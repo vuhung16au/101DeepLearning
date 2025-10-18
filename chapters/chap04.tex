@@ -31,12 +31,12 @@ After studying this chapter, you will be able to:
 % Chapter summary and problems
 \input{chapters/chap04-key-takeaways}
 
-\section{Problems}
+\section{Exercises}
 \label{sec:problems}
 
-This section contains exercises to reinforce your understanding of numerical computation concepts. Problems are categorised by difficulty level.
+This section contains exercises to reinforce your understanding of numerical computation concepts. Exercises are categorised by difficulty level.
 
-\subsection{Easy Problems}
+\subsection{Easy Exercises}
 
 \begin{problem}[Floating-Point Basics]
 \label{prob:float-basics}
@@ -66,7 +66,7 @@ Calculate the condition number of the matrix $\mat{A} = \begin{bmatrix} 1 & 0.5 
 \textbf{Hint:} For a 2×2 matrix, $\kappa(\mat{A}) = \frac{\lambda_{\max}}{\lambda_{\min}}$ where $\lambda_{\max}$ and $\lambda_{\min}$ are the eigenvalues.
 \end{problem}
 
-\subsection{Medium Problems}
+\subsection{Medium Exercises}
 
 \begin{problem}[Log-Sum-Exp Trick]
 \label{prob:log-sum-exp}
@@ -82,7 +82,7 @@ Find the maximum value of $f(x, y) = xy$ subject to the constraint $x^2 + y^2 = 
 \textbf{Hint:} Set up the Lagrangian $\mathcal{L}(x, y, \lambda) = xy + \lambda(1 - x^2 - y^2)$ and solve the system of equations.
 \end{problem}
 
-\subsection{Hard Problems}
+\subsection{Hard Exercises}
 
 \begin{problem}[Numerical Stability of Matrix Inversion]
 \label{prob:matrix-inversion-stability}
@@ -102,4 +102,53 @@ Consider the optimisation problem:
 Find the optimal solution using the KKT conditions and verify that all conditions are satisfied.
 
 \textbf{Hint:} Set up the Lagrangian with multiple constraints and check the complementary slackness conditions.
+\end{problem}
+
+\begin{problem}[Numerical Differentiation]
+\label{prob:numerical-diff}
+Implement the forward, backward, and central difference formulas for computing the derivative of $f(x) = \sin(x)$ at $x = \pi/4$. Compare the accuracy with the analytical derivative.
+
+\textbf{Hint:} Use $f'(x) \approx \frac{f(x+h) - f(x)}{h}$ for forward difference and similar formulas for other methods.
+\end{problem}
+
+\begin{problem}[Machine Epsilon]
+\label{prob:machine-epsilon}
+Write a program to find the machine epsilon of your system. What is the smallest number $\epsilon$ such that $1 + \epsilon \neq 1$ in floating-point arithmetic?
+
+\textbf{Hint:} Start with $\epsilon = 1$ and repeatedly divide by 2 until $1 + \epsilon = 1$.
+\end{problem}
+
+\begin{problem}[Gradient Descent Convergence]
+\label{prob:gradient-convergence}
+For the function $f(x, y) = x^2 + 100y^2$, implement gradient descent with different learning rates. Show that the convergence rate depends on the condition number.
+
+\textbf{Hint:} The condition number of the Hessian matrix determines the convergence rate.
+\end{problem}
+
+\begin{problem}[Numerical Integration]
+\label{prob:numerical-integration}
+Compare the trapezoidal rule and Simpson's rule for approximating $\int_0^1 e^{-x^2} dx$. Use $n = 4, 8, 16$ subintervals.
+
+\textbf{Hint:} Trapezoidal rule: $\int_a^b f(x)dx \approx \frac{h}{2}[f(a) + 2\sum_{i=1}^{n-1}f(x_i) + f(b)]$.
+\end{problem}
+
+\begin{problem}[Matrix Conditioning]
+\label{prob:matrix-conditioning}
+Given the matrix $\mat{A} = \begin{bmatrix} 1 & 1 \\ 1 & 1.0001 \end{bmatrix}$, compute its condition number and solve $\mat{A}\vect{x} = \vect{b}$ where $\vect{b} = [2, 2.0001]^T$.
+
+\textbf{Hint:} A small change in $\vect{b}$ can cause a large change in the solution when the condition number is large.
+\end{problem}
+
+\begin{problem}[Newton's Method]
+\label{prob:newton-method}
+Use Newton's method to find the root of $f(x) = x^3 - 2x - 5$ starting from $x_0 = 2$. Compare with the bisection method.
+
+\textbf{Hint:} Newton's method: $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$.
+\end{problem}
+
+\begin{problem}[Eigenvalue Computation]
+\label{prob:eigenvalue-computation}
+For the matrix $\mat{A} = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix}$, compute the eigenvalues and eigenvectors using the characteristic equation and verify with numerical methods.
+
+\textbf{Hint:} Solve $\det(\mat{A} - \lambda\mat{I}) = 0$ for eigenvalues.
 \end{problem}

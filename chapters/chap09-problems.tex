@@ -1,7 +1,7 @@
-% Problems (Hands-On Exercises) for Chapter 9: Convolutional Networks
+% Exercises (Hands-On Exercises) for Chapter 9: Convolutional Networks
 
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
@@ -60,5 +60,41 @@ Derive the receptive field for a stack of dilated convolutions with dilation rat
 Analyse the computational savings of depthwise separable convolutions (as used in MobileNets) compared to standard convolutions. Derive the reduction factor for a layer with $C_{in}$ input channels, $C_{out}$ output channels, and $K×K$ kernel size.
 
 \textbf{Hint:} Depthwise separable splits into depthwise ($C_{in}$ groups) and pointwise (1×1) convolutions. Compare FLOPs.
+\end{problem}
+
+\begin{problem}[Convolutional Layer Design]
+Design a convolutional layer architecture for a specific computer vision task. Justify your choices of kernel size, stride, and padding.
+
+\textbf{Hint:} Consider the trade-off between computational efficiency and feature extraction capability.
+\end{problem}
+
+\begin{problem}[Pooling Operations]
+Compare different pooling operations (max, average, L2) and their effects on feature maps.
+
+\textbf{Hint:} Consider the impact on spatial information, gradient flow, and computational efficiency.
+\end{problem}
+
+\begin{problem}[Feature Map Visualization]
+Explain how to visualize and interpret feature maps in different layers of a CNN.
+
+\textbf{Hint:} Consider activation maximization, gradient-based methods, and occlusion analysis.
+\end{problem}
+
+\begin{problem}[CNN Architecture Search]
+Design an automated method for finding optimal CNN architectures for a given dataset.
+
+\textbf{Hint:} Consider neural architecture search (NAS), evolutionary algorithms, and reinforcement learning approaches.
+\end{problem}
+
+\begin{problem}[Transfer Learning Strategies]
+Compare different transfer learning approaches for CNNs and when to use each.
+
+\textbf{Hint:} Consider feature extraction, fine-tuning, and progressive unfreezing strategies.
+\end{problem}
+
+\begin{problem}[CNN Interpretability]
+Explain methods for understanding and interpreting CNN decisions, including attention mechanisms.
+
+\textbf{Hint:} Consider gradient-based attribution methods, attention maps, and adversarial analysis.
 \end{problem}
 

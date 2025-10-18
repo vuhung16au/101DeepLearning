@@ -1,7 +1,7 @@
-% Problems (Hands-On Exercises) for Chapter 8: Optimization for Training Deep Models
+% Exercises (Hands-On Exercises) for Chapter 8: Optimization for Training Deep Models
 
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
@@ -55,5 +55,41 @@ Derive the natural gradient update rule and explain why it is invariant to repar
 Analyse why learning rate warmup is beneficial when training with large batch sizes. Provide theoretical justification based on the optimization landscape.
 
 \textbf{Hint:} Consider the stability of gradients in early training and the sharpness of the loss landscape.
+\end{problem}
+
+\begin{problem}[Optimizer Comparison]
+Compare the convergence properties of SGD, Adam, and RMSprop on a non-convex optimization problem.
+
+\textbf{Hint:} Consider the adaptive learning rates and momentum effects of each optimizer.
+\end{problem}
+
+\begin{problem}[Gradient Clipping]
+Explain when and why gradient clipping is necessary. How does it affect the optimization dynamics?
+
+\textbf{Hint:} Consider the exploding gradient problem and the relationship between gradient norms and learning stability.
+\end{problem}
+
+\begin{problem}[Learning Rate Scheduling]
+Design a learning rate schedule for training a deep network. Compare step decay, exponential decay, and cosine annealing.
+
+\textbf{Hint:} Consider the trade-off between exploration and exploitation in different phases of training.
+\end{problem}
+
+\begin{problem}[Second-Order Methods]
+Explain why second-order optimization methods are rarely used in deep learning despite their theoretical advantages.
+
+\textbf{Hint:} Consider computational complexity, memory requirements, and the stochastic nature of deep learning.
+\end{problem}
+
+\begin{problem}[Optimization Landscape]
+Analyse the relationship between the optimization landscape and the choice of optimizer for deep networks.
+
+\textbf{Hint:} Consider saddle points, local minima, and the role of noise in optimization.
+\end{problem}
+
+\begin{problem}[Batch Size Effects]
+Investigate how batch size affects optimization dynamics and generalization in deep learning.
+
+\textbf{Hint:} Consider the relationship between batch size, gradient noise, and the implicit regularization effect.
 \end{problem}
 

@@ -160,15 +160,15 @@ The margins are configured using the geometry package in `main.tex`:
 
 ### Chapter Structure Requirements
 - **Each chapter must have a brief introduction at the start**: A 1-2 paragraph overview that introduces the chapter's topic and provides context
-- **Each chapter must have 15-20 Hands-On Exercises**: Practical problems categorised by difficulty (Easy/Medium/Hard) to reinforce learning
+- **Each chapter must have 15-20 Hands-On Exercises**: Practical exercises categorised by difficulty (Easy/Medium/Hard) to reinforce learning
   - Use `\begin{problem}[Title]...\end{problem}` environment
-  - Problems have their own separate numbering system starting from 1 in each chapter (e.g., Problem 1.1, Problem 1.2, Problem 2.1, Problem 2.2)
-  - Include hints for each problem using `\textbf{Hint:}` formatting
+  - Exercises have their own separate numbering system starting from 1 in each chapter (e.g., Exercise 1.1, Exercise 1.2, Exercise 2.1, Exercise 2.2)
+  - Include hints for each exercise using `\textbf{Hint:}` formatting
   - Organise by difficulty level in subsections (Easy, Medium, Hard)
 - **Each chapter must have a Key Takeaways section**: Use the boxed `keytakeaways` environment
   - Create a file named `chapters/chapXX-key-takeaways.tex`
   - Use `\begin{keytakeaways}...\end{keytakeaways}` with itemised key points
-  - Include this file at the end of the chapter before problems
+  - Include this file at the end of the chapter before exercises
 - **Summaries should use boxed format when present**: Use the `summary` environment
   - Use `\begin{summary}...\end{summary}` for chapter or section summaries
   - Both environments use tcolorbox for enhanced visual presentation
@@ -193,21 +193,21 @@ The margins are configured using the geometry package in `main.tex`:
 - Provide expected outputs and explanations
 - Match difficulty level of surrounding content
 
-### Problem Formatting
+### Exercise Formatting
 - **Environment**: Use `\begin{problem}[Title]...\end{problem}` for all exercises
-- **Numbering**: Problems have their own separate numbering system
-  - Format: "Problem X.Y" where X is the chapter number and Y is the sequential number starting from 1
-  - Example: Problem 1.1, Problem 1.2, Problem 1.3 (in Chapter 1)
-  - Example: Problem 2.1, Problem 2.2, Problem 2.3 (in Chapter 2)
-  - Problems are numbered independently from theorems, definitions, and examples
-- **Structure**: Each problem should include:
-  - Optional title in square brackets: `\begin{problem}[Problem Title]`
-  - Problem statement or question
+- **Numbering**: Exercises have their own separate numbering system
+  - Format: "Exercise X.Y" where X is the chapter number and Y is the sequential number starting from 1
+  - Example: Exercise 1.1, Exercise 1.2, Exercise 1.3 (in Chapter 1)
+  - Example: Exercise 2.1, Exercise 2.2, Exercise 2.3 (in Chapter 2)
+  - Exercises are numbered independently from theorems, definitions, and examples
+- **Structure**: Each exercise should include:
+  - Optional title in square brackets: `\begin{problem}[Exercise Title]`
+  - Exercise statement or question
   - Hint using `\textbf{Hint:}` followed by guidance
-- **Organisation**: Group problems by difficulty level using subsections:
-  - `\subsection*{Easy}` for beginner-level problems
-  - `\subsection*{Medium}` for intermediate problems
-  - `\subsection*{Hard}` for advanced problems
+- **Organisation**: Group exercises by difficulty level using subsections:
+  - `\subsection*{Easy}` for beginner-level exercises
+  - `\subsection*{Medium}` for intermediate exercises
+  - `\subsection*{Hard}` for advanced exercises
 
 ## Common Tasks
 

@@ -1,7 +1,7 @@
-% Problems (Hands-On Exercises) for Chapter 7: Regularization for Deep Learning
+% Exercises (Hands-On Exercises) for Chapter 7: Regularization for Deep Learning
 
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
@@ -55,5 +55,41 @@ Mixup trains on convex combinations of examples: $\tilde{\vect{x}} = \lambda \ve
 Design an adversarial training procedure for a classification model. Explain how to generate adversarial examples using FGSM (Fast Gradient Sign Method) and why this improves robustness.
 
 \textbf{Hint:} Adversarial examples are $\vect{x}_{adv} = \vect{x} + \epsilon \cdot \text{sign}(\nabla_{\vect{x}} L)$. Discuss the trade-off between clean and adversarial accuracy.
+\end{problem}
+
+\begin{problem}[Early Stopping Strategy]
+Explain how early stopping works as a regularisation technique. How do you determine the optimal stopping point?
+
+\textbf{Hint:} Monitor validation loss and stop when it starts increasing, indicating overfitting.
+\end{problem}
+
+\begin{problem}[Data Augmentation Effects]
+Compare different data augmentation techniques for image classification. Which techniques are most effective for different types of images?
+
+\textbf{Hint:} Consider geometric transformations, color jittering, and mixup techniques.
+\end{problem}
+
+\begin{problem}[Weight Decay vs Dropout]
+Compare the effects of weight decay and dropout regularisation. When would you use one over the other?
+
+\textbf{Hint:} Weight decay penalises large weights globally, while dropout creates sparse activations locally.
+\end{problem}
+
+\begin{problem}[Batch Normalization vs Layer Normalization]
+Compare batch normalisation and layer normalisation. When is each more appropriate?
+
+\textbf{Hint:} Batch normalisation depends on batch statistics, while layer normalisation is independent of batch size.
+\end{problem}
+
+\begin{problem}[Regularisation in Convolutional Networks]
+Explain how regularisation techniques differ when applied to convolutional layers versus fully connected layers.
+
+\textbf{Hint:} Consider spatial structure preservation and parameter sharing in convolutional layers.
+\end{problem}
+
+\begin{problem}[Ensemble Regularisation]
+How can ensemble methods be viewed as a form of regularisation? Compare bagging and boosting approaches.
+
+\textbf{Hint:} Ensembles reduce variance by averaging predictions from multiple models.
 \end{problem}
 

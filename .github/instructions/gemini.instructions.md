@@ -163,16 +163,16 @@ make pdf      # Complete compilation process
 
 ### Chapter Structure Requirements
 - **Each chapter must have a brief introduction at the start**: A 1-2 paragraph overview that introduces the chapter's topic and provides context
-- **Each chapter must have 15-20 Hands-On Exercises**: Practical problems categorised by difficulty (Easy/Medium/Hard) to reinforce learning
+- **Each chapter must have 15-20 Hands-On Exercises**: Practical exercises categorised by difficulty (Easy/Medium/Hard) to reinforce learning
   - Use `\begin{problem}[Title]...\end{problem}` environment
-  - Problems are automatically numbered by LaTeX (e.g., Problem 2.1, Problem 2.2)
+  - Exercises are automatically numbered by LaTeX (e.g., Exercise 2.1, Exercise 2.2)
   - The numbering is shared with theorems, definitions, and examples within each chapter
-  - Include hints for each problem using `\textbf{Hint:}` formatting
+  - Include hints for each exercise using `\textbf{Hint:}` formatting
   - Organise by difficulty level in subsections (Easy, Medium, Hard)
 - **Each chapter must have a Key Takeaways section**: Use the boxed `keytakeaways` environment
   - Create a file named `chapters/chapXX-key-takeaways.tex`
   - Use `\begin{keytakeaways}...\end{keytakeaways}` with itemised key points
-  - Include this file at the end of the chapter before problems
+  - Include this file at the end of the chapter before exercises
 - **Summaries should use boxed format when present**: Use the `summary` environment
   - Use `\begin{summary}...\end{summary}` for chapter or section summaries
   - Both environments use tcolorbox for enhanced visual presentation

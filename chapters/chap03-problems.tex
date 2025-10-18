@@ -1,7 +1,7 @@
-% Problems (Hands-On Exercises) for Chapter 3: Probability and Information Theory
+% Exercises (Hands-On Exercises) for Chapter 3: Probability and Information Theory
 
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
@@ -29,6 +29,48 @@ Given P(A) = 0.3, P(B) = 0.4, and P(A $\cap$ B) = 0.12, determine if events A an
 \textbf{Hint:} Events are independent if P(A $\cap$ B) = P(A)P(B).
 \end{problem}
 
+\begin{problem}[Conditional Probability]
+In a deck of 52 cards, what is the probability of drawing a heart given that the card drawn is red?
+
+\textbf{Hint:} Use the definition of conditional probability: P(A|B) = P(A $\cap$ B)/P(B).
+\end{problem}
+
+\begin{problem}[Joint Probability]
+Given P(A) = 0.6, P(B) = 0.4, and P(A|B) = 0.8, find P(A $\cap$ B) and P(B|A).
+
+\textbf{Hint:} Use the multiplication rule: P(A $\cap$ B) = P(A|B)P(B).
+\end{problem}
+
+\begin{problem}[Probability Distributions]
+A random variable X follows a uniform distribution on [0, 2]. Find P(X > 1.5) and the expected value E[X].
+
+\textbf{Hint:} For uniform distribution on [a, b], the density is f(x) = 1/(b-a) for x in [a, b].
+\end{problem}
+
+\begin{problem}[Binomial Distribution]
+A fair coin is flipped 10 times. What is the probability of getting exactly 7 heads?
+
+\textbf{Hint:} Use the binomial probability formula: $P(X = k) = C(n,k) p^k (1-p)^{(n-k)}$.
+\end{problem}
+
+\begin{problem}[Normal Distribution]
+If X ~ N(50, 25), find P(45 < X < 55) using the standard normal distribution.
+
+\textbf{Hint:} Standardise using Z = (X - μ)/σ, then use standard normal tables.
+\end{problem}
+
+\begin{problem}[Information Content]
+Calculate the information content of an event with probability 0.1, and compare it to an event with probability 0.5.
+
+\textbf{Hint:} Information content is I(x) = -log₂ P(x).
+\end{problem}
+
+\begin{problem}[Mutual Information]
+Given P(X=0) = 0.6, P(X=1) = 0.4, P(Y=0|X=0) = 0.8, P(Y=1|X=0) = 0.2, P(Y=0|X=1) = 0.3, P(Y=1|X=1) = 0.7, calculate I(X;Y).
+
+\textbf{Hint:} Use I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X).
+\end{problem}
+
 \subsection*{Medium}
 
 \begin{problem}[KL Divergence for Model Comparison]
@@ -43,11 +85,71 @@ Show that minimising cross-entropy loss is equivalent to maximising the log-like
 \textbf{Hint:} Start with the cross-entropy $H(p,q) = -\sum_i p_i \log q_i$ where $p$ is the true distribution and $q$ is the predicted distribution.
 \end{problem}
 
+\begin{problem}[Maximum Likelihood Estimation]
+Given a sample of n independent observations from a normal distribution N(μ, σ²), derive the maximum likelihood estimators for μ and σ².
+
+\textbf{Hint:} Write the likelihood function L(μ, σ²) and take partial derivatives with respect to μ and σ².
+\end{problem}
+
+\begin{problem}[Jensen's Inequality Application]
+Use Jensen's inequality to show that the entropy of a mixture of distributions is at least the weighted average of the individual entropies.
+
+\textbf{Hint:} Consider H(∑ᵢ αᵢpᵢ) ≥ ∑ᵢ αᵢH(pᵢ) where ∑ᵢ αᵢ = 1 and αᵢ ≥ 0.
+\end{problem}
+
+\begin{problem}[Central Limit Theorem]
+Explain how the Central Limit Theorem applies to the convergence of sample means and discuss its implications for machine learning.
+
+\textbf{Hint:} Consider the distribution of sample means and how it approaches normality regardless of the original distribution.
+\end{problem}
+
+\begin{problem}[Concentration Inequalities]
+Use Markov's inequality to bound P(X ≥ 2E[X]) for a non-negative random variable X, and compare with Chebyshev's inequality.
+
+\textbf{Hint:} Markov's inequality: P(X ≥ a) ≤ E[X]/a for a > 0.
+\end{problem}
+
+\begin{problem}[Bayesian Inference]
+Given a prior Beta(2, 2) distribution and observing 7 successes in 10 trials, find the posterior distribution and the Bayesian estimate.
+
+\textbf{Hint:} Use the Beta-Binomial conjugate relationship: Beta(α, β) + Binomial(n, p) → Beta(α + k, β + n - k).
+\end{problem}
+
 \subsection*{Hard}
 
 \begin{problem}[Information Theory in Neural Networks]
 Analyse how mutual information between layers in a neural network can be used to understand information flow during training. Discuss the information bottleneck principle.
 
 \textbf{Hint:} Consider $I(X;Y) = H(X) - H(X|Y)$ and how it relates to representation learning.
+\end{problem}
+
+\begin{problem}[Variational Inference]
+Derive the Evidence Lower Bound (ELBO) for variational inference and explain its relationship to the Kullback-Leibler divergence.
+
+\textbf{Hint:} Start with log p(x) = log ∫ p(x,z) dz and use Jensen's inequality with a variational distribution q(z).
+\end{problem}
+
+\begin{problem}[Information Bottleneck Theory]
+Prove that the information bottleneck principle leads to a trade-off between compression and prediction accuracy in representation learning.
+
+\textbf{Hint:} Consider the Lagrangian L = I(X;T) - βI(T;Y) where T is the representation and β controls the trade-off.
+\end{problem}
+
+\begin{problem}[PAC-Bayes Bounds]
+Derive a PAC-Bayes bound for generalisation error in terms of the KL divergence between prior and posterior distributions.
+
+\textbf{Hint:} Use the change of measure inequality and the union bound over the hypothesis space.
+\end{problem}
+
+\begin{problem}[Maximum Entropy Principle]
+Show that the maximum entropy distribution under moment constraints is exponential family, and derive the dual optimisation problem.
+
+\textbf{Hint:} Use Lagrange multipliers to maximise H(p) subject to E[φᵢ(X)] = μᵢ for moment constraints.
+\end{problem}
+
+\begin{problem}[Causal Inference and Information Theory]
+Analyse the relationship between causal discovery and information-theoretic measures, particularly in the context of conditional independence testing.
+
+\textbf{Hint:} Consider how mutual information relates to conditional independence: X ⊥ Y | Z if and only if I(X;Y|Z) = 0.
 \end{problem}
 

@@ -1,7 +1,7 @@
-% Problems (Hands-On Exercises) for Chapter 6: Deep Feedforward Networks
+% Exercises (Hands-On Exercises) for Chapter 6: Deep Feedforward Networks
 
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
@@ -55,5 +55,47 @@ Derive the Xavier (Glorot) initialisation scheme for weights. Explain why it hel
 Analyse how residual connections (skip connections) help with gradient flow in very deep networks. Derive the gradient through a residual block.
 
 \textbf{Hint:} Consider $\vect{y} = \vect{x} + F(\vect{x})$ and compute $\frac{\partial L}{\partial \vect{x}}$ where $F$ is a sub-network.
+\end{problem}
+
+\begin{problem}[Universal Approximation]
+Explain the universal approximation theorem for neural networks. What are its practical limitations?
+
+\textbf{Hint:} The theorem states that a single hidden layer with sufficient neurons can approximate any continuous function, but doesn't guarantee efficient learning.
+\end{problem}
+
+\begin{problem}[Activation Function Properties]
+Compare the properties of ReLU, Leaky ReLU, and ELU activation functions. When would you use each?
+
+\textbf{Hint:} Consider gradient flow, computational efficiency, and the "dying ReLU" problem.
+\end{problem}
+
+\begin{problem}[Network Depth vs Width]
+Explain the trade-offs between making a network deeper versus wider. When might you prefer one approach?
+
+\textbf{Hint:} Deeper networks can learn more complex features but are harder to train; wider networks are easier to train but may need more parameters.
+\end{problem}
+
+\begin{problem}[Gradient Vanishing Exercise]
+Explain why gradients can vanish in deep networks and how modern architectures address this issue.
+
+\textbf{Hint:} Consider the chain rule and how gradients are multiplied through layers, especially with activation functions like sigmoid.
+\end{problem}
+
+\begin{problem}[Batch Normalization Effects]
+Explain how batch normalization affects training dynamics and why it can improve convergence.
+
+\textbf{Hint:} Batch normalization reduces internal covariate shift and can act as a regularizer.
+\end{problem}
+
+\begin{problem}[Dropout Regularization]
+Compare dropout with other regularization techniques like L1/L2 regularization. When is dropout most effective?
+
+\textbf{Hint:} Dropout prevents overfitting by randomly setting neurons to zero during training, creating an ensemble effect.
+\end{problem}
+
+\begin{problem}[Weight Initialization Strategies]
+Compare Xavier/Glorot initialization with He initialization. When would you use each?
+
+\textbf{Hint:} Xavier assumes symmetric activation functions, while He initialization is designed for ReLU networks.
 \end{problem}
 
