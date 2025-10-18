@@ -91,9 +91,10 @@ The margins are configured using the geometry package in `main.tex`:
 1. **Package Usage**: Use established packages (amsmath, hyperref, glossaries, makeidx)
 2. **Cross-references**: Use `\label{}` and `\ref{}` for internal references
 3. **Math**: Use proper mathematical notation with `\vect{}`, `\mat{}`, `\norm{}`
-4. **Theorems**: Use defined environments (theorem, definition, example, problem, etc.)
+4. **Theorems**: Use defined environments (theorem, definition, example, etc.)
    - All theorem-like environments share the same counter per chapter
    - Numbering format: "Environment X.Y" where X is chapter number, Y is sequential
+   - **Problems have their own separate numbering system**
 
 ### Content Structure
 ```latex
@@ -161,8 +162,7 @@ The margins are configured using the geometry package in `main.tex`:
 - **Each chapter must have a brief introduction at the start**: A 1-2 paragraph overview that introduces the chapter's topic and provides context
 - **Each chapter must have 15-20 Hands-On Exercises**: Practical problems categorised by difficulty (Easy/Medium/Hard) to reinforce learning
   - Use `\begin{problem}[Title]...\end{problem}` environment
-  - Problems are automatically numbered by LaTeX (e.g., Problem 2.1, Problem 2.2)
-  - The numbering is shared with theorems, definitions, and examples within each chapter
+  - Problems have their own separate numbering system starting from 1 in each chapter (e.g., Problem 1.1, Problem 1.2, Problem 2.1, Problem 2.2)
   - Include hints for each problem using `\textbf{Hint:}` formatting
   - Organise by difficulty level in subsections (Easy, Medium, Hard)
 - **Each chapter must have a Key Takeaways section**: Use the boxed `keytakeaways` environment
@@ -195,10 +195,11 @@ The margins are configured using the geometry package in `main.tex`:
 
 ### Problem Formatting
 - **Environment**: Use `\begin{problem}[Title]...\end{problem}` for all exercises
-- **Numbering**: Problems are automatically numbered using the shared theorem counter
-  - Format: "Problem X.Y" where X is the chapter number and Y is the sequential number
+- **Numbering**: Problems have their own separate numbering system
+  - Format: "Problem X.Y" where X is the chapter number and Y is the sequential number starting from 1
+  - Example: Problem 1.1, Problem 1.2, Problem 1.3 (in Chapter 1)
   - Example: Problem 2.1, Problem 2.2, Problem 2.3 (in Chapter 2)
-  - Numbering is shared with theorems, definitions, examples, and other theorem-like environments
+  - Problems are numbered independently from theorems, definitions, and examples
 - **Structure**: Each problem should include:
   - Optional title in square brackets: `\begin{problem}[Problem Title]`
   - Problem statement or question
