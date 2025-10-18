@@ -1,0 +1,54 @@
+% Chapter 18, Section 3
+
+\section{Noise-Contrastive Estimation \\difficultyInline{advanced}}
+\label{sec:nce}
+
+
+\subsection{Key Idea}
+
+Turn density estimation into binary classification:
+\begin{itemize}
+    \item Distinguish data samples from noise samples
+    \item Avoids computing partition function
+\end{itemize}
+
+\subsection{NCE Objective}
+
+\begin{equation}
+\mathcal{L} = \mathbb{E}_{p_{\text{data}}}[\log h(\vect{x})] + k \cdot \mathbb{E}_{p_{\text{noise}}}[\log(1-h(\vect{x}))]
+\end{equation}
+
+where:
+\begin{equation}
+h(\vect{x}) = \frac{p_{\text{model}}(\vect{x})}{p_{\text{model}}(\vect{x}) + k \cdot p_{\text{noise}}(\vect{x})}
+\end{equation}
+
+\subsection{Applications}
+
+\begin{itemize}
+    \item Word embeddings (word2vec)
+    \item Language models
+    \item Energy-based models
+\end{itemize}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (NCE)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={Score $h(x)$}, ylabel={Density}, grid=both]
+%       \addplot[bookpurple,very thick,domain=0:1,samples=100]{4*x*(1-x)};
+%       \addplot[bookred,very thick,dashed,domain=0:1,samples=100]{2*(1-x)};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Schematic of classifier scores for data (solid) vs. noise (dashed).}
+%   \label{fig:nce-scores}
+% \end{figure}
+
+\subsection{Notes and references}
+
+NCE as a technique to bypass partition functions is discussed in \textcite{GoodfellowEtAl2016,Prince2023}.
+

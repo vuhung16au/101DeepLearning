@@ -1,0 +1,59 @@
+% Problems (Exercises) for Chapter 20
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy}
+
+\begin{problem}[VAE vs. GAN]
+Compare the training objectives of VAEs and GANs.
+
+\textbf{Hint:} Likelihood-based vs. adversarial.
+\end{problem}
+
+\begin{problem}[Normalising Flow Invertibility]
+Why must normalising flows be invertible?
+
+\textbf{Hint:} Exact likelihood computation via change of variables.
+\end{problem}
+
+\begin{problem}[Diffusion Process]
+Describe the forward diffusion process in diffusion models.
+
+\textbf{Hint:} Gradual addition of Gaussian noise.
+\end{problem}
+
+\begin{problem}[Sampling Speed]
+Compare sampling speed across VAEs, GANs, and diffusion models.
+
+\textbf{Hint:} Single pass vs. iterative refinement.
+\end{problem}
+
+\subsection*{Medium}
+
+\begin{problem}[Flow Jacobian]
+Derive the change-of-variables formula for a normalising flow.
+
+\textbf{Hint:} $\log p(x) = \log p(z) + \log|\det \frac{\partial f}{\partial z}|$.
+\end{problem}
+
+\begin{problem}[Denoising Score Matching]
+Explain how diffusion models learn the score function.
+
+\textbf{Hint:} Predict noise; connection to $\nabla_x \log p(x)$.
+\end{problem}
+
+\subsection*{Hard}
+
+\begin{problem}[Coupling Layer Design]
+Design an invertible coupling layer and prove its properties.
+
+\textbf{Hint:} Affine transformations; partition dimensions.
+\end{problem}
+
+\begin{problem}[Guidance Trade-off]
+Analyse the trade-off between sample quality and diversity in classifier-free guidance.
+
+\textbf{Hint:} Guidance scale; conditional vs. unconditional scores.
+\end{problem}
+

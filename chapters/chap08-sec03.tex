@@ -1,0 +1,70 @@
+% Chapter 8, Section 3
+
+\section{Adaptive Learning Rate Methods \difficultyInline{intermediate}}
+\label{sec:adaptive-methods}
+
+\subsection{Intuition: Per-Parameter Step Sizes}
+
+Different parameters learn at different speeds: some directions are steep, others are flat. \textbf{Adaptive methods} adjust the step size per parameter based on recent gradient information, allowing faster progress on rarely-updated or low-variance dimensions while stabilizing steps on highly-volatile ones.\index{adaptive optimization}\index{AdaGrad}\index{RMSProp}\index{Adam}
+
+Historical note: AdaGrad emerged for sparse problems; RMSProp stabilized AdaGrad's decay; Adam blended momentum with RMSProp-style adaptation and became a widely used default in deep learning \cite{Duchi2011,Tieleman2012,Kingma2014,GoodfellowEtAl2016}.
+
+\subsection{AdaGrad}
+
+Adapts learning rate per parameter based on historical gradients:
+\begin{align}
+\vect{g}_t &= \nabla_{\vect{\theta}} L(\vect{\theta}_t) \\
+\vect{r}_t &= \vect{r}_{t-1} + \vect{g}_t \odot \vect{g}_t \\
+\vect{\theta}_{t+1} &= \vect{\theta}_t - \frac{\alpha}{\sqrt{\vect{r}_t + \epsilon}} \odot \vect{g}_t
+\end{align}
+
+where $\epsilon$ (e.g., $10^{-8}$) prevents division by zero. AdaGrad is well-suited to sparse features: infrequent parameters receive larger effective steps, accelerating learning in NLP and recommender settings \cite{Duchi2011,WebOptimizationDLBook,D2LChapterOptimization}. A drawback is the ever-growing accumulator \(\vect{r}_t\), which can shrink steps too aggressively over long runs.
+
+\subsection{RMSProp}
+
+Addresses AdaGrad's aggressive decay using exponential moving average:
+\begin{align}
+\vect{r}_t &= \rho \vect{r}_{t-1} + (1-\rho) \vect{g}_t \odot \vect{g}_t \\
+\vect{\theta}_{t+1} &= \vect{\theta}_t - \frac{\alpha}{\sqrt{\vect{r}_t + \epsilon}} \odot \vect{g}_t
+\end{align}
+
+Add a small \(\epsilon\) for numerical stability and tune decay \(\rho\in[0.9,0.99]\). RMSProp prevents the learning rate from decaying to zero as in AdaGrad, making it effective for non-stationary objectives typical in deep networks \cite{Tieleman2012,WebOptimizationDLBook,D2LChapterOptimization}.
+
+\subsection{Adam (Adaptive Moment Estimation)}
+
+Combines momentum and adaptive learning rates:
+\begin{align}
+\vect{m}_t &= \beta_1 \vect{m}_{t-1} + (1-\beta_1) \vect{g}_t \\
+\vect{v}_t &= \beta_2 \vect{v}_{t-1} + (1-\beta_2) \vect{g}_t \odot \vect{g}_t \\
+\hat{\vect{m}}_t &= \frac{\vect{m}_t}{1 - \beta_1^t} \\
+\hat{\vect{v}}_t &= \frac{\vect{v}_t}{1 - \beta_2^t} \\
+\vect{\theta}_{t+1} &= \vect{\theta}_t - \frac{\alpha \hat{\vect{m}}_t}{\sqrt{\hat{\vect{v}}_t} + \epsilon}
+\end{align}
+
+Default hyperparameters: $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}$, $\alpha = 0.001$ \cite{Kingma2014}. Adam often converges quickly and is robust to poorly scaled gradients. For best generalization in some vision tasks, SGD with momentum can still outperform Adam; consider switching optimizers during fine-tuning \cite{GoodfellowEtAl2016,D2LChapterOptimization,He2016}.
+
+\subsection{Learning Rate Schedules}\index{learning rate schedule}
+
+\textbf{Step Decay:}
+\begin{equation}
+\alpha_t = \alpha_0 \cdot \gamma^{\lfloor t / s \rfloor}
+\end{equation}
+
+\textbf{Exponential Decay:}
+\begin{equation}
+\alpha_t = \alpha_0 e^{-\lambda t}
+\end{equation}
+
+\textbf{Cosine Annealing:}
+\begin{equation}
+\alpha_t = \alpha_{\min} + \frac{1}{2}(\alpha_{\max} - \alpha_{\min})\left(1 + \cos\left(\frac{t}{T}\pi\right)\right)
+\end{equation}
+
+Other useful schedules:\index{learning-rate-schedule}
+\begin{itemize}
+    \item Warmup: start from a small \(\alpha\) and increase linearly over the first \(T_w\) steps to reduce early instabilities in large-batch training.
+    \item One-cycle policy: increase then anneal \(\alpha\), often paired with momentum decay, to speed convergence and improve generalization.
+\end{itemize}
+
+Practical recipe: Combine cosine decay with warmup for transformer-like models, step decay for CNNs trained with SGD, and exponential decay for simple baselines \cite{WebOptimizationDLBook,D2LChapterOptimization}.
+

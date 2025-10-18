@@ -1,0 +1,46 @@
+% Chapter 17, Section 1
+
+\section{Sampling and Monte Carlo Estimators \difficultyInline{advanced}}
+\label{sec:mc-estimators}
+
+\subsection{Monte Carlo Estimation}
+
+Approximate expectations using samples:
+\begin{equation}
+\mathbb{E}_{p(x)}[f(x)] \approx \frac{1}{N} \sum_{i=1}^{N} f(x^{(i)}), \quad x^{(i)} \sim p(x)
+\end{equation}
+
+\textbf{Law of large numbers:} Estimate converges to true expectation as $N \to \infty$.
+
+\subsection{Variance Reduction}
+
+Reduce variance of estimators:
+
+\textbf{Rao-Blackwellization:} Use conditional expectations
+
+\textbf{Control variates:} Subtract correlated zero-mean terms
+
+\textbf{Antithetic sampling:} Use negatively correlated samples
+
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (MC estimators)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xmode=log, log basis x=10,
+%       xlabel={$N$ samples}, ylabel={RMSE}, grid=both]
+%       \addplot[bookpurple,very thick,domain=10:10000,samples=100]{1/sqrt(x)};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Monte Carlo error decreases as $\mathcal{O}(N^{-1/2})$ (illustrative).}
+%   \label{fig:mc-rate}
+% \end{figure}
+
+% \subsection{Notes and references}
+
+% See \textcite{Bishop2006,GoodfellowEtAl2016,Prince2023} for Monte Carlo estimators and variance reduction techniques.
+

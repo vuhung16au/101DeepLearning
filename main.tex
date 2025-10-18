@@ -1,0 +1,474 @@
+% Deep Learning 101 - Main Book File
+% Author: Vu Hung Nguyen
+% License: Creative Commons License Version 4.0 (CC BY 4.0)
+
+% Define default paper size if not already defined
+\providecommand{\papersize}{a5paper}
+% Optional per-chapter build support: define a list of includes when building a single chapter
+\providecommand{\includelist}{}
+
+\documentclass[10pt,\papersize,twoside,openright]{book}
+
+% Load etoolbox for conditional commands
+\usepackage{etoolbox}
+% If includelist is provided externally (via Makefile), only include that chapter
+\ifdefempty{\includelist}{}{\includeonly{\includelist}}
+
+% Custom paper size for trade (6"x9")
+\ifdefstring{\papersize}{trade}{%
+  \usepackage[paperwidth=6in,paperheight=9in,top=2cm,bottom=2cm,inner=1.8cm,outer=1.5cm]{geometry}%
+}{%
+  \usepackage[\papersize,top=2cm,bottom=2cm,inner=1.8cm,outer=1.5cm]{geometry}%
+}
+
+% --- Page Layout ---
+% Geometry package is already loaded above with conditional sizing
+\usepackage{setspace}
+\onehalfspacing
+
+% --- Essential Packages and Unicode Support ---
+% etoolbox already loaded above
+\usepackage{iftex}
+\ifPDFTeX
+  % pdfLaTeX path
+  \usepackage[utf8]{inputenc}
+  % Enable Latin (T1) and Vietnamese (T5) encodings
+  \usepackage[T1,T5]{fontenc}
+  \usepackage{lmodern}
+  % Vietnamese font support
+  \usepackage{vntex}
+  % CJK support for Chinese characters in pdfLaTeX
+  \usepackage{CJKutf8}
+\else
+  % XeLaTeX/LuaLaTeX path with native Unicode and CJK support
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+  % Use commonly available fonts
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Courier New}
+  % Engine-specific CJK setup
+  \ifXeTeX
+    \RequirePackage{xeCJK}
+    \setCJKmainfont{PingFang SC}
+    \setCJKsansfont{PingFang SC}
+    \setCJKmonofont{PingFang SC}
+  \fi
+  \ifLuaTeX
+    % LuaLaTeX CJK support via luatexja with safe fallbacks
+    \usepackage{luatexja}
+    \usepackage{luatexja-fontspec}
+    \IfFontExistsTF{PingFang SC}{%
+      \setmainjfont{PingFang SC}
+      \setsansjfont{PingFang SC}
+      \setmonojfont{PingFang SC}
+    }{%
+      % TeX Live bundled Japanese fonts as fallback
+      \setmainjfont{HaranoAjiMincho}
+      \setsansjfont{HaranoAjiGothic}
+      \setmonojfont{HaranoAjiGothic}
+    }
+  \fi
+\fi
+\usepackage{microtype}
+% Language and date formatting
+\usepackage[english]{babel}
+\usepackage[en-GB]{datetime2}
+\DTMsetstyle{en-GB}
+
+% --- Math Packages ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{mathtools}
+
+% --- Graphics and Colors ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{eso-pic}
+
+% --- Custom Color Scheme ---
+\definecolor{bookpurple}{RGB}{60,16,83}
+\definecolor{bookred}{RGB}{242,18,12}
+\definecolor{bookblack}{RGB}{0,0,0}
+\definecolor{bookwhite}{RGB}{255,255,255}
+
+% --- Tables and Lists ---
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+
+% --- References and Links ---
+\usepackage[unicode]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=bookpurple,
+    citecolor=bookred,
+    urlcolor=bookpurple,
+    bookmarksopen=true,
+}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+% --- Bibliography ---
+\usepackage[backend=biber,style=alphabetic,sorting=nyt]{biblatex}
+\addbibresource{references.bib}
+
+% --- Glossary and Index ---
+\usepackage{makeidx}
+\usepackage{glossaries}
+\makeindex
+\makeglossaries
+\loadglsentries{chapters/glossary}
+
+% --- Summary and Takeaways Boxes ---
+\usepackage[most]{tcolorbox}
+
+% Define custom summary box
+\newtcolorbox[auto counter]{summary}[1][]{
+  title={\bfseries Summary~\thetcbcounter},
+  enhanced,
+  drop shadow={black!50!white},
+  coltitle=black,
+  top=0.3in,
+  attach boxed title to top left={
+    xshift=1.5em,
+    yshift=-\tcboxedtitleheight/2
+  },
+  boxed title style={size=small,colback=pink},
+  #1
+}
+
+% Define custom key takeaways box
+\newtcolorbox[auto counter]{keytakeaways}[1][]{
+  title={\bfseries Key Takeaways~\thetcbcounter},
+  enhanced,
+  drop shadow={black!50!white},
+  coltitle=black,
+  top=0.3in,
+  attach boxed title to top left={
+    xshift=1.5em,
+    yshift=-\tcboxedtitleheight/2
+  },
+  boxed title style={size=small,colback=yellow!50},
+  #1
+}
+
+% --- Theorem Environments ---
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Algorithm environment for boxed, numbered algorithms
+\newtheorem{algorithm}[theorem]{Algorithm}
+
+% --- Custom Commands ---
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\transpose}{^\top}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+% --- Emoji and Difficulty Level Commands ---
+% Provide a color emoji font and map common emoji code points.
+% Prefer Apple Color Emoji on macOS; fall back to Noto Color Emoji if available.
+\ifPDFTeX\else
+  \IfFontExistsTF{Apple Color Emoji}{%
+    \newfontfamily\emojifont{Apple Color Emoji}[Renderer=Harfbuzz,Scale=MatchUppercase]
+  }{%
+    \IfFontExistsTF{Noto Color Emoji}{%
+      \newfontfamily\emojifont{Noto Color Emoji}[Renderer=Harfbuzz,Scale=MatchUppercase]
+    }{%
+      % Last-resort monochrome fallback to Symbola
+      \newfontfamily\emojifont{Symbola}[Scale=MatchUppercase]
+    }}
+  \newcommand{\emoji}[1]{{\emojifont #1}}
+  % Handle variation selector U+FE0F (VS16) which often follows stars
+  \usepackage{newunicodechar}
+  \newunicodechar{️}{}
+  % Map specific emojis to the emoji font when typed inline
+  \newunicodechar{💫}{{\emojifont 💫}}
+  \newunicodechar{⭐}{{\emojifont ⭐}}
+  \newunicodechar{🌟}{{\emojifont 🌟}}
+\fi
+
+% Define individual difficulty indicator commands for reusability
+\newcommand{\difficultyBeginner}{\emoji{💫}}
+\newcommand{\difficultyIntermediate}{\emoji{⭐}}
+\newcommand{\difficultyAdvanced}{\emoji{🌟}}
+
+% Inline difficulty indicators with bookmark-safe fallbacks
+\newcommand{\difficultyInlineBeginner}{\texorpdfstring{\,\difficultyBeginner}{ [beginner] }}
+\newcommand{\difficultyInlineIntermediate}{\texorpdfstring{\,\difficultyIntermediate}{ [intermediate] }}
+\newcommand{\difficultyInlineAdvanced}{\texorpdfstring{\,\difficultyAdvanced}{ [advanced] }}
+\newcommand{\difficultyInlineOther}[1]{\texorpdfstring{\,\textbf{[#1]}}{ [#1] }}
+
+\newcommand{\difficultyInline}[1]{%
+  \ifstrequal{#1}{beginner}{\difficultyInlineBeginner}{%
+  \ifstrequal{#1}{intermediate}{\difficultyInlineIntermediate}{%
+  \ifstrequal{#1}{advanced}{\difficultyInlineAdvanced}{\difficultyInlineOther{#1}}}}}
+
+% Legacy \difficulty command used on its own line: make it a no-op now
+\newcommand{\difficulty}[1]{}
+
+% --- Title and Author Information ---
+\title{\textbf{Deep Learning 101}}
+\author{Vũ Hưng Nguyễn}
+\date{\DTMtoday}
+
+% ======================================================================
+% BEGIN DOCUMENT
+% ======================================================================
+
+\begin{document}
+\selectlanguage{english}
+
+% --- Cover and Title Pages (No Front Matter Yet) ---
+% Apply left-aligned text for all content
+\raggedright
+
+% Suppress page numbering completely for cover and title pages
+\setcounter{page}{0}
+\pagenumbering{gobble}
+
+% Title Page - Cover Image Only (First Page)
+\thispagestyle{empty}
+\begingroup % Start a local scope for margin adjustments
+\setlength{\topmargin}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\textheight}{\paperheight}
+\setlength{\textwidth}{\paperwidth}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\marginparsep}{0pt}
+\setlength{\hoffset}{-1in}
+\setlength{\voffset}{-1in}
+
+% Draw image as exact full-page background on THIS page only
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \ifdefstring{\papersize}{a4paper}{%
+      \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-A4.png}%
+    }{%
+      \ifdefstring{\papersize}{a5paper}{%
+        \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-A5.png}%
+      }{%
+        \ifdefstring{\papersize}{letterpaper}{%
+          \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-letter.png}%
+        }{%
+          \ifdefstring{\papersize}{a6paper}{%
+            \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-A6.png}%
+          }{%
+            \ifdefstring{\papersize}{b5paper}{%
+              \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-B5.png}%
+            }{%
+              \ifdefstring{\papersize}{trade}{%
+                \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-trade.png}%
+              }{%
+                \includegraphics[width=\paperwidth,height=\paperheight]{images/DeepLearning101-cover-A5.png}%
+              }%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+\mbox{}% ensure a shipout
+\endgroup % End the local scope, restoring previous margin settings
+\clearpage
+
+% Title Page - Text Content (Second Page)
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+\vspace*{\fill}
+
+{\Huge\bfseries Deep Learning 101\par}
+\vspace{2cm}
+
+{\Large Nguyễn Vũ Hưng -- 阮武興 \par}
+\vspace{2cm}
+
+{\large A Comprehensive Guide to\\
+Deep Learning Theory and Practice\par}
+
+\vspace{3cm}
+
+{\large \DTMtoday\par}
+\vspace{1cm}
+
+{\small License: Creative Commons Attribution 4.0 International (CC BY 4.0)\par}
+
+\vspace*{\fill}
+\end{titlepage}
+
+% Copyright Page (Page 3)
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushleft}
+\textbf{Deep Learning 101}\\
+Copyright \copyright~\the\year~Vu Hung Nguyen\\[0.5em]
+This work is licensed under the Creative Commons Attribution 4.0 International License.\\
+To view a copy of this license, visit \url{http://creativecommons.org/licenses/by/4.0/}\\[0.5em]
+First Edition: \DTMtoday
+\end{flushleft}
+\vspace*{\fill}
+\clearpage
+
+% Preface Page (Page 4)
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{flushleft}
+\textbf{Preface}\\[1em]
+
+Dear ML/AI learners,\\[0.5em]
+
+Welcome to \textit{Deep Learning 101}, a comprehensive guide designed to take you from the fundamentals to advanced concepts in deep learning. This book is crafted for students, researchers, and practitioners who want to build a solid foundation in one of the most transformative fields of our time.\\[0.5em]
+
+I started this book as study notes for myself, because I couldn't find any book that fit my background. As I delved deeper into the field, I realised that many existing resources were either too basic or too advanced, leaving a gap for learners with a technical foundation seeking comprehensive yet accessible coverage.\\[0.5em]
+
+This book is a ``compressed version'' of the deep learning books out there---you'll find the most important concepts and mathematical formulae presented in a structured, coherent manner. Rather than overwhelming you with every detail, I've distilled the essential knowledge that forms the foundation of modern deep learning.\\[0.5em]
+
+This book assumes you have a fair understanding of mathematics, algorithms, and programming. But don't worry---you'll learn along the way if you miss any of them. The early chapters provide mathematical foundations, and examples throughout the book will help reinforce concepts you may need to review.\\[0.5em]
+
+The target audience includes those who want to learn the basics of deep learning with a focus on mathematics. If you're interested in research or want to dive a little deeper into the maths and algorithms underlying neural networks, this book will guide you through both theory and practice.\\[0.5em]
+
+Whether you're just beginning your journey into machine learning or looking to deepen your understanding of neural networks, this book provides the mathematical foundations, practical insights, and hands-on knowledge you need to succeed.\\[0.5em]
+
+I hope this resource serves you well in your learning journey.\\[1em]
+
+Best regards,\\
+Vu Hung Nguyen\\[1em]
+
+\textbf{Contact Information:}\\
+GitHub: \url{https://github.com/vuhung16au}\\
+LinkedIn: \url{https://www.linkedin.com/in/nguyenvuhung/}\\
+Website: \url{https://vuhung16au.github.io/}
+\end{flushleft}
+\vspace*{\fill}
+\clearpage
+
+% --- Front Matter ---
+% Now start front matter after cover and title pages
+% Reset page numbering for front matter
+\setcounter{page}{1}
+\pagenumbering{roman}
+\frontmatter
+
+% Table of Contents
+\tableofcontents
+
+% Acknowledgements
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{chapters/acknowledgements}
+
+% Notation
+\chapter*{Notation}
+\addcontentsline{toc}{chapter}{Notation}
+\input{chapters/notation}
+
+% --- Main Matter ---
+\mainmatter
+
+% Chapter 1: Introduction
+\include{chapters/chap01}
+
+% ======================================================================
+% PART I: Basic Math and Machine Learning Foundation
+% ======================================================================
+\part{Basic Math and Machine Learning Foundation}
+
+% Chapter 2: Linear Algebra
+\include{chapters/chap02}
+
+% Chapter 3: Probability and Information Theory
+\include{chapters/chap03}
+
+% Chapter 4: Numerical Computation
+\include{chapters/chap04}
+
+% Chapter 5: Classical Machine Learning Algorithms
+\include{chapters/chap05}
+
+% ======================================================================
+% PART II: Practical Deep Networks
+% ======================================================================
+\part{Practical Deep Networks}
+
+% Chapter 6: Deep Feedforward Networks
+\include{chapters/chap06}
+
+% Chapter 7: Regularization for Deep Learning
+\include{chapters/chap07}
+
+% Chapter 8: Optimization for Training Deep Models
+\include{chapters/chap08}
+
+% Chapter 9: Convolutional Networks
+\include{chapters/chap09}
+
+% Chapter 10: Sequence Modeling: Recurrent and Recursive Nets
+\include{chapters/chap10}
+
+% Chapter 11: Practical Methodology
+\include{chapters/chap11}
+
+% Chapter 12: Applications
+\include{chapters/chap12}
+
+% ======================================================================
+% PART III: Deep Learning Research
+% ======================================================================
+\part{Deep Learning Research}
+
+% Chapter 13: Linear Factor Models
+\include{chapters/chap13}
+
+% Chapter 14: Autoencoders
+\include{chapters/chap14}
+
+% Chapter 15: Representation Learning
+\include{chapters/chap15}
+
+% Chapter 16: Structured Probabilistic Models for Deep Learning
+\include{chapters/chap16}
+
+% Chapter 17: Monte Carlo Methods
+\include{chapters/chap17}
+
+% Chapter 18: Confronting the Partition Function
+\include{chapters/chap18}
+
+% Chapter 19: Approximate Inference
+\include{chapters/chap19}
+
+% Chapter 20: Deep Generative Models
+\include{chapters/chap20}
+
+% --- Back Matter ---
+\backmatter
+
+% Glossary
+\printglossary[title={Glossary},toctitle={Glossary}]
+
+% Index
+\printindex
+
+% Bibliography
+\printbibliography[heading=bibintoc,title={Bibliography}]
+
+\end{document}

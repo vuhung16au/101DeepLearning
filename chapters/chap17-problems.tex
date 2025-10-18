@@ -1,0 +1,59 @@
+% Problems (Exercises) for Chapter 17
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy}
+
+\begin{problem}[Self-Attention Intuition]
+Explain why self-attention captures long-range dependencies.
+
+\textbf{Hint:} Direct pairwise interactions.
+\end{problem}
+
+\begin{problem}[Positional Encoding]
+Why do Transformers need positional encodings?
+
+\textbf{Hint:} Permutation invariance of self-attention.
+\end{problem}
+
+\begin{problem}[Multi-Head Attention]
+State the benefit of multiple attention heads.
+
+\textbf{Hint:} Different representation subspaces.
+\end{problem}
+
+\begin{problem}[Masked Attention]
+Explain the role of masking in causal attention.
+
+\textbf{Hint:} Prevent future information leakage.
+\end{problem}
+
+\subsection*{Medium}
+
+\begin{problem}[Computational Complexity]
+Derive the computational complexity of self-attention.
+
+\textbf{Hint:} $O(n^2 d)$ for sequence length $n$, dimension $d$.
+\end{problem}
+
+\begin{problem}[LayerNorm vs. BatchNorm]
+Compare LayerNorm and BatchNorm in Transformers.
+
+\textbf{Hint:} Independence from batch; sequence-level statistics.
+\end{problem}
+
+\subsection*{Hard}
+
+\begin{problem}[Sparse Attention]
+Design a sparse attention pattern and analyse complexity savings.
+
+\textbf{Hint:} Local windows; strided patterns; $O(n \log n)$ or $O(n\sqrt{n})$.
+\end{problem}
+
+\begin{problem}[Attention Visualisation]
+Propose methods to interpret attention weights and discuss limitations.
+
+\textbf{Hint:} Attention rollout; gradient-based; correlation vs. causation.
+\end{problem}
+

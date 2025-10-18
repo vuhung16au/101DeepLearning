@@ -1,0 +1,65 @@
+% Chapter 20, Section 4
+
+\section{Diffusion Models \difficultyInline{advanced}}
+\label{sec:diffusion-models}
+
+\subsection{Forward Process}
+
+Gradually add noise over $T$ steps:
+\begin{equation}
+q(\vect{x}_t|\vect{x}_{t-1}) = \mathcal{N}(\vect{x}_t; \sqrt{1-\beta_t} \vect{x}_{t-1}, \beta_t \mat{I})
+\end{equation}
+
+Eventually $\vect{x}_T \approx \mathcal{N}(\boldsymbol{0}, \mat{I})$.
+
+\subsection{Reverse Process}
+
+Learn to denoise (reverse diffusion):
+\begin{equation}
+p_{\theta}(\vect{x}_{t-1}|\vect{x}_t) = \mathcal{N}(\vect{x}_{t-1}; \boldsymbol{\mu}_{\theta}(\vect{x}_t, t), \boldsymbol{\Sigma}_{\theta}(\vect{x}_t, t))
+\end{equation}
+
+\subsection{Training}
+
+Predict noise $\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$ at each step:
+\begin{equation}
+\mathcal{L} = \mathbb{E}_{t, \vect{x}_0, \boldsymbol{\epsilon}}\left[\|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)\|^2\right]
+\end{equation}
+
+\subsection{Sampling}
+
+Start from noise and iteratively denoise:
+\begin{equation}
+\vect{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\vect{x}_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)\right) + \sigma_t \vect{z}
+\end{equation}
+
+\subsection{Advantages}
+
+\begin{itemize}
+    \item High-quality generation (DALL-E 2, Stable Diffusion, Midjourney)
+    \item Stable training
+    \item Strong theoretical foundations
+    \item Can condition on text, images, etc.
+\end{itemize}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (diffusion)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={Step $t$}, ylabel={Noise level}, grid=both]
+%       \addplot[bookpurple,very thick] coordinates{(0,0.0) (10,0.2) (20,0.4) (30,0.6) (40,0.8) (50,1.0)};
+%       \addplot[bookred,very thick,dashed] coordinates{(50,1.0) (40,0.8) (30,0.6) (20,0.4) (10,0.2) (0,0.0)};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Forward (solid) and reverse (dashed) diffusion noise schedules (illustrative).}
+%   \label{fig:diffusion-schedule}
+% \end{figure}
+
+% \subsection{Notes and references}
+
+% See \textcite{Ho2020,Prince2023} for DDPM training and sampling.
+

@@ -1,0 +1,61 @@
+% Chapter 15, Section 1
+
+\section{What Makes a Good Representation? \difficultyInline{intermediate}}
+\label{sec:good-representations}
+
+\subsection{Desirable Properties}
+
+\textbf{Disentanglement:} Different factors of variation are separated
+\begin{itemize}
+    \item Changes in one dimension affect one factor
+    \item Easier interpretation and manipulation
+\end{itemize}
+
+\textbf{Invariance:} Representation unchanged under irrelevant transformations
+\begin{itemize}
+    \item Translation, rotation invariance for objects
+    \item Speaker invariance for speech content
+\end{itemize}
+
+\textbf{Smoothness:} Similar inputs have similar representations
+\begin{itemize}
+    \item Enables generalization
+    \item Supports interpolation
+\end{itemize}
+
+\textbf{Sparsity:} Few features active for each input
+\begin{itemize}
+    \item Computational efficiency
+    \item Interpretability
+\end{itemize}
+
+\subsection{Manifold Hypothesis}
+
+Natural data lies on low-dimensional manifolds embedded in high-dimensional space.
+
+Deep learning learns to:
+\begin{itemize}
+    \item Discover the manifold structure
+    \item Map data to meaningful coordinates on manifold
+\end{itemize}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (representations)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={$x_1$}, ylabel={$x_2$}, grid=both]
+%       \addplot[bookpurple,very thick,domain=-2:2] {sin(deg(x))/1.5};
+%       \addplot[bookred,very thick,domain=-2:2] {0.0};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Complex data manifold (purple) and a learned linearized coordinate (red) locally.}
+%   \label{fig:manifold}
+% \end{figure}
+
+\subsection{Notes and references}
+
+Desirable properties are discussed in modern DL texts; disentanglement and invariance connect to inductive biases and data augmentation \textcite{GoodfellowEtAl2016,Prince2023}.

@@ -1,0 +1,59 @@
+% Problems (Exercises) for Chapter 15
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy}
+
+\begin{problem}[Encoder-Decoder Symmetry]
+Why share architecture between $q(z|x)$ and $p(x|z)$?
+
+\textbf{Hint:} Computation; conceptual symmetry.
+\end{problem}
+
+\begin{problem}[KL in ELBO]
+State the role of $D_{KL}(q||p)$ in VAE training.
+
+\textbf{Hint:} Regularisation; posterior matching.
+\end{problem}
+
+\begin{problem}[Reparameterisation Trick]
+Explain why reparameterisation enables gradient flow.
+
+\textbf{Hint:} Sampling vs. deterministic path.
+\end{problem}
+
+\begin{problem}[Prior Choice]
+Justify Gaussian prior for VAE latents.
+
+\textbf{Hint:} Tractability; simplicity; universality.
+\end{problem}
+
+\subsection*{Medium}
+
+\begin{problem}[ELBO Derivation]
+Derive the ELBO from Jensen's inequality.
+
+\textbf{Hint:} $\log \mathbb{E}[X] \geq \mathbb{E}[\log X]$.
+\end{problem}
+
+\begin{problem}[Beta-VAE]
+Explain how $\beta$-VAE encourages disentanglement.
+
+\textbf{Hint:} Weighted KL penalty; independence.
+\end{problem}
+
+\subsection*{Hard}
+
+\begin{problem}[Posterior Collapse]
+Analyse conditions causing posterior collapse and propose mitigation.
+
+\textbf{Hint:} Strong decoder; KL annealing; free bits.
+\end{problem}
+
+\begin{problem}[Importance-Weighted ELBO]
+Derive the importance-weighted ELBO and show it tightens the bound.
+
+\textbf{Hint:} Multiple samples; log-mean-exp.
+\end{problem}
+

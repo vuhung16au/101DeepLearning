@@ -1,0 +1,65 @@
+% Chapter 12, Section 4
+
+\section{Healthcare and Medical Imaging \difficultyInline{beginner}}
+\label{sec:healthcare-applications}
+
+\subsection{Medical Image Analysis}
+
+\textbf{Disease detection:}
+\begin{itemize}
+    \item Cancer detection in mammograms, CT scans
+    \item Diabetic retinopathy from retinal images
+    \item Pneumonia detection from chest X-rays
+\end{itemize}
+
+\textbf{Segmentation:}
+\begin{itemize}
+    \item Tumor boundary delineation
+    \item Organ segmentation for surgical planning
+\end{itemize}
+
+\subsection{Drug Discovery}
+
+\begin{itemize}
+    \item Predicting molecular properties
+    \item Protein structure prediction (AlphaFold)
+    \item Drug-target interaction prediction
+\end{itemize}
+
+\subsection{Clinical Decision Support}
+
+\begin{itemize}
+    \item Diagnosis assistance
+    \item Treatment recommendation
+    \item Risk prediction (readmission, mortality)
+\end{itemize}
+
+\subsection{Genomics}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (healthcare)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={False Positive Rate}, ylabel={True Positive Rate},
+%       xmin=0,xmax=1,ymin=0,ymax=1, grid=both]
+%       \addplot[very thick,bookpurple] coordinates{(0,0) (0.1,0.7) (0.2,0.85) (0.4,0.92) (1,1)};
+%       \addplot[bookpurple!40] coordinates{(0,0) (1,1)};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{ROC curve schematic for a medical classifier.}
+%   \label{fig:med-roc}
+% \end{figure}
+
+\subsection{Historical context and references}
+
+CNNs enabled breakthroughs in segmentation and classification, notably U-Net in biomedical imaging \textcite{Ronneberger2015}. Clinical deployment emphasizes calibration and monitoring \textcite{Prince2023}.
+\begin{itemize}
+    \item DNA sequence analysis
+    \item Variant calling
+    \item Gene expression prediction
+\end{itemize}
+

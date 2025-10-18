@@ -1,0 +1,113 @@
+% Chapter 7, Section 4
+
+\section{Dropout \difficultyInline{intermediate}}
+\label{sec:dropout}
+
+\textbf{Dropout} randomly deactivates neurons during training, preventing co-adaptation.
+
+\subsection{Intuition: Training a Robust Ensemble}
+
+Dropout is like asking different subsets of a team to work on the same task on different days. No single member can rely on a particular colleague always being present, so each learns to be broadly useful. This results in a robust team (model) that performs well even when some members (neurons) are inactive.
+
+\subsection{Training with Dropout}
+
+At each training step, for each layer:
+\begin{enumerate}
+    \item Sample binary mask $\vect{m}$ with $P(m_i = 1) = p$
+    \item Apply mask: $\vect{h} = \vect{m} \odot \vect{h}$
+\end{enumerate}
+
+Mathematically:
+\begin{equation}
+\vect{h}_{\text{dropout}} = \vect{m} \odot f(\mat{W}\vect{x} + \vect{b})
+\end{equation}
+
+where $m_i \sim \text{Bernoulli}(p)$.
+
+\subsection{Inference}
+
+At test time, scale outputs by dropout probability:
+\begin{equation}
+\vect{h}_{\text{test}} = p \cdot f(\mat{W}\vect{x} + \vect{b})
+\end{equation}
+
+Or equivalently, scale weights during training by $\frac{1}{p}$ (inverted dropout).
+
+In practice, modern frameworks implement \emph{inverted dropout}: during training, activations are scaled by $\tfrac{1}{p}$ after masking so that the expected activation matches test-time activations, and no scaling is needed at inference \cite{Srivastava2014,GoodfellowEtAl2016}. For convolutional layers, use the same $p$ per feature map to avoid distribution shift.
+
+\subsection{Interpretation}
+
+Dropout can be viewed as:
+\begin{itemize}
+    \item \textbf{Implicit ensemble:} Sampling masks trains an ensemble of $2^n$ subnetworks whose shared weights yield a form of model averaging \cite{Srivastava2014}.
+    \item \textbf{Noise injection:} Multiplicative Bernoulli noise on activations acts like data-dependent regularization analogous to adding Gaussian noise for linear models \cite{GoodfellowEtAl2016}.
+    \item \textbf{Approximate Bayesian inference:} With appropriate priors, dropout relates to variational inference; applying dropout at test time with multiple passes (MC dropout) estimates predictive uncertainty \cite{Gal2016MCDropout}.
+\end{itemize}
+
+\begin{example}
+\textbf{Example (uncertainty):} Run $T=20$ stochastic forward passes with dropout enabled at test time and average predictions to obtain mean and variance; high variance flags low-confidence inputs.
+\end{example}
+
+\subsection{Variants}
+
+\textbf{DropConnect:} Drop individual weights instead of activations, promoting sparsity at the parameter level.
+
+\textbf{Spatial Dropout:} Drop entire feature maps in CNNs to preserve spatial coherence and regularize channel reliance.
+
+\textbf{Variational Dropout:} Use the same dropout mask across time steps in RNNs to avoid injecting different noise per step that can harm temporal consistency.
+
+\textbf{MC Dropout:} Keep dropout active at inference and average predictions to quantify epistemic uncertainty \cite{Gal2016MCDropout}, useful in safety-critical applications.
+
+\textbf{Concrete/Alpha Dropout:} Continuous relaxations or distributions tailored for specific activations (e.g., SELU) to maintain self-normalizing properties.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+    % simple schematic: three subnetworks averaged
+    \node[draw, rectangle, fill=bookpurple!15] (s1) at (0,0) {Subnetwork 1};
+    \node[draw, rectangle, fill=bookpurple!15] (s2) at (3,0) {Subnetwork 2};
+    \node[draw, rectangle, fill=bookpurple!15] (s3) at (6,0) {Subnetwork 3};
+    \node[draw, circle, fill=bookpurple!20] (avg) at (3,-1.8) {Average};
+    \draw[->] (s1) -- (avg);
+    \draw[->] (s2) -- (avg);
+    \draw[->] (s3) -- (avg);
+\end{tikzpicture}
+\caption{Dropout as implicit model averaging over many subnetworks.}
+\label{fig:dropout-ensemble}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+    % Layer nodes
+    \foreach \i in {1,2,3}
+        \node[circle, draw, fill=bookpurple!15, minimum size=0.7cm] (x\i) at (0,-\i) {};
+    \foreach \i in {1,2,3,4}
+        \node[circle, draw, fill=bookpurple!25, minimum size=0.7cm] (h\i) at (2,-\i*0.8) {};
+    \foreach \i in {1,2}
+        \node[circle, draw, fill=bookred!15, minimum size=0.7cm] (y\i) at (4,-\i) {};
+
+    % Full connections (light color)
+    \foreach \i in {1,2,3}
+        \foreach \j in {1,2,3,4}
+            \draw[->,bookpurple!30] (x\i) -- (h\j);
+    \foreach \i in {1,2,3,4}
+        \foreach \j in {1,2}
+            \draw[->,bookpurple!30] (h\i) -- (y\j);
+
+    % Dropped neurons (crossed)
+    \draw[bookred, line width=1.2pt] (h2) ++(-0.25,-0.25) -- ++(0.5,0.5);
+    \draw[bookred, line width=1.2pt] (h2) ++(0.25,-0.25) -- ++(-0.5,0.5);
+    \draw[bookred, line width=1.2pt] (h4) ++(-0.25,-0.25) -- ++(0.5,0.5);
+    \draw[bookred, line width=1.2pt] (h4) ++(0.25,-0.25) -- ++(-0.5,0.5);
+
+    \node at (2,0.5) {\small Randomly dropped (training)};
+\end{tikzpicture}
+\caption{Dropout during training: randomly deactivating hidden units encourages redundancy and robustness.}
+\label{fig:dropout-diagram}
+\end{figure}
+
+% Index entries
+\index{dropout}
+\index{regularization!dropout}
+

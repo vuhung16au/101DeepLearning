@@ -1,0 +1,56 @@
+% Chapter 8, Section 2
+
+\section{Momentum-Based Methods \difficultyInline{intermediate}}
+\label{sec:momentum}
+
+\subsection{Intuition: Rolling a Ball Down a Valley}
+
+Plain SGD can wobble like a marble on a bumpy path. \textbf{Momentum} acts like mass: it carries velocity so you keep moving in consistently good directions and smooth out small bumps. \textbf{Nesterov acceleration} adds anticipation by peeking where the momentum will take you before correcting, often yielding crisper steps in curved valleys.\index{momentum}\index{Nesterov}
+
+Historical note: Momentum has deep roots in convex optimization and was popularized in early neural network training; Nesterov's variant provided stronger theoretical guarantees in convex settings and inspired practical variants in deep learning \cite{Polyak1964,Nesterov1983,GoodfellowEtAl2016,Bishop2006}.
+
+\subsection{Momentum}
+
+Accumulates gradients over time:
+\begin{align}
+\vect{v}_t &= \beta \vect{v}_{t-1} - \alpha \nabla_{\vect{\theta}} L(\vect{\theta}_t) \\
+\vect{\theta}_{t+1} &= \vect{\theta}_t + \vect{v}_t
+\end{align}
+
+where $\beta \in [0, 1)$ is the momentum coefficient (typically 0.9).
+
+Benefits:\index{optimization!momentum}
+\begin{itemize}
+    \item Accelerates convergence in relevant directions
+    \item Dampens oscillations
+    \item Helps escape local minima and saddle points
+\end{itemize}
+
+Interpretation: Momentum is equivalent to an exponentially weighted moving average of past gradients, implementing a low-pass filter that suppresses high-frequency noise. In anisotropic valleys, it allows larger effective step along the shallow curvature direction while reducing zig-zag across the sharp direction \cite{Polyak1964,WebOptimizationDLBook,D2LChapterOptimization}.
+
+Choice of hyperparameters:
+\begin{itemize}
+    \item \(\beta\in[0.8,0.99]\); larger values increase smoothing and memory.
+    \item Couple with a tuned \(\alpha\); too-large \(\alpha\) can still diverge.
+\end{itemize}
+
+Example (ravine function): For \(L(\theta_1,\theta_2)=100\theta_1^2+\theta_2^2\), momentum reduces oscillations in the steep \(\theta_1\) direction and speeds travel along the gentle \(\theta_2\) direction.
+
+\subsection{Nesterov Accelerated Gradient (NAG)}\index{optimization!Nesterov}
+
+"Look-ahead" version of momentum:
+\begin{align}
+\vect{v}_t &= \beta \vect{v}_{t-1} - \alpha \nabla_{\vect{\theta}} L(\vect{\theta}_t + \beta \vect{v}_{t-1}) \\
+\vect{\theta}_{t+1} &= \vect{\theta}_t + \vect{v}_t
+\end{align}
+
+Evaluates gradient at anticipated future position, often providing better updates.
+
+Rationale: By computing the gradient at the look-ahead point \(\theta_t+\beta v_{t-1}\), NAG corrects the course earlier, which reduces overshoot in curved valleys and can improve convergence rates in convex settings \cite{Nesterov1983,WebOptimizationDLBook,GoodfellowEtAl2016}.
+
+Practice notes:
+\begin{itemize}
+    \item Common defaults: \(\beta=0.9\), initial \(\alpha\in[10^{-3},10^{-1}]\) depending on scale.
+    \item Widely used with SGD in large-scale vision models \cite{He2016}.
+\end{itemize}
+

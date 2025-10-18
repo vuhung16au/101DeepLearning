@@ -1,0 +1,99 @@
+% Chapter 4, Section 4: Numerical Stability and Conditioning
+
+\section{Numerical Stability and Conditioning \difficultyInline{beginner}}
+\label{sec:numerical-stability}
+
+\subsection{Intuition: The Butterfly Effect in Computation}
+
+Imagine a house of cards. A tiny breeze can cause the entire structure to collapse. In numerical computation, we have a similar problem: small errors can grow into large ones.
+
+This is especially problematic in deep learning because:
+\begin{itemize}
+    \item \textbf{Deep networks} have many layers - errors compound
+    \item \textbf{Matrix operations} can amplify small errors
+    \item \textbf{Gradient computation} requires precise derivatives
+\end{itemize}
+
+The \textbf{condition number} tells us how "sensitive" a computation is to small changes. A high condition number means small input errors become large output errors.
+
+\subsection{Condition Number}
+
+The \textbf{condition number} of matrix $\mat{A}$ is:
+
+\begin{equation}
+\kappa(\mat{A}) = \|\mat{A}\| \|\mat{A}^{-1}\|
+\end{equation}
+
+For symmetric matrices with eigenvalues $\lambda_i$:
+
+\begin{equation}
+\kappa(\mat{A}) = \frac{\max_i |\lambda_i|}{\min_i |\lambda_i|}
+\end{equation}
+
+High condition numbers indicate numerical instability: small changes in input lead to large changes in output.
+
+\subsubsection{Example: Well-Conditioned vs Ill-Conditioned Matrices}
+
+Consider two matrices:
+\begin{align}
+\mat{A}_1 &= \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} \quad \text{(well-conditioned)} \\
+\mat{A}_2 &= \begin{bmatrix} 1 & 0.99 \\ 0.99 & 1 \end{bmatrix} \quad \text{(ill-conditioned)}
+\end{align}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Input Error},
+    ylabel={Output Error},
+    width=10cm,
+    height=6cm,
+    legend pos=north west
+]
+\addplot[bookpurple, thick] {x};
+\addplot[bookred, thick] {10*x};
+\legend{Well-conditioned, Ill-conditioned}
+\end{axis}
+\end{tikzpicture}
+\caption{Error amplification for well-conditioned vs ill-conditioned matrices}
+\label{fig:condition-number}
+\end{figure}
+
+\subsection{Ill-Conditioned Matrices}
+
+In deep learning, ill-conditioned Hessians can make optimization difficult. This motivates techniques like:
+\begin{itemize}
+    \item Batch normalization
+    \item Careful weight initialization
+    \item Adaptive learning rate methods
+    \item Preconditioning
+\end{itemize}
+
+\subsection{Gradient Checking}
+
+To verify gradient computations, we use \textbf{finite differences}:
+
+\begin{equation}
+\frac{\partial f}{\partial \theta_i} \approx \frac{f(\theta_i + \epsilon) - f(\theta_i - \epsilon)}{2\epsilon}
+\end{equation}
+
+This is computationally expensive but useful for debugging.
+
+\subsection{Numerical Precision Trade-offs}
+
+\textbf{Mixed precision training:}
+\begin{itemize}
+    \item Store weights in FP32
+    \item Compute activations/gradients in FP16
+    \item Use loss scaling to prevent underflow
+    \item 2-3x speedup with minimal accuracy loss
+\end{itemize}
+
+\subsection{Practical Tips}
+
+\begin{itemize}
+    \item Monitor gradient norms during training
+    \item Use gradient clipping for RNNs
+    \item Prefer numerically stable implementations (log-space computations)
+    \item Be aware of precision limits in very deep networks
+\end{itemize}

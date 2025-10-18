@@ -1,0 +1,48 @@
+% Chapter 20, Section 1
+
+\section{Variational Autoencoders (VAEs) \difficultyInline{advanced}}
+\label{sec:vaes}
+
+(See also Chapter 14 for detailed VAE coverage.)
+
+\subsection{Recap}
+
+VAE learns latent representation $\vect{z}$ and decoder $p_{\theta}(\vect{x}|\vect{z})$:
+\begin{equation}
+\max_{\theta, \phi} \mathbb{E}_{q_{\phi}(\vect{z}|\vect{x})}[\log p_{\theta}(\vect{x}|\vect{z})] - D_{KL}(q_{\phi}(\vect{z}|\vect{x}) \| p(\vect{z}))
+\end{equation}
+
+\subsection{Conditional VAEs}
+
+Generate conditioned on class or attributes:
+\begin{equation}
+\max \mathbb{E}_{q(\vect{z}|\vect{x}, y)}[\log p(\vect{x}|\vect{z}, y)] - D_{KL}(q(\vect{z}|\vect{x}, y) \| p(\vect{z}))
+\end{equation}
+
+\subsection{Disentangled Representations}
+
+\textbf{$\beta$-VAE:} Increase KL weight for disentanglement
+\begin{equation}
+\mathcal{L} = \mathbb{E}_{q}[\log p(\vect{x}|\vect{z})] - \beta D_{KL}(q(\vect{z}|\vect{x}) \| p(\vect{z}))
+\end{equation}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (VAE recap)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={$z_1$}, ylabel={$z_2$}, grid=both]
+%       \addplot+[only marks,mark=*,mark size=0.9pt,bookpurple!70] coordinates{(-2,-2) (-1,0) (0,0) (1,1) (2,2)};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Latent samples from a learned VAE prior/posterior (illustrative).}
+%   \label{fig:vae20-latent}
+% \end{figure}
+
+% \subsection{Notes and references}
+
+% See \textcite{Kingma2013,GoodfellowEtAl2016,Prince2023} for VAE objectives, conditional VAEs, and disentanglement.
+

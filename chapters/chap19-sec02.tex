@@ -1,0 +1,50 @@
+% Chapter 19, Section 2
+
+\section{Mean Field Approximation \difficultyInline{advanced}}
+\label{sec:mean-field}
+
+\subsection{Fully Factorized Approximation}
+
+Assume all variables independent:
+\begin{equation}
+q(\vect{z}) = \prod_{i=1}^{n} q_i(z_i)
+\end{equation}
+
+\subsection{Update Equations}
+
+For each variable:
+\begin{equation}
+\log q_j^*(z_j) = \mathbb{E}_{i \neq j}[\log p(\vect{z}, \vect{x})] + \text{const}
+\end{equation}
+
+Iterate until convergence.
+
+\subsection{Properties}
+
+\begin{itemize}
+    \item Underestimates variance (overconfident)
+    \item Computationally efficient
+    \item Often good approximation in practice
+\end{itemize}
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (mean field)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={$z$}, ylabel={Density}, grid=both]
+%       \addplot[bookpurple,very thick,domain=-3:3,samples=100]{exp(-0.5*(x^2))};
+%       \addplot[bookred,very thick,dashed,domain=-3:3,samples=100]{exp(-0.5*((x/0.7)^2))};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Mean field (dashed) often underestimates posterior variance (illustrative).}
+%   \label{fig:mf-variance}
+% \end{figure}
+
+% \subsection{Notes and references}
+
+% For mean-field derivations and limitations, see \textcite{Bishop2006,GoodfellowEtAl2016,Prince2023}.
+

@@ -1,0 +1,36 @@
+% Chapter 18, Section 4
+
+\section{Score Matching \difficultyInline{advanced}}
+\label{sec:score-matching}
+
+Match gradients of log-density (score function):
+\begin{equation}
+\psi(\vect{x}) = \nabla_{\vect{x}} \log p(\vect{x})
+\end{equation}
+
+Objective:
+\begin{equation}
+\mathcal{L} = \frac{1}{2} \mathbb{E}_{p_{\text{data}}}[\|\psi_{\theta}(\vect{x}) - \nabla_{\vect{x}} \log p_{\text{data}}(\vect{x})\|^2]
+\end{equation}
+
+Avoids partition function since it cancels in gradient.
+
+% \subsection{Visual aids}
+% \addcontentsline{toc}{subsubsection}{Visual aids (score matching)}
+
+% \begin{figure}[h]
+%   \centering
+%   \begin{tikzpicture}
+%     \begin{axis}[
+%       width=0.48\textwidth,height=0.36\textwidth,
+%       xlabel={$x$}, ylabel={Score $\nabla_x \log p(x)$}, grid=both]
+%       \addplot[bookpurple,very thick,domain=-2:2,samples=100]{-x};
+%     \end{axis}
+%   \end{tikzpicture}
+%   \caption{Score function for a standard normal $p(x) \propto e^{-x^2/2}$ is $-x$ (illustrative).}
+%   \label{fig:score-normal}
+% \end{figure}
+
+% \subsection{Notes and references}
+
+% See \textcite{GoodfellowEtAl2016,Prince2023} for score matching and related denoising score matching.

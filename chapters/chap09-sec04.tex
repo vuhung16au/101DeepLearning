@@ -1,0 +1,51 @@
+% Chapter 9, Section 4
+
+\section{Applications of CNNs \difficultyInline{intermediate}}
+\label{sec:cnn-applications}
+
+\subsection*{Intuition}
+Backbones of stacked convolutions extract spatially local features that become increasingly abstract with depth. Task-specific heads (classification, detection, segmentation) transform backbone features into outputs appropriate to the problem \cite{GoodfellowEtAl2016,Prince2023}.
+\subsection{Image Classification}
+
+\textbf{Task:} assign a label to the entire image.
+
+\textbf{Backbone + head:}
+\begin{itemize}
+    \item Convolutional backbone extracts hierarchical features.
+    \item Downsampling via pooling or strided convolutions.
+    \item Global average pooling and a small fully connected (or $1\times1$ conv) layer with softmax.
+\end{itemize}
+
+\textbf{Examples and datasets:} CIFAR-10/100, ImageNet (ILSVRC). Transfer learning from ImageNet pretraining commonly improves downstream tasks.
+
+\subsection{Object Detection}
+
+\textbf{Task:} localize and classify objects with bounding boxes.
+
+\textbf{Region-based (two-stage):}
+\begin{itemize}
+    \item R-CNN: region proposals + CNN features (slow).
+    \item Fast/Faster R-CNN: integrate feature extraction; Faster learns proposals (RPN).
+    \item Mask R-CNN: extends with an instance segmentation branch.
+\end{itemize}
+
+\textbf{Single-shot (one-stage):}
+\begin{itemize}
+    \item YOLO: dense predictions at multiple scales with real-time speed.
+    \item SSD: default boxes across feature maps; efficient multi-scale detection.
+\end{itemize}
+
+\textbf{Heads and losses:} classification (cross-entropy/focal loss), box regression (smooth-$\ell_1$ or IoU losses), non-maximum suppression (NMS) at inference.
+
+\subsection{Semantic Segmentation}
+
+\textbf{Task:} assign a class label to each pixel.
+
+\textbf{Architectures:}
+\begin{itemize}
+    \item FCN: replace dense layers with $1\times1$ convs and upsample (deconvolution) to input resolution.
+    \item U-Net: encoder-decoder with skip connections for precise localization; widely used in medical imaging \cite{Ronneberger2015}.
+    \item Atrous/dilated convolutions: enlarge receptive field without losing resolution.
+\end{itemize}
+
+\textbf{Losses and metrics:} pixel-wise cross-entropy, Dice/IoU; mIoU for evaluation.

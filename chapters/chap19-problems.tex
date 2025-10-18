@@ -1,0 +1,59 @@
+% Problems (Exercises) for Chapter 19
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy}
+
+\begin{problem}[Why Approximate?]
+Explain why exact inference is intractable in many models.
+
+\textbf{Hint:} Partition function; high-dimensional integration.
+\end{problem}
+
+\begin{problem}[ELBO Connection]
+Relate ELBO to KL divergence between $q$ and $p$.
+
+\textbf{Hint:} $\log p(x) = \text{ELBO} + D_{KL}(q||p)$.
+\end{problem}
+
+\begin{problem}[Mean-Field Assumption]
+State the mean-field independence assumption.
+
+\textbf{Hint:} Factored variational distribution.
+\end{problem}
+
+\begin{problem}[MCMC vs. VI]
+Compare MCMC and variational inference trade-offs.
+
+\textbf{Hint:} Asymptotic exactness vs. computational speed.
+\end{problem}
+
+\subsection*{Medium}
+
+\begin{problem}[Coordinate Ascent VI]
+Derive the coordinate ascent update for a simple model.
+
+\textbf{Hint:} Fix all but one factor; optimise w.r.t. remaining factor.
+\end{problem}
+
+\begin{problem}[Importance Sampling]
+Explain how importance sampling estimates expectations.
+
+\textbf{Hint:} Reweight samples from proposal distribution.
+\end{problem}
+
+\subsection*{Hard}
+
+\begin{problem}[Amortised Inference]
+Analyse the trade-offs of amortised inference in VAEs.
+
+\textbf{Hint:} Amortisation gap; scalability.
+\end{problem}
+
+\begin{problem}[Reparameterisation Gradients]
+Derive the reparameterisation gradient for a Gaussian variational distribution.
+
+\textbf{Hint:} $z = \mu + \sigma \epsilon$ where $\epsilon \sim \mathcal{N}(0,1)$.
+\end{problem}
+

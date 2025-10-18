@@ -1,0 +1,99 @@
+% Chapter 5: Classical Machine Learning Algorithms
+
+\chapter{Classical Machine Learning Algorithms}
+\label{chap:classical-ml}
+
+This chapter reviews traditional machine learning methods that provide context and motivation for deep learning approaches. Understanding these classical algorithms helps appreciate the advantages and innovations of deep learning.
+
+\section*{Learning Objectives}
+\addcontentsline{toc}{section}{Learning Objectives}
+
+After studying this chapter, you will be able to:
+
+\begin{enumerate}
+    \item \textbf{Understand the mathematical foundations} of classical machine learning algorithms including linear regression, logistic regression, and support vector machines
+    \item \textbf{Compare and contrast} different approaches to classification and regression problems
+    \item \textbf{Implement and optimize} classical algorithms using both closed-form solutions and iterative methods
+    \item \textbf{Apply ensemble methods} like random forests and gradient boosting to improve model performance
+    \item \textbf{Evaluate the trade-offs} between classical methods and deep learning approaches
+    \item \textbf{Choose appropriate algorithms} based on dataset characteristics, computational constraints, and interpretability requirements
+    \item \textbf{Understand the limitations} of classical methods that motivated the development of deep learning
+    \item \textbf{Apply regularization techniques} to prevent overfitting in classical machine learning models
+\end{enumerate}
+
+ This chapter assumes familiarity with linear algebra, probability theory, and basic optimization concepts from previous chapters.
+
+\input{chapters/chap05-sec01}
+\input{chapters/chap05-sec02}
+\input{chapters/chap05-sec03}
+\input{chapters/chap05-sec04}
+\input{chapters/chap05-sec05}
+\input{chapters/chap05-sec06}
+
+% Chapter summary and problems
+\input{chapters/chap05-key-takeaways}
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy Problems}
+
+\begin{problem}[Linear Regression Basics]
+\label{prob:linear-regression-basics}
+Given the dataset $\{(1, 2), (2, 4), (3, 6), (4, 8)\}$, find the linear regression model $\hat{y} = wx + b$ that minimises the mean squared error.
+
+\textbf{Hint:} Use the normal equation $\vect{w}^* = (\mat{X}^\top \mat{X})^{-1} \mat{X}^\top \vect{y}$ where $\mat{X}$ includes a column of ones for the bias term.
+\end{problem}
+
+\begin{problem}[Logistic Regression Decision Boundary]
+\label{prob:logistic-decision-boundary}
+For a logistic regression model with weights $\vect{w} = [2, -1]$ and bias $b = 0$, find the decision boundary equation and classify the point $(1, 1)$.
+
+\textbf{Hint:} The decision boundary occurs where $P(y=1|\vect{x}) = 0.5$, which means $\vect{w}^\top \vect{x} + b = 0$.
+\end{problem}
+
+\begin{problem}[Decision Tree Splitting]
+\label{prob:decision-tree-splitting}
+Given a node with 10 examples: 6 belong to class A and 4 to class B, calculate the Gini impurity and entropy.
+
+\textbf{Hint:} Gini impurity = $1 - \sum_{k} p_k^2$ and entropy = $-\sum_{k} p_k \log p_k$ where $p_k$ is the proportion of class $k$.
+\end{problem}
+
+\begin{problem}[Regularisation Effect]
+\label{prob:regularization-effect}
+Explain why L1 regularisation (Lasso) can drive some weights to exactly zero, while L2 regularisation (Ridge) cannot.
+
+\textbf{Hint:} Consider the shape of the L1 and L2 penalty functions and their derivatives at zero.
+\end{problem}
+
+\subsection*{Medium Problems}
+
+\begin{problem}[Ridge Regression Derivation]
+\label{prob:ridge-derivation}
+Derive the closed-form solution for ridge regression: $\vect{w}^* = (\mat{X}^\top \mat{X} + \lambda \mat{I})^{-1} \mat{X}^\top \vect{y}$.
+
+\textbf{Hint:} Start with the ridge regression objective function $L(\vect{w}) = \|\mat{X}\vect{w} - \vect{y}\|^2 + \lambda \|\vect{w}\|^2$ and take the gradient with respect to $\vect{w}$.
+\end{problem}
+
+\begin{problem}[Random Forest Bias-Variance]
+\label{prob:random-forest-bias-variance}
+Explain how random forests reduce variance compared to a single decision tree. What happens to bias?
+
+\textbf{Hint:} Consider how averaging multiple models affects the bias and variance of the ensemble.
+\end{problem}
+
+\subsection*{Hard Problems}
+
+\begin{problem}[SVM Kernel Trick]
+\label{prob:svm-kernel-trick}
+Prove that the polynomial kernel $k(\vect{x}, \vect{x}') = (\vect{x}^\top \vect{x}' + c)^d$ is a valid kernel function by showing it corresponds to an inner product in some feature space.
+
+\textbf{Hint:} Expand the polynomial and show it can be written as $\phi(\vect{x})^\top \phi(\vect{x}')$ for some feature map $\phi$.
+\end{problem}
+
+\begin{problem}[Ensemble Methods Theory]
+\label{prob:ensemble-theory}
+Prove that for an ensemble of $B$ independent models with error rate $p < 0.5$, the ensemble error rate approaches 0 as $B \to \infty$.
+
+\textbf{Hint:} Use the binomial distribution and the fact that the ensemble makes an error only when more than half of the models are wrong.
+\end{problem}

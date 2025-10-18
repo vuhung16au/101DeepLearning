@@ -1,0 +1,60 @@
+% Problems (Exercises) for Chapter 13
+
+\section*{Problems}
+\addcontentsline{toc}{section}{Problems}
+
+\subsection*{Easy}
+
+\begin{problem}[PPCA vs PCA]
+Contrast PCA and probabilistic PCA in assumptions and outputs.
+
+\textbf{Hint:} Deterministic vs. probabilistic view; noise model; likelihood.
+\end{problem}
+
+\begin{problem}[Dimensionality Choice]
+List two heuristics to select latent dimensionality.
+
+\textbf{Hint:} Explained variance, information criteria.
+\end{problem}
+
+\begin{problem}[Gaussian Conditionals]
+Recall the conditional of a joint Gaussian and its role in E-steps.
+
+\textbf{Hint:} Use block-partitioned mean and covariance formulas.
+\end{problem}
+
+\begin{problem}[Rotation Ambiguity]
+Explain why factor loadings are identifiable only up to rotation.
+
+\textbf{Hint:} Orthogonal transforms preserve latent covariance.
+\end{problem}
+
+\subsection*{Medium}
+
+\begin{problem}[PPCA Likelihood]
+Derive the log-likelihood of PPCA and the M-step for $\sigma^2$.
+
+\textbf{Hint:} Marginalise latents; differentiate w.r.t. variance.
+\end{problem}
+
+\begin{problem}[EM for FA]
+Write the E and M steps for Factor Analysis with diagonal noise.
+
+\textbf{Hint:} Use expected sufficient statistics of latents.
+\end{problem}
+
+\subsection*{Hard}
+
+\begin{problem}[Equivalence of PPCA Solution]
+Show that the MLE loading matrix spans the top-$k$ eigenvectors of the sample covariance.
+
+\textbf{Hint:} Use spectral decomposition of covariance.
+\end{problem}
+
+\begin{problem}[Nonlinear Extension]
+Sketch how to generalise linear factor models to VAEs.
+
+\textbf{Hint:} Replace linear-Gaussian with neural encoder/decoder.
+\end{problem}
+
+
