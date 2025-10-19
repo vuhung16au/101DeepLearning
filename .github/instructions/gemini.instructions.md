@@ -83,14 +83,25 @@ The margins are configured using the geometry package in `main.tex`:
 \usepackage{amsmath,amssymb}   % Mathematics
 \usepackage{hyperref}          % Cross-references
 \usepackage{xcolor}            % Color support for difficulty levels
+\usepackage{algorithm}         % Algorithm environment
+\usepackage{algpseudocode}     % Pseudocode formatting
 ```
+
+### Algorithm Environments
+The book uses the `algorithm` and `algpseudocode` packages for all algorithms:
+- **Outer container**: Use `\begin{algorithm}...\end{algorithm}` with `\caption{}` and `\label{}`
+- **Inner pseudocode**: Use `\begin{algorithmic}...\end{algorithmic}`
+- **Preconditions/Postconditions**: Use `\Require` and `\Ensure`
+- **Control structures**: Use `\State`, `\If`, `\ElsIf`, `\Else`, `\EndIf`, `\While`, `\EndWhile`, `\For`, `\EndFor`, `\Return`
+- **Comments**: Use `\Comment{text}` for inline comments
+- **Numbering**: Algorithms are automatically numbered and can be cross-referenced
 
 ### Theorem-Like Environments
 The book uses LaTeX's `\newtheorem` command to define numbered environments:
 - All theorem-like environments share the same counter per chapter
 - Definition: `\newtheorem{problem}[theorem]{Problem}`
 - Numbering format: "Environment X.Y" (X = chapter, Y = sequential number)
-- Environments include: theorem, lemma, proposition, corollary, definition, example, problem, remark, algorithm
+- Environments include: theorem, lemma, proposition, corollary, definition, example, problem, remark
 
 ### Build Dependencies
 - `pdflatex` - Primary LaTeX compiler
@@ -334,6 +345,35 @@ Most challenging problem statement.
 % Note: Problems are automatically numbered as Problem X.1, X.2, X.3, etc.
 % where X is the chapter number. The counter is shared with theorems,
 % definitions, and examples within the chapter.
+```
+
+### Algorithm Pattern
+```latex
+% Algorithm example using algpseudocode
+\begin{algorithm}
+\caption{Algorithm Name}
+\label{alg:algorithm-name}
+\begin{algorithmic}
+\Require $n \geq 0$ (description of input parameter)
+\Ensure $y = x^n$ (description of output)
+\State $y \gets 1$
+\State $X \gets x$
+\State $N \gets n$
+\While{$N \neq 0$}
+\If{$N$ is even}
+    \State $X \gets X \times X$
+    \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+    \State $y \gets y \times X$
+    \State $N \gets N - 1$
+\EndIf
+\EndWhile
+\State \Return $y$
+\end{algorithmic}
+\end{algorithm}
+
+% Index entries for algorithms
+\index{algorithms!power computation}
 ```
 
 ## Troubleshooting Guide
