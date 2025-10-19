@@ -60,6 +60,9 @@ For input with $C_{\text{in}}$ channels and $C_{\text{out}}$ output channels:
 S_{c_{\text{out}}}(i,j) = \sum_{c_{\text{in}}=1}^{C_{\text{in}}} (I_{c_{\text{in}}} * K_{c_{\text{out}}, c_{\text{in}}})(i,j) + b_{c_{\text{out}}}
 \end{equation}
 
+\paragraph{Understanding Multi-Channel Convolution and S(i,j)}
+Multi-channel convolution is the fundamental operation that enables CNNs to process complex inputs like RGB images (3 channels) and produce rich feature representations. The notation $S_{c_{\text{out}}}(i,j)$ represents the output feature map value at spatial position $(i,j)$ for output channel $c_{\text{out}}$. This operation allows the network to learn both spatial patterns (through kernel sliding) and cross-channel interactions (by mixing information from different input channels). Each output channel $S_{c_{\text{out}}}(i,j)$ captures how strongly a particular learned pattern is detected at location $(i,j)$, where higher values indicate stronger pattern matches. This enables the network to detect complex features that span across multiple input channels while maintaining spatial locality and translation equivariance.
+
 \subsection{Hyperparameters}
 
 \textbf{Kernel size:} Typically $3 \times 3$ or $5 \times 5$ (stacked $3\times3$ often preferred over a single $5\times5$ as in VGG \cite{GoodfellowEtAl2016})
