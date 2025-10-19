@@ -95,6 +95,12 @@ The margins are configured using the geometry package in `main.tex`:
    - All theorem-like environments share the same counter per chapter
    - Numbering format: "Environment X.Y" where X is chapter number, Y is sequential
    - **Problems have their own separate numbering system**
+5. **Algorithms**: Use `algorithm` and `algpseudocode` packages for all algorithms
+   - Use `\begin{algorithm}...\end{algorithm}` for the outer container
+   - Use `\begin{algorithmic}...\end{algorithmic}` for the pseudocode content
+   - Use `\Require` and `\Ensure` for preconditions and postconditions
+   - Use `\State`, `\If`, `\While`, `\For` and other algpseudocode commands for control structures
+   - Algorithms are automatically numbered and can be cross-referenced with `\label{}` and `\ref{}`
 
 ### Content Structure
 ```latex
@@ -119,6 +125,31 @@ The margins are configured using the geometry package in `main.tex`:
 - Use hierarchical structure: `\index{main!subcategory}`
 - Include both technical terms and conceptual topics
 - Add entries throughout content, not just at section ends
+
+### Algorithm Structure
+```latex
+\begin{algorithm}
+\caption{Algorithm Name}
+\label{alg:algorithm-name}
+\begin{algorithmic}
+\Require $n \geq 0$ (description of input parameter)
+\Ensure $y = x^n$ (description of output)
+\State $y \gets 1$
+\State $X \gets x$
+\State $N \gets n$
+\While{$N \neq 0$}
+\If{$N$ is even}
+    \State $X \gets X \times X$
+    \State $N \gets \frac{N}{2}$  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+    \State $y \gets y \times X$
+    \State $N \gets N - 1$
+\EndIf
+\EndWhile
+\State \Return $y$
+\end{algorithmic}
+\end{algorithm}
+```
 
 ## File Organization
 

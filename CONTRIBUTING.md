@@ -52,6 +52,33 @@ The `\difficulty{}` command automatically adds an emoji indicator next to the se
 - Provide complete, runnable examples
 - Include expected outputs and explanations
 
+### Algorithms
+- Use the `algorithm` and `algpseudocode` packages for all algorithm descriptions
+- Structure algorithms with:
+  - `\begin{algorithm}...\end{algorithm}` for the container
+  - `\caption{}` for the algorithm name
+  - `\label{}` for cross-referencing
+  - `\begin{algorithmic}...\end{algorithmic}` for the pseudocode
+  - `\Require` and `\Ensure` for inputs and outputs
+  - `\State`, `\If`, `\While`, `\For`, `\Return` for control flow
+  - `\Comment{}` for inline comments
+- Example:
+  ```latex
+  \begin{algorithm}
+  \caption{Algorithm Name}
+  \label{alg:example}
+  \begin{algorithmic}
+  \Require Input parameters
+  \Ensure Output description
+  \State Initialization
+  \While{condition}
+      \State Do something
+  \EndWhile
+  \State \Return result
+  \end{algorithmic}
+  \end{algorithm}
+  ```
+
 ## Glossary and Index Guidelines
 
 ### Glossary Entries
