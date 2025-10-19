@@ -200,6 +200,9 @@ The margins are configured using the geometry package in `main.tex`:
   - Create a file named `chapters/chapXX-key-takeaways.tex`
   - Use `\begin{keytakeaways}...\end{keytakeaways}` with itemised key points
   - Include this file at the end of the chapter before exercises
+  - Key Takeaways should be concise and to the point, focusing on the most important concepts and insights
+  - Aim for 5 items per chapter as the standard, with flexibility to use 4-6 items
+
 - **Summaries should use boxed format when present**: Use the `summary` environment
   - Use `\begin{summary}...\end{summary}` for chapter or section summaries
   - Both environments use tcolorbox for enhanced visual presentation
