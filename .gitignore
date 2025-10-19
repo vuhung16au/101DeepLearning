@@ -222,6 +222,11 @@ miktex/
 *.xef
 *.xref
 
+
+# luatex
+
+luatex*
+
 # Optional: ignore general EPUB outputs except published ones
 *.epub
 !Deep-Learning101-PDF-Books/*.epub
