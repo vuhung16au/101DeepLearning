@@ -5,111 +5,171 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Linear Regression Basics]
 \label{prob:linear-regression-basics}
 Given the dataset $\{(1, 2), (2, 4), (3, 6), (4, 8)\}$, find the linear regression model $\hat{y} = wx + b$ that minimises the mean squared error.
-
-\textbf{Hint:} Use the normal equation $\vect{w}^* = (\mat{X}^\top \mat{X})^{-1} \mat{X}^\top \vect{y}$ where $\mat{X}$ includes a column of ones for the bias term.
 \end{problem}
+\begin{hintbox}
+Use the normal equation $\vect{w}^* = (\mat{X}^\top \mat{X})^{-1} \mat{X}^\top \vect{y}$ where $\mat{X}$ includes a column of ones for the bias term.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Logistic Regression Decision Boundary]
 \label{prob:logistic-decision-boundary}
 For a logistic regression model with weights $\vect{w} = [2, -1]$ and bias $b = 0$, find the decision boundary equation and classify the point $(1, 1)$.
-
-\textbf{Hint:} The decision boundary occurs where $P(y=1|\vect{x}) = 0.5$, which means $\vect{w}^\top \vect{x} + b = 0$.
 \end{problem}
+\begin{hintbox}
+The decision boundary occurs where $P(y=1|\vect{x}) = 0.5$, which means $\vect{w}^\top \vect{x} + b = 0$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Decision Tree Splitting]
 \label{prob:decision-tree-splitting}
 Given a node with 10 examples: 6 belong to class A and 4 to class B, calculate the Gini impurity and entropy.
-
-\textbf{Hint:} Gini impurity = $1 - \sum_{k} p_k^2$ and entropy = $-\sum_{k} p_k \log p_k$ where $p_k$ is the proportion of class $k$.
 \end{problem}
+\begin{hintbox}
+Gini impurity = $1 - \sum_{k} p_k^2$ and entropy = $-\sum_{k} p_k \log p_k$ where $p_k$ is the proportion of class $k$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Regularisation Effect]
 \label{prob:regularization-effect}
 Explain why L1 regularisation (Lasso) can drive some weights to exactly zero, while L2 regularisation (Ridge) cannot.
-
-\textbf{Hint:} Consider the shape of the L1 and L2 penalty functions and their derivatives at zero.
 \end{problem}
+\begin{hintbox}
+Consider the shape of the L1 and L2 penalty functions and their derivatives at zero.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Naive Bayes Assumption]
 \label{prob:naive-bayes}
 Explain the naive Bayes assumption and why it's called "naive". Give an example where this assumption might be violated.
-
-\textbf{Hint:} The assumption is that features are conditionally independent given the class label.
 \end{problem}
+\begin{hintbox}
+The assumption is that features are conditionally independent given the class label.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[K-Means Initialization]
 \label{prob:kmeans-init}
 Compare k-means clustering with random initialization versus k-means++ initialization. Why does k-means++ often perform better?
-
-\textbf{Hint:} k-means++ chooses initial centroids to be far apart, reducing the chance of poor local minima.
 \end{problem}
+\begin{hintbox}
+k-means++ chooses initial centroids to be far apart, reducing the chance of poor local minima.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Decision Tree Pruning]
 \label{prob:tree-pruning}
 Explain the difference between pre-pruning and post-pruning in decision trees. When would you use each approach?
-
-\textbf{Hint:} Pre-pruning stops growth early, while post-pruning grows the full tree then removes branches.
 \end{problem}
+\begin{hintbox}
+Pre-pruning stops growth early, while post-pruning grows the full tree then removes branches.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Cross-Validation Types]
 \label{prob:cross-validation}
 Compare k-fold cross-validation, leave-one-out cross-validation, and stratified cross-validation. When would you use each?
-
-\textbf{Hint:} Consider computational cost, variance of estimates, and class distribution preservation.
 \end{problem}
+\begin{hintbox}
+Consider computational cost, variance of estimates, and class distribution preservation.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Ridge Regression Derivation]
 \label{prob:ridge-derivation}
 Derive the closed-form solution for ridge regression: $\vect{w}^* = (\mat{X}^\top \mat{X} + \lambda \mat{I})^{-1} \mat{X}^\top \vect{y}$.
-
-\textbf{Hint:} Start with the ridge regression objective function $L(\vect{w}) = \|\mat{X}\vect{w} - \vect{y}\|^2 + \lambda \|\vect{w}\|^2$ and take the gradient with respect to $\vect{w}$.
 \end{problem}
+\begin{hintbox}
+Start with the ridge regression objective function $L(\vect{w}) = \|\mat{X}\vect{w} - \vect{y}\|^2 + \lambda \|\vect{w}\|^2$ and take the gradient with respect to $\vect{w}$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Random Forest Bias-Variance]
 \label{prob:random-forest-bias-variance}
 Explain how random forests reduce variance compared to a single decision tree. What happens to bias?
-
-\textbf{Hint:} Consider how averaging multiple models affects the bias and variance of the ensemble.
 \end{problem}
+\begin{hintbox}
+Consider how averaging multiple models affects the bias and variance of the ensemble.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Feature Selection Methods]
 \label{prob:feature-selection}
 Compare filter methods, wrapper methods, and embedded methods for feature selection. Give examples of each.
-
-\textbf{Hint:} Filter methods use statistical measures, wrapper methods use model performance, embedded methods are built into the learning algorithm.
 \end{problem}
+\begin{hintbox}
+Filter methods use statistical measures, wrapper methods use model performance, embedded methods are built into the learning algorithm.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Bias-Variance Trade-off]
 \label{prob:bias-variance}
 For a given dataset, explain how increasing model complexity affects bias and variance. Provide a concrete example.
-
-\textbf{Hint:} More complex models typically have lower bias but higher variance.
 \end{problem}
+\begin{hintbox}
+More complex models typically have lower bias but higher variance.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Regularization Effects]
 \label{prob:regularization-effects}
 Compare L1 and L2 regularization in terms of their effect on feature selection and model interpretability.
-
-\textbf{Hint:} L1 regularization can drive coefficients to exactly zero, while L2 regularization shrinks them toward zero.
 \end{problem}
+\begin{hintbox}
+L1 regularization can drive coefficients to exactly zero, while L2 regularization shrinks them toward zero.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[SVM Kernel Trick]
 \label{prob:svm-kernel-trick}
 Prove that the polynomial kernel $k(\vect{x}, \vect{x}') = (\vect{x}^\top \vect{x}' + c)^d$ is a valid kernel function by showing it corresponds to an inner product in some feature space.
-
-\textbf{Hint:} Expand the polynomial and show it can be written as $\phi(\vect{x})^\top \phi(\vect{x}')$ for some feature map $\phi$.
 \end{problem}
+\begin{hintbox}
+Expand the polynomial and show it can be written as $\phi(\vect{x})^\top \phi(\vect{x}')$ for some feature map $\phi$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Ensemble Methods Theory]
 \label{prob:ensemble-theory}
 Prove that for an ensemble of $B$ independent models with error rate $p < 0.5$, the ensemble error rate approaches 0 as $B \to \infty$.
-
-\textbf{Hint:} Use the binomial distribution and the fact that the ensemble makes an error only when more than half of the models are wrong.
 \end{problem}
+\begin{hintbox}
+Use the binomial distribution and the fact that the ensemble makes an error only when more than half of the models are wrong.
+\end{hintbox}
+\end{exercisebox}
+

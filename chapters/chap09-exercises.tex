@@ -5,32 +5,49 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Receptive Field Calculation]
 A CNN has two convolutional layers with 3×3 kernels (no padding, stride 1). Calculate the receptive field of a neuron in the second layer.
-
-\textbf{Hint:} Each layer expands the receptive field. For the second layer, consider how many input pixels affect it.
 \end{problem}
+\begin{hintbox}
+Each layer expands the receptive field. For the second layer, consider how many input pixels affect it.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Parameter Counting]
 Calculate the number of parameters in a convolutional layer with 64 input channels, 128 output channels, and 3×3 kernels (including bias).
-
-\textbf{Hint:} Each output channel has a 3×3 kernel for each input channel, plus one bias term.
 \end{problem}
+\begin{hintbox}
+Each output channel has a 3×3 kernel for each input channel, plus one bias term.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Pooling Operations]
 Explain the difference between max pooling and average pooling. When would you prefer one over the other?
-
-\textbf{Hint:} Consider feature prominence, spatial information retention, and gradient flow.
 \end{problem}
+\begin{hintbox}
+Consider feature prominence, spatial information retention, and gradient flow.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Translation Equivariance]
 Explain what translation equivariance means in the context of CNNs and why it is a desirable property for image processing.
-
-\textbf{Hint:} If the input is shifted, how does the output change? Consider the relationship $f(T(x)) = T(f(x))$.
 \end{problem}
+\begin{hintbox}
+If the input is shifted, how does the output change? Consider the relationship $f(T(x)) = T(f(x))$.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Output Shape Calculation]
 Given an input image of size 224×224×3, apply the following operations and calculate the output shape at each step:
 \begin{enumerate}
@@ -38,63 +55,102 @@ Given an input image of size 224×224×3, apply the following operations and cal
     \item MaxPool2D: 3×3, stride 2
     \item Conv2D: 128 filters, 3×3 kernel, stride 1, padding 1
 \end{enumerate}
-
-\textbf{Hint:} Use the formula: $\text{output\_size} = \lfloor \frac{\text{input\_size} + 2 \times \text{padding} - \text{kernel\_size}}{\text{stride}} \rfloor + 1$.
 \end{problem}
+\begin{hintbox}
+Use the formula: $\text{output\_size} = \lfloor \frac{\text{input\_size} + 2 \times \text{padding} - \text{kernel\_size}}{\text{stride}} \rfloor + 1$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[ResNet Skip Connections]
 Explain why residual connections (skip connections) help train very deep networks. Discuss the gradient flow through skip connections.
-
-\textbf{Hint:} Consider the identity mapping $\vect{y} = \vect{x} + F(\vect{x})$ and compute $\frac{\partial \vect{y}}{\partial \vect{x}}$.
 \end{problem}
+\begin{hintbox}
+Consider the identity mapping $\vect{y} = \vect{x} + F(\vect{x})$ and compute $\frac{\partial \vect{y}}{\partial \vect{x}}$.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Dilated Convolutions]
 Derive the receptive field for a stack of dilated convolutions with dilation rates [1, 2, 4, 8]. Compare computational cost with standard convolutions achieving the same receptive field.
-
-\textbf{Hint:} Dilated convolution with rate $r$ introduces $(r-1)$ gaps between kernel elements. Track receptive field growth layer by layer.
 \end{problem}
+\begin{hintbox}
+Dilated convolution with rate $r$ introduces $(r-1)$ gaps between kernel elements. Track receptive field growth layer by layer.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Depthwise Separable Convolutions]
 Analyse the computational savings of depthwise separable convolutions (as used in MobileNets) compared to standard convolutions. Derive the reduction factor for a layer with $C_{in}$ input channels, $C_{out}$ output channels, and $K×K$ kernel size.
-
-\textbf{Hint:} Depthwise separable splits into depthwise ($C_{in}$ groups) and pointwise (1×1) convolutions. Compare FLOPs.
 \end{problem}
+\begin{hintbox}
+Depthwise separable splits into depthwise ($C_{in}$ groups) and pointwise (1×1) convolutions. Compare FLOPs.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Convolutional Layer Design]
 Design a convolutional layer architecture for a specific computer vision task. Justify your choices of kernel size, stride, and padding.
-
-\textbf{Hint:} Consider the trade-off between computational efficiency and feature extraction capability.
 \end{problem}
+\begin{hintbox}
+Consider the trade-off between computational efficiency and feature extraction capability.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Pooling Operations]
 Compare different pooling operations (max, average, L2) and their effects on feature maps.
-
-\textbf{Hint:} Consider the impact on spatial information, gradient flow, and computational efficiency.
 \end{problem}
+\begin{hintbox}
+Consider the impact on spatial information, gradient flow, and computational efficiency.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Feature Map Visualization]
 Explain how to visualize and interpret feature maps in different layers of a CNN.
-
-\textbf{Hint:} Consider activation maximization, gradient-based methods, and occlusion analysis.
 \end{problem}
+\begin{hintbox}
+Consider activation maximization, gradient-based methods, and occlusion analysis.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[CNN Architecture Search]
 Design an automated method for finding optimal CNN architectures for a given dataset.
-
-\textbf{Hint:} Consider neural architecture search (NAS), evolutionary algorithms, and reinforcement learning approaches.
 \end{problem}
+\begin{hintbox}
+Consider neural architecture search (NAS), evolutionary algorithms, and reinforcement learning approaches.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Transfer Learning Strategies]
 Compare different transfer learning approaches for CNNs and when to use each.
-
-\textbf{Hint:} Consider feature extraction, fine-tuning, and progressive unfreezing strategies.
 \end{problem}
+\begin{hintbox}
+Consider feature extraction, fine-tuning, and progressive unfreezing strategies.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[CNN Interpretability]
 Explain methods for understanding and interpreting CNN decisions, including attention mechanisms.
-
-\textbf{Hint:} Consider gradient-based attribution methods, attention maps, and adversarial analysis.
 \end{problem}
+\begin{hintbox}
+Consider gradient-based attribution methods, attention maps, and adversarial analysis.
+\end{hintbox}
+\end{exercisebox}
+
 

@@ -5,98 +5,158 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Define Success Metrics]
 You are building a classifier for defect detection. Propose suitable metrics beyond accuracy and justify validation splits.
-
-\textbf{Hint:} Consider precision/recall, AUROC vs. AUPRC under class imbalance, and stratified splits.
 \end{problem}
+\begin{hintbox}
+Consider precision/recall, AUROC vs. AUPRC under class imbalance, and stratified splits.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Sanity Checks]
 List three quick sanity checks to run before large-scale training and explain expected outcomes.
-
-\textbf{Hint:} Overfit a tiny subset; randomise labels; train with shuffled pixels.
 \end{problem}
+\begin{hintbox}
+Overfit a tiny subset; randomise labels; train with shuffled pixels.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Baseline First]
 Explain why a strong non-deep baseline can accelerate iteration on a deep model.
-
-\textbf{Hint:} Separates data/metric issues from model capacity; provides performance floor.
 \end{problem}
+\begin{hintbox}
+Separates data/metric issues from model capacity; provides performance floor.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Data Leakage]
 Define data leakage and give two concrete examples.
-
-\textbf{Hint:} Temporal leakage; using normalised stats computed on the full dataset.
 \end{problem}
+\begin{hintbox}
+Temporal leakage; using normalised stats computed on the full dataset.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Hyperparameter Search Budget]
 Given budget for 30 runs, propose an allocation between exploration (random search) and exploitation (local search). Defend your choice.
-
-\textbf{Hint:} Start broad (e.g., 20 random), then refine top configurations (e.g., 10 local).
 \end{problem}
+\begin{hintbox}
+Start broad (e.g., 20 random), then refine top configurations (e.g., 10 local).
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Early Stopping vs. Schedules]
 Compare early stopping with cosine decay schedules under limited training budget.
-
-\textbf{Hint:} Consider variance, bias, and checkpoint selection.
 \end{problem}
+\begin{hintbox}
+Consider variance, bias, and checkpoint selection.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Confidence Intervals]
 Derive a 95\% Wilson interval for a classifier with $n$ samples and accuracy $\hat{p}$.
-
-\textbf{Hint:} Use $\frac{\hat{p}+z^2/(2n) \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z^2}{4n^2}}}{1+z^2/n}$ with $z\approx1.96$.
 \end{problem}
+\begin{hintbox}
+Use $\frac{\hat{p}+z^2/(2n) \pm z\sqrt{\frac{\hat{p}(1-\hat{p})}{n}+\frac{z^2}{4n^2}}}{1+z^2/n}$ with $z\approx1.96$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Causal Confounding]
 Your model uses a spurious feature. Propose an experimental protocol to detect and mitigate it.
-
-\textbf{Hint:} Counterfactual augmentation, environment splitting, invariant risk minimisation.
 \end{problem}
+\begin{hintbox}
+Counterfactual augmentation, environment splitting, invariant risk minimisation.
+\end{hintbox}
+\end{exercisebox}
 
 
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 1]
 Explain a key concept from this chapter and its practical applications.
-
-\textbf{Hint:} Consider the theoretical foundations and real-world implications.
 \end{problem}
+\begin{hintbox}
+Consider the theoretical foundations and real-world implications.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 2]
 Analyse the relationship between different techniques covered in this chapter.
-
-\textbf{Hint:} Look for connections and trade-offs between methods.
 \end{problem}
+\begin{hintbox}
+Look for connections and trade-offs between methods.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 3]
 Design an experiment to test a hypothesis related to this chapter's content.
-
-\textbf{Hint:} Consider experimental design, metrics, and potential confounding factors.
 \end{problem}
+\begin{hintbox}
+Consider experimental design, metrics, and potential confounding factors.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 4]
 Compare different approaches to solving a problem from this chapter.
-
-\textbf{Hint:} Consider computational complexity, accuracy, and practical considerations.
 \end{problem}
+\begin{hintbox}
+Consider computational complexity, accuracy, and practical considerations.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 5]
 Derive a mathematical relationship or prove a theorem from this chapter.
-
-\textbf{Hint:} Start with the definitions and work through the logical steps.
 \end{problem}
+\begin{hintbox}
+Start with the definitions and work through the logical steps.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 6]
 Implement a practical solution to a problem discussed in this chapter.
-
-\textbf{Hint:} Consider the implementation details and potential challenges.
 \end{problem}
+\begin{hintbox}
+Consider the implementation details and potential challenges.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Topic 7]
 Evaluate the limitations and potential improvements of techniques from this chapter.
-
-\textbf{Hint:} Consider both theoretical limitations and practical constraints.
 \end{problem}
+\begin{hintbox}
+Consider both theoretical limitations and practical constraints.
+\end{hintbox}
+\end{exercisebox}
+

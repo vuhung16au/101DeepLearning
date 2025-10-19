@@ -5,91 +5,147 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[L1 vs L2 Regularisation]
 Explain the difference between L1 and L2 regularisation. Which one is more likely to produce sparse weights, and why?
-
-\textbf{Hint:} Consider the shape of the L1 and L2 penalty terms and their gradients.
 \end{problem}
+\begin{hintbox}
+Consider the shape of the L1 and L2 penalty terms and their gradients.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Data Augmentation Strategies]
 List three common data augmentation techniques for image classification tasks and explain how each helps improve generalisation.
-
-\textbf{Hint:} Think about geometric transformations, colour adjustments, and realistic variations.
 \end{problem}
+\begin{hintbox}
+Think about geometric transformations, colour adjustments, and realistic variations.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Early Stopping]
 Describe how early stopping works as a regularisation technique. What metric should you monitor, and when should you stop training?
-
-\textbf{Hint:} Consider validation set performance and the risk of overfitting to the training set.
 \end{problem}
+\begin{hintbox}
+Consider validation set performance and the risk of overfitting to the training set.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Dropout Interpretation]
 During training, dropout randomly sets activations to zero with probability $p$. During inference, all neurons are active but their outputs are scaled. Explain why this scaling is necessary.
-
-\textbf{Hint:} Think about the expected value of activations during training versus inference.
 \end{problem}
+\begin{hintbox}
+Think about the expected value of activations during training versus inference.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Regularisation Trade-off]
 Given a model with both L2 regularisation and dropout, discuss how you would tune the regularisation strength $\lambda$ and dropout rate $p$. What signs would indicate too much or too little regularisation?
-
-\textbf{Hint:} Monitor training and validation loss curves, and consider the bias-variance trade-off.
 \end{problem}
+\begin{hintbox}
+Monitor training and validation loss curves, and consider the bias-variance trade-off.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Batch Normalisation Effect]
 Explain how batch normalisation acts as a regulariser. Discuss its interaction with dropout.
-
-\textbf{Hint:} Consider the noise introduced by computing statistics on mini-batches and why dropout is often not needed with batch normalisation.
 \end{problem}
+\begin{hintbox}
+Consider the noise introduced by computing statistics on mini-batches and why dropout is often not needed with batch normalisation.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Mixup Derivation]
 Mixup trains on convex combinations of examples: $\tilde{\vect{x}} = \lambda \vect{x}_i + (1-\lambda)\vect{x}_j$ where $\lambda \sim \text{Beta}(\alpha, \alpha)$. Derive how this affects the decision boundary and explain why it improves generalisation.
-
-\textbf{Hint:} Consider the effect on the loss surface and the implicit regularisation from interpolating between examples.
 \end{problem}
+\begin{hintbox}
+Consider the effect on the loss surface and the implicit regularisation from interpolating between examples.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Adversarial Training]
 Design an adversarial training procedure for a classification model. Explain how to generate adversarial examples using FGSM (Fast Gradient Sign Method) and why this improves robustness.
-
-\textbf{Hint:} Adversarial examples are $\vect{x}_{adv} = \vect{x} + \epsilon \cdot \text{sign}(\nabla_{\vect{x}} L)$. Discuss the trade-off between clean and adversarial accuracy.
 \end{problem}
+\begin{hintbox}
+Adversarial examples are $\vect{x}_{adv} = \vect{x} + \epsilon \cdot \text{sign}(\nabla_{\vect{x}} L)$. Discuss the trade-off between clean and adversarial accuracy.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Early Stopping Strategy]
 Explain how early stopping works as a regularisation technique. How do you determine the optimal stopping point?
-
-\textbf{Hint:} Monitor validation loss and stop when it starts increasing, indicating overfitting.
 \end{problem}
+\begin{hintbox}
+Monitor validation loss and stop when it starts increasing, indicating overfitting.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Data Augmentation Effects]
 Compare different data augmentation techniques for image classification. Which techniques are most effective for different types of images?
-
-\textbf{Hint:} Consider geometric transformations, color jittering, and mixup techniques.
 \end{problem}
+\begin{hintbox}
+Consider geometric transformations, color jittering, and mixup techniques.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Weight Decay vs Dropout]
 Compare the effects of weight decay and dropout regularisation. When would you use one over the other?
-
-\textbf{Hint:} Weight decay penalises large weights globally, while dropout creates sparse activations locally.
 \end{problem}
+\begin{hintbox}
+Weight decay penalises large weights globally, while dropout creates sparse activations locally.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Batch Normalization vs Layer Normalization]
 Compare batch normalisation and layer normalisation. When is each more appropriate?
-
-\textbf{Hint:} Batch normalisation depends on batch statistics, while layer normalisation is independent of batch size.
 \end{problem}
+\begin{hintbox}
+Batch normalisation depends on batch statistics, while layer normalisation is independent of batch size.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Regularisation in Convolutional Networks]
 Explain how regularisation techniques differ when applied to convolutional layers versus fully connected layers.
-
-\textbf{Hint:} Consider spatial structure preservation and parameter sharing in convolutional layers.
 \end{problem}
+\begin{hintbox}
+Consider spatial structure preservation and parameter sharing in convolutional layers.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Ensemble Regularisation]
 How can ensemble methods be viewed as a form of regularisation? Compare bagging and boosting approaches.
-
-\textbf{Hint:} Ensembles reduce variance by averaging predictions from multiple models.
 \end{problem}
+\begin{hintbox}
+Ensembles reduce variance by averaging predictions from multiple models.
+\end{hintbox}
+\end{exercisebox}
+
 

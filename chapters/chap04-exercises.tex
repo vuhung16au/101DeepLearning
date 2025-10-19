@@ -5,108 +5,165 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Floating-Point Basics]
 \label{prob:float-basics}
 Consider a hypothetical 4-bit floating-point system with 1 sign bit, 2 exponent bits, and 1 mantissa bit. What is the smallest positive number that can be represented? What is the largest number?
-
-\textbf{Hint:} Use the IEEE 754 format: $(-1)^s \times 2^{e-b} \times (1 + m)$ where $s$ is the sign bit, $e$ is the exponent, $b$ is the bias, and $m$ is the mantissa.
 \end{problem}
+\begin{hintbox}
+Use the IEEE 754 format: $(-1)^s \times 2^{e-b} \times (1 + m)$ where $s$ is the sign bit, $e$ is the exponent, $b$ is the bias, and $m$ is the mantissa.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Softmax Stability]
 \label{prob:softmax-stability}
 Compute the softmax of $\vect{x} = [1000, 1001, 1002]$ using both the naive approach and the numerically stable approach. Show your work step by step.
-
-\textbf{Hint:} Use the identity $\text{softmax}(\vect{x}) = \text{softmax}(\vect{x} - c)$ where $c = \max_i x_i$.
 \end{problem}
+\begin{hintbox}
+Use the identity $\text{softmax}(\vect{x}) = \text{softmax}(\vect{x} - c)$ where $c = \max_i x_i$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Gradient Computation]
 \label{prob:gradient-computation}
 Compute the gradient of $f(x, y) = x^2 + 3xy + y^2$ at the point $(2, 1)$.
-
-\textbf{Hint:} The gradient is $\nabla f = \left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right]$.
 \end{problem}
+\begin{hintbox}
+The gradient is $\nabla f = \left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right]$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Condition Number]
 \label{prob:condition-number}
 Calculate the condition number of the matrix $\mat{A} = \begin{bmatrix} 1 & 0.5 \\ 0.5 & 1 \end{bmatrix}$.
-
-\textbf{Hint:} For a 2×2 matrix, $\kappa(\mat{A}) = \frac{\lambda_{\max}}{\lambda_{\min}}$ where $\lambda_{\max}$ and $\lambda_{\min}$ are the eigenvalues.
 \end{problem}
+\begin{hintbox}
+For a 2×2 matrix, $\kappa(\mat{A}) = \frac{\lambda_{\max}}{\lambda_{\min}}$ where $\lambda_{\max}$ and $\lambda_{\min}$ are the eigenvalues.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Numerical Differentiation]
 \label{prob:numerical-diff}
 Implement the forward, backward, and central difference formulas for computing the derivative of $f(x) = \sin(x)$ at $x = \pi/4$. Compare the accuracy with the analytical derivative.
-
-\textbf{Hint:} Use $f'(x) \approx \frac{f(x+h) - f(x)}{h}$ for forward difference and similar formulas for other methods.
 \end{problem}
+\begin{hintbox}
+Use $f'(x) \approx \frac{f(x+h) - f(x)}{h}$ for forward difference and similar formulas for other methods.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Machine Epsilon]
 \label{prob:machine-epsilon}
 Write a program to find the machine epsilon of your system. What is the smallest number $\epsilon$ such that $1 + \epsilon \neq 1$ in floating-point arithmetic?
-
-\textbf{Hint:} Start with $\epsilon = 1$ and repeatedly divide by 2 until $1 + \epsilon = 1$.
 \end{problem}
+\begin{hintbox}
+Start with $\epsilon = 1$ and repeatedly divide by 2 until $1 + \epsilon = 1$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Numerical Integration]
 \label{prob:numerical-integration}
 Compare the trapezoidal rule and Simpson's rule for approximating $\int_0^1 e^{-x^2} dx$. Use $n = 4, 8, 16$ subintervals.
-
-\textbf{Hint:} Trapezoidal rule: $\int_a^b f(x)dx \approx \frac{h}{2}[f(a) + 2\sum_{i=1}^{n-1}f(x_i) + f(b)]$.
 \end{problem}
+\begin{hintbox}
+Trapezoidal rule: $\int_a^b f(x)dx \approx \frac{h}{2}[f(a) + 2\sum_{i=1}^{n-1}f(x_i) + f(b)]$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Matrix Conditioning]
 \label{prob:matrix-conditioning}
 Given the matrix $\mat{A} = \begin{bmatrix} 1 & 1 \\ 1 & 1.0001 \end{bmatrix}$, compute its condition number and solve $\mat{A}\vect{x} = \vect{b}$ where $\vect{b} = [2, 2.0001]^T$.
-
-\textbf{Hint:} A small change in $\vect{b}$ can cause a large change in the solution when the condition number is large.
 \end{problem}
+\begin{hintbox}
+A small change in $\vect{b}$ can cause a large change in the solution when the condition number is large.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Log-Sum-Exp Trick]
 \label{prob:log-sum-exp}
 Derive the log-sum-exp trick: $\log\left(\sum_{i=1}^n \exp(x_i)\right) = c + \log\left(\sum_{i=1}^n \exp(x_i - c)\right)$ where $c = \max_i x_i$.
-
-\textbf{Hint:} Start by factoring out $\exp(c)$ from the sum.
 \end{problem}
+\begin{hintbox}
+Start by factoring out $\exp(c)$ from the sum.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Lagrange Multipliers]
 \label{prob:lagrange-multipliers}
 Find the maximum value of $f(x, y) = xy$ subject to the constraint $x^2 + y^2 = 1$ using Lagrange multipliers.
-
-\textbf{Hint:} Set up the Lagrangian $\mathcal{L}(x, y, \lambda) = xy + \lambda(1 - x^2 - y^2)$ and solve the system of equations.
 \end{problem}
+\begin{hintbox}
+Set up the Lagrangian $\mathcal{L}(x, y, \lambda) = xy + \lambda(1 - x^2 - y^2)$ and solve the system of equations.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Gradient Descent Convergence]
 \label{prob:gradient-convergence}
 For the function $f(x, y) = x^2 + 100y^2$, implement gradient descent with different learning rates. Show that the convergence rate depends on the condition number.
-
-\textbf{Hint:} The condition number of the Hessian matrix determines the convergence rate.
 \end{problem}
+\begin{hintbox}
+The condition number of the Hessian matrix determines the convergence rate.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Newton's Method]
 \label{prob:newton-method}
 Use Newton's method to find the root of $f(x) = x^3 - 2x - 5$ starting from $x_0 = 2$. Compare with the bisection method.
-
-\textbf{Hint:} Newton's method: $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$.
 \end{problem}
+\begin{hintbox}
+Newton's method: $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Eigenvalue Computation]
 \label{prob:eigenvalue-computation}
 For the matrix $\mat{A} = \begin{bmatrix} 3 & 1 \\ 1 & 3 \end{bmatrix}$, compute the eigenvalues and eigenvectors using the characteristic equation and verify with numerical methods.
-
-\textbf{Hint:} Solve $\det(\mat{A} - \lambda\mat{I}) = 0$ for eigenvalues.
 \end{problem}
+\begin{hintbox}
+Solve $\det(\mat{A} - \lambda\mat{I}) = 0$ for eigenvalues.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Numerical Stability of Matrix Inversion]
 \label{prob:matrix-inversion-stability}
 Consider the matrix $\mat{A} = \begin{bmatrix} 1 & 1 \\ 1 & 1 + \epsilon \end{bmatrix}$ where $\epsilon$ is small. Show that the condition number grows as $\epsilon \to 0$. Implement a numerical experiment to demonstrate this and show how the error in $\mat{A}^{-1}$ grows.
-
-\textbf{Hint:} Use the formula $\kappa(\mat{A}) = \frac{\lambda_{\max}}{\lambda_{\min}}$ and compute the eigenvalues analytically.
 \end{problem}
+\begin{hintbox}
+Use the formula $\kappa(\mat{A}) = \frac{\lambda_{\max}}{\lambda_{\min}}$ and compute the eigenvalues analytically.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[KKT Conditions Application]
 \label{prob:kkt-conditions}
 Consider the optimisation problem:
@@ -116,6 +173,9 @@ Consider the optimisation problem:
 & x \geq 0, y \geq 0
 \end{align}
 Find the optimal solution using the KKT conditions and verify that all conditions are satisfied.
-
-\textbf{Hint:} Set up the Lagrangian with multiple constraints and check the complementary slackness conditions.
 \end{problem}
+\begin{hintbox}
+Set up the Lagrangian with multiple constraints and check the complementary slackness conditions.
+\end{hintbox}
+\end{exercisebox}
+
