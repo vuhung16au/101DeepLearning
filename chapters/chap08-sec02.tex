@@ -5,7 +5,7 @@
 
 \subsection{Intuition: Rolling a Ball Down a Valley}
 
-Plain SGD can wobble like a marble on a bumpy path. \textbf{Momentum} acts like mass: it carries velocity so you keep moving in consistently good directions and smooth out small bumps. \textbf{Nesterov acceleration} adds anticipation by peeking where the momentum will take you before correcting, often yielding crisper steps in curved valleys.\index{momentum}\index{Nesterov}
+Plain SGD can wobble like a marble on a bumpy path. \textbf{Momentum} acts like mass: it carries velocity so you keep moving in consistently good directions and smooth out small bumps. Imagine a heavy ball rolling down a hill—its mass (momentum) helps it maintain direction even when hitting small bumps, just like how momentum accumulates past gradients to maintain consistent movement in the loss landscape. The derivative of momentum with respect to time gives us the acceleration, but in optimization, we use the derivative of the loss with respect to parameters to determine the direction, while momentum provides the "inertia" to keep moving smoothly. \textbf{Nesterov acceleration} adds anticipation by peeking where the momentum will take you before correcting, often yielding crisper steps in curved valleys. Think of it like a skilled skier who looks ahead to anticipate the curve and adjusts their trajectory before reaching it, rather than just following their current momentum and then correcting afterward. This "look-ahead" approach helps the optimizer make more informed decisions by evaluating the gradient at the anticipated future position, leading to smoother and more efficient convergence.\index{momentum}\index{Nesterov}
 
 Historical note: Momentum has deep roots in convex optimization and was popularized in early neural network training; Nesterov's variant provided stronger theoretical guarantees in convex settings and inspired practical variants in deep learning \cite{Polyak1964,Nesterov1983,GoodfellowEtAl2016,Bishop2006}.
 
@@ -52,5 +52,9 @@ Practice notes:
 \begin{itemize}
     \item Common defaults: \(\beta=0.9\), initial \(\alpha\in[10^{-3},10^{-1}]\) depending on scale.
     \item Widely used with SGD in large-scale vision models \cite{He2016}.
+    \item Start with \(\beta=0.9\) and tune \(\alpha\) based on your loss scale; for well-normalized networks, \(\alpha=0.01\) often works well.
+    \item NAG typically requires fewer iterations than standard momentum to converge, making it particularly valuable for expensive training runs.
+    \item The look-ahead gradient computation adds minimal computational overhead (one extra gradient evaluation per step) while often providing significant convergence improvements.
+    \item Consider using NAG when training deep networks with many parameters, as the anticipation effect helps navigate complex loss landscapes more efficiently than standard momentum.
 \end{itemize}
 

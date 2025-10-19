@@ -40,6 +40,35 @@ Saddle points have:
 
 Momentum and noise help escape saddle points.
 
+\subsubsection{Example: Critical Points in Two Dimensions}
+
+Consider the function $f(x,y) = x^4 - 2x^2 + y^2$ to illustrate different types of critical points:
+
+\textbf{Local minimum:} Bottom of a bowl - you can't go lower in any direction
+\begin{itemize}
+    \item At $(0,0)$: $f(0,0) = 0$ is a local minimum
+    \item All nearby points have higher function values
+    \item Gradient is zero: $\nabla f = (4x^3 - 4x, 2y) = (0,0)$
+    \item Hessian has positive eigenvalues (concave up in all directions)
+\end{itemize}
+
+\textbf{Local maximum:} Top of a hill - you can't go higher in any direction
+\begin{itemize}
+    \item At $(0,0)$ for $f(x,y) = -x^4 + 2x^2 - y^2$: would be a local maximum
+    \item All nearby points have lower function values
+    \item Hessian has negative eigenvalues (concave down in all directions)
+\end{itemize}
+
+\textbf{Saddle point:} Mountain pass - you can go down in some directions, up in others
+\begin{itemize}
+    \item At $(1,0)$ and $(-1,0)$: $f(\pm 1,0) = -1$ are saddle points
+    \item Gradient is zero: $\nabla f = (4x^3 - 4x, 2y) = (0,0)$
+    \item Hessian has mixed eigenvalues (concave up in one direction, down in another)
+    \item Like sitting on a horse saddle: you can slide down the sides but the saddle curves up in front/back
+\end{itemize}
+
+In high-dimensional optimization, saddle points are much more common than local minima, making them the primary challenge for gradient-based methods.
+
 \subsection{Plateaus}\index{plateau}
 
 Flat regions with small gradients slow convergence. Adaptive methods and learning rate schedules help navigate plateaus.

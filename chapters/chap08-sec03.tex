@@ -22,7 +22,7 @@ where $\epsilon$ (e.g., $10^{-8}$) prevents division by zero. AdaGrad is well-su
 
 \subsection{RMSProp}
 
-Addresses AdaGrad's aggressive decay using exponential moving average:
+RMSProp (Root Mean Square Propagation) addresses AdaGrad's aggressive decay using exponential moving average:
 \begin{align}
 \vect{r}_t &= \rho \vect{r}_{t-1} + (1-\rho) \vect{g}_t \odot \vect{g}_t \\
 \vect{\theta}_{t+1} &= \vect{\theta}_t - \frac{\alpha}{\sqrt{\vect{r}_t + \epsilon}} \odot \vect{g}_t
