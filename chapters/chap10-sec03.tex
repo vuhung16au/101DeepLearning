@@ -30,6 +30,8 @@ LSTM uses \textbf{gating mechanisms} to control information flow and maintain a 
 
 \subsection{Key Ideas}
 
+The LSTM's key innovations address fundamental limitations of traditional RNNs and feedforward networks. Unlike standard RNNs where information must pass through repeated nonlinear transformations that cause gradient decay, the LSTM introduces a dedicated \textbf{cell state} $\vect{c}_t$ that acts as a highway for information flow with minimal transformation, enabling gradients to flow directly across long time spans. The \textbf{gating mechanisms} (forget, input, and output gates) provide selective control over information flow, allowing the network to learn when to remember, forget, and output information—a capability that was impossible with fixed-weight feedforward networks or vanilla RNNs. This selective memory management solves the vanishing gradient problem by creating direct paths for gradient flow while maintaining the ability to learn complex temporal dependencies that exceed the capacity of traditional sequence models.
+
 \textbf{Cell state} $\vect{c}_t$: Long-term memory
 \begin{itemize}
     \item Information flows with minimal transformation
@@ -45,12 +47,15 @@ LSTM uses \textbf{gating mechanisms} to control information flow and maintain a 
 \subsection{Advantages}
 
 \begin{itemize}
-    \item Addresses vanishing gradient problem
-    \item Can learn long-term dependencies
-    \item Gradients flow more easily through cell state
-    \item Widely used for sequential tasks
+    \item \textbf{Addresses vanishing gradient problem:} LSTMs mitigate vanishing gradients through their cell state and gating mechanisms. The cell state acts as a memory highway, allowing gradients to flow relatively unimpeded across many time steps, preventing them from shrinking to zero. Unlike vanilla RNNs where gradients must pass through repeated nonlinear transformations, LSTMs provide direct paths for gradient flow.
+    
+    \item \textbf{Can learn long-term dependencies:} The forget and input gates explicitly control what information is retained or discarded from the cell state. This selective memory mechanism allows LSTMs to store relevant information for extended periods and access it when needed, effectively capturing long-term dependencies. The cell state can maintain information across hundreds of time steps without degradation.
+    
+    \item \textbf{Gradients flow more easily through cell state:} The cell state path often involves simple additions and multiplications by gate activations (which are typically between 0 and 1). This linear-like flow, especially when the forget gate is close to 1, prevents the repeated multiplication by small weights that causes gradients to vanish in vanilla RNNs. The gating mechanism creates a more stable gradient propagation environment.
+    
+    \item \textbf{Widely used for sequential tasks:} Due to their ability to handle long-term dependencies and mitigate gradient issues, LSTMs have become a de facto standard for various sequential data processing tasks. Their robust performance across diverse applications, from natural language processing to speech recognition, underscores their versatility and effectiveness. The architecture's success has made it a go-to choice for practitioners working with temporal data.
+\end{itemize}
 
-\paragraph{Visual aid.} A compact LSTM cell diagram:
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[>=stealth, node distance=1.8cm]
@@ -66,7 +71,8 @@ LSTM uses \textbf{gating mechanisms} to control information flow and maintain a 
         \draw[->] (sum) -- (ct);
         \draw[->] (ot) |- ++(1.2,1.8) node[pos=0.55, right] {$\odot\,\tanh(\vect{c}_t)$} -| ++(0,0);
     \end{tikzpicture}
-    \caption{Illustrative LSTM flow with forget, input, and output gates.}
+    \caption{Visual aid: A compact LSTM cell diagram.}
+    \label{fig:lstm_cell_diagram}
 \end{figure}
 \end{itemize}
 

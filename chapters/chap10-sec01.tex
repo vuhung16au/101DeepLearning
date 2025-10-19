@@ -30,6 +30,16 @@ Classic feedforward networks assume fixed-size inputs and lack a persistent stat
 
 \index{sequence modeling}\index{temporal dependency}\glsadd{recurrent-neural-network}
 
+\subsection{Why Sequences Matter}
+
+The unique value of sequence modeling:
+\begin{itemize}
+    \item \textbf{Context awareness:} Understanding how earlier elements affect later ones
+    \item \textbf{Variable-length handling:} Working with inputs of any length
+    \item \textbf{Temporal patterns:} Capturing how things change over time
+    \item \textbf{Natural interaction:} Enabling human-like communication with machines
+\end{itemize}
+
 \subsection{Basic RNN Architecture}
 
 An RNN maintains a hidden state $\vect{h}_t$ that evolves over time:
@@ -101,15 +111,26 @@ This view connects RNNs to dynamic Bayesian networks and emphasizes that trainin
 
 \subsection{Types of Sequences}
 
-\textbf{One-to-one:} Fixed-size input to fixed-size output with temporal structure ignored or not present (e.g., static image classification with no time component).
-
-\textbf{One-to-many:} Single input to sequence output (e.g., image captioning, where an image produces a sequence of words).
-
-\textbf{Many-to-one:} Sequence input to single output (e.g., sentiment classification from a review; keyword spotting from audio).
-
-\textbf{Many-to-many (synchronous):} Sequence labeling with aligned input/output lengths (e.g., part-of-speech tagging, CTC-free frame labeling).
-
-\textbf{Many-to-many (asynchronous):} Sequence transduction with potentially different lengths (e.g., machine translation, speech recognition with CTC/attention). Attention helps bridge length mismatch by learning soft alignments \cite{Bahdanau2014}.
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{0.6\textwidth}|p{0.25\textwidth}|}
+\hline
+\textbf{Type} & \textbf{Description} & \textbf{Examples} \\
+\hline
+One-to-one & Fixed-size input to fixed-size output with temporal structure ignored or not present & Static image classification with no time component \\
+\hline
+One-to-many & Single input to sequence output & Image captioning, where an image produces a sequence of words \\
+\hline
+Many-to-one & Sequence input to single output & Sentiment classification from a review; keyword spotting from audio \\
+\hline
+Many-to-many (synchronous) & Sequence labeling with aligned input/output lengths & Part-of-speech tagging, CTC-free frame labeling \\
+\hline
+Many-to-many (asynchronous) & Sequence transduction with potentially different lengths. Attention helps bridge length mismatch by learning soft alignments \cite{Bahdanau2014} & Machine translation, speech recognition with CTC/attention \\
+\hline
+\end{tabular}
+\caption{Types of sequence models and their characteristics.}
+\label{tab:sequence-types}
+\end{table}
 
 Design choices (teacher forcing, bidirectionality, attention, beam search) depend on whether future context is available and whether output timing must be causal. See \cite{D2LChapterRNN,WebRNNWikipedia} for further taxonomy.
 

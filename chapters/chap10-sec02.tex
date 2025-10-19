@@ -1,6 +1,6 @@
 % Chapter 10, Section 2
 
-\section{Backpropagation Through Time \difficultyInline{intermediate}}
+\section{Backpropagation Through Time (BTTT)\difficultyInline{intermediate}}
 \label{sec:bptt}
 
 \subsection*{Intuition}
@@ -29,41 +29,54 @@ For any parameter block $\mat{W} \in \vect{\theta}$ appearing at each time step:
 \frac{\partial L}{\partial \mat{W}} = \sum_{t=1}^{T} \frac{\partial L_t}{\partial \mat{W}}
 \end{equation}
 
-\paragraph{Algorithm (BPTT).}
-\begin{enumerate}[nosep]
-    \item Forward pass: for $t=1,\dots,T$, compute $\vect{h}_t$, $\vect{y}_t$, and $L_t$.
-    \item Initialize temporal gradients: $\frac{\partial L}{\partial \vect{h}_{T+1}}=\vect{0}$.
-    \item Backward pass: for $t=T,\dots,1$:
-    \begin{align*}
-        \delta_t &\leftarrow \frac{\partial L}{\partial \vect{y}_t} \frac{\partial \vect{y}_t}{\partial \vect{h}_t} + \left(\frac{\partial L}{\partial \vect{h}_{t+1}}\right) \frac{\partial \vect{h}_{t+1}}{\partial \vect{h}_t} \\
-        \frac{\partial L}{\partial \mat{W}} &\mathrel{+}= \delta_t \frac{\partial \vect{h}_t}{\partial \mat{W}} \quad (\text{or add contributions for all parameters at time } t)
-    \end{align*}
-    \item Apply gradient clipping if needed and update parameters.
-\end{enumerate}
+\begin{algorithm}[h]
+\caption{Backpropagation Through Time (BPTT)}
+\label{alg:bptt}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Sequence $\{\vect{x}_1, \ldots, \vect{x}_T\}$, parameters $\vect{\theta}$
+\State \textbf{Output:} Gradients $\frac{\partial L}{\partial \vect{\theta}}$
+\State
+\State \Comment{Forward pass}
+\For{$t = 1$ \textbf{to} $T$}
+    \State Compute $\vect{h}_t = f(\vect{h}_{t-1}, \vect{x}_t; \vect{\theta})$
+    \State Compute $\vect{y}_t = g(\vect{h}_t; \vect{\theta}_y)$
+    \State Compute $L_t = \text{loss}(\vect{y}_t, \vect{y}_t^{\text{target}})$
+\EndFor
+\State
+\State \Comment{Initialize temporal gradients}
+\State $\frac{\partial L}{\partial \vect{h}_{T+1}} \leftarrow \vect{0}$
+\State
+\State \Comment{Backward pass}
+\For{$t = T$ \textbf{downto} $1$}
+    \State $\delta_t \leftarrow \frac{\partial L}{\partial \vect{y}_t} \frac{\partial \vect{y}_t}{\partial \vect{h}_t} + \frac{\partial L}{\partial \vect{h}_{t+1}} \frac{\partial \vect{h}_{t+1}}{\partial \vect{h}_t}$
+    \State $\frac{\partial L}{\partial \mat{W}} \mathrel{+}= \delta_t \frac{\partial \vect{h}_t}{\partial \mat{W}}$ \Comment{Accumulate gradients for all parameters at time $t$}
+\EndFor
+\State
+\State \Comment{Apply gradient clipping if needed and update parameters}
+\State Apply gradient clipping if $\norm{\frac{\partial L}{\partial \vect{\theta}}} > \text{threshold}$
+\State Update parameters: $\vect{\theta} \leftarrow \vect{\theta} - \alpha \frac{\partial L}{\partial \vect{\theta}}$
+\end{algorithmic}
+\end{algorithm}
 
 This view aligns with the computational-graph treatment in \cite{GoodfellowEtAl2016} and standard expositions \cite{WebDLBRNN,D2LChapterRNN}.
 
 \subsection{Vanishing and Exploding Gradients}
 
-Gradients can vanish or explode exponentially:
+Gradients can vanish or explode exponentially due to the chain rule applied across time steps. The gradient of the loss with respect to an earlier hidden state $\vect{h}_k$ involves a product of Jacobian matrices:
 
 \begin{equation}
 \frac{\partial \vect{h}_t}{\partial \vect{h}_k} = \prod_{i=k+1}^{t} \frac{\partial \vect{h}_i}{\partial \vect{h}_{i-1}} = \prod_{i=k+1}^{t} \mat{W}^\top \text{diag}(\sigma'(\vect{z}_i))
 \end{equation}
 
-If eigenvalues of $\mat{W}$ are:
+The behavior depends on the eigenvalues of the weight matrix $\mat{W}$:
 \begin{itemize}
-    \item $< 1$: gradients vanish
-    \item $> 1$: gradients explode
+    \item \textbf{Eigenvalues $< 1$:} Each multiplication by $\mat{W}^\top$ shrinks the gradient magnitude, causing exponential decay as the product accumulates over time steps. This leads to vanishing gradients where early time steps receive negligible gradient signals.
+    \item \textbf{Eigenvalues $> 1$:} Each multiplication amplifies the gradient, causing exponential growth that can lead to numerical instability and training divergence.
 \end{itemize}
 
 \textbf{Solutions:}
-\begin{itemize}
-    \item Gradient clipping (for explosion) \glsadd{gradient-clipping}
-    \item Careful initialization
-    \item ReLU activation
-    \item LSTM/GRU architectures
-\end{itemize}
+
+\textbf{Gradient clipping} prevents exploding gradients by scaling down gradients when their norm exceeds a threshold, maintaining training stability while preserving gradient direction. \textbf{Careful initialization} techniques like Xavier/He initialization set initial weights to have appropriate variance, reducing the likelihood of extreme eigenvalues that cause gradient problems. \textbf{ReLU activation} helps because its derivative is either 0 or 1, avoiding the multiplicative shrinking effect of sigmoid/tanh derivatives that compound vanishing gradients. \textbf{LSTM/GRU architectures} introduce gating mechanisms that create direct paths for gradient flow, bypassing the problematic multiplicative chains and enabling learning of long-range dependencies.
 
 \subsection{Truncated BPTT}
 
@@ -74,13 +87,38 @@ For very long sequences, truncate gradient computation by limiting backpropagati
     \item Hidden state is carried forward between segments but treated as a constant during the truncated backward step.
 \end{itemize}
 
-\paragraph{Algorithm (Truncated BPTT).}
-\begin{enumerate}[nosep]
-    \item For $t=1,1+s,1+2s,\dots$, take the chunk $[t,\, t+k-1]$.
-    \item Run forward pass over the chunk using the current hidden state as initialization.
-    \item Backpropagate losses only within the chunk; accumulate gradients.
-    \item Optionally detach the final hidden state from the graph before the next chunk to bound gradient length.
-\end{enumerate}
+\begin{algorithm}[h]
+\caption{Truncated Backpropagation Through Time (Truncated BPTT)}
+\label{alg:truncated-bptt}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Sequence $\{\vect{x}_1, \ldots, \vect{x}_T\}$, parameters $\vect{\theta}$, chunk size $k$, stride $s$
+\State \textbf{Output:} Gradients $\frac{\partial L}{\partial \vect{\theta}}$
+\State
+\State Initialize $\vect{h}_0$ \Comment{Initial hidden state}
+\State
+\For{$t = 1$ \textbf{to} $T$ \textbf{step} $s$}
+    \State \Comment{Take chunk $[t, t+k-1]$}
+    \State $t_{\text{end}} \leftarrow \min(t + k - 1, T)$
+    \State
+    \State \Comment{Forward pass over the chunk}
+    \For{$i = t$ \textbf{to} $t_{\text{end}}$}
+        \State Compute $\vect{h}_i = f(\vect{h}_{i-1}, \vect{x}_i; \vect{\theta})$
+        \State Compute $\vect{y}_i = g(\vect{h}_i; \vect{\theta}_y)$
+        \State Compute $L_i = \text{loss}(\vect{y}_i, \vect{y}_i^{\text{target}})$
+    \EndFor
+    \State
+    \State \Comment{Backpropagate losses only within the chunk}
+    \State Initialize $\frac{\partial L}{\partial \vect{h}_{t_{\text{end}}+1}} \leftarrow \vect{0}$
+    \For{$i = t_{\text{end}}$ \textbf{downto} $t$}
+        \State $\delta_i \leftarrow \frac{\partial L}{\partial \vect{y}_i} \frac{\partial \vect{y}_i}{\partial \vect{h}_i} + \frac{\partial L}{\partial \vect{h}_{i+1}} \frac{\partial \vect{h}_{i+1}}{\partial \vect{h}_i}$
+        \State $\frac{\partial L}{\partial \mat{W}} \mathrel{+}= \delta_i \frac{\partial \vect{h}_i}{\partial \mat{W}}$ \Comment{Accumulate gradients}
+    \EndFor
+    \State
+    \State \Comment{Optionally detach hidden state to bound gradient length}
+    \State $\vect{h}_t \leftarrow \text{detach}(\vect{h}_{t_{\text{end}}})$ \Comment{Prevent gradients from flowing beyond chunk}
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 \textbf{Trade-offs:} Lower memory and latency versus potentially missing very long-range dependencies. Increasing $k$ improves dependency length coverage but increases cost. Hybrids with dilated RNNs or attention can mitigate the trade-off.
 
