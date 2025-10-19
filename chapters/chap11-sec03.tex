@@ -3,58 +3,94 @@
 \section{Hyperparameter Tuning \difficultyInline{intermediate}}
 \label{sec:hyperparameter-tuning}
 
+\textbf{Hyperparameter tuning} is the process of selecting optimal configuration settings that control how a machine learning model learns, rather than the parameters the model learns itself. Unlike classical ML algorithms like linear regression or decision trees that have few, well-understood hyperparameters, deep learning models have dozens of hyperparameters that interact in complex ways, making tuning much more challenging and critical for success.
+
+\paragraph{Metaphor.} Think of hyperparameter tuning like tuning a musical instrument—classical ML is like tuning a simple guitar with just a few strings, where each adjustment has a clear, predictable effect. Deep learning is like tuning a complex orchestra with dozens of instruments, where changing one instrument's tuning affects how all the others sound together, and the perfect harmony requires careful coordination of many interdependent settings.
+
+\index{classical ML}\index{deep learning}
+
 \subsection{Key Hyperparameters (Priority Order)}
 
-Effective tuning prioritizes learning rate, regularization, and capacity before fine details \index{hyperparameter tuning}. Treat the validation set as your instrumentation layer and control randomness via fixed seeds \textcite{GoodfellowEtAl2016,Prince2023,D2LChapterOptimization}.
+Effective tuning prioritizes learning rate, regularization, and capacity before fine details \index{hyperparameter tuning}. This systematic approach prevents wasting time on minor optimizations when fundamental issues remain unresolved—for example, tuning dropout rates while using a learning rate that's 10x too high will yield poor results regardless of regularization choices. Treat the validation set as your instrumentation layer and control randomness via fixed seeds \textcite{GoodfellowEtAl2016,Prince2023,D2LChapterOptimization}.
 
-\begin{enumerate}
-    \item \textbf{Learning rate:} Most critical; consider warmup and cosine decay
-    \item \textbf{Network architecture:} Depth/width, normalization, residuals
-    \item \textbf{Batch size:} Affects noise scale and generalization
-    \item \textbf{Regularization:} Weight decay, dropout, label smoothing
-    \item \textbf{Optimizer parameters:} Momentum, $\beta$ values in Adam
-\end{enumerate}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|p{0.6\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{Priority} & \textbf{Hyperparameter} & \textbf{Key Considerations} \\
+\hline
+1 & Learning rate & Most critical; consider warmup and cosine decay \\
+\hline
+2 & Network architecture & Depth/width, normalization, residuals \\
+\hline
+3 & Batch size & Affects noise scale and generalization \\
+\hline
+4 & Regularization & Weight decay, dropout, label smoothing \\
+\hline
+5 & Optimizer parameters & Momentum, $\beta$ values in Adam \\
+\hline
+\end{tabular}
+\caption{Priority order for hyperparameter tuning in deep learning.}
+\label{tab:hyperparameter-priority}
+\end{table}
 
 \subsection{Search Strategies}
 
-\textbf{Manual Search:}
+\textbf{Manual Search:} Manual search involves human-guided exploration of hyperparameter space based on domain knowledge and intuition. 
 \begin{itemize}
-    \item Start with educated guesses
-    \item Adjust based on results
-    \item Time-consuming but insightful
+    \item \textbf{Start with educated guesses:} Begin with hyperparameter values that have worked well in similar problems or are recommended in literature. For example, starting with a learning rate of 0.001 for Adam optimizer or using 0.5 dropout rate for fully connected layers, as these are commonly successful starting points across many deep learning tasks.
+    
+    \item \textbf{Adjust based on results:} Systematically modify hyperparameters based on validation performance, typically changing one parameter at a time to understand its individual effect. If validation loss plateaus, try increasing learning rate; if overfitting occurs, increase regularization strength or reduce model capacity.
+    
+    \item \textbf{Time-consuming but insightful:} While manual search requires significant human effort and can take days or weeks, it provides deep understanding of how different hyperparameters affect model behavior. This hands-on experience builds intuition that proves valuable for future projects and helps identify the most promising regions of hyperparameter space.
 \end{itemize}
 
-\textbf{Grid Search:}
+\textbf{Grid Search:} Grid search systematically evaluates all combinations of hyperparameters from predefined discrete sets.
 \begin{itemize}
-    \item Try all combinations from predefined values
-    \item Exhaustive but expensive
-    \item Better for 2-3 hyperparameters
+    \item \textbf{Try all combinations from predefined values:} Define a grid of possible values for each hyperparameter (e.g., learning rates [0.001, 0.01, 0.1] and batch sizes [32, 64, 128]) and train a model for every possible combination. This ensures comprehensive coverage of the specified search space without missing any potential configurations.
+    
+    \item \textbf{Exhaustive but expensive:} Grid search guarantees finding the best combination within the defined grid, but computational cost grows exponentially with the number of hyperparameters. For 3 hyperparameters with 5 values each, you need 125 training runs, making it computationally prohibitive for large models or extensive search spaces.
+    
+    \item \textbf{Better for 2-3 hyperparameters:} Grid search works well when you have few hyperparameters to tune, as the search space remains manageable. However, with more than 3-4 hyperparameters, the curse of dimensionality makes grid search impractical, and most combinations will likely be suboptimal anyway.
 \end{itemize}
 
-\textbf{Random Search:}
+\textbf{Random Search:} Random search samples hyperparameters from probability distributions rather than evaluating all combinations.
 \begin{itemize}
-    \item Sample hyperparameters randomly
-    \item More efficient than grid search
-    \item Better for high-dimensional spaces
+    \item \textbf{Sample hyperparameters randomly:} Instead of testing every combination, randomly sample hyperparameter values from appropriate distributions (e.g., learning rate from log-uniform distribution, dropout from uniform distribution). This approach explores the search space more efficiently by avoiding the rigid structure of grid search.
+    
+    \item \textbf{More efficient than grid search:} Random search often finds good hyperparameters with fewer trials than grid search because it doesn't waste time on systematically poor regions of the search space. Studies show that random search can achieve similar performance to grid search with 10-100x fewer evaluations, making it much more practical for expensive training procedures.
+    
+    \item \textbf{Better for high-dimensional spaces:} As the number of hyperparameters increases, random search becomes increasingly advantageous over grid search. In high-dimensional spaces, most of the volume lies near the boundaries, and random sampling naturally explores these regions more effectively than the structured approach of grid search.
 \end{itemize}
 
-\textbf{Bayesian Optimization:}
+\textbf{Bayesian Optimization:} Bayesian optimization uses probabilistic models to guide hyperparameter search intelligently.
 \begin{itemize}
-    \item Model hyperparameter performance
-    \item Choose next trials intelligently
-    \item More sample-efficient
+    \item \textbf{Model hyperparameter performance:} Bayesian optimization builds a probabilistic model (typically Gaussian Process) that predicts the performance of untested hyperparameter configurations based on previous evaluations. This model captures both the expected performance and uncertainty, allowing informed decisions about where to search next.
+    
+    \item \textbf{Choose next trials intelligently:} Instead of random sampling, Bayesian optimization uses acquisition functions (like Expected Improvement or Upper Confidence Bound) to select the most promising hyperparameter configurations to evaluate next. This balances exploration of uncertain regions with exploitation of areas likely to contain good solutions.
+    
+    \item \textbf{More sample-efficient:} Bayesian optimization typically requires far fewer evaluations than random or grid search to find good hyperparameters, especially when each evaluation is expensive. It's particularly valuable for neural architecture search or when training large models, where each hyperparameter trial might take hours or days to complete.
 \end{itemize}
 
 \subsection{Best Practices}
 
+Effective hyperparameter tuning requires systematic approaches that balance thoroughness with computational efficiency while maintaining scientific rigor. These best practices help practitioners avoid common pitfalls and maximize the value of their tuning efforts.
+
 \begin{itemize}
-    \item Use logarithmic scale for learning rate; sweep $[10^{-5},10^{-1}]$
-    \item Vary batch size and adjust learning rate proportionally
-    \item Track results with a consistent random seed and multiple repeats
-    \item Early-stop poor runs; allocate budget adaptively
-    \item Use a fixed validation protocol to avoid leakage
-    \item Retrain with best setting on train+val and report on held-out test
+    \item \textbf{Use logarithmic scale for learning rate; sweep $[10^{-5},10^{-1}]$:} Learning rates span several orders of magnitude, and linear spacing would miss critical regions where small changes have dramatic effects. For example, the difference between 0.001 and 0.01 can mean the difference between convergence and divergence, while the difference between 0.1 and 0.11 is usually negligible. Logarithmic sampling ensures equal attention to each order of magnitude, capturing the full range of potentially useful learning rates.
+    
+    \item \textbf{Vary batch size and adjust learning rate proportionally:} Larger batch sizes provide more stable gradients but require higher learning rates to maintain the same effective step size. When doubling batch size from 32 to 64, increase learning rate by approximately 2x to maintain similar convergence dynamics. This relationship stems from the fact that larger batches reduce gradient noise, allowing for more aggressive updates without destabilizing training.
+    
+    \item \textbf{Track results with a consistent random seed and multiple repeats:} Deep learning results can vary significantly due to random initialization and data shuffling, making single runs unreliable for hyperparameter comparison. Use fixed seeds for reproducibility and run multiple trials (3-5) to estimate the variance and ensure that performance differences are statistically significant rather than due to random chance.
+    
+    \item \textbf{Early-stop poor runs; allocate budget adaptively:} Instead of running every hyperparameter configuration to completion, monitor training progress and terminate clearly failing experiments early. If a configuration shows no improvement after 20\% of the planned training time, stop it and redirect computational resources to more promising candidates. This adaptive allocation can reduce total tuning time by 50-70\% while focusing effort on the most promising regions of hyperparameter space.
+    
+    \item \textbf{Use a fixed validation protocol to avoid leakage:} Establish a single, immutable validation split before beginning any hyperparameter tuning to prevent data leakage and overfitting to the validation set. Changing validation splits during tuning can lead to overly optimistic estimates and poor generalization. The validation set should remain completely untouched until the final evaluation, with all hyperparameter decisions based on this consistent benchmark.
+    
+    \item \textbf{Retrain with best setting on train+val and report on held-out test:} After identifying the best hyperparameters, retrain the model using both training and validation data to maximize the information available for learning. Report final performance on a completely held-out test set that was never used for any hyperparameter decisions. This two-stage approach ensures that the final model uses all available training data while maintaining an unbiased estimate of true generalization performance.
 \end{itemize}
+
+\index{manual search}\index{grid search}\index{random search}\index{Bayesian optimization}\index{batch size}\index{learning rate}\index{early stopping}\index{two-stage training}
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (tuning)}
@@ -76,5 +112,5 @@ Effective tuning prioritizes learning rate, regularization, and capacity before 
 
 \subsection{Historical notes}
 
-Random search and Bayesian optimization rose to prominence as models and search spaces grew large; they offer better coverage than grid for high-dimensional spaces. Practical DL texts emphasize learning-rate schedules (step, cosine) and warmup for stability \textcite{GoodfellowEtAl2016,Prince2023,D2LChapterOptimization}.
+The scaling of deep learning models and search spaces necessitated a move beyond rudimentary optimization methods, driving the evolution from simple grid search to more sophisticated hyperparameter tuning strategies. The challenge of efficiently finding optimal hyperparameters in high-dimensional spaces led to the rise of Random Search and Bayesian Optimization, offering superior coverage and effectiveness compared to exhaustive grid searches that became computationally prohibitive. For the stability of model weights during the immense computation required for large language models and Transformers, learning-rate schedules became a standard component of modern training pipelines. Specifically, practices like Warmup ensure that training begins with a small learning rate to stabilize early-stage gradients before gradually increasing it, while techniques such as Step Decay or Cosine Annealing then regulate the descent toward the optimum in later phases. These scheduling mechanisms are essential for preventing gradient explosion and achieving reliable convergence across large batches and deep network architectures. The historical progression from manual tuning to automated optimization reflects the broader trend toward systematic, data-driven approaches in deep learning methodology \textcite{GoodfellowEtAl2016,Prince2023,D2LChapterOptimization}.
 

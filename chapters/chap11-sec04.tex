@@ -5,73 +5,183 @@
 
 \subsection{Data Splitting}
 
-\textbf{Train/Validation/Test split:}
-\begin{itemize}
-    \item Training: 60-80\%
-    \item Validation: 10-20\%
-    \item Test: 10-20\%
-\end{itemize}
-
-\textbf{Cross-validation:} For small datasets
-\begin{itemize}
-    \item k-fold cross-validation
-    \item Stratified splits for imbalanced data
-\end{itemize}
-
-\subsection{Normalization}
-
-\textbf{Min-Max Scaling:}
-\begin{equation}
-x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
-\end{equation}
-
-\textbf{Standardization (Z-score):}
-\begin{equation}
-x' = \frac{x - \mu}{\sigma}
-\end{equation}
-
-Always compute statistics on training set only! \index{data leakage}
-
-\subsection{Handling Imbalanced Data}
-
-\begin{itemize}
-    \item \textbf{Oversampling:} Duplicate minority class examples
-    \item \textbf{Undersampling:} Remove majority class examples
-    \item \textbf{SMOTE:} Synthetic minority oversampling
-    \item \textbf{Class weights:} Penalize errors on minority class more
-    \item \textbf{Focal loss:} Focus on hard examples
-\end{itemize}
-
-\subsection{Data Augmentation}
-
-Generate additional training examples through transformations (see Chapter 7). For images: flips, crops, color jitter; for text: back-translation; for audio: time stretch, noise. Calibrate augmentation strength to avoid distribution shift \textcite{Prince2023}.
-
-\subsection{Visual aids}
-\addcontentsline{toc}{subsubsection}{Visual aids (data)}
+\textbf{Train/Validation/Test split:} This three-way split ensures unbiased model evaluation by keeping the test set completely isolated until final assessment, while the validation set guides hyperparameter tuning without contaminating the final performance estimate. The validation set acts as a proxy for the test set during development, allowing you to make informed decisions about model architecture and hyperparameters without peeking at the true test performance.
 
 \begin{figure}[h]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      width=0.48\textwidth,height=0.36\textwidth,
-      ybar, bar width=10pt, grid=both,
+      width=0.6\textwidth,
+      height=0.15\textwidth,
+      ybar, bar width=20pt,
+      xlabel={Dataset Split}, ylabel={Percentage},
+      xtick=data,
+      xticklabels={Training, Validation, Test},
+      ymin=0, ymax=100,
+      grid=both]
+      \addplot[bookpurple,fill=bookpurple!60] coordinates{(1,70)};
+      \addplot[bookred,fill=bookred!60] coordinates{(2,15)};
+      \addplot[blue,fill=blue!60] coordinates{(3,15)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Train/Validation/Test split with typical proportions: 70\% training, 15\% validation, 15\% test.}
+  \label{fig:data-split}
+\end{figure}
+
+\textbf{Cross-validation:} For small datasets where a single train/validation split might not provide reliable estimates, k-fold cross-validation uses all available data for both training and validation by rotating which subset serves as the validation set. This approach maximizes the use of limited data while providing more robust performance estimates, especially crucial when you have fewer than 1000 examples and need to make the most of every data point.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.8\textwidth,
+      height=0.4\textwidth,
+      xlabel={Data Points (100 total)}, ylabel={Fold},
+      ymin=0.5, ymax=10.5,
+      xmin=0, xmax=100,
+      grid=both,
+      ytick={1,2,3,4,5,6,7,8,9,10},
+      yticklabels={Fold 1, Fold 2, Fold 3, Fold 4, Fold 5, Fold 6, Fold 7, Fold 8, Fold 9, Fold 10},
+      xtick={0,10,20,30,40,50,60,70,80,90,100}]
+      
+      % Fold 1: Validation = 0-9
+      \addplot[bookred,very thick] coordinates{(0,1) (9,1)};
+      \addplot[bookpurple,very thick] coordinates{(10,1) (99,1)};
+      
+      % Fold 2: Validation = 10-19
+      \addplot[bookred,very thick] coordinates{(10,2) (19,2)};
+      \addplot[bookpurple,very thick] coordinates{(0,2) (9,2)};
+      \addplot[bookpurple,very thick] coordinates{(20,2) (99,2)};
+      
+      % Fold 3: Validation = 20-29
+      \addplot[bookred,very thick] coordinates{(20,3) (29,3)};
+      \addplot[bookpurple,very thick] coordinates{(0,3) (19,3)};
+      \addplot[bookpurple,very thick] coordinates{(30,3) (99,3)};
+      
+      % Fold 4: Validation = 30-39
+      \addplot[bookred,very thick] coordinates{(30,4) (39,4)};
+      \addplot[bookpurple,very thick] coordinates{(0,4) (29,4)};
+      \addplot[bookpurple,very thick] coordinates{(40,4) (99,4)};
+      
+      % Fold 5: Validation = 40-49
+      \addplot[bookred,very thick] coordinates{(40,5) (49,5)};
+      \addplot[bookpurple,very thick] coordinates{(0,5) (39,5)};
+      \addplot[bookpurple,very thick] coordinates{(50,5) (99,5)};
+      
+      % Fold 6: Validation = 50-59
+      \addplot[bookred,very thick] coordinates{(50,6) (59,6)};
+      \addplot[bookpurple,very thick] coordinates{(0,6) (49,6)};
+      \addplot[bookpurple,very thick] coordinates{(60,6) (99,6)};
+      
+      % Fold 7: Validation = 60-69
+      \addplot[bookred,very thick] coordinates{(60,7) (69,7)};
+      \addplot[bookpurple,very thick] coordinates{(0,7) (59,7)};
+      \addplot[bookpurple,very thick] coordinates{(70,7) (99,7)};
+      
+      % Fold 8: Validation = 70-79
+      \addplot[bookred,very thick] coordinates{(70,8) (79,8)};
+      \addplot[bookpurple,very thick] coordinates{(0,8) (69,8)};
+      \addplot[bookpurple,very thick] coordinates{(80,8) (99,8)};
+      
+      % Fold 9: Validation = 80-89
+      \addplot[bookred,very thick] coordinates{(80,9) (89,9)};
+      \addplot[bookpurple,very thick] coordinates{(0,9) (79,9)};
+      \addplot[bookpurple,very thick] coordinates{(90,9) (99,9)};
+      
+      % Fold 10: Validation = 90-99
+      \addplot[bookred,very thick] coordinates{(90,10) (99,10)};
+      \addplot[bookpurple,very thick] coordinates{(0,10) (89,10)};
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{10-fold cross-validation with 100 data points. Red bars show validation sets (10 points each), purple bars show training sets (90 points each).}
+  \label{fig:kfold-cv}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{k-fold cross-validation:} Divides data into k equal folds, using each fold as validation set once
+    \item \textbf{Stratified splits for imbalanced data:} Ensures each fold maintains the same class distribution as the original dataset
+\end{itemize}
+
+\index{cross-validation}
+
+\subsection{Normalization}
+
+Normalization is essential because neural networks are sensitive to the scale of input features, and features with vastly different ranges can cause training instability and poor convergence. When one feature ranges from 0 to 1 while another spans 0 to 1000, the larger-scale feature dominates the learning process, causing the network to ignore the smaller-scale feature entirely. This scale imbalance leads to slow convergence, as the optimizer struggles to find appropriate learning rates that work for both features simultaneously.
+
+\textbf{Min-Max Scaling:} This method rescales features to a fixed range, typically [0,1], by subtracting the minimum value and dividing by the range. Min-max scaling preserves the original distribution shape and is particularly useful when you know the expected range of your data or when you need features to have the same scale for distance-based algorithms.
+\begin{equation}
+x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
+\end{equation}
+
+\textbf{Standardization (Z-score):} This approach transforms features to have zero mean and unit variance, making them follow a standard normal distribution. Standardization is more robust to outliers than min-max scaling and is the preferred method for most deep learning applications, as it centers the data around zero and gives equal importance to all features regardless of their original scale.
+\begin{equation}
+x' = \frac{x - \mu}{\sigma}
+\end{equation}
+
+Always compute statistics on training set only! \index{data leakage} Using validation or test set statistics would create data leakage, as the model would have access to information from future data during training, leading to overly optimistic performance estimates that don't generalize to truly unseen data.
+
+\index{min-max scaling}\index{normalization}\index{standardization}
+
+\subsection{Handling Imbalanced Data}
+
+\textbf{Imbalanced data} occurs when one or more classes have significantly fewer examples than others, creating a skewed class distribution that can severely bias model training toward the majority class. This imbalance is problematic because standard machine learning algorithms assume balanced class distributions and will naturally favor the majority class, leading to poor performance on minority classes that are often the most important to identify correctly.
+
+\begin{itemize}
+    \item \textbf{Oversampling:} Duplicate minority class examples to balance the dataset artificially. This approach increases the representation of minority classes by creating exact copies of existing examples, which helps the model see more minority class instances during training. However, simple duplication can lead to overfitting since the model sees identical examples multiple times, potentially memorizing specific patterns rather than learning generalizable features.
+    
+    \item \textbf{Undersampling:} Remove majority class examples to create a more balanced dataset by randomly discarding instances from the overrepresented class. This method reduces computational cost and training time while forcing the model to pay more attention to minority classes. The main drawback is the loss of potentially valuable information from the majority class, which can hurt overall model performance if the discarded examples contain important patterns.
+    
+    \item \textbf{SMOTE:} Synthetic minority oversampling creates new synthetic examples for minority classes by interpolating between existing minority class instances in feature space. SMOTE generates realistic synthetic data points by finding k-nearest neighbors of minority examples and creating new instances along the line segments connecting them. This approach provides more diverse training examples than simple duplication while maintaining the statistical properties of the original minority class distribution.
+    
+    \item \textbf{Class weights:} Penalize errors on minority class more heavily during training by assigning higher loss weights to minority class misclassifications. This technique adjusts the loss function to make the model more sensitive to minority class errors, effectively forcing it to prioritize learning the underrepresented classes. The weights are typically set inversely proportional to class frequency, so a class with 10\% representation gets 10x higher weight than a class with 100\% representation.
+    
+    \item \textbf{Focal loss:} Focus on hard examples by down-weighting easy examples and up-weighting difficult-to-classify instances, particularly useful for extreme class imbalance. This loss function automatically adapts to the difficulty of each example, reducing the contribution of well-classified majority class examples while emphasizing misclassified minority class instances. Focal loss is especially effective for object detection and segmentation tasks where background pixels vastly outnumber foreground objects.
+\end{itemize}
+
+\index{oversampling}\index{undersampling}\index{SMOTE}\index{class weights}\index{focal loss}
+
+\subsection{Data Augmentation}
+
+\textbf{Data augmentation} is a crucial strategy in deep learning to artificially increase the size and diversity of a training dataset, which is vital for achieving generalization and mitigating overfitting, especially when working with limited real-world samples. By generating additional examples through domain-specific transformations, such as flips, crops, or color jitter for images, the model learns to recognize the core object or pattern regardless of minor variations. In the NLP space, techniques like back-translation (translating text to another language and back) introduce crucial syntactic and vocabulary variance that stabilizes large language models. The primary challenge lies in calibrating the strength of these augmentations, as excessive or unrealistic noise, such as extreme time stretching for audio or radical color shifts for images, can distort the underlying signal and cause a debilitating distribution shift that undermines model performance. Ultimately, intelligent data augmentation expands the effective manifold of the training data without the cost of collecting new samples.
+
+For images: flips, crops, color jitter; for text: back-translation; for audio: time stretch, noise. Calibrate augmentation strength to avoid distribution shift \textcite{Prince2023}.
+
+\subsection{Visual aids}
+\addcontentsline{toc}{subsubsection}{Visual aids (data)}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.45\textwidth,
+      height=0.32\textwidth,
+      ybar, bar width=15pt, grid=both,
       xlabel={Class}, ylabel={Count}, xtick=data,
-      xticklabels={A,B,C,D,E}]
-      \addplot[bookpurple,fill=bookpurple!40] coordinates{(1,1000) (2,800) (3,120) (4,80) (5,40)};
+      xticklabels={A,B,C,D,E},
+      ymin=0, ymax=1200,
+      axis lines=left]
+      \addplot[bookpurple,fill=bookpurple!60] coordinates{(1,1000) (2,800) (3,120) (4,80) (5,40)};
     \end{axis}
   \end{tikzpicture}
   \caption{Imbalanced dataset example motivating class weights or resampling.}
   \label{fig:imbalance-bar}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      width=0.48\textwidth,height=0.36\textwidth,
-      xlabel={$x$}, ylabel={$x'$}, grid=both]
+      width=0.45\textwidth,
+      height=0.32\textwidth,
+      xlabel={Original value $x$}, ylabel={Normalized value $x'$}, 
+      grid=both,
+      axis lines=left,
+      xmin=0, xmax=1, ymin=0, ymax=1]
       \addplot[bookpurple,very thick,domain=0:1]{x};
       \addplot[bookred,very thick,domain=-3:3]({(x+3)/6},{(x-0)/2});
+      \node at (0.5,0.8) {Min-Max};
+      \node at (0.5,0.2) {Standardization};
     \end{axis}
   \end{tikzpicture}
   \caption{Min-max scaling (purple) vs. standardization (red) schematic.}
@@ -80,5 +190,5 @@ Generate additional training examples through transformations (see Chapter 7). F
 
 \subsection{Historical notes}
 
-Careful dataset design (train/val/test segregation, leakage prevention) has long underpinned reliable evaluation in ML and remains essential at scale in deep learning \textcite{Bishop2006,GoodfellowEtAl2016}.
+Careful dataset design (train/val/test segregation, leakage prevention) has long underpinned reliable evaluation in ML and remains essential at scale in deep learning \textcite{Bishop2006,GoodfellowEtAl2016}. The evolution from classical ML to deep learning fundamentally transformed data preprocessing requirements, as traditional methods like linear regression and decision trees were relatively robust to feature scaling, while neural networks require careful normalization to prevent gradient instability. The introduction of batch normalization by Ioffe and Szegedy in 2015 marked a pivotal moment, as it automated the normalization process during training, eliminating the need for manual feature scaling in many cases. Unlike classical methods where data splitting was primarily about preventing overfitting, deep learning's data augmentation techniques (pioneered in computer vision by Krizhevsky et al. in 2012) became essential for generalization, as neural networks' high capacity made them prone to memorizing training data. The rise of transfer learning and pre-trained models further complicated data preparation, as practitioners now needed to understand how to adapt datasets for models trained on different distributions, a challenge that classical ML rarely faced. Modern frameworks like TensorFlow and PyTorch have democratized these sophisticated preprocessing techniques, making advanced data preparation accessible to practitioners who previously relied on simpler methods like one-hot encoding for categorical variables or basic standardization for continuous features.
 

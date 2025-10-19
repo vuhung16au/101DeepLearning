@@ -5,7 +5,7 @@
 
 \subsection{Establishing Baselines}
 
-Strong baselines de-risk projects by validating data quality, metrics, and feasibility \textcite{GoodfellowEtAl2016,Prince2023}. Establish multiple baselines and track them as immutable references. \index{baseline}
+A \textbf{baseline model} is a simple, well-understood reference system that provides a performance floor for comparison against more complex approaches. Strong baselines de-risk projects by validating data quality, metrics, and feasibility \textcite{GoodfellowEtAl2016,Prince2023}. They serve as sanity checks to ensure that sophisticated models actually improve upon simple solutions rather than introducing unnecessary complexity. Baselines help identify whether poor performance stems from model limitations or fundamental issues with data quality, preprocessing, or evaluation methodology. By establishing multiple baselines across different complexity levels, practitioners can quantify the marginal value of each architectural choice and avoid over-engineering solutions. These reference points become immutable benchmarks that prevent performance regression and provide confidence that improvements are genuine rather than artifacts of experimental variance. \index{baseline}
 
 Start with simple baselines:
 \begin{enumerate}
@@ -18,6 +18,10 @@ Start with simple baselines:
 Compare deep learning improvements against these baselines. Use \emph{data leakage} \index{data leakage} checks (e.g., time-based splits, patient-level splits) and ensure identical preprocessing across baselines.
 
 \subsection{Debugging Strategy}
+
+Deep learning models often fail silently or produce unexpected results due to the complexity of neural architectures and the non-convex optimization landscape. Systematic debugging is essential because model failures can stem from multiple sources: implementation bugs, data quality issues, hyperparameter choices, or fundamental limitations of the approach. Without proper debugging methodology, practitioners may waste significant time pursuing ineffective solutions or miss critical insights about their data and model behavior.
+
+\index{silent failures}
 
 \textbf{Step 1: Overfit a small dataset}
 \begin{itemize}
@@ -44,24 +48,33 @@ Compare deep learning improvements against these baselines. Use \emph{data leaka
 
 \textbf{Vanishing/exploding gradients:}
 \begin{itemize}
-    \item Use batch normalization
-    \item Gradient clipping
-    \item Better initialization
-    \item Consider residual connections
+    \item \textbf{Use batch normalization:} Batch normalization stabilizes training by normalizing inputs to each layer, preventing gradients from becoming too small or large during backpropagation. For example, in a 50-layer network without batch norm, gradients might vanish to near-zero values by layer 20, but with batch norm they remain stable throughout the entire network.
+    
+    \item \textbf{Gradient clipping:} Gradient clipping prevents exploding gradients by capping gradient magnitudes at a threshold (e.g., 1.0 or 5.0). This is particularly important in RNNs where gradients can grow exponentially over long sequences, causing training instability and preventing convergence.
+    
+    \item \textbf{Better initialization:} Proper weight initialization (Xavier/He initialization) ensures gradients start at reasonable magnitudes rather than vanishing or exploding from the first forward pass. For instance, He initialization for ReLU networks sets weights to $\sqrt{2/n}$ where $n$ is the input size, preventing the "dead neuron" problem where all activations become zero.
+    
+    \item \textbf{Consider residual connections:} Residual connections provide direct paths for gradient flow, allowing information to bypass layers where gradients might vanish. In ResNet architectures, the skip connection $y = F(x) + x$ ensures that even if $F(x)$ becomes zero, the gradient can still flow through the identity connection.
 \end{itemize}
+
+\index{batch normalization}\index{gradient clipping}
 
 \textbf{Dead ReLUs:}
 \begin{itemize}
-    \item Lower learning rate
-    \item Use Leaky ReLU or ELU
+    \item \textbf{Lower learning rate:} Dead ReLUs occur when neurons never activate because their weights become too negative, often due to aggressive learning rates. Reducing the learning rate from 0.01 to 0.001 can prevent neurons from being "killed" during early training, allowing them to recover and contribute to learning.
+    
+    \item \textbf{Use Leaky ReLU or ELU:} Unlike standard ReLU which outputs zero for negative inputs, Leaky ReLU allows small negative values (e.g., 0.01x) and ELU provides smooth negative outputs. This prevents the "dying ReLU" problem where neurons become permanently inactive, as seen in networks where 30-50\% of neurons might never fire after initialization.
 \end{itemize}
 
 \textbf{Loss not decreasing:}
 \begin{itemize}
-    \item Check learning rate (too high or too low)
-    \item Verify gradient computation
-    \item Check data preprocessing
-    \item Confirm label alignment and class indexing
+    \item \textbf{Check learning rate (too high or too low):} Learning rates that are too high cause the optimizer to overshoot the minimum and oscillate around it, while rates that are too low make training painfully slow. A learning rate of 0.1 might cause loss to bounce between 0.5 and 0.7, while 0.0001 might show no improvement for 100 epochs.
+    
+    \item \textbf{Verify gradient computation:} Gradient computation bugs can cause the optimizer to move in wrong directions or not move at all. Common issues include incorrect backpropagation implementations, wrong loss function derivatives, or gradient accumulation errors that result in gradients being zero or pointing away from the minimum.
+    
+    \item \textbf{Check data preprocessing:} Incorrect data preprocessing can make learning impossible by normalizing inputs to the wrong scale or introducing data leakage. For example, normalizing images to [0,1] when the model expects [-1,1], or accidentally including future information in time series data can prevent the model from learning meaningful patterns.
+    
+    \item \textbf{Confirm label alignment and class indexing:} Misaligned labels or incorrect class indexing can cause the model to learn the wrong mappings. A common mistake is using 1-based indexing for labels when the model expects 0-based indexing, causing the model to predict class 0 when it should predict class 1, resulting in consistently wrong predictions.
 \end{itemize}
 
 \subsection{Ablation and sanity checks}

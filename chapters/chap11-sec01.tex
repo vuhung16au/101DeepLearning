@@ -83,15 +83,20 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
 \subsubsection*{Visual aids}
 \addcontentsline{toc}{subsubsection}{Visual aids (classification)}
 
-\begin{figure}[h]
+\paragraph{ROC and PR curves.} The following figures illustrate key classification metrics:
+
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      width=0.48\textwidth,
-      height=0.36\textwidth,
-      xlabel={False Positive Rate}, ylabel={True Positive Rate},
+      width=0.45\textwidth,
+      height=0.32\textwidth,
+      xlabel={False Positive Rate}, 
+      ylabel={True Positive Rate},
       xmin=0,xmax=1,ymin=0,ymax=1,
-      legend pos=south east, grid=both]
+      legend pos=south east, 
+      grid=both,
+      axis lines=left]
       \addplot[very thick,bookpurple] coordinates {(0,0) (0.1,0.6) (0.2,0.78) (0.4,0.9) (1,1)};\addlegendentry{Model A}
       \addplot[very thick,bookred,dashed] coordinates {(0,0) (0.2,0.55) (0.5,0.8) (0.8,0.9) (1,1)};\addlegendentry{Model B}
       \addplot[bookpurple!40] coordinates {(0,0) (1,1)};\addlegendentry{Random}
@@ -101,15 +106,18 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
   \label{fig:roc-curves}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      width=0.48\textwidth,
-      height=0.36\textwidth,
-      xlabel={Recall}, ylabel={Precision},
+      width=0.45\textwidth,
+      height=0.32\textwidth,
+      xlabel={Recall}, 
+      ylabel={Precision},
       xmin=0,xmax=1,ymin=0,ymax=1,
-      legend pos=south west, grid=both]
+      legend pos=south west, 
+      grid=both,
+      axis lines=left]
       \addplot[very thick,bookpurple] coordinates {(0.0,1.0) (0.2,0.92) (0.4,0.88) (0.6,0.80) (0.8,0.65) (1.0,0.45)};\addlegendentry{Model A}
       \addplot[very thick,bookred,dashed] coordinates {(0.0,1.0) (0.2,0.85) (0.4,0.78) (0.6,0.70) (0.8,0.55) (1.0,0.40)};\addlegendentry{Model B}
     \end{axis}
@@ -118,14 +126,19 @@ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \te
   \label{fig:pr-curves}
 \end{figure}
 
-\begin{figure}[h]
+\paragraph{Calibration diagram.} Shows how well predicted probabilities match observed frequencies:
+
+\begin{figure}[ht]
   \centering
   \begin{tikzpicture}
     \begin{axis}[
-      width=0.48\textwidth,
-      height=0.36\textwidth,
-      xlabel={Predicted probability}, ylabel={Observed frequency},
-      xmin=0,xmax=1,ymin=0,ymax=1, grid=both]
+      width=0.45\textwidth,
+      height=0.32\textwidth,
+      xlabel={Predicted probability}, 
+      ylabel={Observed frequency},
+      xmin=0,xmax=1,ymin=0,ymax=1, 
+      grid=both,
+      axis lines=left]
       \addplot[bookpurple,very thick] coordinates{(0.0,0.0) (0.1,0.05) (0.2,0.10) (0.3,0.18) (0.4,0.28) (0.5,0.40) (0.6,0.55) (0.7,0.68) (0.8,0.80) (0.9,0.90) (1.0,1.0)};
       \addplot[bookpurple!50] coordinates{(0,0) (1,1)};
     \end{axis}
@@ -169,7 +182,9 @@ Sequence generation quality is commonly measured by \gls{bleu} \index{BLEU} and 
 \text{PPL} = \exp\left(-\frac{1}{N} \sum_{i=1}^{N} \log P(x_i)\right).
 \end{equation}
 
-For retrieval and ranking, report mean average precision (mAP), normalized discounted cumulative gain (nDCG), and recall@k.
+For retrieval and ranking, report mean average precision (mAP), normalized discounted cumulative gain (nDCG), and recall@k. Mean Average Precision (mAP) measures how well a system ranks relevant items by computing the average precision across different recall levels, making it crucial for information retrieval where ranking quality matters more than binary classification. Normalized Discounted Cumulative Gain (nDCG) evaluates ranking quality by considering both relevance and position, giving higher weight to items ranked earlier in the list, which reflects real-world user behavior where top results are most important. Recall@k measures the proportion of relevant items found in the top-k results, providing a practical metric for applications where users only examine the first few results. These metrics are essential because they capture the nuanced performance of ranking systems where the order of results significantly impacts user experience, unlike traditional classification metrics that treat all predictions equally regardless of their position in a ranked list.
+
+\index{mAP}\index{nDCG}\index{recall@k}
 
 \subsection{Worked examples}
 

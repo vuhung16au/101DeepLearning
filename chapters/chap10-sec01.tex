@@ -113,19 +113,19 @@ This view connects RNNs to dynamic Bayesian networks and emphasizes that trainin
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|l|p{0.6\textwidth}|p{0.25\textwidth}|}
+\begin{tabular}{|l|p{0.5\textwidth}|p{0.3\textwidth}|}
 \hline
 \textbf{Type} & \textbf{Description} & \textbf{Examples} \\
 \hline
-One-to-one & Fixed-size input to fixed-size output with temporal structure ignored or not present & Static image classification with no time component \\
+One-to-one & Fixed-size input to fixed-size output with temporal structure ignored or not present & Static image classification \\
 \hline
-One-to-many & Single input to sequence output & Image captioning, where an image produces a sequence of words \\
+One-to-many & Single input to sequence output & Image captioning \\
 \hline
-Many-to-one & Sequence input to single output & Sentiment classification from a review; keyword spotting from audio \\
+Many-to-one & Sequence input to single output & Sentiment classification; keyword spotting \\
 \hline
-Many-to-many (synchronous) & Sequence labeling with aligned input/output lengths & Part-of-speech tagging, CTC-free frame labeling \\
+Many-to-many (synchronous) & Sequence labeling with aligned input/output lengths & Part-of-speech tagging; frame labeling \\
 \hline
-Many-to-many (asynchronous) & Sequence transduction with potentially different lengths. Attention helps bridge length mismatch by learning soft alignments \cite{Bahdanau2014} & Machine translation, speech recognition with CTC/attention \\
+Many-to-many (asynchronous) & Sequence transduction with potentially different lengths. Attention helps bridge length mismatch by learning soft alignments \cite{Bahdanau2014} & Machine translation; speech recognition \\
 \hline
 \end{tabular}
 \caption{Types of sequence models and their characteristics.}
