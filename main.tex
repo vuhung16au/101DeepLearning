@@ -158,6 +158,54 @@
   #1
 }
 
+% --- Exercise Boxes ---
+% Define color scheme for exercise difficulty levels
+\definecolor{easycolor}{RGB}{232,245,233}      % Light green for easy exercises
+\definecolor{mediumcolor}{RGB}{227,242,253}    % Light blue for medium exercises
+\definecolor{hardcolor}{RGB}{255,235,238}      % Light red/pink for hard exercises
+
+% Define exercise box environment with difficulty-based color coding
+\newtcolorbox{exercisebox}[1][easy]{
+  enhanced,
+  colback=#1color,
+  colframe=black!20,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=5pt,
+  right=5pt,
+  top=5pt,
+  bottom=5pt,
+  before skip=10pt,
+  after skip=10pt
+}
+
+% Define hint box environment
+\newtcolorbox{hintbox}{
+  enhanced,
+  colback=yellow!10,
+  colframe=orange!50,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=5pt,
+  right=5pt,
+  top=5pt,
+  bottom=5pt,
+  before skip=5pt,
+  after skip=5pt,
+  fontupper=\small\itshape,
+  title={\small\bfseries Hint:},
+  coltitle=black,
+  attach boxed title to top left={
+    xshift=5pt,
+    yshift=-3pt
+  },
+  boxed title style={
+    size=small,
+    colback=yellow!30,
+    colframe=orange!50
+  }
+}
+
 % --- Theorem Environments ---
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}

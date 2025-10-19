@@ -5,97 +5,157 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Activation Functions]
 Compare ReLU and sigmoid activation functions. List two advantages of ReLU over sigmoid for hidden layers in deep networks.
-
-\textbf{Hint:} Consider gradient flow, computational efficiency, and the vanishing gradient problem.
 \end{problem}
+\begin{hintbox}
+Consider gradient flow, computational efficiency, and the vanishing gradient problem.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Network Capacity]
 A feedforward network has an input layer with 10 neurons, two hidden layers with 20 neurons each, and an output layer with 3 neurons. Calculate the total number of parameters (weights and biases).
-
-\textbf{Hint:} For each layer transition, count weights and biases separately.
 \end{problem}
+\begin{hintbox}
+For each layer transition, count weights and biases separately.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Output Layer Design]
 For a binary classification task, what activation function and loss function would you use for the output layer? Justify your choice.
-
-\textbf{Hint:} Think about probability outputs and the relationship between binary cross-entropy and sigmoid activation.
 \end{problem}
+\begin{hintbox}
+Think about probability outputs and the relationship between binary cross-entropy and sigmoid activation.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Backpropagation Basics]
 Explain in simple terms why backpropagation is more efficient than computing gradients using finite differences for each parameter.
-
-\textbf{Hint:} Consider the number of forward passes required and the chain rule of calculus.
 \end{problem}
+\begin{hintbox}
+Consider the number of forward passes required and the chain rule of calculus.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Gradient Computation]
 For a simple network with one hidden layer: $\vect{h} = \sigma(\mat{W}_1\vect{x} + \vect{b}_1)$ and $\vect{y} = \mat{W}_2\vect{h} + \vect{b}_2$, derive the gradient $\frac{\partial L}{\partial \mat{W}_1}$ for mean squared error loss.
-
-\textbf{Hint:} Apply the chain rule: $\frac{\partial L}{\partial \mat{W}_1} = \frac{\partial L}{\partial \vect{y}} \frac{\partial \vect{y}}{\partial \vect{h}} \frac{\partial \vect{h}}{\partial \mat{W}_1}$.
 \end{problem}
+\begin{hintbox}
+Apply the chain rule: $\frac{\partial L}{\partial \mat{W}_1} = \frac{\partial L}{\partial \vect{y}} \frac{\partial \vect{y}}{\partial \vect{h}} \frac{\partial \vect{h}}{\partial \mat{W}_1}$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Universal Approximation]
 The universal approximation theorem states that a feedforward network with a single hidden layer can approximate any continuous function. Discuss why we still use deep networks with multiple layers in practice.
-
-\textbf{Hint:} Consider efficiency of representation, number of neurons needed, and hierarchical feature learning.
 \end{problem}
+\begin{hintbox}
+Consider efficiency of representation, number of neurons needed, and hierarchical feature learning.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Xavier Initialisation]
 Derive the Xavier (Glorot) initialisation scheme for weights. Explain why it helps maintain variance of activations across layers.
-
-\textbf{Hint:} Start with the variance of layer outputs and the assumption that inputs and weights are independent.
 \end{problem}
+\begin{hintbox}
+Start with the variance of layer outputs and the assumption that inputs and weights are independent.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Residual Connections]
 Analyse how residual connections (skip connections) help with gradient flow in very deep networks. Derive the gradient through a residual block.
-
-\textbf{Hint:} Consider $\vect{y} = \vect{x} + F(\vect{x})$ and compute $\frac{\partial L}{\partial \vect{x}}$ where $F$ is a sub-network.
 \end{problem}
+\begin{hintbox}
+Consider $\vect{y} = \vect{x} + F(\vect{x})$ and compute $\frac{\partial L}{\partial \vect{x}}$ where $F$ is a sub-network.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Universal Approximation]
 Explain the universal approximation theorem for neural networks. What are its practical limitations?
-
-\textbf{Hint:} The theorem states that a single hidden layer with sufficient neurons can approximate any continuous function, but doesn't guarantee efficient learning.
 \end{problem}
+\begin{hintbox}
+The theorem states that a single hidden layer with sufficient neurons can approximate any continuous function, but doesn't guarantee efficient learning.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Activation Function Properties]
 Compare the properties of ReLU, Leaky ReLU, and ELU activation functions. When would you use each?
-
-\textbf{Hint:} Consider gradient flow, computational efficiency, and the "dying ReLU" problem.
 \end{problem}
+\begin{hintbox}
+Consider gradient flow, computational efficiency, and the "dying ReLU" problem.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Network Depth vs Width]
 Explain the trade-offs between making a network deeper versus wider. When might you prefer one approach?
-
-\textbf{Hint:} Deeper networks can learn more complex features but are harder to train; wider networks are easier to train but may need more parameters.
 \end{problem}
+\begin{hintbox}
+Deeper networks can learn more complex features but are harder to train; wider networks are easier to train but may need more parameters.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Gradient Vanishing Exercise]
 Explain why gradients can vanish in deep networks and how modern architectures address this issue.
-
-\textbf{Hint:} Consider the chain rule and how gradients are multiplied through layers, especially with activation functions like sigmoid.
 \end{problem}
+\begin{hintbox}
+Consider the chain rule and how gradients are multiplied through layers, especially with activation functions like sigmoid.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Batch Normalization Effects]
 Explain how batch normalization affects training dynamics and why it can improve convergence.
-
-\textbf{Hint:} Batch normalization reduces internal covariate shift and can act as a regularizer.
 \end{problem}
+\begin{hintbox}
+Batch normalization reduces internal covariate shift and can act as a regularizer.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Dropout Regularization]
 Compare dropout with other regularization techniques like L1/L2 regularization. When is dropout most effective?
-
-\textbf{Hint:} Dropout prevents overfitting by randomly setting neurons to zero during training, creating an ensemble effect.
 \end{problem}
+\begin{hintbox}
+Dropout prevents overfitting by randomly setting neurons to zero during training, creating an ensemble effect.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Weight Initialization Strategies]
 Compare Xavier/Glorot initialization with He initialization. When would you use each?
-
-\textbf{Hint:} Xavier assumes symmetric activation functions, while He initialization is designed for ReLU networks.
 \end{problem}
+\begin{hintbox}
+Xavier assumes symmetric activation functions, while He initialization is designed for ReLU networks.
+\end{hintbox}
+\end{exercisebox}
+
 

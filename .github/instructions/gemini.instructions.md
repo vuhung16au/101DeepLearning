@@ -175,10 +175,11 @@ make pdf      # Complete compilation process
 ### Chapter Structure Requirements
 - **Each chapter must have a brief introduction at the start**: A 1-2 paragraph overview that introduces the chapter's topic and provides context
 - **Each chapter must have 15-20 Hands-On Exercises**: Practical exercises categorised by difficulty (Easy/Medium/Hard) to reinforce learning
-  - Use `\begin{problem}[Title]...\end{problem}` environment
+  - Use `\begin{exercisebox}[difficulty]...\end{exercisebox}` to wrap each exercise
+  - Inner `\begin{problem}[Title]...\end{problem}` for exercise content
+  - Use `\begin{hintbox}...\end{hintbox}` for hints (separate from problem)
   - Exercises are automatically numbered by LaTeX (e.g., Exercise 2.1, Exercise 2.2)
   - The numbering is shared with theorems, definitions, and examples within each chapter
-  - Include hints for each exercise using `\textbf{Hint:}` formatting
   - Organise by difficulty level in subsections (Easy, Medium, Hard)
 - **Each chapter must have a Key Takeaways section**: Use the boxed `keytakeaways` environment
   - Create a file named `chapters/chapXX-key-takeaways.tex`
@@ -187,6 +188,32 @@ make pdf      # Complete compilation process
 - **Summaries should use boxed format when present**: Use the `summary` environment
   - Use `\begin{summary}...\end{summary}` for chapter or section summaries
   - Both environments use tcolorbox for enhanced visual presentation
+
+### Exercise Box Design Policy
+- **Visual Hierarchy**: Exercises use color-coded boxes to indicate difficulty level
+  - Easy exercises: Light green background (RGB 232,245,233) - `\begin{exercisebox}[easy]`
+  - Medium exercises: Light blue background (RGB 227,242,253) - `\begin{exercisebox}[medium]`
+  - Hard exercises: Light red/pink background (RGB 255,235,238) - `\begin{exercisebox}[hard]`
+- **Hint Boxes**: Hints must be in separate `hintbox` environments
+  - Yellow background (10% opacity) with orange border (50% opacity)
+  - Automatic "Hint:" label with small bold text
+  - Italic text style for hint content
+  - Visually distinct from exercise content
+- **Professional Design**: Subtle styling maintains academic tone
+  - Thin borders (0.5pt) with slight rounding (3pt arc)
+  - Appropriate spacing (10pt before/after exercise boxes, 5pt for hint boxes)
+  - Enhanced tcolorbox features for consistent appearance
+- **Structure**: Always follow this pattern:
+  ```latex
+  \begin{exercisebox}[difficulty]
+  \begin{problem}[Title]
+  Exercise content here.
+  \end{problem}
+  \begin{hintbox}
+  Hint content here.
+  \end{hintbox}
+  \end{exercisebox}
+  ```
 
 ### Deep Learning Chapters Requirements
 - **All deep learning chapters (6-20) must include a "Real World Applications" section**
@@ -308,43 +335,63 @@ The \gls{technical-term} is a fundamental concept...
 
 ### Problem Environment Pattern
 ```latex
-% Problems file: chapters/chapXX-problems.tex
-\section*{Problems}
-\addcontentsline{toc}{section}{Problems}
+% Exercises file: chapters/chapXX-exercises.tex
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Problem Title]
 Problem statement or question goes here.
-
-\textbf{Hint:} Helpful guidance for solving the problem.
 \end{problem}
+\begin{hintbox}
+Helpful guidance for solving the problem.
+\end{hintbox}
+\end{exercisebox}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Another Problem]
 Second problem statement.
-
-\textbf{Hint:} Another hint.
 \end{problem}
+\begin{hintbox}
+Another hint.
+\end{hintbox}
+\end{exercisebox}
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Intermediate Problem]
 More challenging problem statement.
-
-\textbf{Hint:} Hint for intermediate problem.
 \end{problem}
+\begin{hintbox}
+Hint for intermediate problem.
+\end{hintbox}
+\end{exercisebox}
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Advanced Problem]
 Most challenging problem statement.
-
-\textbf{Hint:} Hint for advanced problem.
 \end{problem}
+\begin{hintbox}
+Hint for advanced problem.
+\end{hintbox}
+\end{exercisebox}
 
-% Note: Problems are automatically numbered as Problem X.1, X.2, X.3, etc.
+% Note: Exercises are automatically numbered as Exercise X.1, X.2, X.3, etc.
 % where X is the chapter number. The counter is shared with theorems,
 % definitions, and examples within the chapter.
+%
+% Exercise Boxes:
+% - Use color-coded boxes for visual hierarchy
+% - Easy: light green background (RGB 232,245,233)
+% - Medium: light blue background (RGB 227,242,253)
+% - Hard: light red/pink background (RGB 255,235,238)
+% - Hints in separate yellow boxes with "Hint:" label
+% - Professional appearance with subtle colors and thin borders
 ```
 
 ### Algorithm Pattern

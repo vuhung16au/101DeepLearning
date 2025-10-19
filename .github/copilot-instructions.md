@@ -225,20 +225,74 @@ The margins are configured using the geometry package in `main.tex`:
 - Match difficulty level of surrounding content
 
 ### Exercise Formatting
-- **Environment**: Use `\begin{problem}[Title]...\end{problem}` for all exercises
+- **Environment**: Use `\begin{exercisebox}[difficulty]...\end{exercisebox}` to wrap exercises
+- **Difficulty Levels**: Pass difficulty as parameter to exercisebox
+  - `\begin{exercisebox}[easy]` for beginner-level exercises (light green background)
+  - `\begin{exercisebox}[medium]` for intermediate exercises (light blue background)
+  - `\begin{exercisebox}[hard]` for advanced exercises (light red/pink background)
 - **Numbering**: Exercises have their own separate numbering system
   - Format: "Exercise X.Y" where X is the chapter number and Y is the sequential number starting from 1
   - Example: Exercise 1.1, Exercise 1.2, Exercise 1.3 (in Chapter 1)
   - Example: Exercise 2.1, Exercise 2.2, Exercise 2.3 (in Chapter 2)
   - Exercises are numbered independently from theorems, definitions, and examples
 - **Structure**: Each exercise should include:
-  - Optional title in square brackets: `\begin{problem}[Exercise Title]`
-  - Exercise statement or question
-  - Hint using `\textbf{Hint:}` followed by guidance
+  - Outer `exercisebox` with difficulty level
+  - Inner `\begin{problem}[Title]...\end{problem}` for the exercise content
+  - `\begin{hintbox}...\end{hintbox}` for hints (separate from problem)
 - **Organisation**: Group exercises by difficulty level using subsections:
   - `\subsection*{Easy}` for beginner-level exercises
   - `\subsection*{Medium}` for intermediate exercises
   - `\subsection*{Hard}` for advanced exercises
+
+### Exercise Box Design
+- **Visual Design**: Exercises use color-coded boxes for clear visual hierarchy
+  - Easy exercises: Light green background (RGB 232,245,233)
+  - Medium exercises: Light blue background (RGB 227,242,253)
+  - Hard exercises: Light red/pink background (RGB 255,235,238)
+- **Hint Boxes**: Hints are displayed in separate yellow boxes with orange borders
+  - Automatic "Hint:" label
+  - Italic text style for readability
+  - Visually distinct from exercise content
+- **Professional Appearance**: Subtle colors and minimal borders maintain academic tone
+  - Rounded corners (3pt arc)
+  - Thin borders (0.5pt)
+  - Appropriate spacing before and after boxes
+
+### Example Exercise Format
+```latex
+\subsection*{Easy}
+
+\begin{exercisebox}[easy]
+\begin{problem}[RNN vs Feedforward]
+Explain why standard feedforward networks are not suitable for sequence modeling tasks.
+\end{problem}
+\begin{hintbox}
+Consider variable-length inputs and the need to maintain temporal context.
+\end{hintbox}
+\end{exercisebox}
+
+\subsection*{Medium}
+
+\begin{exercisebox}[medium]
+\begin{problem}[BPTT Implementation]
+Describe how truncated backpropagation through time (BPTT) works.
+\end{problem}
+\begin{hintbox}
+Consider memory requirements, gradient approximation quality, and the effective temporal window.
+\end{hintbox}
+\end{exercisebox}
+
+\subsection*{Hard}
+
+\begin{exercisebox}[hard]
+\begin{problem}[GRU vs LSTM]
+Compare GRU and LSTM architectures mathematically. Derive their update equations.
+\end{problem}
+\begin{hintbox}
+Count the number of parameters and operations per cell. GRU has fewer gates.
+\end{hintbox}
+\end{exercisebox}
+```
 
 ## Common Tasks
 

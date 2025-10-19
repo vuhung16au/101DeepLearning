@@ -5,91 +5,147 @@
 
 \subsection*{Easy}
 
+\begin{exercisebox}[easy]
 \begin{problem}[Batch Size Selection]
 Explain the trade-offs between using a large batch size versus a small batch size for training. Consider computation time, memory usage, and convergence properties.
-
-\textbf{Hint:} Think about GPU utilization, gradient noise, and generalization gap.
 \end{problem}
+\begin{hintbox}
+Think about GPU utilization, gradient noise, and generalization gap.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Momentum Intuition]
 Describe how momentum helps accelerate optimization. Use the analogy of a ball rolling down a hill to explain the concept.
-
-\textbf{Hint:} Consider how previous gradients influence the current update and help overcome small local variations.
 \end{problem}
+\begin{hintbox}
+Consider how previous gradients influence the current update and help overcome small local variations.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Learning Rate Scheduling]
 List three common learning rate scheduling strategies and explain when each is most appropriate.
-
-\textbf{Hint:} Consider step decay, exponential decay, cosine annealing, and cyclical learning rates.
 \end{problem}
+\begin{hintbox}
+Consider step decay, exponential decay, cosine annealing, and cyclical learning rates.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[easy]
 \begin{problem}[Adam Hyperparameters]
 Adam optimizer has hyperparameters $\beta_1$ (typically 0.9) and $\beta_2$ (typically 0.999). Explain the role of each parameter.
-
-\textbf{Hint:} $\beta_1$ controls momentum (first moment), $\beta_2$ controls adaptive learning rates (second moment).
 \end{problem}
+\begin{hintbox}
+$\beta_1$ controls momentum (first moment), $\beta_2$ controls adaptive learning rates (second moment).
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Medium}
 
+\begin{exercisebox}[medium]
 \begin{problem}[Optimizer Comparison]
 Compare SGD with momentum, RMSProp, and Adam on a simple optimization problem. Discuss their convergence behavior and when to prefer one over another.
-
-\textbf{Hint:} Consider sparse gradients, non-stationary objectives, and computational cost.
 \end{problem}
+\begin{hintbox}
+Consider sparse gradients, non-stationary objectives, and computational cost.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[medium]
 \begin{problem}[Gradient Clipping]
 Explain why gradient clipping is important for training recurrent neural networks. Derive the gradient clipping formula and discuss the choice of threshold.
-
-\textbf{Hint:} Consider exploding gradients and the norm $\|\nabla L\|$. Clip by value or by norm.
 \end{problem}
+\begin{hintbox}
+Consider exploding gradients and the norm $\|\nabla L\|$. Clip by value or by norm.
+\end{hintbox}
+\end{exercisebox}
+
 
 \subsection*{Hard}
 
+\begin{exercisebox}[hard]
 \begin{problem}[Natural Gradient Descent]
 Derive the natural gradient update rule and explain why it is invariant to reparameterisations. Discuss the computational challenges of using natural gradient in deep learning.
-
-\textbf{Hint:} Consider the Fisher information matrix $\mat{F}$ and the update $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} - \eta \mat{F}^{-1} \nabla L$.
 \end{problem}
+\begin{hintbox}
+Consider the Fisher information matrix $\mat{F}$ and the update $\boldsymbol{\theta} \leftarrow \boldsymbol{\theta} - \eta \mat{F}^{-1} \nabla L$.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Learning Rate Warmup]
 Analyse why learning rate warmup is beneficial when training with large batch sizes. Provide theoretical justification based on the optimization landscape.
-
-\textbf{Hint:} Consider the stability of gradients in early training and the sharpness of the loss landscape.
 \end{problem}
+\begin{hintbox}
+Consider the stability of gradients in early training and the sharpness of the loss landscape.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Optimizer Comparison]
 Compare the convergence properties of SGD, Adam, and RMSprop on a non-convex optimization problem.
-
-\textbf{Hint:} Consider the adaptive learning rates and momentum effects of each optimizer.
 \end{problem}
+\begin{hintbox}
+Consider the adaptive learning rates and momentum effects of each optimizer.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Gradient Clipping]
 Explain when and why gradient clipping is necessary. How does it affect the optimization dynamics?
-
-\textbf{Hint:} Consider the exploding gradient problem and the relationship between gradient norms and learning stability.
 \end{problem}
+\begin{hintbox}
+Consider the exploding gradient problem and the relationship between gradient norms and learning stability.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Learning Rate Scheduling]
 Design a learning rate schedule for training a deep network. Compare step decay, exponential decay, and cosine annealing.
-
-\textbf{Hint:} Consider the trade-off between exploration and exploitation in different phases of training.
 \end{problem}
+\begin{hintbox}
+Consider the trade-off between exploration and exploitation in different phases of training.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Second-Order Methods]
 Explain why second-order optimization methods are rarely used in deep learning despite their theoretical advantages.
-
-\textbf{Hint:} Consider computational complexity, memory requirements, and the stochastic nature of deep learning.
 \end{problem}
+\begin{hintbox}
+Consider computational complexity, memory requirements, and the stochastic nature of deep learning.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Optimization Landscape]
 Analyse the relationship between the optimization landscape and the choice of optimizer for deep networks.
-
-\textbf{Hint:} Consider saddle points, local minima, and the role of noise in optimization.
 \end{problem}
+\begin{hintbox}
+Consider saddle points, local minima, and the role of noise in optimization.
+\end{hintbox}
+\end{exercisebox}
 
+
+\begin{exercisebox}[hard]
 \begin{problem}[Batch Size Effects]
 Investigate how batch size affects optimization dynamics and generalization in deep learning.
-
-\textbf{Hint:} Consider the relationship between batch size, gradient noise, and the implicit regularization effect.
 \end{problem}
+\begin{hintbox}
+Consider the relationship between batch size, gradient noise, and the implicit regularization effect.
+\end{hintbox}
+\end{exercisebox}
+
 
