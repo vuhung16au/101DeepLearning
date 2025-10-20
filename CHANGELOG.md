@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - 8.4.2 Newton's Method
     - 8.4.3 Quasi-Newton Methods
     - 8.5.2 Vanishing and Exploding Gradients
-    - 8.5.3 Local Minima and Saddle Points
+    - 8.5.3 Local Minima and Saddle Points (main content; pedagogical example structure preserved)
     - 8.5.5 Practical Optimization Strategy
   - Maintained British English spelling throughout (optimisation, generalisation, stabilise, etc.)
   - Preserved all technical content, citations, mathematical equations, and index entries
