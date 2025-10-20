@@ -3,30 +3,30 @@
 \section{The Partition Function Problem \difficultyInline{advanced}}
 \label{sec:partition-problem}
 
-Many models have form:
+Many probabilistic models have the form:
 \begin{equation}
 p(\vect{x}) = \frac{1}{Z} \tilde{p}(\vect{x})
 \end{equation}
 
-where partition function $Z = \sum_{\vect{x}} \tilde{p}(\vect{x})$ or $Z = \int \tilde{p}(\vect{x}) d\vect{x}$ is intractable.
+This equation (18.1) shows that the normalized probability $p(\vect{x})$ is obtained by dividing the unnormalized probability $\tilde{p}(\vect{x})$ by the partition function $Z$. The partition function $Z = \sum_{\vect{x}} \tilde{p}(\vect{x})$ (for discrete variables) or $Z = \int \tilde{p}(\vect{x}) d\vect{x}$ (for continuous variables) is intractable because it requires summing or integrating over all possible configurations.
+
+In deep learning, this problem arises in energy-based models like Restricted Boltzmann Machines and modern generative models, where we need to compute likelihoods for training but cannot evaluate the partition function exactly. This forces us to use approximate methods like contrastive divergence, noise contrastive estimation, or score matching to train these models effectively.
 
 \subsection{Why It's Hard}
 
-Computing $Z$ requires:
-\begin{itemize}
-    \item Summing/integrating over all configurations
-    \item Exponential in dimensionality
-    \item Prohibitive for high-dimensional models
-\end{itemize}
+Computing the partition function $Z$ presents fundamental computational challenges that grow exponentially with the dimensionality of the problem. The core difficulty lies in the requirement to sum or integrate over all possible configurations, which becomes computationally prohibitive as the number of variables increases.
+
+The exponential growth in dimensionality means that for a model with $d$ binary variables, we must consider $2^d$ possible configurations, making exact computation impossible for realistic model sizes. This exponential explosion affects not just the computational cost but also the memory requirements, as we need to store and process information about exponentially many states.
+
+The solution to this intractability involves developing approximate methods that avoid computing the partition function directly. These approaches include contrastive divergence, which uses short Markov chains to approximate gradients; noise contrastive estimation, which transforms the problem into binary classification; and score matching, which works with gradients rather than probabilities. Each method trades off between computational efficiency and approximation accuracy, enabling practical training of complex probabilistic models.
 
 \subsection{Impact}
 
-Cannot directly:
-\begin{itemize}
-    \item Evaluate likelihood $p(\vect{x})$
-    \item Compute gradients for learning
-    \item Compare models
-\end{itemize}
+The intractability of partition functions has profound implications for probabilistic modeling and machine learning, fundamentally limiting our ability to work with complex models in their most natural form. When we cannot compute the partition function, we lose the ability to evaluate exact likelihoods, which are essential for model comparison, parameter estimation, and uncertainty quantification.
+
+This limitation prevents us from directly computing gradients needed for learning, forcing us to develop alternative training procedures that approximate the true gradients. The inability to evaluate exact likelihoods also makes it difficult to compare different models or assess their relative performance, as we cannot compute the standard likelihood-based metrics that would naturally arise from the probabilistic framework.
+
+These challenges have driven the development of specialized techniques that work around the partition function problem, including approximate inference methods, contrastive learning approaches, and score-based training procedures. While these methods provide practical solutions, they often introduce bias or require careful tuning, highlighting the fundamental tension between theoretical elegance and computational feasibility in probabilistic modeling.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (partition function)}

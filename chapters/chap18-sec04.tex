@@ -3,17 +3,19 @@
 \section{Score Matching \difficultyInline{advanced}}
 \label{sec:score-matching}
 
-Match gradients of log-density (score function):
+Score matching is a powerful technique that learns probability distributions by matching the gradients of the log-density (score function) rather than the densities themselves. The score function is defined as:
 \begin{equation}
 \psi(\vect{x}) = \nabla_{\vect{x}} \log p(\vect{x})
 \end{equation}
 
-Objective:
+This equation shows that the score function represents the gradient of the log-probability with respect to the input variables. The key insight is that the score function can be computed without knowing the partition function, as the normalization constant cancels out when taking the gradient.
+
+The score matching objective minimizes the squared difference between the model's score function and the data's score function:
 \begin{equation}
 \mathcal{L} = \frac{1}{2} \mathbb{E}_{p_{\text{data}}}[\|\psi_{\theta}(\vect{x}) - \nabla_{\vect{x}} \log p_{\text{data}}(\vect{x})\|^2]
 \end{equation}
 
-Avoids partition function since it cancels in gradient.
+This approach avoids the partition function problem entirely because the normalization constant cancels out in the gradient computation, making the objective tractable to optimize. Score matching has been particularly successful in training energy-based models and has connections to modern generative modeling techniques like diffusion models.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (score matching)}

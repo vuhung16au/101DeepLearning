@@ -23,7 +23,11 @@ After studying this chapter, you will be able to:
 \section*{Intuition}
 \addcontentsline{toc}{section}{Intuition}
 
-Partition functions normalize probabilities by summing over exponentially many states. Estimators navigate this space by focusing effort on high-probability regions without exhaustive enumeration.
+Partition functions are normalizing constants that ensure probability distributions sum to one by dividing unnormalized probabilities by their sum over all possible states. They normalize probabilities by summing over exponentially many states, making exact computation intractable for high-dimensional models.
+
+For example, in a binary image with 100 pixels, computing the partition function requires summing over $2^{100}$ possible configurations, which is computationally impossible. Like trying to count every possible arrangement of a massive jigsaw puzzle where each piece can be in one of two orientations, partition functions represent the total "weight" of all possible configurations that must be computed to get proper probabilities.
+
+Think of partition functions as the "denominator" in a fraction where the numerator is the probability of a specific configuration and the denominator is the sum of probabilities of all possible configurations. Just as you can't know what fraction of a pizza you're eating without knowing the total size of the pizza, you can't compute exact probabilities without knowing the partition function.
 
 
 \input{chapters/chap18-sec01}

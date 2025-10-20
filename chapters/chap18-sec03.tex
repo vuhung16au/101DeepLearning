@@ -1,35 +1,38 @@
 % Chapter 18, Section 3
 
-\section{Noise-Contrastive Estimation \\difficultyInline{advanced}}
+\section{Noise-Contrastive Estimation \difficultyInline{advanced}}
 \label{sec:nce}
+
+Noise-Contrastive Estimation (NCE) transforms the intractable density estimation problem into a tractable binary classification problem by distinguishing between data samples and noise samples, avoiding the need to compute partition functions.
 
 
 \subsection{Key Idea}
 
-Turn density estimation into binary classification:
-\begin{itemize}
-    \item Distinguish data samples from noise samples
-    \item Avoids computing partition function
-\end{itemize}
+The key insight of Noise-Contrastive Estimation is to transform the intractable density estimation problem into a tractable binary classification problem. Instead of trying to compute the partition function directly, NCE trains a classifier to distinguish between samples from the data distribution and samples from a known noise distribution.
+
+This approach cleverly avoids the partition function problem by focusing on the relative probabilities rather than absolute probabilities. By learning to distinguish data from noise, the model implicitly learns the structure of the data distribution without needing to normalize it. The noise distribution serves as a reference point that makes the classification problem well-defined and computationally tractable, enabling effective learning even when the true data distribution has an intractable partition function.
 
 \subsection{NCE Objective}
 
+The NCE objective function combines the log-likelihood of correctly identifying data samples with the log-likelihood of correctly identifying noise samples:
 \begin{equation}
 \mathcal{L} = \mathbb{E}_{p_{\text{data}}}[\log h(\vect{x})] + k \cdot \mathbb{E}_{p_{\text{noise}}}[\log(1-h(\vect{x}))]
 \end{equation}
 
-where:
+This equation (18.4) shows that the objective maximizes the probability of correctly classifying data samples as data while also maximizing the probability of correctly classifying noise samples as noise. The parameter $k$ controls the relative importance of the noise samples in the objective.
+
+The classifier function is defined as:
 \begin{equation}
 h(\vect{x}) = \frac{p_{\text{model}}(\vect{x})}{p_{\text{model}}(\vect{x}) + k \cdot p_{\text{noise}}(\vect{x})}
 \end{equation}
 
+This equation (18.5) shows that $h(\vect{x})$ represents the probability that a sample comes from the data distribution rather than the noise distribution. The key insight is that this ratio can be computed without knowing the partition function, as the normalization constants cancel out in the ratio, making the objective tractable to optimize.
+
 \subsection{Applications}
 
-\begin{itemize}
-    \item Word embeddings (word2vec)
-    \item Language models
-    \item Energy-based models
-\end{itemize}
+Noise-Contrastive Estimation has found widespread applications in natural language processing and machine learning, particularly in scenarios where traditional maximum likelihood estimation is intractable due to partition function issues. The method has been particularly successful in training word embeddings, where the goal is to learn dense vector representations of words that capture their semantic relationships.
+
+In language modeling, NCE enables training of neural language models without computing the full softmax over the entire vocabulary, which would be computationally prohibitive for large vocabularies. The method has also been applied to energy-based models, where it provides a practical alternative to contrastive divergence for training models with intractable partition functions. These applications demonstrate the versatility of NCE as a general-purpose method for handling partition function intractability across different domains and model architectures.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (NCE)}
@@ -50,5 +53,7 @@ h(\vect{x}) = \frac{p_{\text{model}}(\vect{x})}{p_{\text{model}}(\vect{x}) + k \
 
 \subsection{Notes and references}
 
-NCE as a technique to bypass partition functions is discussed in \textcite{GoodfellowEtAl2016,Prince2023}.
+The development of Noise-Contrastive Estimation represents a significant milestone in addressing partition function intractability, with its introduction by Gutmann and Hyvärinen in 2010 marking a turning point in probabilistic modeling. The method's theoretical foundations were further developed through connections to maximum likelihood estimation and the analysis of its asymptotic properties, establishing NCE as a principled alternative to traditional approaches.
+
+Key achievements include the successful application of NCE to word2vec embeddings, which demonstrated its practical effectiveness in large-scale natural language processing tasks. The method's extension to neural language models enabled training on massive vocabularies without computational bottlenecks, contributing to the development of modern language models. Recent work has explored connections between NCE and other contrastive learning methods, highlighting its broader impact on representation learning and its role in the development of modern generative models that avoid partition function computation entirely.
 
