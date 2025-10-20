@@ -11,10 +11,63 @@ Imagine you're learning to play basketball, where after each shot, you need to k
 
 \subsection{The Chain Rule}
 
+The chain rule is fundamental for computing derivatives of composite functions. Let's start with simple examples to build intuition.
+
+\subsubsection{Simple Chain Rule: $f(g(x))$}
+
 For composition $f(g(x))$:
 \begin{equation}
 \frac{df}{dx} = \frac{df}{dg} \frac{dg}{dx}
 \end{equation}
+
+\begin{example}
+Let $f(x) = (x^2 + 1)^3$. We can think of this as $f(g(x))$ where:
+\begin{itemize}
+    \item $g(x) = x^2 + 1$ (inner function)
+    \item $f(g) = g^3$ (outer function)
+\end{itemize}
+
+Using the chain rule:
+\begin{align}
+\frac{df}{dx} &= \frac{df}{dg} \cdot \frac{dg}{dx} \\
+&= 3g^2 \cdot (2x) \\
+&= 3(x^2 + 1)^2 \cdot 2x \\
+&= 6x(x^2 + 1)^2
+\end{align}
+\end{example}
+
+\subsubsection{Multivariable Chain Rule: $f(g(x,y))$}
+
+For functions of multiple variables, we use partial derivatives:
+\begin{equation}
+\frac{\partial f}{\partial x} = \frac{\partial f}{\partial g} \frac{\partial g}{\partial x}
+\end{equation}
+
+\begin{example}
+Let $f(x,y) = (x^2 + y^2)^2$. We can think of this as $f(g(x,y))$ where:
+\begin{itemize}
+    \item $g(x,y) = x^2 + y^2$ (inner function)
+    \item $f(g) = g^2$ (outer function)
+\end{itemize}
+
+Using the chain rule for partial derivatives:
+\begin{align}
+\frac{\partial f}{\partial x} &= \frac{\partial f}{\partial g} \cdot \frac{\partial g}{\partial x} \\
+&= 2g \cdot (2x) \\
+&= 2(x^2 + y^2) \cdot 2x \\
+&= 4x(x^2 + y^2)
+\end{align}
+
+Similarly:
+\begin{align}
+\frac{\partial f}{\partial y} &= \frac{\partial f}{\partial g} \cdot \frac{\partial g}{\partial y} \\
+&= 2g \cdot (2y) \\
+&= 2(x^2 + y^2) \cdot 2y \\
+&= 4y(x^2 + y^2)
+\end{align}
+\end{example}
+
+\subsubsection{Vector Chain Rule}
 
 For vectors, we use the Jacobian:
 \begin{equation}

@@ -22,6 +22,10 @@ At the optimum, both:
 \nabla_{\vect{x}} \mathcal{L} = \boldsymbol{0} \quad \text{and} \quad \frac{\partial \mathcal{L}}{\partial \lambda} = 0
 \end{equation}
 
+\begin{remark}
+Lagrange multipliers are crucial in deep learning for implementing regularization techniques like weight decay and dropout, where we optimize the loss function subject to constraints on parameter norms or activation patterns. They also enable the development of constrained optimization algorithms for training neural networks with fairness constraints, ensuring models treat different demographic groups equally while maintaining high performance.
+\end{remark}
+
 \subsection{Inequality Constraints}
 
 For inequality constraint $g(\vect{x}) \leq 0$, we use the \textbf{Karush-Kuhn-Tucker (KKT)} conditions:
@@ -33,6 +37,10 @@ For inequality constraint $g(\vect{x}) \leq 0$, we use the \textbf{Karush-Kuhn-T
 g(\vect{x}) &\leq 0
 \end{align}
 
+\begin{remark}
+KKT conditions are essential in deep learning for handling inequality constraints such as bounding neural network weights to prevent exploding gradients, ensuring activation functions stay within valid ranges, and implementing robust optimization with adversarial training where perturbations must remain within specified bounds. They also enable the development of constrained optimization algorithms for training neural networks with fairness constraints, ensuring models treat different demographic groups equally while maintaining high performance.
+\end{remark}
+
 \subsection{Projected Gradient Descent}
 
 For constraints defining a set $\mathcal{C}$, \textbf{projected gradient descent} applies:
@@ -42,6 +50,17 @@ For constraints defining a set $\mathcal{C}$, \textbf{projected gradient descent
 \end{equation}
 
 where $\text{Proj}_{\mathcal{C}}$ projects onto the feasible set.
+
+The mathematical operation works as follows: first, we compute the standard gradient descent step $\vect{x}_t - \alpha \nabla f(\vect{x}_t)$, which may move us outside the feasible set $\mathcal{C}$. Then, the projection operator $\text{Proj}_{\mathcal{C}}$ finds the closest point in $\mathcal{C}$ to this intermediate result, ensuring that $\vect{x}_{t+1} \in \mathcal{C}$. The projection is defined as:
+\begin{equation}
+\text{Proj}_{\mathcal{C}}(\vect{y}) = \arg\min_{\vect{x} \in \mathcal{C}} \|\vect{x} - \vect{y}\|_2
+\end{equation}
+
+This ensures that each update step remains within the constraint set while still moving in the direction that reduces the objective function.
+
+\begin{remark}
+Projected gradient descent is essential in deep learning for maintaining constraints during training, such as keeping neural network weights within specified bounds to prevent exploding gradients, ensuring probability outputs sum to 1 in softmax layers, and implementing robust optimization with adversarial training where perturbations must stay within $\ell_\infty$ balls around input examples.
+\end{remark}
 
 \subsection{Applications in Deep Learning}
 

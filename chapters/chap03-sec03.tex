@@ -23,6 +23,10 @@ For continuous variables:
 \mathbb{E}_{x \sim p}[f(x)] = \int p(x) f(x) \, dx
 \end{equation}
 
+\begin{remark}
+Discrete expectation is a special case of continuous expectation. When we have a discrete distribution with probability mass function $P(x)$, we can think of it as a continuous distribution using Dirac delta functions: $p(x) = \sum_i P(x_i) \delta(x - x_i)$. The integral $\int p(x) f(x) \, dx$ then becomes $\sum_i P(x_i) f(x_i)$, which is exactly the discrete expectation formula. This unified view helps us understand that both discrete and continuous expectations follow the same fundamental principle of weighted averaging.
+\end{remark}
+
 \subsubsection{Example: Expected Value of Dice}
 
 For a fair six-sided die:
@@ -60,11 +64,7 @@ The expected value is 3.5, even though we can never actually roll 3.5!
 
 \subsubsection{Intuition: Measuring Spread}
 
-Variance tells us how "spread out" the values are around the mean. Think of two dart players:
-\begin{itemize}
-    \item \textbf{Low variance}: All darts cluster tightly around the bullseye
-    \item \textbf{High variance}: Darts are scattered all over the board
-\end{itemize}
+Variance tells us how "spread out" the values are around the mean. Imagine two dart players with very different playing styles. The first player has low variance in their throws - every dart lands very close to the bullseye, creating a tight cluster of holes around the center. This player is consistent and precise, with their throws showing little variation from the target. The second player has high variance in their throws - their darts are scattered all over the board, some landing far to the left, others to the right, some high, some low. This player is inconsistent and unpredictable, with their throws showing large variation from the target. Variance quantifies this difference in consistency, measuring how much the individual values deviate from the average or expected value.
 
 The \textbf{variance} measures the spread of a distribution:
 
@@ -149,3 +149,13 @@ Positive covariance confirms that taller people tend to weigh more!
 \subsection{Correlation}
 
 The correlation coefficient normalizes covariance by dividing it by the product of the standard deviations, providing a standardized measure of linear relationship between variables that ranges from -1 to 1. A correlation of 1 indicates a perfect positive linear relationship, a correlation of -1 indicates a perfect negative linear relationship, and a correlation of 0 indicates no linear relationship, though the variables may still be dependent in non-linear ways.
+
+\begin{definition}[Correlation Coefficient]
+The correlation coefficient between random variables $X$ and $Y$ is defined as:
+\begin{equation}
+\rho_{X,Y} = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}
+\end{equation}
+where $\sigma_X$ and $\sigma_Y$ are the standard deviations of $X$ and $Y$ respectively.
+\end{definition}
+
+The correlation coefficient has several important properties. It is always bounded between -1 and 1, with $\rho = 1$ indicating perfect positive linear correlation (as one variable increases, the other increases proportionally), $\rho = -1$ indicating perfect negative linear correlation (as one variable increases, the other decreases proportionally), and $\rho = 0$ indicating no linear correlation (though the variables may still be related in non-linear ways). The correlation coefficient is invariant to linear transformations of the variables, meaning that scaling or shifting the variables doesn't change their correlation. This makes correlation particularly useful for comparing relationships between variables that may have different scales or units.

@@ -35,6 +35,42 @@ Think of a decision tree as a flowchart for making decisions, where to classify 
 
 A decision tree recursively partitions the input space based on feature values, where the algorithm works by starting with all training examples at the root, finding the best feature and threshold to split on that maximizes information gain, creating child nodes for each split that represent the different outcomes, repeating recursively until a stopping criterion is met such as maximum depth or minimum samples per leaf, and assigning a prediction to each leaf node based on the majority class or mean value of the examples that reach that node.
 
+\begin{example}[Decision Tree: "Will we go out?"]
+Consider the decision of whether to go out based on four features:
+\begin{itemize}
+    \item \textbf{Is it raining?} (Yes/No)
+    \item \textbf{Temperature} (Hot/Mild/Cold)
+    \item \textbf{Traffic OK?} (Yes/No)
+    \item \textbf{Anyone goes with me?} (Yes/No)
+\end{itemize}
+
+A decision tree might look like:
+\begin{enumerate}
+    \item \textbf{Is it raining?}
+    \begin{itemize}
+        \item \textbf{Yes} → \textbf{Don't go out} (regardless of other factors)
+        \item \textbf{No} → Continue to next question
+    \end{itemize}
+    \item \textbf{Temperature?}
+    \begin{itemize}
+        \item \textbf{Hot} → \textbf{Don't go out} (too hot)
+        \item \textbf{Mild/Cold} → Continue to next question
+    \end{itemize}
+    \item \textbf{Traffic OK?}
+    \begin{itemize}
+        \item \textbf{No} → \textbf{Don't go out} (traffic is bad)
+        \item \textbf{Yes} → Continue to next question
+    \end{itemize}
+    \item \textbf{Anyone goes with me?}
+    \begin{itemize}
+        \item \textbf{Yes} → \textbf{Go out} (company makes it worthwhile)
+        \item \textbf{No} → \textbf{Don't go out} (not worth going alone)
+    \end{itemize}
+\end{enumerate}
+
+This tree shows how decision trees make sequential decisions, where each question splits the data based on the most important feature at that point, leading to a final prediction.
+\end{example}
+
 \subsubsection{Splitting Criteria}
 
 The key question is: "Which feature and threshold should we use to split the data?" We want splits that create the most homogeneous child nodes.

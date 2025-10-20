@@ -5,6 +5,10 @@
 
 \textbf{Support Vector Machines} (SVMs) are powerful classification algorithms that find the optimal hyperplane that maximally separates different classes. The key insight is to maximize the margin between classes, leading to better generalization performance.
 
+\begin{remark}
+The name "Support Vector Machine" comes from the critical role that support vectors play in defining the optimal hyperplane: these are the data points closest to the decision boundary that literally "support" the entire structure of the classifier. If you move any other data point, the hyperplane doesn't change, but if you move a support vector, the entire hyperplane shifts, demonstrating that the entire "machine" is defined and supported by these few critical vectors.
+\end{remark}
+
 \subsection{Intuition and Motivation}
 
 Imagine you have two groups of points on a plane that you want to separate with a line, where there are many possible lines that could separate them, but SVM finds the line that maximizes the distance to the nearest points from each class. This "maximum margin" approach leads to better generalization because the decision boundary is as far as possible from both classes, making the model more robust to new data. The key concepts include support vectors which are the training examples closest to the decision boundary and determine its position, the margin which is the distance between the decision boundary and the nearest support vectors, and the maximum margin principle which chooses the hyperplane that maximizes this margin to achieve the best possible separation.

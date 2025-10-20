@@ -140,6 +140,10 @@ For very large datasets, we can use stochastic gradient descent (SGD), which upd
 
 where $L_i$ is the loss for a single training example or a small batch.
 
+\begin{remark}
+The "stochastic" approach uses random sampling of data points instead of the entire dataset, introducing noise that helps escape local minima and provides better generalization by preventing overfitting to the specific training set. This stochasticity also enables faster convergence and more efficient memory usage, making it the preferred method for training large neural networks on massive datasets.
+\end{remark}
+
 \subsection{Geometric Interpretation}
 
 Linear regression can be understood geometrically as finding the projection of the target vector $\vect{y}$ onto the column space of the design matrix $\mat{X}$. The residual vector $\vect{y} - \mat{X}\vect{w}^*$ is orthogonal to the column space of $\mat{X}$.

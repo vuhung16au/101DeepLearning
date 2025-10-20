@@ -112,17 +112,52 @@ The most common continuous distribution is the \textbf{normal (Gaussian) distrib
     domain=-3:3,
     width=10cm,
     height=6cm,
-    samples=100
+    samples=100,
+    grid=major,
+    grid style={line width=.1pt, draw=gray!10},
+    major grid style={line width=.2pt, draw=gray!50}
 ]
 \addplot[bookpurple, thick] {1/sqrt(2*pi) * exp(-x^2/2)};
 \addplot[bookred, thick] {1/sqrt(2*pi*0.5) * exp(-(x-0.5)^2/(2*0.5))};
 \end{axis}
 \end{tikzpicture}
-\caption{Two normal distributions with different means and standard deviations}
+\caption{Two normal distributions with different means and standard deviations. The purple curve shows $\mathcal{N}(0, 1)$ (standard normal with mean 0 and variance 1), while the red curve shows $\mathcal{N}(0.5, 0.5)$ (normal with mean 0.5 and variance 0.5). The grid helps visualize the density values at different points.}
 \label{fig:normal-distributions}
 \end{figure}
 
 The area under the curve between any two points gives the probability of the variable falling in that range.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Probability Density},
+    xlabel={Value},
+    domain=-2:4,
+    width=10cm,
+    height=6cm,
+    samples=100,
+    grid=major,
+    grid style={line width=.1pt, draw=gray!10},
+    major grid style={line width=.2pt, draw=gray!50},
+    axis lines=middle,
+    axis line style=thick,
+    enlargelimits=upper
+]
+% Normal distribution
+\addplot[blue,thick] {1/sqrt(2*pi) * exp(-(x-1)^2/2)};
+% Fill area under curve from -2 to 0.5
+\addplot[blue!25, fill opacity=0.3] {1/sqrt(2*pi) * exp(-(x-1)^2/2)} \closedcycle;
+% Vertical line at a=0.5
+\addplot[blue,dashed,thick] coordinates {(0.5,0) (0.5,0.4)};
+\node[blue,below] at (axis cs:0.5,0) {$a$};
+\node[blue,above right] at (axis cs:2,0.3) {$f(x)$};
+\node[blue!60!black,above left] at (axis cs:-0.5,0.2) {$P(X\leq a)$};
+\end{axis}
+\end{tikzpicture}
+\caption{Cumulative probability visualization showing the probability density function $f(x)$ and the cumulative probability $P(X \leq a)$ for a normal distribution. The shaded area represents the probability that the random variable $X$ takes a value less than or equal to $a$.}
+\label{fig:cumulative-probability}
+\end{figure}
 
 \subsection{Joint and Marginal Distributions}
 

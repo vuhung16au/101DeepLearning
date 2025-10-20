@@ -94,6 +94,29 @@ This operation is fundamental in neural networks, where it represents the linear
     b_i = \sum_{j=1}^{n} A_{ij}x_j
 \end{equation}
 
+\begin{example}
+Let's compute a matrix-vector product using the numbers 11 and 16:
+
+\begin{equation}
+    \begin{bmatrix} 11 & 3 \\ 2 & 16 \end{bmatrix}
+    \begin{bmatrix} 4 \\ 5 \end{bmatrix}
+    = \begin{bmatrix} ? \\ ? \end{bmatrix}
+\end{equation}
+
+Computing each element:
+\begin{align}
+    b_1 &= A_{11}x_1 + A_{12}x_2 = 11 \cdot 4 + 3 \cdot 5 = 44 + 15 = 59 \\
+    b_2 &= A_{21}x_1 + A_{22}x_2 = 2 \cdot 4 + 16 \cdot 5 = 8 + 80 = 88
+\end{align}
+
+So the result is:
+\begin{equation}
+    \begin{bmatrix} 11 & 3 \\ 2 & 16 \end{bmatrix}
+    \begin{bmatrix} 4 \\ 5 \end{bmatrix}
+    = \begin{bmatrix} 59 \\ 88 \end{bmatrix}
+\end{equation}
+\end{example}
+
 \subsection{Dot Product}
 
 The dot product (or inner product) of two vectors is a special case of matrix multiplication:
@@ -110,6 +133,23 @@ The dot product has geometric interpretation:
     \vect{x} \cdot \vect{y} = \norm{\vect{x}} \norm{\vect{y}} \cos\theta
 \end{equation}
 where $\theta$ is the angle between the vectors.
+
+\subsubsection{Cosine Similarity}
+
+From the geometric interpretation, we can derive the cosine similarity, which measures the angle between two vectors regardless of their magnitude:
+
+\begin{equation}
+    \cos\theta = \frac{\vect{x} \cdot \vect{y}}{\norm{\vect{x}} \norm{\vect{y}}}
+\end{equation}
+
+Cosine similarity ranges from -1 to 1:
+\begin{itemize}
+    \item $\cos\theta = 1$: Vectors point in the same direction (perfectly similar)
+    \item $\cos\theta = 0$: Vectors are perpendicular (no similarity)
+    \item $\cos\theta = -1$: Vectors point in opposite directions (perfectly dissimilar)
+\end{itemize}
+
+Cosine similarity is particularly useful in machine learning for measuring similarity between feature vectors, as it focuses on the direction rather than the magnitude of the vectors. This makes it robust to differences in scale between features.
 
 \subsection{Computational Complexity}
 

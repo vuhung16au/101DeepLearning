@@ -38,6 +38,10 @@ Think of logistic regression as answering: "Given these features, what's the pro
 
 For binary classification with classes $\{0, 1\}$, logistic regression models the probability of the positive class using the sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$, which smoothly maps any real number to a probability between 0 and 1. The prediction probability is $P(y=1|\vect{x}) = \sigma(\vect{w}^\top \vect{x} + b) = \frac{1}{1 + e^{-(\vect{w}^\top \vect{x} + b)}}$, where the linear combination of features and weights determines the input to the sigmoid function, and the output represents the probability that the input belongs to the positive class.
 
+\begin{remark}
+For categorical classification with more than 2 classes, we extend logistic regression to softmax regression, which uses the softmax function to compute probabilities for each class that sum to 1. This allows us to handle multi-class problems like image classification with 10 digit classes or natural language processing with hundreds of word categories.
+\end{remark}
+
 \subsubsection{Properties of the Sigmoid Function}
 
 The sigmoid function has several important properties:
@@ -57,6 +61,10 @@ L(\vect{w}, b) = -\frac{1}{n} \sum_{i=1}^{n} \left[y^{(i)} \log \hat{y}^{(i)} + 
 \end{equation}
 
 where $\hat{y}^{(i)} = P(y=1|\vect{x}^{(i)})$.
+
+\begin{remark}
+Cross-entropy loss is the standard loss function for classification tasks in both classical machine learning and deep learning, providing better gradient properties than mean squared error for probability outputs. In deep neural networks, it's commonly used in the final layer for binary and multi-class classification, enabling efficient backpropagation and stable training across various architectures from simple logistic regression to complex convolutional and transformer networks.
+\end{remark}
 
 \subsubsection{Derivation of Cross-Entropy Loss}
 
@@ -85,7 +93,13 @@ The gradient has a simple form: it's the average of the prediction errors multip
 
 \subsection{Multiclass Classification}
 
-For $K$ classes, we extend logistic regression to softmax regression (also called multinomial logistic regression), where instead of a single sigmoid function, we use the softmax function $P(y=k|\vect{x}) = \frac{\exp(\vect{w}_k^\top \vect{x} + b_k)}{\sum_{j=1}^{K} \exp(\vect{w}_j^\top \vect{x} + b_j)}$ to compute the probability of each class. The softmax function normalizes the exponential scores so that they sum to 1, creating a valid probability distribution over all possible classes.
+For $K$ classes, we extend logistic regression to softmax regression (also called multinomial logistic regression), where instead of a single sigmoid function, we use the softmax function to compute the probability of each class:
+
+\begin{equation}
+P(y=k|\vect{x}) = \frac{\exp(\vect{w}_k^\top \vect{x} + b_k)}{\sum_{j=1}^{K} \exp(\vect{w}_j^\top \vect{x} + b_j)}
+\end{equation}
+
+The softmax function normalizes the exponential scores so that they sum to 1, creating a valid probability distribution over all possible classes.
 
 \subsubsection{Properties of Softmax}
 
@@ -154,6 +168,10 @@ L(\vect{w}) = -\frac{1}{n} \sum_{i=1}^{n} \left[y^{(i)} \log \hat{y}^{(i)} + (1-
 \begin{equation}
 L(\vect{w}) = -\frac{1}{n} \sum_{i=1}^{n} \left[y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log(1-\hat{y}^{(i)})\right] + \lambda \|\vect{w}\|_1
 \end{equation}
+
+\begin{remark}
+The key difference between L1 and L2 regularization lies in their penalty shapes: L2 uses the sum of squared weights $\|\vect{w}\|^2$ which creates smooth, continuous shrinkage of all weights, while L1 uses the sum of absolute weights $\|\vect{w}\|_1$ which can drive some weights to exactly zero, performing automatic feature selection. L2 is better for preventing overfitting when all features are relevant, while L1 is preferred when you want to identify and remove irrelevant features.
+\end{remark}
 
 \subsection{Advantages and Limitations}
 

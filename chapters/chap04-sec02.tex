@@ -80,6 +80,33 @@ f(\vect{x}) \approx f(\vect{x}_0) + (\vect{x} - \vect{x}_0)^\top \nabla f(\vect{
 
 This provides insight into optimization behavior.
 
+\begin{example}[Taylor Series for $f(x) = e^x$ around $x_0 = 0$]
+For the exponential function $f(x) = e^x$, we can compute the Taylor series expansion around $x_0 = 0$:
+
+Since all derivatives of $e^x$ are $e^x$, and $e^0 = 1$, we have:
+\begin{align}
+f(0) &= 1 \\
+f'(0) &= 1 \\
+f''(0) &= 1 \\
+f'''(0) &= 1 \\
+&\vdots
+\end{align}
+
+The Taylor series expansion is:
+\begin{equation}
+e^x \approx 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots
+\end{equation}
+
+For small values of $x$, we can use the first few terms:
+\begin{itemize}
+    \item Linear approximation: $e^x \approx 1 + x$
+    \item Quadratic approximation: $e^x \approx 1 + x + \frac{x^2}{2}$
+    \item Cubic approximation: $e^x \approx 1 + x + \frac{x^2}{2} + \frac{x^3}{6}$
+\end{itemize}
+
+For example, $e^{0.1} \approx 1 + 0.1 + \frac{0.01}{2} = 1.105$, which is very close to the true value of approximately $1.1052$.
+\end{example}
+
 \subsection{Critical Points}
 
 Critical points are locations where the gradient is zero, representing different types of terrain features in the optimization landscape. A local minimum is like the bottom of a bowl where you can't go lower in any direction, a local maximum is like the top of a hill where you can't go higher in any direction, and a saddle point is like a mountain pass where you can go down in some directions and up in others. At a critical point, $\nabla f(\vect{x}) = \boldsymbol{0}$, and the Hessian matrix determines the nature of the critical point: a local minimum occurs when the Hessian is positive definite, a local maximum occurs when the Hessian is negative definite, and a saddle point occurs when the Hessian has both positive and negative eigenvalues.
