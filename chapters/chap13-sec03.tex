@@ -3,25 +3,15 @@
 \section{Independent Component Analysis \difficultyInline{intermediate}}
 \label{sec:ica}
 
+Independent Component Analysis (ICA) is a powerful technique for separating mixed signals into their independent source components, particularly useful when the sources are non-Gaussian and statistically independent.
+
 \subsection{Objective}
 
-Find independent sources from linear mixtures:
-\begin{equation}
-\vect{x} = \mat{A}\vect{s}
-\end{equation}
-
-where $\vect{s}$ contains independent sources.
+The objective of ICA is to find independent sources from linear mixtures through the equation $\vect{x} = \mat{A}\vect{s}$ where $\vect{s}$ contains independent sources and $\mat{A}$ is the mixing matrix. This formulation assumes that observed data is a linear combination of independent source signals, where the goal is to recover the original sources by finding the unmixing matrix that separates the mixed signals. ICA is particularly powerful because it can separate sources even when they are mixed in unknown proportions, making it useful for blind source separation problems where we don't know the mixing process beforehand. The key insight is that independent sources have different statistical properties than their mixtures, allowing ICA to identify and separate them based on these differences.
 
 \subsection{Non-Gaussianity}
 
-ICA exploits that independent signals are typically non-Gaussian.
-
-\textbf{Applications:}
-\begin{itemize}
-    \item Blind source separation (cocktail party problem)
-    \item Signal processing
-    \item Feature extraction
-\end{itemize}
+ICA exploits the fact that independent signals are typically non-Gaussian, where the non-Gaussianity of source signals provides the key information needed to separate them from their mixtures. This is because Gaussian signals have the property that their mixtures are also Gaussian, making it impossible to separate them based on statistical independence alone, but non-Gaussian signals retain their distinctive statistical properties even when mixed. The non-Gaussianity assumption is crucial for ICA's success, as it allows the algorithm to identify which directions in the data space correspond to the original source signals rather than arbitrary linear combinations. This principle is widely applied in blind source separation problems like the cocktail party problem, where multiple speakers' voices are mixed together and need to be separated, in signal processing applications where noise needs to be separated from the signal of interest, and in feature extraction where we want to identify the most informative and independent features in high-dimensional data.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (ICA)}
