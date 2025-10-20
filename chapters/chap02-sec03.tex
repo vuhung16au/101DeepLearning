@@ -74,13 +74,7 @@ However, computing inverses is expensive ($O(n^3)$ for dense matrices) and numer
 
 \subsection{Conditions for Invertibility}
 
-A matrix $\mat{A} \in \mathbb{R}^{n \times n}$ is invertible if and only if:
-\begin{itemize}
-    \item Its determinant is non-zero: $\det(\mat{A}) \neq 0$
-    \item Its columns (and rows) are linearly independent
-    \item It has full rank: $\text{rank}(\mat{A}) = n$
-    \item Its null space contains only the zero vector
-\end{itemize}
+A matrix $\mat{A} \in \mathbb{R}^{n \times n}$ is invertible if and only if it satisfies several equivalent conditions that are fundamental to understanding when linear transformations can be reversed. The determinant condition $\det(\mat{A}) \neq 0$ provides a direct computational test for invertibility, as the determinant captures the volume scaling factor of the linear transformation and a zero determinant indicates that the transformation collapses the space to a lower dimension. The linear independence condition requires that both the columns and rows of the matrix are linearly independent, meaning that no column or row can be expressed as a linear combination of the others, which ensures that the transformation preserves the full dimensionality of the space. The rank condition $\text{rank}(\mat{A}) = n$ ensures that the matrix has full rank, meaning that all $n$ dimensions of the input space are preserved in the output space, which is necessary for the transformation to be reversible. The null space condition requires that the null space contains only the zero vector, meaning that the only vector that maps to zero is the zero vector itself, which ensures that the transformation is one-to-one and therefore invertible.
 
 \subsection{Singular Matrices}
 
@@ -90,12 +84,7 @@ Matrices that are not invertible are called \emph{singular} or \emph{degenerate}
 The matrix $\mat{A} = \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$ is singular because its rows are linearly dependent (the second row is twice the first). Its determinant is $\det(\mat{A}) = 4 - 4 = 0$.
 \end{example}
 
-Singular matrices arise in deep learning when:
-\begin{itemize}
-    \item Features are perfectly correlated
-    \item The model is overparameterized
-    \item Numerical precision issues occur
-\end{itemize}
+Singular matrices arise in deep learning when several problematic conditions occur that can significantly impact model performance and training stability. Features that are perfectly correlated create linear dependencies in the data matrix, leading to singular matrices that cannot be inverted and causing numerical instability in optimization algorithms. Overparameterized models with more parameters than training examples can lead to singular weight matrices, particularly in the early layers where the model has not yet learned meaningful representations and the weight matrices may have insufficient rank. Numerical precision issues occur when the computational precision of floating-point arithmetic is insufficient to distinguish between nearly identical values, causing matrices that should be invertible to become singular due to rounding errors, which is particularly problematic in deep networks where small errors can accumulate and propagate through multiple layers.
 
 \subsection{Pseudo-inverse}
 
@@ -103,10 +92,4 @@ For non-square or singular matrices, we can use the Moore-Penrose pseudo-inverse
 
 \subsection{Practical Considerations}
 
-In deep learning implementations:
-\begin{itemize}
-    \item Avoid explicitly computing matrix inverses when possible
-    \item Use numerically stable algorithms (e.g., QR decomposition, SVD)
-    \item Add regularization to ensure invertibility (e.g., $(\mat{A}\transpose\mat{A} + \lambda\mat{I})^{-1}$)
-    \item Leverage optimized linear algebra libraries (BLAS, LAPACK, cuBLAS)
-\end{itemize}
+In deep learning implementations, several practical considerations are essential for maintaining numerical stability and computational efficiency when working with matrix inverses and related operations. Avoiding explicit computation of matrix inverses whenever possible is crucial, as direct inversion is computationally expensive with $O(n^3)$ complexity and can be numerically unstable, particularly for ill-conditioned matrices that are common in deep learning applications. Using numerically stable algorithms such as QR decomposition and singular value decomposition (SVD) provides more robust alternatives to direct inversion, as these methods are designed to handle numerical precision issues and can provide meaningful results even when matrices are nearly singular. Adding regularization terms such as $(\mat{A}\transpose\mat{A} + \lambda\mat{I})^{-1}$ helps ensure invertibility by adding a small positive value to the diagonal elements, which prevents singular matrices and improves numerical stability while maintaining the mathematical properties of the original problem. Leveraging optimized linear algebra libraries such as BLAS, LAPACK, and cuBLAS is essential for achieving high performance in deep learning applications, as these libraries are highly optimized for specific hardware architectures and can provide significant speedups over naive implementations, particularly when working with large matrices on GPU hardware.

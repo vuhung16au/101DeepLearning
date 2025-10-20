@@ -50,11 +50,7 @@ If a matrix $\mat{A} \in \mathbb{R}^{n \times n}$ has $n$ linearly independent e
     \mat{A} = \mat{V}\boldsymbol{\Lambda}\mat{V}^{-1}
 \end{equation}
 
-where:
-\begin{itemize}
-    \item $\mat{V}$ is the matrix whose columns are eigenvectors: $\mat{V} = [\vect{v}_1, \vect{v}_2, \ldots, \vect{v}_n]$
-    \item $\boldsymbol{\Lambda}$ is a diagonal matrix of eigenvalues: $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \lambda_2, \ldots, \lambda_n)$
-\end{itemize}
+where $\mat{V}$ is the matrix whose columns are eigenvectors $\mat{V} = [\vect{v}_1, \vect{v}_2, \ldots, \vect{v}_n]$ and $\boldsymbol{\Lambda}$ is a diagonal matrix of eigenvalues $\boldsymbol{\Lambda} = \text{diag}(\lambda_1, \lambda_2, \ldots, \lambda_n)$.
 
 This is called the \emph{eigendecomposition} or \emph{spectral decomposition}.
 
@@ -79,14 +75,7 @@ This decomposition is fundamental in many algorithms, including Principal Compon
 
 \subsection{Properties of Eigenvalues}
 
-For a matrix $\mat{A} \in \mathbb{R}^{n \times n}$:
-
-\begin{itemize}
-    \item $\text{trace}(\mat{A}) = \sum_{i=1}^{n} A_{ii} = \sum_{i=1}^{n} \lambda_i$
-    \item $\det(\mat{A}) = \prod_{i=1}^{n} \lambda_i$
-    \item If $\mat{A}$ is invertible, eigenvalues of $\mat{A}^{-1}$ are $1/\lambda_i$
-    \item Eigenvalues of $\mat{A}^k$ are $\lambda_i^k$
-\end{itemize}
+For a matrix $\mat{A} \in \mathbb{R}^{n \times n}$, several important properties connect eigenvalues to other matrix characteristics. The trace of a matrix equals the sum of its eigenvalues $\text{trace}(\mat{A}) = \sum_{i=1}^{n} A_{ii} = \sum_{i=1}^{n} \lambda_i$, providing a direct relationship between the diagonal elements and the eigenvalues that is useful for understanding the overall behavior of the matrix. The determinant of a matrix equals the product of its eigenvalues $\det(\mat{A}) = \prod_{i=1}^{n} \lambda_i$, which connects the volume scaling factor of the linear transformation to the eigenvalues and provides insight into whether the transformation preserves or changes the orientation of the space. If $\mat{A}$ is invertible, the eigenvalues of $\mat{A}^{-1}$ are the reciprocals of the original eigenvalues $1/\lambda_i$, which means that the inverse transformation scales vectors by the inverse of the original scaling factors. The eigenvalues of $\mat{A}^k$ are the $k$-th powers of the original eigenvalues $\lambda_i^k$, which is particularly useful for understanding the long-term behavior of iterative processes and the stability of dynamical systems.
 
 \subsection{Positive Definite Matrices}
 
@@ -106,34 +95,10 @@ Positive definite matrices are crucial in optimization, as they ensure that loca
 
 \subsection{Applications in Deep Learning}
 
-Eigendecomposition has several important applications:
-
-\begin{enumerate}
-    \item \textbf{Principal Component Analysis (PCA):} Finds directions of maximum variance by computing eigenvectors of the covariance matrix.
-    
-    \item \textbf{Optimization:} The Hessian matrix's eigenvalues determine the curvature of the loss surface. Positive definite Hessians indicate convexity.
-    
-    \item \textbf{Spectral Normalization:} Constrains the largest eigenvalue of weight matrices to stabilize training of GANs.
-    
-    \item \textbf{Graph Neural Networks:} Graph Laplacian eigendecomposition defines spectral graph convolutions.
-    
-    \item \textbf{Understanding Dynamics:} Eigenvalues of recurrent weight matrices affect gradient flow and stability.
-\end{enumerate}
+Eigendecomposition has several important applications in deep learning that leverage the geometric and algebraic properties of eigenvalues and eigenvectors. Principal Component Analysis (PCA) finds directions of maximum variance by computing eigenvectors of the covariance matrix, which is fundamental for dimensionality reduction and data preprocessing in many machine learning pipelines. In optimization, the Hessian matrix's eigenvalues determine the curvature of the loss surface, with positive definite Hessians indicating convexity and providing insights into the convergence properties of optimization algorithms. Spectral normalization constrains the largest eigenvalue of weight matrices to stabilize training of generative adversarial networks (GANs), preventing the discriminator from becoming too powerful and maintaining training stability. Graph Neural Networks use graph Laplacian eigendecomposition to define spectral graph convolutions, which enable the application of convolutional neural network concepts to irregular graph structures. Understanding the dynamics of recurrent neural networks involves analyzing the eigenvalues of recurrent weight matrices, as these eigenvalues affect gradient flow and stability during training, with eigenvalues greater than 1 leading to exploding gradients and eigenvalues less than 1 leading to vanishing gradients.
 
 \subsection{Computational Considerations}
 
-Computing eigendecomposition:
-\begin{itemize}
-    \item Full eigendecomposition: $O(n^3)$ for dense matrices
-    \item Power iteration for dominant eigenvector: $O(kn^2)$ for $k$ iterations
-    \item Iterative methods (e.g., Lanczos) for sparse matrices
-\end{itemize}
-
-For large-scale deep learning, we often use:
-\begin{itemize}
-    \item Approximations (e.g., power iteration)
-    \item Focus on top-$k$ eigenvalues/eigenvectors
-    \item Specialized algorithms for specific structures (e.g., symmetric, sparse)
-\end{itemize}
+Computing eigendecomposition involves several computational considerations that are important for practical applications in deep learning. Full eigendecomposition requires $O(n^3)$ operations for dense matrices, making it computationally expensive for large matrices, which is why approximate methods are often preferred in practice. Power iteration for finding the dominant eigenvector requires $O(kn^2)$ operations for $k$ iterations, providing a more efficient way to compute the most important eigenvalue and eigenvector when only the dominant direction is needed. Iterative methods such as Lanczos algorithm are particularly useful for sparse matrices, as they can exploit the sparsity structure to reduce computational complexity and memory requirements. For large-scale deep learning applications, we often use approximations such as power iteration when only the top eigenvalues are needed, focus on top-$k$ eigenvalues and eigenvectors when the full spectrum is not required, and employ specialized algorithms for specific matrix structures such as symmetric or sparse matrices to achieve better performance and numerical stability.
 
 Understanding eigendecomposition provides insight into the geometric properties of linear transformations and is essential for many advanced deep learning techniques.

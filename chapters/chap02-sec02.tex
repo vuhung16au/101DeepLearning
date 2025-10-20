@@ -64,12 +64,7 @@ Consider the multiplication:
 where $C_{11} = 1 \cdot 5 + 2 \cdot 7 = 19$.
 \end{example}
 
-Important properties:
-\begin{itemize}
-    \item \textbf{Associative:} $(\mat{AB})\mat{C} = \mat{A}(\mat{BC})$
-    \item \textbf{Distributive:} $\mat{A}(\mat{B} + \mat{C}) = \mat{AB} + \mat{AC}$
-    \item \textbf{Not commutative:} Generally $\mat{AB} \neq \mat{BA}$
-\end{itemize}
+Matrix multiplication exhibits several important properties that are fundamental to understanding neural network computations. The associative property $(\mat{AB})\mat{C} = \mat{A}(\mat{BC})$ allows us to group matrix multiplications in different ways without changing the result, which is crucial for optimizing the order of operations in deep neural networks and enables efficient computation strategies. The distributive property $\mat{A}(\mat{B} + \mat{C}) = \mat{AB} + \mat{AC}$ allows us to break down complex matrix operations into simpler components, which is particularly useful in gradient computation and backpropagation algorithms where we need to compute derivatives of matrix expressions. Unlike scalar multiplication, matrix multiplication is generally not commutative, meaning that $\mat{AB} \neq \mat{BA}$ in most cases, which has important implications for the order of operations in neural networks and explains why the order of matrix multiplications in forward and backward passes must be carefully considered.
 
 \subsection{Element-wise (Hadamard) Product}
 
@@ -118,12 +113,4 @@ where $\theta$ is the angle between the vectors.
 
 \subsection{Computational Complexity}
 
-Understanding computational costs is important for efficient implementation:
-
-\begin{itemize}
-    \item Matrix-matrix multiplication $\mat{A} \in \mathbb{R}^{m \times n}$, $\mat{B} \in \mathbb{R}^{n \times p}$: $O(mnp)$ operations
-    \item Matrix-vector multiplication: $O(mn)$ operations
-    \item Element-wise operations: $O(mn)$ operations
-\end{itemize}
-
-These operations can be efficiently parallelized on modern hardware (GPUs, TPUs), which is one reason deep learning has become practical.
+Understanding computational costs is crucial for efficient implementation of deep learning algorithms, as the computational complexity of matrix operations directly impacts training time, memory requirements, and the feasibility of deploying models in production environments. Matrix-matrix multiplication between $\mat{A} \in \mathbb{R}^{m \times n}$ and $\mat{B} \in \mathbb{R}^{n \times p}$ requires $O(mnp)$ operations, making it the most computationally expensive operation in neural networks and the primary bottleneck in training large models. Matrix-vector multiplication requires $O(mn)$ operations, which is significantly more efficient than full matrix multiplication and is commonly used in forward passes through neural network layers. Element-wise operations such as activation functions and Hadamard products require $O(mn)$ operations, making them relatively inexpensive compared to matrix multiplications but still important for overall computational efficiency. These operations can be efficiently parallelized on modern hardware such as GPUs and TPUs, which is one of the key reasons why deep learning has become practical for large-scale applications, as the parallel nature of matrix operations maps well to the parallel processing capabilities of specialized hardware.

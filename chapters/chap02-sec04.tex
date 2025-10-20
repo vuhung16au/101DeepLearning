@@ -83,12 +83,10 @@ The \emph{dimension} of a vector space is the number of vectors in any basis for
 The \emph{rank} of a matrix $\mat{A}$ is the dimension of the space spanned by its columns (column rank) or rows (row rank). For any matrix, column rank equals row rank, so we simply refer to ``the rank.''
 \end{definition}
 
-Properties of rank:
-\begin{itemize}
-    \item $\text{rank}(\mat{A}) \leq \min(m, n)$ for $\mat{A} \in \mathbb{R}^{m \times n}$
-    \item $\text{rank}(\mat{AB}) \leq \min(\text{rank}(\mat{A}), \text{rank}(\mat{B}))$
-    \item $\mat{A}$ is invertible if and only if $\text{rank}(\mat{A}) = n$ (full rank)
-\end{itemize}
+Properties of rank provide important insights into the behavior of matrices and their applications in deep learning. The inequality $\text{rank}(\mat{A}) \leq \min(m, n)$ for $\mat{A} \in \mathbb{R}^{m \times n}$ establishes that the rank of a matrix cannot exceed the smaller of its dimensions, which means that a matrix can have at most as many linearly independent columns as it has rows, and vice versa. The rank inequality $\text{rank}(\mat{AB}) \leq \min(\text{rank}(\mat{A}), \text{rank}(\mat{B}))$ shows that matrix multiplication cannot increase the rank, which has important implications for the expressiveness of neural network layers, as the rank of the output is limited by the rank of the weight matrices. The invertibility condition states that $\mat{A}$ is invertible if and only if $\text{rank}(\mat{A}) = n$ (full rank), which connects the concept of rank directly to the invertibility conditions we discussed earlier, as a matrix must have full rank to be invertible, meaning that all its columns must be linearly independent.
+
+\paragraph{Example: Calculating Rank of a 2×2 Matrix}
+Consider the matrix $\mat{A} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$. To calculate its rank, we need to determine how many of its columns are linearly independent. The first column is $\begin{bmatrix} 1 \\ 3 \end{bmatrix}$ and the second column is $\begin{bmatrix} 2 \\ 4 \end{bmatrix}$. These columns are linearly independent because there is no scalar $c$ such that $\begin{bmatrix} 2 \\ 4 \end{bmatrix} = c\begin{bmatrix} 1 \\ 3 \end{bmatrix}$ (this would require $2 = c \cdot 1$ and $4 = c \cdot 3$, which gives $c = 2$ and $c = 4/3$, a contradiction). Since both columns are linearly independent, the rank of this matrix is 2, which is the maximum possible rank for a 2×2 matrix, making it full rank and therefore invertible.
 
 \subsection{Column Space and Null Space}
 
@@ -109,10 +107,4 @@ The \emph{null space} (or \emph{kernel}) of $\mat{A}$ is the set of all vectors 
 
 \subsection{Relevance to Deep Learning}
 
-These concepts are fundamental to understanding:
-\begin{itemize}
-    \item \textbf{Model Capacity:} The expressiveness of a layer depends on the rank of its weight matrix
-    \item \textbf{Redundancy:} Linear dependence in features indicates redundant information
-    \item \textbf{Dimensionality Reduction:} Methods like PCA seek low-dimensional representations
-    \item \textbf{Network Design:} Understanding which transformations are possible with given architectures
-\end{itemize}
+These concepts are fundamental to understanding the capacity, expressiveness, and limitations of neural networks, providing crucial insights into how different architectural choices affect the model's ability to learn and represent complex patterns in data. The expressiveness of a neural network layer depends critically on the rank of its weight matrix, as the rank determines the dimensionality of the space that the layer can map inputs to, with higher rank matrices providing more expressive power but also requiring more parameters and computational resources. Linear dependence in features indicates redundant information that can lead to overfitting and poor generalization, as the model may learn to rely on correlated features rather than discovering the underlying patterns that generalize to new data. Dimensionality reduction methods like PCA seek low-dimensional representations by identifying the directions of maximum variance in the data, which can help reduce overfitting and improve computational efficiency while preserving the most important information. Understanding which transformations are possible with given architectures is essential for network design, as the rank and structure of weight matrices determine what kinds of mappings the network can learn, which directly impacts the model's ability to solve specific tasks and the efficiency of the learning process.

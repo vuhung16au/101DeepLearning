@@ -7,16 +7,7 @@ Norms are functions that measure the size or length of vectors. They are essenti
 
 \subsection{Definition of a Norm}
 
-\begin{definition}[Norm]
-A function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is a norm if it satisfies the following properties for all $\vect{x}, \vect{y} \in \mathbb{R}^n$ and $\alpha \in \mathbb{R}$:
-\begin{enumerate}
-    \item \textbf{Non-negativity:} $f(\vect{x}) \geq 0$, with equality if and only if $\vect{x} = \vect{0}$
-    \item \textbf{Homogeneity:} $f(\alpha\vect{x}) = |\alpha|f(\vect{x})$
-    \item \textbf{Triangle inequality:} $f(\vect{x} + \vect{y}) \leq f(\vect{x}) + f(\vect{y})$
-\end{enumerate}
-\end{definition}
-
-We typically denote norms using the notation $\norm{\vect{x}}$.
+A norm is a mathematical function that provides a consistent and intuitive way to measure the size or length of vectors, serving as the foundation for many important concepts in deep learning including regularization, optimization, and distance metrics. The non-negativity property $f(\vect{x}) \geq 0$ with equality if and only if $\vect{x} = \vect{0}$ ensures that norms always return non-negative values and that only the zero vector has zero norm, which makes intuitive sense as the zero vector has no magnitude. The homogeneity property $f(\alpha\vect{x}) = |\alpha|f(\vect{x})$ ensures that scaling a vector by a scalar $\alpha$ scales its norm by the absolute value of that scalar, which means that the norm scales proportionally with the vector's magnitude, preserving the relative size relationships between vectors. The triangle inequality $f(\vect{x} + \vect{y}) \leq f(\vect{x}) + f(\vect{y})$ ensures that the norm of the sum of two vectors is never greater than the sum of their individual norms, which captures the intuitive notion that the shortest path between two points is a straight line and prevents the norm from behaving in counterintuitive ways. We typically denote norms using the notation $\norm{\vect{x}}$, which provides a concise and standardized way to refer to the magnitude of vectors in mathematical expressions and algorithms.
 
 \subsection{$L^p$ Norms}
 
@@ -42,12 +33,7 @@ The $L^1$ norm is the sum of absolute values:
 For $\vect{x} = \begin{bmatrix} 3 \\ -4 \\ 2 \end{bmatrix}$, we have $\norm{\vect{x}}_1 = 3 + 4 + 2 = 9$.
 \end{example}
 
-The $L^1$ norm is used in:
-\begin{itemize}
-    \item Lasso regularization (encourages sparsity)
-    \item Robust statistics
-    \item Compressed sensing
-\end{itemize}
+The $L^1$ norm is particularly useful in applications where sparsity is desired, as it encourages solutions with many zero components, making it ideal for feature selection and model compression in deep learning applications.
 
 \subsubsection{$L^2$ Norm (Euclidean Distance)}
 
@@ -60,12 +46,7 @@ The $L^2$ norm is the most common norm, corresponding to Euclidean distance:
 For $\vect{x} = \begin{bmatrix} 3 \\ -4 \\ 2 \end{bmatrix}$, we have $\norm{\vect{x}}_2 = \sqrt{9 + 16 + 4} = \sqrt{29} \approx 5.39$.
 \end{example}
 
-The $L^2$ norm is used in:
-\begin{itemize}
-    \item Ridge regularization (weight decay)
-    \item Gradient descent
-    \item Distance metrics
-\end{itemize}
+The $L^2$ norm is the most widely used norm in deep learning, serving as the foundation for many important algorithms and techniques including ridge regularization, gradient descent optimization, and distance-based similarity measures.
 
 The squared $L^2$ norm is often used in optimization because it has simpler derivatives:
 \begin{equation}
@@ -110,13 +91,7 @@ To normalize a vector $\vect{x}$, we divide by its norm:
 resulting in a unit vector pointing in the same direction.
 \end{definition}
 
-Normalization is commonly used in deep learning:
-\begin{itemize}
-    \item Batch normalization
-    \item Layer normalization
-    \item Input feature scaling
-    \item Weight normalization
-\end{itemize}
+Normalization is commonly used in deep learning for improving training stability and convergence, including batch normalization for normalizing activations across mini-batches, layer normalization for normalizing within individual samples, input feature scaling for ensuring consistent input ranges, and weight normalization for controlling the magnitude of network parameters.
 
 \subsection{Distance Metrics}
 
@@ -125,21 +100,10 @@ Norms induce distance metrics. The distance between vectors $\vect{x}$ and $\vec
     d(\vect{x}, \vect{y}) = \norm{\vect{x} - \vect{y}}
 \end{equation}
 
-Different norms lead to different notions of distance:
-\begin{itemize}
-    \item $L^1$: Manhattan distance (sum of coordinate differences)
-    \item $L^2$: Euclidean distance (straight-line distance)
-    \item $L^\infty$: Chebyshev distance (maximum coordinate difference)
-\end{itemize}
+Different norms lead to different notions of distance that are useful in various contexts. The $L^1$ norm leads to Manhattan distance, which measures the sum of coordinate differences and is particularly useful in applications where movement is constrained to grid-like patterns, such as in image processing or when dealing with sparse data where the path between points must follow coordinate axes. The $L^2$ norm leads to Euclidean distance, which measures the straight-line distance between points and is the most intuitive distance metric for most applications, making it the default choice for similarity measures, clustering algorithms, and optimization problems in deep learning. The $L^\infty$ norm leads to Chebyshev distance, which measures the maximum coordinate difference and is useful in applications where the worst-case difference between coordinates is more important than the overall distance, such as in error analysis or when dealing with constraints that must be satisfied simultaneously.
 
 \subsection{Regularization in Deep Learning}
 
-Norms are central to regularization techniques:
-
-\begin{itemize}
-    \item \textbf{$L^1$ Regularization:} Adds $\lambda\norm{\vect{w}}_1$ to loss, promoting sparsity
-    \item \textbf{$L^2$ Regularization:} Adds $\lambda\norm{\vect{w}}_2^2$ to loss, preventing large weights
-    \item \textbf{Elastic Net:} Combines $L^1$ and $L^2$: $\lambda_1\norm{\vect{w}}_1 + \lambda_2\norm{\vect{w}}_2^2$
-\end{itemize}
+Norms are central to regularization techniques that help prevent overfitting and improve generalization in deep learning models. $L^1$ regularization adds $\lambda\norm{\vect{w}}_1$ to the loss function, promoting sparsity by encouraging many weights to become exactly zero, which helps with feature selection and model compression by automatically identifying and removing less important features. $L^2$ regularization adds $\lambda\norm{\vect{w}}_2^2$ to the loss function, preventing large weights by penalizing the squared magnitude of the weight vector, which helps prevent overfitting by keeping the model parameters small and well-behaved. Elastic Net regularization combines both $L^1$ and $L^2$ penalties using $\lambda_1\norm{\vect{w}}_1 + \lambda_2\norm{\vect{w}}_2^2$, providing a balanced approach that can achieve both sparsity and smoothness in the learned parameters, making it particularly useful in applications where both feature selection and parameter stability are important.
 
 Understanding norms and their properties is essential for designing effective regularization strategies and analyzing model behavior.
