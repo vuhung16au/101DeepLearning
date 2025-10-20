@@ -3,41 +3,15 @@
 \section{What Makes a Good Representation? \difficultyInline{intermediate}}
 \label{sec:good-representations}
 
+In the context of deep learning, a representation is a learned transformation that maps high-dimensional raw data into a lower-dimensional space that captures the essential semantic information needed for downstream tasks, where the goal is to extract meaningful features that are useful for classification, generation, or other machine learning objectives.
+
 \subsection{Desirable Properties}
 
-\textbf{Disentanglement:} Different factors of variation are separated
-\begin{itemize}
-    \item Changes in one dimension affect one factor
-    \item Easier interpretation and manipulation
-\end{itemize}
-
-\textbf{Invariance:} Representation unchanged under irrelevant transformations
-\begin{itemize}
-    \item Translation, rotation invariance for objects
-    \item Speaker invariance for speech content
-\end{itemize}
-
-\textbf{Smoothness:} Similar inputs have similar representations
-\begin{itemize}
-    \item Enables generalization
-    \item Supports interpolation
-\end{itemize}
-
-\textbf{Sparsity:} Few features active for each input
-\begin{itemize}
-    \item Computational efficiency
-    \item Interpretability
-\end{itemize}
+Disentanglement refers to the property where different factors of variation are separated in the representation space, where changes in one dimension affect only one factor, making the representation easier to interpret and manipulate by allowing independent control over different aspects of the data. Invariance ensures that the representation remains unchanged under irrelevant transformations, such as translation and rotation invariance for objects or speaker invariance for speech content, where the model learns to focus on task-relevant features while ignoring nuisance variability. Smoothness means that similar inputs have similar representations, enabling generalization to unseen data and supporting interpolation between known examples, where the representation space maintains a coherent structure that reflects the underlying data manifold. Sparsity refers to the property where few features are active for each input, providing computational efficiency by reducing the number of computations needed and improving interpretability by focusing on the most important features for each specific input.
 
 \subsection{Manifold Hypothesis}
 
-Natural data lies on low-dimensional manifolds embedded in high-dimensional space.
-
-Deep learning learns to:
-\begin{itemize}
-    \item Discover the manifold structure
-    \item Map data to meaningful coordinates on manifold
-\end{itemize}
+The manifold hypothesis states that natural data lies on low-dimensional manifolds embedded in high-dimensional space, where despite the high dimensionality of raw data, the underlying structure can be captured by a much smaller number of parameters. Deep learning learns to discover the manifold structure by identifying the low-dimensional subspace that contains the essential information, where the model maps data to meaningful coordinates on the manifold that correspond to the underlying factors of variation in the data, enabling efficient representation and manipulation of complex high-dimensional data.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (representations)}
@@ -58,4 +32,4 @@ Deep learning learns to:
 
 \subsection{Notes and references}
 
-Desirable properties are discussed in modern DL texts; disentanglement and invariance connect to inductive biases and data augmentation \textcite{GoodfellowEtAl2016,Prince2023}.
+Desirable properties are discussed in modern deep learning texts, where disentanglement and invariance connect to inductive biases and data augmentation, representing key milestones in understanding how to design effective representation learning systems. The work by Goodfellow and colleagues has been particularly influential in establishing the theoretical foundations for representation learning, while Prince's contributions have advanced our understanding of how these properties emerge in practice. These models have achieved remarkable success in applications ranging from computer vision and natural language processing to scientific discovery and creative applications, demonstrating their versatility and practical impact in modern machine learning systems.

@@ -3,48 +3,27 @@
 \section{Contrastive Learning \difficultyInline{intermediate}}
 \label{sec:contrastive-learning}
 
-Learn representations by contrasting positive and negative pairs.
+Contrastive learning learns representations by contrasting positive and negative pairs, where the model learns to pull similar examples together and push dissimilar examples apart in the representation space, enabling the discovery of meaningful semantic structure without explicit supervision.
 
 \subsection{Core Idea}
 
-Maximize agreement between different views of same data (positive pairs), minimize agreement with other data (negative pairs).
+The core idea of contrastive learning is to maximize agreement between different views of the same data (positive pairs) while minimizing agreement with other data (negative pairs), where this approach forces the model to learn representations that are invariant to irrelevant transformations while being sensitive to semantic differences. This is achieved by training the model to distinguish between positive pairs that should have similar representations and negative pairs that should have different representations, where the contrastive loss encourages the model to learn a representation space where similar examples are close together and dissimilar examples are far apart. The key insight is that by learning to distinguish between positive and negative pairs, the model naturally learns to capture the underlying semantic structure of the data without requiring explicit labels.
 
 \subsection{SimCLR Framework}
 
-\begin{enumerate}
-    \item Apply two random augmentations to each image
-    \item Encode both views: $\vect{z}_i = f(\vect{x}_i)$, $\vect{z}_j = f(\vect{x}_j)$
-    \item Minimize contrastive loss (NT-Xent):
-\end{enumerate}
-
-\begin{equation}
-\ell_{i,j} = -\log \frac{\exp(\text{sim}(\vect{z}_i, \vect{z}_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{I}_{[k \neq i]} \exp(\text{sim}(\vect{z}_i, \vect{z}_k)/\tau)}
-\end{equation}
-
-where $\text{sim}(\cdot, \cdot)$ is cosine similarity and $\tau$ is temperature.
+The SimCLR framework applies two random augmentations to each image, encodes both views using the same encoder network $\vect{z}_i = f(\vect{x}_i)$ and $\vect{z}_j = f(\vect{x}_j)$, and minimizes the contrastive loss (NT-Xent) to learn representations that are invariant to the applied augmentations. The contrastive loss $\ell_{i,j} = -\log \frac{\exp(\text{sim}(\vect{z}_i, \vect{z}_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{I}_{[k \neq i]} \exp(\text{sim}(\vect{z}_i, \vect{z}_k)/\tau)}$ encourages the model to learn representations where positive pairs have high similarity and negative pairs have low similarity, where $\text{sim}(\cdot, \cdot)$ is cosine similarity and $\tau$ is a temperature parameter that controls the sharpness of the similarity distribution.
 
 \subsection{MoCo (Momentum Contrast)}
 
-Uses momentum encoder and queue of negative samples for efficiency.
+MoCo (Momentum Contrast) uses a momentum encoder and a queue of negative samples for efficiency, where the momentum encoder is updated using exponential moving average of the main encoder parameters to maintain consistency in the representation space. The queue stores negative samples from previous batches to provide a large and diverse set of negative examples without requiring large batch sizes, where this approach enables efficient contrastive learning with limited computational resources while maintaining high-quality representations.
 
 \subsection{BYOL (Bootstrap Your Own Latent)}
 
-Surprisingly, can work without negative samples using:
-\begin{itemize}
-    \item Online network (updated by gradients)
-    \item Target network (momentum update)
-    \item Prediction head on online network
-\end{itemize}
+BYOL (Bootstrap Your Own Latent) surprisingly works without negative samples by using an online network that is updated by gradients, a target network that is updated using momentum, and a prediction head on the online network that learns to predict the target network's output. This approach avoids the need for negative samples by learning to predict the target representation from the online representation, where the target network provides a moving target that encourages the online network to learn consistent representations across different augmentations.
 
 \subsection{Applications}
 
-State-of-the-art results in:
-\begin{itemize}
-    \item Image classification
-    \item Object detection
-    \item Segmentation
-    \item Medical imaging with limited labels
-\end{itemize}
+Contrastive learning has achieved state-of-the-art results in image classification where the learned representations transfer well to downstream classification tasks, object detection where the learned features enable accurate localization and classification of objects, and segmentation where the learned representations capture fine-grained spatial information needed for pixel-level predictions. The approach is particularly valuable for medical imaging with limited labels, where the learned representations can be fine-tuned with minimal labeled data while maintaining high performance on diagnostic tasks.
 
 
 % \subsection{Visual aids}

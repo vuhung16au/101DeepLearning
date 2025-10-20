@@ -3,43 +3,19 @@
 \section{Transfer Learning and Domain Adaptation \difficultyInline{intermediate}}
 \label{sec:transfer-learning}
 
+Transfer learning and domain adaptation enable the reuse of learned representations across different tasks and domains, where knowledge from a source task is leveraged to improve performance on a target task, even when the target task has limited labeled data or operates in a different domain.
+
 \subsection{Transfer Learning}
 
-Leverage knowledge from source task to improve target task:
-
-\textbf{Feature extraction:}
-\begin{enumerate}
-    \item Pre-train on large dataset (e.g., ImageNet)
-    \item Freeze convolutional layers
-    \item Train only final classification layers on target task
-\end{enumerate}
-
-\textbf{Fine-tuning:}
-\begin{enumerate}
-    \item Start with pre-trained model
-    \item Continue training on target task with lower learning rate
-    \item Optionally freeze early layers
-\end{enumerate}
+Transfer learning leverages knowledge from a source task to improve performance on a target task, where the learned representations from the source task are reused to accelerate learning on the target task. Feature extraction involves pre-training on a large dataset like ImageNet, freezing the convolutional layers to preserve the learned features, and training only the final classification layers on the target task, where this approach is particularly effective when the target task has limited labeled data. Fine-tuning starts with a pre-trained model and continues training on the target task with a lower learning rate to avoid destroying the learned features, where optionally freezing early layers can help preserve the low-level features while allowing the higher-level features to adapt to the target task.
 
 \subsection{Domain Adaptation}
 
-Adapt model when training (source) and test (target) distributions differ.
-
-\textbf{Approaches:}
-\begin{itemize}
-    \item \textbf{Domain-adversarial training:} Learn domain-invariant features
-    \item \textbf{Self-training:} Use confident predictions on target domain
-    \item \textbf{Multi-task learning:} Joint training on both domains
-\end{itemize}
+Domain adaptation addresses the challenge when training and test distributions differ, where the model needs to adapt to the target domain while maintaining performance on the source domain. Domain-adversarial training learns domain-invariant features by using an adversarial training procedure that encourages the feature extractor to learn representations that are indistinguishable between source and target domains, where this approach helps the model generalize across different data distributions. Self-training uses confident predictions on the target domain to generate pseudo-labels for unlabeled target data, where the model is iteratively trained on these pseudo-labels to improve its performance on the target domain. Multi-task learning involves joint training on both domains, where the model learns to perform well on both the source and target tasks simultaneously, enabling better transfer of knowledge between domains.
 
 \subsection{Few-Shot Learning}
 
-Learn from few examples per class:
-\begin{itemize}
-    \item \textbf{Meta-learning:} Learn to learn quickly (MAML)
-    \item \textbf{Prototypical networks:} Learn metric space
-    \item \textbf{Matching networks:} Attention-based comparison
-\end{itemize}
+Few-shot learning addresses the challenge of learning from few examples per class, where the model needs to quickly adapt to new tasks with limited labeled data. Meta-learning approaches like MAML (Model-Agnostic Meta-Learning) learn to learn quickly by training the model to adapt to new tasks with just a few gradient steps, where the meta-learner learns initialization parameters that enable fast adaptation to new tasks. Prototypical networks learn a metric space where examples from the same class are close together and examples from different classes are far apart, where classification is performed by computing distances to class prototypes in this learned metric space. Matching networks use attention-based comparison to find the most similar examples in the support set for each query example, where the model learns to attend to relevant examples and make predictions based on these similarities.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (transfer)}

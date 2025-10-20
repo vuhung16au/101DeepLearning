@@ -23,7 +23,12 @@ After studying this chapter, you will be able to:
 \section*{Intuition}
 \addcontentsline{toc}{section}{Intuition}
 
-Good representations separate task-relevant factors from nuisance variability. Learning signals that compare positive and negative pairs, or predict masked content, shape geometry in embedding spaces to reflect semantics.
+Good representations separate task-relevant factors from nuisance variability, where learning signals that compare positive and negative pairs, or predict masked content, shape geometry in embedding spaces to reflect semantics. For example, in facial recognition systems, a good representation would capture identity-related features like facial structure and bone geometry while being invariant to lighting conditions, pose variations, and facial expressions. A good representation is like a highly efficient, specialized library catalogue designed for a specific purpose, where it organizes and indexes information in a way that makes the most relevant details immediately accessible while filtering out irrelevant noise and redundancy.
+
+\section*{Representation Function}
+\addcontentsline{toc}{section}{Representation Function}
+
+Representation learning can be mathematically defined as learning a function that maps raw input data from a high-dimensional space to a lower-dimensional, more informative space. Mathematically, representation learning aims to find a mapping function $\mathbf{f}$ that transforms the input data $\mathbf{x} \in \mathbb{R}^{D}$ into a representation $\mathbf{z} \in \mathbb{R}^{d}$, where typically the input dimension $D$ is much greater than the representation dimension $d$ ($D \gg d$). The key is that $\mathbf{z}$ is designed to capture the salient semantic factors of $\mathbf{x}$ while discarding noise and redundancy, where the function $\mathbf{f}$ is learned by defining an objective function that encourages $\mathbf{z}$ to possess desirable properties like invariance, disentanglement, and sparsity.
 
 
 \input{chapters/chap15-sec01}

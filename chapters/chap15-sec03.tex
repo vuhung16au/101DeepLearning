@@ -3,32 +3,15 @@
 \section{Self-Supervised Learning \difficultyInline{intermediate}}
 \label{sec:self-supervised}
 
-Learn representations without manual labels by solving pretext tasks.
+Self-supervised learning learns representations without manual labels by solving pretext tasks that can be automatically generated from the data itself, where the model learns useful representations by predicting parts of the input from other parts or by solving auxiliary tasks that don't require human annotation.
 
 \subsection{Pretext Tasks}
 
-\textbf{For images:}
-\begin{itemize}
-    \item \textbf{Rotation prediction:} Predict rotation angle
-    \item \textbf{Jigsaw puzzle:} Arrange shuffled patches
-    \item \textbf{Colorization:} Predict colors from grayscale
-    \item \textbf{Inpainting:} Fill masked regions
-\end{itemize}
-
-\textbf{For text:}
-\begin{itemize}
-    \item \textbf{Masked language modeling:} Predict masked words (BERT)
-    \item \textbf{Next sentence prediction:} Predict if sentences are consecutive
-    \item \textbf{Autoregressive generation:} Predict next token (GPT)
-\end{itemize}
+Pretext tasks for images include rotation prediction where the model learns to predict the rotation angle of an image, jigsaw puzzle where the model arranges shuffled patches to learn spatial relationships, colorization where the model predicts colors from grayscale images to learn color semantics, and inpainting where the model fills masked regions to learn object structure and context. For text, pretext tasks include masked language modeling where the model predicts masked words as in BERT, next sentence prediction where the model determines if sentences are consecutive to learn discourse relationships, and autoregressive generation where the model predicts the next token as in GPT to learn language modeling capabilities.
 
 \subsection{Benefits}
 
-\begin{itemize}
-    \item Leverage unlabeled data
-    \item Learn general-purpose representations
-    \item Often outperforms supervised pre-training
-\end{itemize}
+Self-supervised learning provides several key benefits including the ability to leverage unlabeled data that is often abundant and cheap to obtain, where the model can learn from vast amounts of data without requiring expensive human annotation. The learned representations are often general-purpose and transfer well to downstream tasks, where the model learns to capture the underlying structure of the data rather than task-specific patterns. Self-supervised learning often outperforms supervised pre-training on downstream tasks, where the learned representations are more robust and generalizable because they are not biased toward specific labeled examples.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (self-supervised)}
