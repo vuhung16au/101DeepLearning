@@ -3,25 +3,11 @@
 \section{Constrained Optimization \difficultyInline{beginner}}
 \label{sec:constrained-optimization}
 
+Constrained optimization extends traditional optimization by incorporating additional requirements or limitations that must be satisfied while finding optimal solutions, providing essential tools for implementing regularization, fairness constraints, and other practical considerations in deep learning applications.
+
 \subsection{Intuition: Optimization with Rules}
 
-Imagine you're trying to find the best location for a new store, but you have constraints:
-\begin{itemize}
-    \item Must be within 10 km of the city centre
-    \item Must have parking for at least 50 cars
-    \item Budget cannot exceed \$1 million
-\end{itemize}
-
-You can't just pick any location - you must follow these rules while still optimizing your objective (like maximizing customer traffic).
-
-In deep learning, we often have similar constraints:
-\begin{itemize}
-    \item \textbf{Weight constraints}: Keep weights small to prevent overfitting
-    \item \textbf{Probability constraints}: Outputs must sum to 1 (like softmax)
-    \item \textbf{Fairness constraints}: Model must treat different groups equally
-\end{itemize}
-
-Many problems require optimizing a function subject to constraints.
+Imagine you're trying to find the best location for a new store, but you have constraints such as being within 10 km of the city centre, having parking for at least 50 cars, and a budget that cannot exceed \$1 million. You can't just pick any location - you must follow these rules while still optimizing your objective like maximizing customer traffic. In deep learning, we often have similar constraints including weight constraints to keep weights small and prevent overfitting, probability constraints where outputs must sum to 1 like in softmax functions, and fairness constraints where the model must treat different groups equally. Many problems require optimizing a function subject to constraints, making constrained optimization an essential tool for practical machine learning applications.
 
 \subsection{Lagrange Multipliers}
 
@@ -59,10 +45,4 @@ where $\text{Proj}_{\mathcal{C}}$ projects onto the feasible set.
 
 \subsection{Applications in Deep Learning}
 
-Constrained optimization appears in:
-\begin{itemize}
-    \item Weight constraints (e.g., unit norm constraints)
-    \item Projection to valid probability distributions
-    \item Adversarial training with bounded perturbations
-    \item Fairness constraints
-\end{itemize}
+Constrained optimization appears in several important applications in deep learning, including weight constraints such as unit norm constraints that help prevent overfitting and improve generalization, projection to valid probability distributions that ensures model outputs are mathematically valid, adversarial training with bounded perturbations that creates robust models by training against carefully crafted adversarial examples, and fairness constraints that ensure models treat different groups equally and avoid discriminatory behavior.

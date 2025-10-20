@@ -3,19 +3,11 @@
 \section{Gradient-Based Optimization \difficultyInline{beginner}}
 \label{sec:gradient-optimization}
 
+Gradient-based optimization is the fundamental method for training deep learning models, using the mathematical concept of gradients to iteratively find optimal parameters that minimize loss functions through careful navigation of high-dimensional parameter spaces.
+
 \subsection{Intuition: Finding the Bottom of a Hill}
 
-Imagine you're hiking in foggy mountains and need to find the lowest point in a valley. You can't see far ahead, but you can feel the slope under your feet. The steepest downward direction tells you which way to walk to get lower.
-
-This is exactly what gradient descent does:
-\begin{itemize}
-    \item \textbf{The mountain} = the loss function we want to minimize
-    \item \textbf{Your position} = current parameter values
-    \item \textbf{The slope} = gradient (direction of steepest increase)
-    \item \textbf{Your steps} = parameter updates
-\end{itemize}
-
-Most deep learning algorithms involve optimization: finding parameters that minimize or maximize an objective function.
+Imagine you're hiking in foggy mountains and need to find the lowest point in a valley. You can't see far ahead, but you can feel the slope under your feet. The steepest downward direction tells you which way to walk to get lower. This is exactly what gradient descent does, where the mountain represents the loss function we want to minimize, your position represents the current parameter values, the slope represents the gradient (direction of steepest increase), and your steps represent parameter updates. Most deep learning algorithms involve optimization, which is the process of finding parameters that minimize or maximize an objective function, making gradient descent the cornerstone of neural network training.
 
 \subsection{Gradient Descent}
 
@@ -90,22 +82,7 @@ This provides insight into optimization behavior.
 
 \subsection{Critical Points}
 
-\subsubsection{Intuition: Different Types of Critical Points}
-
-Think of critical points as different types of terrain features:
-
-\begin{itemize}
-    \item \textbf{Local minimum} = Bottom of a bowl - you can't go lower in any direction
-    \item \textbf{Local maximum} = Top of a hill - you can't go higher in any direction  
-    \item \textbf{Saddle point} = Mountain pass - you can go down in some directions, up in others
-\end{itemize}
-
-At a \textbf{critical point}, $\nabla f(\vect{x}) = \boldsymbol{0}$. The Hessian determines the nature:
-\begin{itemize}
-    \item \textbf{Local minimum:} Hessian is positive definite
-    \item \textbf{Local maximum:} Hessian is negative definite
-    \item \textbf{Saddle point:} Hessian has both positive and negative eigenvalues
-\end{itemize}
+Critical points are locations where the gradient is zero, representing different types of terrain features in the optimization landscape. A local minimum is like the bottom of a bowl where you can't go lower in any direction, a local maximum is like the top of a hill where you can't go higher in any direction, and a saddle point is like a mountain pass where you can go down in some directions and up in others. At a critical point, $\nabla f(\vect{x}) = \boldsymbol{0}$, and the Hessian matrix determines the nature of the critical point: a local minimum occurs when the Hessian is positive definite, a local maximum occurs when the Hessian is negative definite, and a saddle point occurs when the Hessian has both positive and negative eigenvalues.
 
 \begin{figure}[h]
 \centering

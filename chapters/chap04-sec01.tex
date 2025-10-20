@@ -3,29 +3,15 @@
 \section{Overflow and Underflow \difficultyInline{beginner}}
 \label{sec:overflow-underflow}
 
+Overflow and underflow are critical numerical issues that occur when computations produce values outside the representable range of floating-point arithmetic, causing catastrophic failures in deep learning algorithms that rely on precise numerical calculations.
+
 \subsection{Intuition: The Problem with Finite Precision}
 
-Imagine you're trying to measure the height of a building using a ruler that only has markings every meter. If the building is 10.7 meters tall, you might record it as 11 meters - you've lost some precision. Now imagine doing millions of calculations with this imprecise ruler, and you can see how small errors can compound into big problems.
-
-Computers face a similar challenge. They can only represent a finite number of digits, so they must round numbers. This \textbf{finite precision} is like having a ruler with limited markings - some information is always lost.
-
-In deep learning, this becomes critical because:
-\begin{itemize}
-    \item \textbf{Neural networks perform millions of calculations} - small errors accumulate
-    \item \textbf{Exponential functions are common} - they can produce extremely large or small numbers
-    \item \textbf{Gradients can become very small} - they might round to zero, breaking training
-\end{itemize}
-
-Computers represent real numbers with finite precision, typically using floating-point arithmetic. This leads to \textbf{rounding errors} that can accumulate and cause problems.
+Imagine you're trying to measure the height of a building using a ruler that only has markings every meter. If the building is 10.7 meters tall, you might record it as 11 meters - you've lost some precision. Now imagine doing millions of calculations with this imprecise ruler, and you can see how small errors can compound into big problems. Computers face a similar challenge because they can only represent a finite number of digits, so they must round numbers, which is like having a ruler with limited markings where some information is always lost. In deep learning, this becomes critical because neural networks perform millions of calculations where small errors accumulate, exponential functions are common and can produce extremely large or small numbers, and gradients can become very small and might round to zero, breaking training. Computers represent real numbers with finite precision, typically using floating-point arithmetic, which leads to rounding errors that can accumulate and cause problems in deep learning algorithms.
 
 \subsection{Floating-Point Representation}
 
-The IEEE 754 standard defines floating-point numbers. For 32-bit floats:
-\begin{itemize}
-    \item Smallest positive number: approximately $10^{-38}$
-    \item Largest number: approximately $10^{38}$
-    \item Machine epsilon: approximately $10^{-7}$
-\end{itemize}
+The IEEE 754 standard defines floating-point numbers using a fixed number of bits to represent real numbers, with 32-bit floats having a smallest positive number of approximately $10^{-38}$, a largest number of approximately $10^{38}$, and a machine epsilon of approximately $10^{-7}$. This representation allows computers to handle a wide range of numbers but introduces limitations that can cause overflow when numbers exceed the maximum representable value and underflow when numbers become smaller than the minimum representable value.
 
 \begin{figure}[h]
 \centering

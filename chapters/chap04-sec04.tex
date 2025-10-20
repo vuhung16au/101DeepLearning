@@ -3,18 +3,11 @@
 \section{Numerical Stability and Conditioning \difficultyInline{beginner}}
 \label{sec:numerical-stability}
 
+Numerical stability and conditioning are crucial considerations in deep learning that determine how sensitive computations are to small errors, affecting the reliability and accuracy of neural network training and inference in real-world applications.
+
 \subsection{Intuition: The Butterfly Effect in Computation}
 
-Imagine a house of cards. A tiny breeze can cause the entire structure to collapse. In numerical computation, we have a similar problem: small errors can grow into large ones.
-
-This is especially problematic in deep learning because:
-\begin{itemize}
-    \item \textbf{Deep networks} have many layers - errors compound
-    \item \textbf{Matrix operations} can amplify small errors
-    \item \textbf{Gradient computation} requires precise derivatives
-\end{itemize}
-
-The \textbf{condition number} tells us how "sensitive" a computation is to small changes. A high condition number means small input errors become large output errors.
+Imagine a house of cards where a tiny breeze can cause the entire structure to collapse. In numerical computation, we have a similar problem where small errors can grow into large ones, especially problematic in deep learning because deep networks have many layers where errors compound, matrix operations can amplify small errors, and gradient computation requires precise derivatives. The condition number tells us how "sensitive" a computation is to small changes, where a high condition number means small input errors become large output errors, making the computation unstable and unreliable.
 
 \subsection{Condition Number}
 
@@ -61,13 +54,7 @@ Consider two matrices:
 
 \subsection{Ill-Conditioned Matrices}
 
-In deep learning, ill-conditioned Hessians can make optimization difficult. This motivates techniques like:
-\begin{itemize}
-    \item Batch normalization
-    \item Careful weight initialization
-    \item Adaptive learning rate methods
-    \item Preconditioning
-\end{itemize}
+In deep learning, ill-conditioned Hessians can make optimization difficult, motivating techniques like batch normalization to stabilize activations, careful weight initialization to avoid poor starting points, adaptive learning rate methods to adjust step sizes dynamically, and preconditioning to improve the conditioning of optimization problems.
 
 \subsection{Gradient Checking}
 
@@ -81,19 +68,8 @@ This is computationally expensive but useful for debugging.
 
 \subsection{Numerical Precision Trade-offs}
 
-\textbf{Mixed precision training:}
-\begin{itemize}
-    \item Store weights in FP32
-    \item Compute activations/gradients in FP16
-    \item Use loss scaling to prevent underflow
-    \item 2-3x speedup with minimal accuracy loss
-\end{itemize}
+Mixed precision training involves storing weights in FP32 for numerical stability while computing activations and gradients in FP16 for computational efficiency, using loss scaling to prevent underflow in the lower precision computations, and achieving 2-3x speedup with minimal accuracy loss by carefully managing the precision trade-offs between numerical stability and computational performance.
 
 \subsection{Practical Tips}
 
-\begin{itemize}
-    \item Monitor gradient norms during training
-    \item Use gradient clipping for RNNs
-    \item Prefer numerically stable implementations (log-space computations)
-    \item Be aware of precision limits in very deep networks
-\end{itemize}
+Practical tips for maintaining numerical stability include monitoring gradient norms during training to detect potential instability, using gradient clipping for RNNs to prevent exploding gradients, preferring numerically stable implementations like log-space computations that avoid overflow and underflow, and being aware of precision limits in very deep networks where accumulated errors can become significant.
