@@ -30,18 +30,40 @@ GRU simplifies LSTM with fewer parameters and merges the cell and hidden state i
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[>=stealth, node distance=2.0cm]
-        \tikzstyle{gate}=[draw, rounded corners, minimum width=1.5cm, minimum height=0.9cm]
-        \node[gate] (zt) {$\vect{z}_t$};
-        \node[gate, below of=zt] (rt) {$\vect{r}_t$};
-        \node[right of=zt, xshift=2.2cm] (ht1) {$\vect{h}_{t-1}$};
-        \node[right of=ht1, xshift=1.2cm] (cand) {$\tilde{\vect{h}}_t$};
-        \node[right of=cand, xshift=1.2cm] (ht) {$\vect{h}_t$};
-        \draw[->] (ht1) -- node[midway, above] {$\odot\,\vect{r}_t$} (cand);
-        \draw[->] (cand) -- (ht);
-        \draw[->] (ht1) |- ++(0.8,1.8) node[pos=0.55, right] {$1-\vect{z}_t$} -| (ht);
-        \draw[->] (cand) |- ++(0.8,-1.8) node[pos=0.55, right] {$\vect{z}_t$} -| (ht);
+        \tikzstyle{gate}=[draw, rounded corners, minimum width=1.5cm, minimum height=0.9cm, fill=blue!10]
+        \tikzstyle{state}=[draw, circle, minimum width=1.5cm, fill=orange!10]
+        
+        % Previous hidden state
+        \node[state] (ht1) {$\vect{h}_{t-1}$};
+        
+        % Input
+        \node[below of=ht1, yshift=0.5cm] (xt) {$\vect{x}_t$};
+        
+        % Reset gate
+        \node[gate, right of=ht1, xshift=0.5cm] (rt) {$\vect{r}_t$};
+        
+        % Candidate hidden state
+        \node[state, right of=rt, xshift=0.5cm] (cand) {$\tilde{\vect{h}}_t$};
+        
+        % Update gate
+        \node[gate, above of=cand, yshift=-0.5cm] (zt) {$\vect{z}_t$};
+        
+        % Current hidden state
+        \node[state, right of=cand, xshift=1.5cm] (ht) {$\vect{h}_t$};
+        
+        % Arrows
+        \draw[->] (ht1) -- (rt);
+        \draw[->] (xt) -- (rt);
+        \draw[->] (xt) -| (zt);
+        \draw[->] (ht1) |- (zt);
+        \draw[->] (rt) -- node[midway, above] {$\odot$} (cand);
+        \draw[->] (xt) -- (cand);
+        \draw[->] (cand) -- node[midway, above] {$\vect{z}_t \odot$} (ht);
+        \draw[->] (ht1) -- node[pos=0.7, above] {$(1-\vect{z}_t) \odot$} (ht);
+        \draw[->] (zt) -- (ht);
     \end{tikzpicture}
-    \caption{Illustrative GRU flow with update and reset gates.}
+    \caption{GRU architecture showing update gate $\vect{z}_t$, reset gate $\vect{r}_t$, and information flow from $\vect{h}_{t-1}$ and $\vect{x}_t$ to $\vect{h}_t$.}
+    \label{fig:gru_architecture}
 \end{figure}
 
 \subsection{Comparison with LSTM}
