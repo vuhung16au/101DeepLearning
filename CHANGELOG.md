@@ -63,13 +63,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Enhanced theorem environment styling using keytheorems package
   - Implemented styled theorem boxes with colored backgrounds and frames
-  - Added "theorembox" style for theorems, lemmas, propositions, and corollaries
+  - Added "theorembox" style for theorems, lemmas, propositions, and corollaries (Soft Ivory background as of v1.3.0)
   - Added "definitionbox" style for definitions and examples (white background with left purple border)
   - Added "remarkbox" style for remarks (white background with subtle left border, italic text)
   - Added "proofbox" style for proofs (white background with top border, non-numbered)
   - Maintained existing counter-sharing system where theorem-like environments share numbering
   - Exercise/problem environment maintains separate numbering as before
-  - Colors match book theme (bookpurple, bookred) for consistency
+  - Colors match existing book theme (bookpurple, bookred) for consistency
 
 ### Technical Details (Theorem Styles)
 - **Author**: GitHub Copilot
