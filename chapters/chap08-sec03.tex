@@ -3,6 +3,8 @@
 \section{Adaptive Learning Rate Methods \difficultyInline{intermediate}}
 \label{sec:adaptive-methods}
 
+Adaptive methods automatically adjust per-parameter learning rates based on gradient history, enabling faster progress on infrequent features whilst stabilising updates on frequently-occurring ones.
+
 \subsection{Intuition: Per-Parameter Step Sizes}
 
 Different parameters learn at different speeds: some directions are steep, others are flat. \textbf{Adaptive methods} adjust the step size per parameter based on recent gradient information, allowing faster progress on rarely-updated or low-variance dimensions while stabilizing steps on highly-volatile ones.\index{adaptive optimization}\index{AdaGrad}\index{RMSProp}\index{Adam}
@@ -60,11 +62,7 @@ Default hyperparameters: $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}
 \alpha_t = \alpha_{\min} + \frac{1}{2}(\alpha_{\max} - \alpha_{\min})\left(1 + \cos\left(\frac{t}{T}\pi\right)\right)
 \end{equation}
 
-Other useful schedules:\index{learning-rate-schedule}
-\begin{itemize}
-    \item Warmup: start from a small \(\alpha\) and increase linearly over the first \(T_w\) steps to reduce early instabilities in large-batch training.
-    \item One-cycle policy: increase then anneal \(\alpha\), often paired with momentum decay, to speed convergence and improve generalization.
-\end{itemize}
+Beyond the standard decay schedules, warmup and one-cycle policies offer additional flexibility.\index{learning-rate-schedule} Warmup starts from a small \(\alpha\) and increases linearly over the first \(T_w\) steps to reduce early instabilities in large-batch training. The one-cycle policy increases then anneals \(\alpha\), often paired with momentum decay, to speed convergence and improve generalisation.
 
 Practical recipe: Combine cosine decay with warmup for transformer-like models, step decay for CNNs trained with SGD, and exponential decay for simple baselines \cite{WebOptimizationDLBook,D2LChapterOptimization}.
 

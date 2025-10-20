@@ -3,6 +3,8 @@
 \section{Second-Order Methods \difficultyInline{intermediate}}
 \label{sec:second-order}
 
+Second-order methods leverage curvature information from the Hessian or Fisher matrix to take more informed steps, though computational costs often limit their applicability to smaller models.
+
 \subsection{Intuition: Curvature-Aware Steps}
 
 First-order methods follow the slope; second-order methods also consider the \textit{curvature} of the landscape to choose better-scaled steps. If the valley is sharply curved in one direction and flat in another, curvature-aware steps shorten strides along the sharp direction and lengthen them along the flat one.\index{second-order methods}
@@ -38,23 +40,13 @@ where $\mat{H}$ is the Hessian matrix. Intuitively, the Hessian rescales the gra
 \label{fig:newton-bowl}
 \end{figure}
 
-Challenges:\index{Newton's method}
-\begin{itemize}
-    \item Computing Hessian is $O(n^2)$ in parameters
-    \item Inverting Hessian is $O(n^3)$
-    \item Infeasible for large neural networks
-\end{itemize}
+Newton's method faces significant computational challenges.\index{Newton's method} Computing the Hessian is $O(n^2)$ in the number of parameters, and inverting it is $O(n^3)$. These costs render Newton's method infeasible for large neural networks with millions or billions of parameters.
 
 \subsection{Quasi-Newton Methods}\index{L-BFGS}
 
 Approximate the Hessian inverse:
 
-\textbf{L-BFGS:} (Limited-memory Broyden-Fletcher-Goldfarb-Shanno) maintains low-rank approximation of Hessian inverse
-\begin{itemize}
-    \item More efficient than full Newton's method
-    \item Still expensive for very large models
-    \item Used for smaller networks or specific applications
-\end{itemize}
+\textbf{L-BFGS} (Limited-memory Broyden-Fletcher-Goldfarb-Shanno) maintains a low-rank approximation of the Hessian inverse, making it more efficient than full Newton's method. However, L-BFGS remains expensive for very large models and is primarily used for smaller networks or specific applications where its convergence properties justify the computational cost.
 
 Historical note: Quasi-Newton methods, notably BFGS and its limited-memory variant L-BFGS \cite{LiuNocedal1989}, performed well on moderate-sized networks and remain valuable for fine-tuning smaller models or optimizing differentiable components inside larger systems \cite{GoodfellowEtAl2016,Bishop2006}.
 
