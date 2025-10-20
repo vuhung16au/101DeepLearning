@@ -68,24 +68,15 @@ Gradients can vanish or explode exponentially due to the chain rule applied acro
 \frac{\partial \vect{h}_t}{\partial \vect{h}_k} = \prod_{i=k+1}^{t} \frac{\partial \vect{h}_i}{\partial \vect{h}_{i-1}} = \prod_{i=k+1}^{t} \mat{W}^\top \text{diag}(\sigma'(\vect{z}_i))
 \end{equation}
 
-The behavior depends on the eigenvalues of the weight matrix $\mat{W}$:
-\begin{itemize}
-    \item \textbf{Eigenvalues $< 1$:} Each multiplication by $\mat{W}^\top$ shrinks the gradient magnitude, causing exponential decay as the product accumulates over time steps. This leads to vanishing gradients where early time steps receive negligible gradient signals.
-    \item \textbf{Eigenvalues $> 1$:} Each multiplication amplifies the gradient, causing exponential growth that can lead to numerical instability and training divergence.
-\end{itemize}
+The behaviour depends critically on the eigenvalues of the weight matrix $\mat{W}$. When eigenvalues are less than 1, each multiplication by $\mat{W}^\top$ shrinks the gradient magnitude, causing exponential decay as the product accumulates over time steps, which leads to vanishing gradients where early time steps receive negligible gradient signals and fail to learn effectively. Conversely, when eigenvalues exceed 1, each multiplication amplifies the gradient, causing exponential growth that can lead to numerical instability and training divergence, where parameter updates become so large that the model's behaviour becomes chaotic.
 
 \textbf{Solutions:}
 
-\textbf{Gradient clipping} prevents exploding gradients by scaling down gradients when their norm exceeds a threshold, maintaining training stability while preserving gradient direction. \textbf{Careful initialization} techniques like Xavier/He initialization set initial weights to have appropriate variance, reducing the likelihood of extreme eigenvalues that cause gradient problems. \textbf{ReLU activation} helps because its derivative is either 0 or 1, avoiding the multiplicative shrinking effect of sigmoid/tanh derivatives that compound vanishing gradients. \textbf{LSTM/GRU architectures} introduce gating mechanisms that create direct paths for gradient flow, bypassing the problematic multiplicative chains and enabling learning of long-range dependencies.
+Several techniques have been developed to address these gradient pathologies. Gradient clipping prevents exploding gradients by scaling down gradients when their norm exceeds a threshold, maintaining training stability whilst preserving gradient direction so that the model continues learning in the right direction. Careful initialisation techniques like Xavier or He initialisation set initial weights to have appropriate variance, reducing the likelihood of extreme eigenvalues that cause gradient problems by ensuring the signal neither grows nor shrinks excessively during the initial forward passes. ReLU activation helps because its derivative is either 0 or 1, avoiding the multiplicative shrinking effect of sigmoid or tanh derivatives that compound vanishing gradients through repeated multiplication. Most significantly, LSTM and GRU architectures introduce gating mechanisms that create direct paths for gradient flow, bypassing the problematic multiplicative chains and enabling learning of long-range dependencies by maintaining an explicit memory cell that can preserve information over many time steps.
 
 \subsection{Truncated BPTT}
 
-For very long sequences, truncate gradient computation by limiting backpropagation to a sliding window of $k$ steps \cite{GoodfellowEtAl2016}:
-\begin{itemize}
-    \item Process inputs in segments of length $k$ (possibly overlapping with stride $s$).
-    \item Backpropagate gradients only within each segment to reduce memory and time.
-    \item Hidden state is carried forward between segments but treated as a constant during the truncated backward step.
-\end{itemize}
+For very long sequences, truncate gradient computation by limiting backpropagation to a sliding window of $k$ steps \cite{GoodfellowEtAl2016}. The approach processes inputs in segments of length $k$, which can be either non-overlapping or overlapping with stride $s$ to balance computational efficiency with information retention. During training, gradients are backpropagated only within each segment to reduce memory requirements and computation time, making it feasible to train on sequences that would otherwise exceed available memory. The hidden state is carried forward between segments to maintain temporal continuity, but it is treated as a constant during the truncated backward step, meaning gradients do not flow backwards beyond the current segment boundary.
 
 \begin{algorithm}[h]
 \caption{Truncated Backpropagation Through Time (Truncated BPTT)}

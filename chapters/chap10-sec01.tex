@@ -17,14 +17,7 @@ Early sequence models struggled with long-term dependencies due to vanishing gra
 
 \subsection{Motivation}
 
-Sequential data exhibits \emph{temporal dependencies} and \emph{order-sensitive} structure that cannot be modeled well by i.i.d. assumptions or fixed-size context windows alone \cite{GoodfellowEtAl2016,Prince2023,Bishop2006}. Examples include:
-\begin{itemize}
-    \item Time series: forecasting energy load, financial returns, or physiological signals (ECG).
-    \item Natural language: the meaning of a word depends on its context; sentences conform to syntax and discourse structure.
-    \item Speech/audio: phonemes combine to form words; coarticulation effects span multiple frames.
-    \item Video: actions unfold over time; temporal cues disambiguate similar frames.
-    \item Control and reinforcement learning: actions influence future observations, requiring memory.
-\end{itemize}
+Sequential data exhibits \emph{temporal dependencies} and \emph{order-sensitive} structure that cannot be modelled well by i.i.d. assumptions or fixed-size context windows alone \cite{GoodfellowEtAl2016,Prince2023,Bishop2006}. Time series data, such as energy load forecasting, financial returns, or physiological signals like ECG readings, inherently depend on the temporal order of observations, where past measurements directly influence future predictions. In natural language, the meaning of a word depends critically on its context within a sentence, as sentences conform to complex syntactic and discourse structures that unfold sequentially. Speech and audio processing similarly require temporal modelling, since phonemes combine sequentially to form words, and coarticulation effects span multiple frames, meaning the pronunciation of one sound is influenced by neighbouring sounds. Video understanding demands temporal reasoning as well, where actions unfold over time and temporal cues help disambiguate visually similar frames. Control and reinforcement learning present yet another domain where sequential processing is essential, as actions taken at one time step influence future observations, requiring the system to maintain memory of past states and decisions.
 
 Classic feedforward networks assume fixed-size inputs and lack a persistent state, making them ill-suited for long-range dependencies. Recurrent architectures introduce a hidden state that acts as a compact, learned memory \index{memory!neural} and enables conditioning on arbitrary-length histories. Historically, recurrent ideas trace back to early neural sequence models and dynamical systems; practical training matured with BPTT \cite{Rumelhart1986} and later with gated units to mitigate vanishing/exploding gradients \cite{Hochreiter1997}. For further background see the RNN overview in \cite{GoodfellowEtAl2016} and educational treatments in \cite{D2LChapterRNN,WebRNNWikipedia,WebDLBRNN}.
 
@@ -32,13 +25,7 @@ Classic feedforward networks assume fixed-size inputs and lack a persistent stat
 
 \subsection{Why Sequences Matter}
 
-The unique value of sequence modeling:
-\begin{itemize}
-    \item \textbf{Context awareness:} Understanding how earlier elements affect later ones
-    \item \textbf{Variable-length handling:} Working with inputs of any length
-    \item \textbf{Temporal patterns:} Capturing how things change over time
-    \item \textbf{Natural interaction:} Enabling human-like communication with machines
-\end{itemize}
+The unique value of sequence modelling stems from several fundamental capabilities that distinguish it from traditional approaches. Context awareness represents perhaps the most crucial aspect, as sequence models excel at understanding how earlier elements in a sequence systematically affect later ones, enabling them to capture dependencies that span across time or position. Variable-length handling is another essential feature, as these models can naturally work with inputs of any length without requiring padding or truncation, making them remarkably flexible for real-world data where sequence lengths vary unpredictably. The ability to capture temporal patterns—understanding how things change and evolve over time—provides sequence models with the power to model dynamic phenomena ranging from language structure to physical processes. Finally, these capabilities combine to enable natural interaction with machines, facilitating human-like communication through speech and text, which has revolutionised how we interface with technology in everyday life.
 
 \subsection{Basic RNN Architecture}
 

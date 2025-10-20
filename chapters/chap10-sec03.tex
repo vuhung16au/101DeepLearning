@@ -17,7 +17,7 @@ Introduced in the 1990s to address vanishing gradients \cite{Hochreiter1997}, LS
 
 \subsection{Architecture}
 
-LSTM uses \textbf{gating mechanisms} to control information flow and maintain a persistent cell state that supports long-range credit assignment \cite{Hochreiter1997,GoodfellowEtAl2016}:
+LSTM uses \textbf{gating mechanisms} to control information flow and maintain a persistent cell state that supports long-range credit assignment \cite{Hochreiter1997,GoodfellowEtAl2016}. Let $\vect{h}_{t-1} \in \mathbb{R}^h$ denote the hidden state from the previous time step, $\vect{x}_t \in \mathbb{R}^d$ the current input, and $\vect{c}_{t-1} \in \mathbb{R}^h$ the previous cell state. The concatenation $[\vect{h}_{t-1}, \vect{x}_t] \in \mathbb{R}^{h+d}$ combines both sources of information. The LSTM computes the following:
 
 \begin{align}
 \vect{f}_t &= \sigma(\mat{W}_f [\vect{h}_{t-1}, \vect{x}_t] + \vect{b}_f) \quad \text{(forget gate)} \\
@@ -27,6 +27,10 @@ LSTM uses \textbf{gating mechanisms} to control information flow and maintain a 
 \vect{o}_t &= \sigma(\mat{W}_o [\vect{h}_{t-1}, \vect{x}_t] + \vect{b}_o) \quad \text{(output gate)} \\
 \vect{h}_t &= \vect{o}_t \odot \tanh(\vect{c}_t) \quad \text{(hidden state)}
 \end{align}
+
+where $\sigma(\cdot)$ denotes the sigmoid function $\sigma(z) = 1/(1+e^{-z})$ applied element-wise, $\tanh(\cdot)$ is the hyperbolic tangent activation, and $\odot$ represents the Hadamard (element-wise) product. The weight matrices have dimensions $\mat{W}_f, \mat{W}_i, \mat{W}_c, \mat{W}_o \in \mathbb{R}^{h \times (h+d)}$ and bias vectors $\vect{b}_f, \vect{b}_i, \vect{b}_c, \vect{b}_o \in \mathbb{R}^h$.
+
+The cell state update equation $\vect{c}_t = \vect{f}_t \odot \vect{c}_{t-1} + \vect{i}_t \odot \tilde{\vect{c}}_t$ can be understood as a gated linear interpolation. When $\vect{f}_t \approx \vect{1}$ (forget gate fully open) and $\vect{i}_t \approx \vect{0}$ (input gate closed), the cell state is preserved: $\vect{c}_t \approx \vect{c}_{t-1}$. When $\vect{f}_t \approx \vect{0}$ and $\vect{i}_t \approx \vect{1}$, the cell state is replaced: $\vect{c}_t \approx \tilde{\vect{c}}_t$. In practice, both gates take intermediate values, allowing partial forgetting and partial updating.
 
 \subsection{Key Ideas}
 
@@ -46,15 +50,21 @@ The LSTM's key innovations address fundamental limitations of traditional RNNs a
 
 \subsection{Advantages}
 
-\begin{itemize}
-    \item \textbf{Addresses vanishing gradient problem:} LSTMs mitigate vanishing gradients through their cell state and gating mechanisms. The cell state acts as a memory highway, allowing gradients to flow relatively unimpeded across many time steps, preventing them from shrinking to zero. Unlike vanilla RNNs where gradients must pass through repeated nonlinear transformations, LSTMs provide direct paths for gradient flow.
-    
-    \item \textbf{Can learn long-term dependencies:} The forget and input gates explicitly control what information is retained or discarded from the cell state. This selective memory mechanism allows LSTMs to store relevant information for extended periods and access it when needed, effectively capturing long-term dependencies. The cell state can maintain information across hundreds of time steps without degradation.
-    
-    \item \textbf{Gradients flow more easily through cell state:} The cell state path often involves simple additions and multiplications by gate activations (which are typically between 0 and 1). This linear-like flow, especially when the forget gate is close to 1, prevents the repeated multiplication by small weights that causes gradients to vanish in vanilla RNNs. The gating mechanism creates a more stable gradient propagation environment.
-    
-    \item \textbf{Widely used for sequential tasks:} Due to their ability to handle long-term dependencies and mitigate gradient issues, LSTMs have become a de facto standard for various sequential data processing tasks. Their robust performance across diverse applications, from natural language processing to speech recognition, underscores their versatility and effectiveness. The architecture's success has made it a go-to choice for practitioners working with temporal data.
-\end{itemize}
+\textbf{Addresses vanishing gradient problem:} LSTMs mitigate vanishing gradients through their cell state and gating mechanisms. Consider the gradient of the loss $L$ with respect to the cell state at an earlier time $k$:
+\begin{equation}
+\frac{\partial L}{\partial \vect{c}_k} = \frac{\partial L}{\partial \vect{c}_t} \prod_{i=k+1}^{t} \frac{\partial \vect{c}_i}{\partial \vect{c}_{i-1}}
+\end{equation}
+where $\frac{\partial \vect{c}_i}{\partial \vect{c}_{i-1}} = \text{diag}(\vect{f}_i)$ from the cell state update rule. When forget gates are close to 1, this product involves multiplications close to identity, preventing gradient decay. Unlike vanilla RNNs where $\frac{\partial \vect{h}_i}{\partial \vect{h}_{i-1}} = \mat{W}^\top \text{diag}(\sigma'(\vect{z}_i))$ involves repeated matrix multiplications that compound eigenvalue effects, the LSTM's cell state path provides a more direct gradient highway.
+
+\textbf{Can learn long-term dependencies:} The forget and input gates explicitly control information retention through learnable parameters. The effective memory span can be approximated by considering when $\vect{f}_i \approx \vect{1}$ for all $i \in [k, t]$, the cell state propagates with minimal modification: $\vect{c}_t \approx \vect{c}_k + \sum_{i=k+1}^{t} \vect{i}_i \odot \tilde{\vect{c}}_i$. This additive structure, rather than multiplicative, allows information to persist over hundreds of time steps. The selective gating learns to retain task-relevant information whilst discarding noise.
+
+\textbf{Gradients flow more easily through cell state:} The gradient flow through the cell state can be written as:
+\begin{equation}
+\frac{\partial L}{\partial \vect{c}_{t-1}} = \frac{\partial L}{\partial \vect{c}_t} \odot \vect{f}_t + \frac{\partial L}{\partial \vect{h}_t} \odot \vect{o}_t \odot (1 - \tanh^2(\vect{c}_t)) \odot \vect{f}_t
+\end{equation}
+The first term shows that when $\vect{f}_t \approx \vect{1}$, gradients pass through almost unchanged: $\frac{\partial L}{\partial \vect{c}_{t-1}} \approx \frac{\partial L}{\partial \vect{c}_t}$. This linear-like flow, especially when the forget gate is close to 1, prevents the repeated multiplication by small weights that causes gradients to vanish in vanilla RNNs where $\frac{\partial L}{\partial \vect{h}_{t-1}} \propto \mat{W}^\top \sigma'(\cdot)$. The gating mechanism creates a more stable gradient propagation environment by adaptively controlling gradient flow.
+
+\textbf{Widely used for sequential tasks:} Due to their ability to handle long-term dependencies and mitigate gradient issues, LSTMs have become a de facto standard for various sequential data processing tasks. Their robust performance across diverse applications, from natural language processing to speech recognition, underscores their versatility and effectiveness. The architecture's success has made it a go-to choice for practitioners working with temporal data.
 
 \begin{figure}[h]
     \centering
