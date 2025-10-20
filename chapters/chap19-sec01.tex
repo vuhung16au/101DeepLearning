@@ -3,9 +3,11 @@
 \section{Variational Inference \difficultyInline{advanced}}
 \label{sec:variational-inference}
 
+Variational inference transforms intractable posterior inference into an optimization problem by approximating the true posterior with a simpler, tractable distribution that can be efficiently optimized.
+
 \subsection{Evidence Lower Bound (ELBO)}
 
-For latent variable model with intractable posterior $p(\vect{z}|\vect{x})$, approximate with $q(\vect{z})$:
+For latent variable model with intractable posterior $p(\vect{z}|\vect{x})$, we approximate with $q(\vect{z})$. The mathematical derivation shows how we can bound the log-evidence:
 
 \begin{align}
 \log p(\vect{x}) &= \mathbb{E}_{q(\vect{z})}[\log p(\vect{x})] \\
@@ -14,41 +16,41 @@ For latent variable model with intractable posterior $p(\vect{z}|\vect{x})$, app
 &\geq \mathbb{E}_{q(\vect{z})}\left[\log \frac{p(\vect{x}, \vect{z})}{q(\vect{z})}\right] = \mathcal{L}(q)
 \end{align}
 
-Maximizing $\mathcal{L}(q)$ minimizes $D_{KL}(q(\vect{z}) \| p(\vect{z}|\vect{x}))$.
+The key insight is that the KL divergence $D_{KL}(q(\vect{z}) \| p(\vect{z}|\vect{x}))$ is always non-negative, so the ELBO $\mathcal{L}(q)$ provides a lower bound on the log-evidence. The motivation behind this mathematical framework is that maximizing the ELBO simultaneously maximizes the log-evidence and minimizes the KL divergence between our approximation $q(\vect{z})$ and the true posterior $p(\vect{z}|\vect{x})$. This transforms the intractable inference problem into a tractable optimization problem where we can use standard optimization techniques to find the best approximation.
 
 \subsection{Variational Family}
 
-Choose tractable family of distributions:
+The choice of variational family determines the expressiveness and computational tractability of our approximation. We must balance between capturing the complexity of the true posterior and maintaining computational efficiency.
 
-\textbf{Mean field:} Fully factorized
+\textbf{Mean field:} Fully factorized approximation assumes all variables are independent:
 \begin{equation}
 q(\vect{z}) = \prod_{i=1}^{n} q_i(z_i)
 \end{equation}
 
-\textbf{Structured:} Allow some dependencies
+This equation shows that the joint distribution factors into a product of individual marginals, making computation tractable but potentially missing important dependencies between variables.
+
+\textbf{Structured:} Allow some dependencies by grouping variables into cliques:
 \begin{equation}
 q(\vect{z}) = \prod_{c} q_c(\vect{z}_c)
 \end{equation}
 
-Trade-off between expressiveness and tractability.
+This equation permits dependencies within each clique $c$ while maintaining independence between cliques, providing a middle ground between mean field and full posterior approximation. The trade-off between expressiveness and tractability is fundamental to variational inference, as more expressive families can better approximate the true posterior but require more computational resources.
 
 \subsection{Coordinate Ascent VI}
 
-Optimize each factor iteratively:
+Coordinate ascent variational inference optimizes each factor of the variational distribution iteratively while keeping all other factors fixed. The update equation for each factor is:
+
 \begin{equation}
 q_j^*(z_j) \propto \exp\left(\mathbb{E}_{q_{-j}}[\log p(\vect{z}, \vect{x})]\right)
 \end{equation}
 
-Guaranteed to converge to local optimum of ELBO.
+This equation shows that the optimal factor $q_j^*(z_j)$ is proportional to the exponential of the expected log-joint probability, where the expectation is taken over all other factors $q_{-j}$. The key insight is that each factor can be optimized independently given the others, making the optimization problem tractable. This approach is guaranteed to converge to a local optimum of the ELBO, providing a principled way to find good approximations to the true posterior.
 
 \subsection{Stochastic Variational Inference}
 
-Use stochastic gradients for scalability:
-\begin{itemize}
-    \item Mini-batch data
-    \item Monte Carlo estimation of expectations
-    \item Reparameterization trick for low variance
-\end{itemize}
+Stochastic variational inference addresses the scalability limitations of traditional variational inference by using stochastic gradients and mini-batch processing to handle large datasets efficiently. The method enables variational inference to scale to massive datasets by processing only small subsets of data at each iteration, making it practical for modern machine learning applications.
+
+The approach combines mini-batch data processing with Monte Carlo estimation of expectations, allowing the algorithm to work with large datasets without requiring the full dataset to be loaded into memory. The reparameterization trick provides a crucial variance reduction technique that enables stable optimization by expressing the stochastic gradients in a form that has lower variance than naive Monte Carlo estimation. This combination of techniques makes stochastic variational inference the method of choice for large-scale probabilistic modeling, enabling the deployment of sophisticated probabilistic models in production systems.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (variational inference)}

@@ -3,29 +3,32 @@
 \section{Mean Field Approximation \difficultyInline{advanced}}
 \label{sec:mean-field}
 
+Mean field approximation is the simplest form of variational inference that assumes all latent variables are independent, providing a computationally efficient but potentially limited approximation to complex posterior distributions.
+
 \subsection{Fully Factorized Approximation}
 
-Assume all variables independent:
+The fully factorized approximation assumes that all latent variables are independent, leading to the factorization:
 \begin{equation}
 q(\vect{z}) = \prod_{i=1}^{n} q_i(z_i)
 \end{equation}
 
+This equation shows that the joint variational distribution factors into a product of individual marginals, where each $q_i(z_i)$ represents the approximate posterior for variable $z_i$. This factorization makes the optimization problem tractable by allowing each factor to be optimized independently, but it may miss important dependencies between variables that exist in the true posterior.
+
 \subsection{Update Equations}
 
-For each variable:
+The mean field update equations provide the optimal form for each factor when all other factors are held fixed. For each variable $z_j$, the optimal factor is:
+
 \begin{equation}
 \log q_j^*(z_j) = \mathbb{E}_{i \neq j}[\log p(\vect{z}, \vect{x})] + \text{const}
 \end{equation}
 
-Iterate until convergence.
+This equation shows that the log of the optimal factor $q_j^*(z_j)$ is proportional to the expected log-joint probability, where the expectation is taken over all other variables $i \neq j$. The constant term ensures proper normalization. The algorithm iterates these updates until convergence, with each update guaranteed to increase the ELBO, leading to a local optimum of the variational objective.
 
 \subsection{Properties}
 
-\begin{itemize}
-    \item Underestimates variance (overconfident)
-    \item Computationally efficient
-    \item Often good approximation in practice
-\end{itemize}
+Mean field approximation exhibits several important properties that make it both useful and limited in practice. The method tends to underestimate variance, leading to overconfident predictions that may not capture the full uncertainty in the posterior distribution. This bias arises from the independence assumption, which prevents the approximation from capturing correlations between variables that could lead to higher uncertainty estimates.
+
+Despite these limitations, mean field approximation remains computationally efficient and often provides surprisingly good approximations in practice. The efficiency comes from the simple factorization that allows each factor to be optimized independently, making the algorithm scalable to high-dimensional problems. The practical success of mean field methods in many applications demonstrates that the independence assumption, while theoretically limiting, often captures enough of the important structure to be useful for decision-making and prediction tasks.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (mean field)}

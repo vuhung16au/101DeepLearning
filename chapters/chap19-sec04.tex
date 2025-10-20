@@ -3,14 +3,13 @@
 \section{Expectation Propagation \difficultyInline{advanced}}
 \label{sec:ep}
 
-Approximates each factor with simpler distribution:
+Expectation propagation approximates complex probability distributions by replacing each factor with a simpler distribution from an exponential family, enabling tractable inference while preserving important statistical properties. The mathematical foundation is:
+
 \begin{equation}
 p(\vect{x}) = \frac{1}{Z} \prod_i f_i(\vect{x}) \approx \frac{1}{Z} \prod_i \tilde{f}_i(\vect{x})
 \end{equation}
 
-Iteratively refine approximations to match moments.
-
-Better than mean field for multi-modal posteriors.
+This equation shows that the true distribution $p(\vect{x})$ is approximated by replacing each complex factor $f_i(\vect{x})$ with a simpler factor $\tilde{f}_i(\vect{x})$ from a tractable family. The algorithm iteratively refines these approximations to match the moments of the true distribution, providing a principled way to approximate complex posteriors. Expectation propagation is particularly effective for multi-modal posteriors where mean field approximation would fail, as it can capture multiple modes by using more expressive approximating families.
 
 
 % \subsection{Visual aids}

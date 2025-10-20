@@ -25,6 +25,10 @@ After studying this chapter, you will be able to:
 
 Exact posteriors are rare. We instead optimize over a family of tractable distributions or draw dependent samples, trading bias and variance to approximate expectations we care about.
 
+For example, when trying to understand a patient's disease risk from their genetic data, we need to integrate information across thousands of genes and environmental factors, which creates an intractable posterior distribution. Like a detective trying to piece together a complex case from scattered evidence, approximate inference methods help us make sense of overwhelming amounts of uncertain information by focusing on the most important patterns and relationships.
+
+Think of approximate inference as using a simplified map instead of a detailed satellite image when navigating a city. While the simplified map might miss some details, it captures the essential information needed to reach your destination efficiently. Similarly, approximate inference methods trade some accuracy for computational efficiency, enabling us to make decisions in complex probabilistic models that would otherwise be impossible to solve exactly.
+
 
 \input{chapters/chap19-sec01}
 \input{chapters/chap19-sec02}
