@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Updated Chapter 8 (Optimization for Training Deep Models) to improve readability and flow
+  - Added one-liner explanations to all main section headings (8.1, 8.2, 8.3, 8.4, 8.5)
+  - Converted bullet point lists to narrative prose in subsections:
+    - 8.1.2 Batch Gradient Descent
+    - 8.1.3 Stochastic Gradient Descent (SGD)
+    - 8.1.4 Mini-Batch Gradient Descent
+    - 8.2.2 Momentum
+    - 8.2.3 Nesterov Accelerated Gradient (NAG)
+    - 8.3.5 Learning Rate Schedules (Other useful schedules)
+    - 8.4.2 Newton's Method
+    - 8.4.3 Quasi-Newton Methods
+    - 8.5.2 Vanishing and Exploding Gradients
+    - 8.5.3 Local Minima and Saddle Points
+    - 8.5.5 Practical Optimization Strategy
+  - Maintained British English spelling throughout (optimisation, generalisation, stabilise, etc.)
+  - Preserved all technical content, citations, mathematical equations, and index entries
+
 ### Added
 - Comprehensive content expansion for Chapter 10 (Sequence Modeling)
   - Enhanced "Advanced Topics" section with detailed explanations of beam search and bidirectional RNNs
