@@ -267,6 +267,41 @@
 % Legacy \difficulty command used on its own line: make it a no-op now
 \newcommand{\difficulty}[1]{}
 
+% --- Learning Objectives Environment ---
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fontawesome}
+
+% Define colors for learning objectives
+\definecolor{objbg}{RGB}{248,249,250}
+\definecolor{objborder}{RGB}{74,144,226}
+\definecolor{objtext}{RGB}{33,37,41}
+
+% Custom command for individual objectives
+\newcommand{\objective}[1]{%
+  \item \textcolor{objtext}{#1}
+}
+
+% Learning objectives environment
+\newenvironment{learningobjectives}{%
+  \begin{tcolorbox}[
+    colback=objbg,
+    colframe=objborder,
+    boxrule=1.5pt,
+    arc=3pt,
+    left=15pt,
+    right=15pt,
+    top=15pt,
+    bottom=15pt,
+    fonttitle=\bfseries\large,
+    title={\textcolor{objborder}{🎯} Learning Objectives}
+  ]
+  \begin{enumerate}[leftmargin=0pt,itemsep=8pt,parsep=0pt]
+}{%
+  \end{enumerate}
+  \end{tcolorbox}
+}
+
 % --- Title and Author Information ---
 \title{\textbf{Deep Learning 101}}
 \author{Vũ Hưng Nguyễn}

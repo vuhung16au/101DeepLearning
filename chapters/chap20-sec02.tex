@@ -15,26 +15,30 @@ In the GAN framework, the generator $G$ takes random noise as input and transfor
   \centering
   \begin{tikzpicture}[
     ->, thick,
-    node/.style={circle, fill=teal!60},
+    node/.style={circle, fill=teal!60, minimum size=1.2cm},
     label/.style={below, font=\footnotesize},
   ]
 
-  \node[node] (zin) {$\vec z_\text{in}$};
-  \node[node, right=5em of zin] (fake) {$\vec x_\text{fake}$};
-  \draw (zin) -- node[above] {$G(\vec x)$} node[label] {generator} (fake);
+  % Generator path
+  \node[node] (zin) at (0,0) {$\vec z$};
+  \node[node] (fake) at (4,0) {$\vec x_\text{fake}$};
+  \draw (zin) -- node[above] {$G(\vec z)$} node[label] {generator} (fake);
 
-  \draw[<-] (zin) -- node[above] {$p_\theta(\vec z)$} node[label] {latent noise} ++(-3,0);
-  \node[node, above=of fake] (real) {$\vec x_\text{real}$};
+  % Real data path
+  \node[node] (real) at (4,2) {$\vec x_\text{real}$};
   \draw[<-] (real) -- node[above] {$p_\text{data}(\vec x)$} ++(-3,0);
-  \node[node, right=6em of fake] (D) at ($(fake)!0.5!(real)$) {$\vec x$};
-  \node[right=7em of D] (out) {real?};
+
+  % Discriminator
+  \node[node] (D) at (8,1) {$\vec x$};
+  \node (out) at (11,1) {real?};
   \draw (D) -- node[above] {$D(\vec x)$} node[label] {discriminator} (out);
 
-  \coordinate[right=2.5em of fake, circle, fill, inner sep=0.15em] (pt1);
-  \coordinate[right=2.5em of real, circle, fill, inner sep=0.15em] (pt2);
+  % Connections to discriminator
+  \draw (fake) -- (D);
+  \draw (real) -- (D);
 
-  \draw[-, dashed] (pt1) edge[bend left] coordinate[circle, fill=orange, inner sep=1mm, pos=0.7] (pt3) (pt2);
-  \draw (fake) -- (pt1) (real) -- (pt2) (pt3) -- (D);
+  % Noise source
+  \draw[<-] (zin) -- node[above] {$p(\vec z)$} node[label] {latent noise} ++(-2,0);
 
 \end{tikzpicture}
 \caption{GAN architecture showing the adversarial relationship between generator and discriminator.}
