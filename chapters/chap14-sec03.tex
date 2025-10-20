@@ -15,7 +15,20 @@ Since we cannot directly maximize $\log p(\vect{x})$, we instead maximize the EL
 
 \subsection{Reparameterization Trick}
 
-The reparameterization trick enables backpropagation through sampling by expressing the latent variable as $\vect{z} = \boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}$ where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$, allowing gradients to flow through the deterministic transformation while maintaining the stochastic nature of the sampling process.
+The reparameterization trick enables backpropagation through stochastic nodes by writing sampling as a deterministic function of parameters and an auxiliary noise variable. For a Gaussian encoder
+\begin{equation}
+q_{\phi}(\vect{z}|\vect{x}) = \mathcal{N}\big(\vect{z};\, \boldsymbol{\mu}_{\phi}(\vect{x}),\; \mathrm{diag}(\boldsymbol{\sigma}^2_{\phi}(\vect{x}))\big),
+\end{equation}
+sample via
+\begin{equation}
+\vect{z} = \boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon},\qquad \boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \mat{I}).
+\end{equation}
+This yields a low-variance gradient estimator of the ELBO because the expectation over $q_{\phi}(\vect{z}|\vect{x})$ becomes an expectation over $\boldsymbol{\epsilon}$ independent of $\phi$:
+\begin{align}
+\nabla_{\phi} \, \mathbb{E}_{q_{\phi}(\vect{z}|\vect{x})}[\,f(\vect{z})\,] &= \nabla_{\phi} \, \mathbb{E}_{\boldsymbol{\epsilon} \sim \mathcal{N}(0,\mat{I})}\big[ f\big(\boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}\big) \big] \\
+&= \mathbb{E}_{\boldsymbol{\epsilon}}\big[ \nabla_{\phi} f\big(\boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}\big) \big].
+\end{align}
+Thus gradients flow through $\boldsymbol{\mu}_{\phi}$ and $\boldsymbol{\sigma}_{\phi}$ via the deterministic mapping while preserving stochasticity through $\boldsymbol{\epsilon}$.
 
 \subsection{Generation}
 

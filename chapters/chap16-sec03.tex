@@ -7,7 +7,11 @@ Deep learning and structured models combine the representational power of neural
 
 \subsection{Structured Output Prediction}
 
-Structured output prediction uses graphical models to model output structure, where the goal is to predict complex, structured outputs that satisfy certain constraints and dependencies. Conditional Random Fields (CRFs) provide a powerful framework for structured prediction with $p(\vect{y}|\vect{x}) = \frac{1}{Z(\vect{x})} \exp\left(\sum_c \vect{w}^\top \vect{\phi}_c(\vect{x}, \vect{y}_c)\right)$, where the model learns to assign higher probability to valid output structures while penalizing invalid ones. Applications include sequence labeling tasks like named entity recognition and part-of-speech tagging, where the model must ensure that the predicted labels form coherent sequences, image segmentation where the model must produce spatially coherent segmentations, and parsing where the model must generate syntactically valid parse trees that respect grammatical constraints.
+Structured output prediction uses graphical models to model output structure, where the goal is to predict complex, structured outputs that satisfy constraints and dependencies. Conditional Random Fields (CRFs) provide a powerful framework with
+\begin{equation}
+p(\vect{y}\,|\,\vect{x}) = \frac{1}{Z(\vect{x})} \, \exp\Big(\sum_{c} \vect{w}^\top \vect{\phi}_c(\vect{x}, \vect{y}_c)\Big).
+\end{equation}
+\noindent\textbf{Variables.} $\vect{x}$: input; $\vect{y}$: structured output; $c$: cliques/factors; $\vect{\phi}_c$: feature functions on $(\vect{x},\vect{y}_c)$; $\vect{w}$: weights; $Z(\vect{x})$: partition function ensuring normalization.
 
 \subsection{Structured Prediction with Neural Networks}
 
@@ -19,7 +23,16 @@ Neural Module Networks compose neural modules based on program structure for vis
 
 \subsection{Graph Neural Networks}
 
-Graph Neural Networks (GNNs) operate on graphs via message passing and permutation-invariant aggregations, where the mathematical definition involves updating node representations through $\mathbf{h}_v^{(l+1)} = \text{UPDATE}^{(l)}(\mathbf{h}_v^{(l)}, \text{AGGREGATE}^{(l)}(\{\mathbf{h}_u^{(l)} : u \in \mathcal{N}(v)\}))$ for each node $v$ and layer $l$. We need GNNs because many real-world problems involve data with inherent graph structure, where traditional neural networks cannot directly handle the irregular and variable-sized nature of graph data. We use GNNs by first representing the data as a graph with nodes and edges, then applying message passing layers that aggregate information from neighboring nodes, where the learned node representations can be used for various downstream tasks like node classification, link prediction, or graph-level prediction.
+Graph Neural Networks (GNNs) operate on data structured as graphs via iterative message passing. Let $\mathcal{G}=(\mathcal{V},\mathcal{E})$ with node features $\mathbf{X} \in \mathbb{R}^{|\mathcal{V}| \times D}$ and adjacency matrix $\mathbf{A}$. At layer $l$, each node $v$ aggregates neighbor information and updates its representation:
+\begin{align}
+\mathbf{m}_{\mathcal{N}(v)}^{(l)} &= \mathrm{AGGREGATE}^{(l)}\big(\{\mathbf{h}_u^{(l-1)}: u \in \mathcal{N}(v)\}\big), \\
+\mathbf{h}_v^{(l)} &= \mathrm{UPDATE}^{(l)}\big(\mathbf{h}_v^{(l-1)}, \mathbf{m}_{\mathcal{N}(v)}^{(l)}\big),
+\end{align}
+where $\mathrm{AGGREGATE}$ is permutation-invariant (e.g., sum/mean/max) and $\mathrm{UPDATE}$ is learnable (e.g., linear map + nonlinearity). A common layer is the GCN:
+\begin{equation}
+\mathbf{H}^{(l)} = \sigma\!\big( \tilde{\mathbf{D}}^{-1/2} \tilde{\mathbf{A}} \, \tilde{\mathbf{D}}^{-1/2} \, \mathbf{H}^{(l-1)} \, \mathbf{W}^{(l)} \big),
+\end{equation}
+with $\tilde{\mathbf{A}}=\mathbf{A}+\mathbf{I}$, $\tilde{\mathbf{D}}_{ii}=\sum_j \tilde{A}_{ij}$, $\mathbf{W}^{(l)}$ learnable, and $\sigma$ an activation. After $L$ layers, $\mathbf{h}_v^{(L)}$ aggregates information from the $L$-hop neighborhood.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (structured models)}

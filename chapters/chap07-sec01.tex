@@ -40,3 +40,5 @@ Combines L1 and L2:
 \tilde{L}(\vect{\theta}) = L(\vect{\theta}) + \lambda_1 \|\vect{w}\|_1 + \lambda_2 \|\vect{w}\|^2
 \end{equation}
 
+Why combine them? The L1 term promotes sparsity, selecting a compact set of features, while the L2 term stabilizes the solution by shrinking correlated coefficients together rather than arbitrarily picking one. In high-dimensional settings with collinearity, pure L1 can be unstable; the added L2 induces grouping and reduces variance, yielding models that are both interpretable (sparse) and numerically well-conditioned.
+

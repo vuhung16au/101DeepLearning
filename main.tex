@@ -349,11 +349,15 @@
   style=remarkbox,
   ]
 
-% Define proof environment (non-numbered)
-\newkeytheorem{proof}[
-  style=proofbox,
-  numbered=false,
+% Define proof environment (non-numbered) only if not already defined by amsthm
+\makeatletter
+\@ifundefined{proof}{%
+  \newkeytheorem{proof}[
+    style=proofbox,
+    numbered=false,
   ]
+}{}
+\makeatother
 
 % Define problem/exercise with separate counter
 \newkeytheorem{problem}[

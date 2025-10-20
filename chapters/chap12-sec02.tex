@@ -19,15 +19,18 @@ Modern text classification systems typically use pretrained transformer models l
 
 \begin{figure}[h]
   \centering
-  \begin{tikzpicture}
-    \tikzstyle{b}=[draw,rounded corners,align=center,minimum width=2.3cm,minimum height=0.9cm]
-    \node[b,fill=bookpurple!10] at (0,0) (tok) {Tokenize +\newline Embed};
-    \node[b,fill=bookpurple!15] at (3.0,0) (enc) {Transformer\newline Encoder ($L$ layers)};
-    \node[b,fill=bookpurple!20] at (6.0,0) (cls) {[CLS] pooled};
-    \node[b,fill=bookpurple!30] at (9.0,0) (head) {Softmax head};
-    \draw[->] (tok) -- (enc);
-    \draw[->] (enc) -- (cls);
-    \draw[->] (cls) -- (head);
+  \begin{tikzpicture}[>=stealth]
+    % Use consistent node sizes and add vertical spacing to avoid overlaps
+    \tikzstyle{b}=[draw,rounded corners,align=center,minimum width=3.0cm,minimum height=1.1cm]
+    % Nodes
+    \node[b,fill=bookpurple!10] (tok) at (0,0) {Tokenize\\Embed};
+    \node[b,fill=bookpurple!15] (enc) at (4.0,0) {Transformer\\Encoder ($L$ layers)};
+    \node[b,fill=bookpurple!20] (cls) at (8.0,0) {[CLS] pooled};
+    \node[b,fill=bookpurple!30] (head) at (12.0,0) {Softmax head};
+    % Arrows
+    \draw[->,thick] (tok) -- (enc);
+    \draw[->,thick] (enc) -- (cls);
+    \draw[->,thick] (cls) -- (head);
   \end{tikzpicture}
   \caption{Transformer fine-tuning for text classification.}
   \label{fig:nlp-class}

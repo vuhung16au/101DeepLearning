@@ -11,11 +11,19 @@ Graphical models represent complex probability distributions using graphs, where
 
 \subsection{Bayesian Networks}
 
-Bayesian networks use directed acyclic graphs (DAGs) to represent conditional dependencies, where the joint probability distribution factorizes as $p(\vect{x}) = \prod_{i=1}^{n} p(x_i | \text{Pa}(x_i))$ with $\text{Pa}(x_i)$ being the parents of $x_i$. In deep learning, Bayesian networks are particularly useful for modeling causal relationships and incorporating domain knowledge, where the directed structure allows for natural representation of cause-effect relationships that can guide the learning process. The Naive Bayes classifier exemplifies this approach with $p(y, \vect{x}) = p(y) \prod_{i=1}^{d} p(x_i|y)$, where the assumption of feature independence given the class enables efficient learning and inference, making it a fundamental building block for more complex graphical models in deep learning applications.
+Bayesian networks use directed acyclic graphs (DAGs) to represent conditional dependencies, where the joint probability distribution factorizes as $p(\vect{x}) = \prod_{i=1}^{n} p(x_i | \text{Pa}(x_i))$ with $\text{Pa}(x_i)$ being the parents of $x_i$. In deep learning, Bayesian networks are particularly useful for modeling causal relationships and incorporating domain knowledge. The Naive Bayes classifier exemplifies this approach with
+\begin{equation}
+p(y, \vect{x}) = p(y) \prod_{i=1}^{d} p(x_i\,|\,y).
+\end{equation}
+\noindent\textbf{Variables.} $y$: class label; $\vect{x}=(x_1,\dots,x_d)$: features; $p(y)$: class prior; $p(x_i|y)$: class-conditional likelihoods.
 
 \subsection{Markov Random Fields}
 
-Markov Random Fields use undirected graphs with potential functions, where the joint probability distribution is given by $p(\vect{x}) = \frac{1}{Z} \prod_{c \in \mathcal{C}} \psi_c(\vect{x}_c)$ with $\mathcal{C}$ being cliques and $Z$ the partition function. In deep learning, Markov Random Fields are particularly valuable for modeling symmetric relationships and spatial dependencies, where the undirected structure allows for natural representation of mutual influences between variables without imposing causal directionality. Examples like the Ising model and Conditional Random Fields (CRFs) demonstrate how MRFs can capture complex spatial and temporal dependencies in data, where CRFs are widely used in sequence labeling tasks like named entity recognition and part-of-speech tagging, enabling the model to consider the context of neighboring labels when making predictions.
+Markov Random Fields use undirected graphs with potential functions. The joint distribution factorizes as
+\begin{equation}
+p(\vect{x}) = \frac{1}{Z} \prod_{c \in \mathcal{C}} \psi_c(\vect{x}_c),
+\end{equation}
+where $\mathcal{C}$ are cliques, $\psi_c$ are nonnegative potentials over variables in clique $c$, and $Z$ is the partition function ensuring normalization.
 
 
 % \subsection{Visual aids}

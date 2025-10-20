@@ -3,7 +3,11 @@
 \section{Sparse Coding \difficultyInline{intermediate}}
 \label{sec:sparse-coding}
 
-Sparse coding learns an overcomplete dictionary where data has sparse representation through the optimization problem $\min_{\mat{D}, \vect{z}} \|\vect{x} - \mat{D}\vect{z}\|^2 + \lambda \|\vect{z}\|_1$, where the first term ensures accurate reconstruction and the second term promotes sparsity in the representation. This formulation is particularly powerful because it can learn meaningful features from data by finding a dictionary that allows each data point to be represented as a sparse combination of dictionary elements, where the sparsity constraint forces the model to identify the most important and distinctive features. Sparse coding has found widespread applications in image denoising where it can separate noise from signal by learning sparse representations, in feature learning where it discovers meaningful patterns in data, and in compression where sparse representations can significantly reduce storage requirements while maintaining reconstruction quality.
+Sparse coding learns an overcomplete dictionary where data has sparse representation through the optimization problem
+\begin{equation}
+\min_{\mat{D},\, \vect{z}}\; \underbrace{\lVert \vect{x} - \mat{D}\vect{z} \rVert^2}_{\text{reconstruction error}} + \lambda\, \underbrace{\lVert \vect{z} \rVert_1}_{\text{sparsity penalty}}.
+\end{equation}
+\noindent\textbf{Explanation.} The objective trades off fidelity to the data (small reconstruction error) with sparsity of the code $\vect{z}$ (few nonzeros), controlled by $\lambda>0$. This encourages parts-based, interpretable representations.
 
 \subsection{Optimization and interpretation}
 

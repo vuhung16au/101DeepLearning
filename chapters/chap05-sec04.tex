@@ -74,14 +74,7 @@ Random forests address the overfitting problem of individual trees by combining 
 
 \subsubsection{Bootstrap Aggregating (Bagging)}
 
-Random forests use two sources of randomness:
-
-\begin{enumerate}
-    \item \textbf{Bootstrap sampling:} Each tree is trained on a random sample (with replacement) of the training data
-    \item \textbf{Random feature selection:} At each split, only a random subset of features is considered
-\end{enumerate}
-
-Prediction is made by averaging (regression) or voting (classification):
+Random forests inject diversity through two complementary mechanisms. First, each tree is trained on a \emph{bootstrap sample}—a dataset created by sampling with replacement from the original training set—so trees see different subsets of examples and learn different decision boundaries. Second, at each split within a tree, the algorithm considers only a \emph{random subset of features} rather than all features, forcing trees to rely on different signals and preventing a few strong predictors from dominating every split. At inference time, the forest aggregates individual tree predictions—by averaging for regression or majority voting for classification—so the ensemble reduces variance relative to any single overfit tree while keeping low bias.
 
 \begin{equation}
 \hat{y} = \frac{1}{B} \sum_{b=1}^{B} f_b(\vect{x})
@@ -116,13 +109,7 @@ where $B$ is the number of trees.
 
 \subsubsection{Advantages of Random Forests}
 
-\begin{itemize}
-    \item \textbf{Reduced overfitting:} Multiple trees reduce variance
-    \item \textbf{Feature importance:} Can measure which features are most important
-    \item \textbf{Robust to outliers:} Bootstrap sampling reduces outlier impact
-    \item \textbf{Parallelizable:} Trees can be trained independently
-    \item \textbf{No feature scaling needed:} Works with mixed data types
-\end{itemize}
+Random forests substantially reduce overfitting by averaging many de-correlated trees, which lowers variance without greatly increasing bias. They provide built-in \emph{feature importance} estimates that highlight which inputs most influence predictions, helping interpretation and feature selection. Because each tree is trained on a bootstrap sample, the ensemble is naturally robust to outliers and noisy examples that might mislead a single tree. Training is trivially parallelizable since trees are independent, and, like decision trees, random forests require no feature scaling and handle mixed data types gracefully.
 
 \subsection{Gradient Boosting}
 
@@ -153,17 +140,13 @@ Gradient boosting works by starting with a simple model like the mean for regres
 \begin{example}
 For regression with target values $[10, 20, 30, 40]$:
 
-\begin{algorithm}[htbp]
-\caption{Gradient Boosting Example}
-\label{alg:gradient-boosting-example}
 \begin{algorithmic}[1]
-\State Initial prediction: $\hat{y}^{(0)} = 25$ \Comment{mean of target values}
-\State Residuals: $[-15, -5, 5, 15]$ \Comment{computed as $y^{(i)} - \hat{y}^{(0)}$}
-\State Train tree on residuals $\{(\vect{x}^{(i)}, r_i^{(1)})\}_{i=1}^{4}$
-\State Add tree to ensemble: $\hat{y}^{(1)} = 25 + \nu \cdot \text{tree}_1(\vect{x})$
-\State Repeat with new residuals for next iteration
+\State Initial prediction: $\hat{y}^{(0)} = 25$ \Comment{mean of targets}
+\State Residuals: $[-15, -5, 5, 15]$ \Comment{$r_i = y^{(i)} - \hat{y}^{(0)}$}
+\State Fit a small tree to residuals $\{(\vect{x}^{(i)}, r_i)\}$
+\State Update ensemble: $\hat{y}^{(1)}(\vect{x}) = 25 + \nu\, f_1(\vect{x})$
+\State Recompute residuals and repeat for $m=2,\dots,M$
 \end{algorithmic}
-\end{algorithm}
 \end{example}
 
 \subsection{Advanced Ensemble Methods}

@@ -21,6 +21,29 @@ with MSE loss:
 L = \frac{1}{n} \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)})^2
 \end{equation}
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.7\textwidth,
+    height=0.4\textwidth,
+    axis lines=left,
+    xlabel={$\hat y$}, ylabel={$L(\hat y)$},
+    xmin=-2, xmax=2, ymin=-0.1, ymax=4,
+    grid=both, grid style={draw=bookpurple!10},
+    major grid style={draw=bookpurple!40}
+  ]
+    % Visualize MSE as (y - yhat)^2 with y=1
+    \addplot[domain=-2:2, samples=300, very thick, bookpurple] {(1 - x)^2};
+    \addlegendentry{$(y-\hat y)^2$ for $y=1$}
+    \addplot[only marks, mark=*, bookred] coordinates {(1,0)};
+    \addlegendentry{Minimum at $\hat y{=}y$}
+  \end{axis}
+\end{tikzpicture}
+\caption{MSE loss in 1D: a convex parabola centered at the target $y$. The minimum occurs at $\hat y{=}y$.}
+\label{fig:mse-1d}
+\end{figure}
+
 \subsection{Sigmoid Output for Binary Classification}
 
 For binary classification:

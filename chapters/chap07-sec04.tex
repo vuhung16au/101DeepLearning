@@ -19,78 +19,80 @@ Training with dropout involves sampling a binary mask $\vect{m}$ with $P(m_i = 1
     node/.style={circle, draw, thick},
   ]
 
-  \def\layersep{2}
-  \def\nodesep{1.5}
+\def\layersep{2}
+\def\nodesep{1.2}
 
-  % Input layer
-  \foreach \y in {1,...,5}{
+  % Input layer (6 nodes)
+  \foreach \y in {1,...,6}{
       \node[node] (i\y) at (0,\nodesep*\y) {};
     }
 
-  % Hidden layer 1
-  \foreach \y in {1,...,5}{
+  % Hidden layer 1 (6 nodes)
+  \foreach \y in {1,...,6}{
       \node[node] (h1\y) at (\layersep,\nodesep*\y) {};
     }
 
-  % Hidden layer 2
-  \foreach \y in {1,...,5}{
+  % Hidden layer 2 (6 nodes)
+  \foreach \y in {1,...,6}{
       \node[node] (h2\y) at (2*\layersep,\nodesep*\y) {};
     }
 
-  % Output layer
+  % Output layer (3 nodes)
   \node[node] (o1) at (3*\layersep,\nodesep*2) {};
-  \node[node] (o2) at (3*\layersep,\nodesep*4) {};
+  \node[node] (o2) at (3*\layersep,\nodesep*3.5) {};
+  \node[node] (o3) at (3*\layersep,\nodesep*5) {};
 
   % Connections
-  \foreach \source in {1,...,5}
-  \foreach \dest in {1,...,5}{
+  \foreach \source in {1,...,6}
+  \foreach \dest in {1,...,6}{
       \path[-stealth, thick] (i\source) edge (h1\dest);
       \path[-stealth, thick] (h1\source) edge (h2\dest);
     }
-  \foreach \source in {1,...,5}
-  \foreach \dest in {1,2}
+  \foreach \source in {1,...,6}
+  \foreach \dest in {1,2,3}
   \draw[-stealth, thick] (h2\source) -- (o\dest);
 
   % Dropout arrow
   \draw[-stealth, thick] (7.5,3*\nodesep) -- node[above,font=\Large\bfseries] {dropout} (9.5, 3*\nodesep);
 
-  % After dropout - Input layer
-  \foreach \y in {1,...,5}
+  % After dropout - Input layer (6 nodes, drop 2)
+  \foreach \y in {1,...,6}
   \node[node] (di\y) at (10,\nodesep*\y) {};
 
-  \node[red,font=\huge] at (di1) {$\times$};
-  \node[red,font=\huge] at (di3) {$\times$};
+  \node[red,font=\huge] at (di2) {$\times$};
+  \node[red,font=\huge] at (di5) {$\times$};
 
-  % After dropout - Hidden layer 1
-  \foreach \y in {1,...,5}
+  % After dropout - Hidden layer 1 (6 nodes, drop 3)
+  \foreach \y in {1,...,6}
   \node[node] (dh1\y) at (10+\layersep,\nodesep*\y) {};
 
   \node[red,font=\huge] at (dh11) {$\times$};
   \node[red,font=\huge] at (dh13) {$\times$};
-  \node[red,font=\huge] at (dh14) {$\times$};
+  \node[red,font=\huge] at (dh16) {$\times$};
 
-  % After dropout - Hidden layer 2
-  \foreach \y in {1,...,5}
+  % After dropout - Hidden layer 2 (6 nodes, drop 2)
+  \foreach \y in {1,...,6}
   \node[node] (dh2\y) at (10+2*\layersep,\nodesep*\y) {};
 
   \node[red,font=\huge] at (dh22) {$\times$};
-  \node[red,font=\huge] at (dh24) {$\times$};
+  \node[red,font=\huge] at (dh25) {$\times$};
 
-  % After dropout - Output layer
+  % After dropout - Output layer (3 nodes)
   \node[node] (do1) at (10+3*\layersep,\nodesep*2) {};
-  \node[node] (do2) at (10+3*\layersep,\nodesep*4) {};
+  \node[node] (do2) at (10+3*\layersep,\nodesep*3.5) {};
+  \node[node] (do3) at (10+3*\layersep,\nodesep*5) {};
 
   % After dropout connections
-  \foreach \source in {2,4,5}
-  \foreach \dest in {2,5}
+  \foreach \source in {1,3,4,6}
+  \foreach \dest in {1,4,6}
   \draw[-stealth, thick] (di\source) -- (dh1\dest);
 
-  \foreach \source in {2,5}
-  \foreach \dest in {1,3,5}
+  \foreach \source in {1,4,6}
+  \foreach \dest in {1,3,6}
   \draw[-stealth, thick] (dh1\source) -- (dh2\dest);
 
-  \foreach \source in {1,3,5}
-  \foreach \dest in {1,2}
+  \foreach \source in {1,3,4,6}
+  \foreach \dest in {1,2,3}
   \draw[-stealth, thick] (dh2\source) -- (do\dest);
 
 \end{tikzpicture}

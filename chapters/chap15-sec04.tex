@@ -11,7 +11,18 @@ The core idea of contrastive learning is to maximize agreement between different
 
 \subsection{SimCLR Framework}
 
-The SimCLR framework applies two random augmentations to each image, encodes both views using the same encoder network $\vect{z}_i = f(\vect{x}_i)$ and $\vect{z}_j = f(\vect{x}_j)$, and minimizes the contrastive loss (NT-Xent) to learn representations that are invariant to the applied augmentations. The contrastive loss $\ell_{i,j} = -\log \frac{\exp(\text{sim}(\vect{z}_i, \vect{z}_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{I}_{[k \neq i]} \exp(\text{sim}(\vect{z}_i, \vect{z}_k)/\tau)}$ encourages the model to learn representations where positive pairs have high similarity and negative pairs have low similarity, where $\text{sim}(\cdot, \cdot)$ is cosine similarity and $\tau$ is a temperature parameter that controls the sharpness of the similarity distribution.
+The SimCLR framework applies two random augmentations to each image, encodes both views using the same encoder network $\vect{z}_i = f(\vect{x}_i)$ and $\vect{z}_j = f(\vect{x}_j)$, and minimizes the contrastive loss (NT-Xent) to learn invariances.
+\begin{equation}
+\ell_{i,j} = -\log \frac{\exp(\mathrm{sim}(\vect{z}_i, \vect{z}_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{I}[k \neq i] \, \exp(\mathrm{sim}(\vect{z}_i, \vect{z}_k)/\tau)}.
+\end{equation}
+\noindent\textbf{Variables.}
+\begin{itemize}[leftmargin=1.5em]
+  \item $\vect{z}_i,\vect{z}_j$: embeddings of two augmented views of the same image.
+  \item $\mathrm{sim}(\cdot,\cdot)$: cosine similarity between normalized embeddings.
+  \item $\tau>0$: temperature scaling the softness of the distribution.
+  \item $2N$: number of views in a batch (two per original sample); negatives are the other $2N-2$ views.
+  \item $\mathbb{I}[\cdot]$: indicator that excludes the anchor itself from the denominator.
+\end{itemize}
 
 \subsection{MoCo (Momentum Contrast)}
 

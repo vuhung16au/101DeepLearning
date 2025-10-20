@@ -17,15 +17,25 @@ The choice of network depth and width involves important trade-offs, where deepe
 
 Poor initialization can prevent learning. Common strategies:
 
-\textbf{Xavier/Glorot initialization:}
+\textbf{Xavier/Glorot initialization:} balances variance across layers by matching forward and backward signal scales for approximately linear activations (tanh/sigmoid in their linear regime). In the popular uniform variant:
 \begin{equation}
-W_{ij} \sim \mathcal{N}\left(0, \frac{2}{n_{\text{in}} + n_{\text{out}}}\right)
+W_{ij} \sim \mathcal{U}\Big(-\sqrt{\tfrac{6}{n_{\text{in}} + n_{\text{out}}}},\; \sqrt{\tfrac{6}{n_{\text{in}} + n_{\text{out}}}}\Big)
 \end{equation}
+and in the normal variant:
+\begin{equation}
+W_{ij} \sim \mathcal{N}\!\left(0, \; \frac{2}{n_{\text{in}} + n_{\text{out}}}\right)
+\end{equation}
+The scaling arises by setting $\mathrm{Var}[\text{preact}]$ and $\mathrm{Var}[\text{grad}]$ approximately constant layer-to-layer under independence assumptions.
 
-\textbf{He initialization} (for ReLU):
+\textbf{He initialization} (for ReLU-family): uses a larger variance to compensate for half of activations being zeroed by $\max(0,\cdot)$. Common forms are
 \begin{equation}
-W_{ij} \sim \mathcal{N}\left(0, \frac{2}{n_{\text{in}}}\right)
+W_{ij} \sim \mathcal{N}\!\left(0, \; \frac{2}{n_{\text{in}}}\right)
 \end{equation}
+or the uniform analogue
+\begin{equation}
+W_{ij} \sim \mathcal{U}\Big(-\sqrt{\tfrac{6}{n_{\text{in}}}},\; \sqrt{\tfrac{6}{n_{\text{in}}}}\Big)
+\end{equation}
+which maintains stable activation and gradient variances at initialization for ReLU/LeakyReLU networks.
 
 \subsection{Batch Training}
 
