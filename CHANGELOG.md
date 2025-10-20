@@ -8,6 +8,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Enhanced theorem environment styling using keytheorems package
+  - Implemented styled theorem boxes with colored backgrounds and frames
+  - Added "theorembox" style for theorems, lemmas, propositions, and corollaries (grey background with purple frame)
+  - Added "definitionbox" style for definitions and examples (white background with left purple border)
+  - Added "remarkbox" style for remarks (white background with subtle left border, italic text)
+  - Added "proofbox" style for proofs (white background with top border, non-numbered)
+  - Maintained existing counter-sharing system where theorem-like environments share numbering
+  - Exercise/problem environment maintains separate numbering as before
+  - Colors match existing book theme (bookpurple, bookred) for consistency
+
+### Technical Details (Theorem Styles)
+- **Version**: 1.2.0 (Enhanced Theorem Styles)
+- **Author**: GitHub Copilot
+- **Date**: 20 Oct 2025
+- **License**: CC BY 4.0
+- **Source**: `main.tex` (lines 129-330)
+- **Dependencies**: Added `keytheorems` package (requires recent TeX distribution with keytheorems support)
+- **Instructions**: Standard `make pdf` workflow; no additional build steps required
+- **Notes**: 
+  - Theorem styles inspired by issue example but adapted to book's color scheme
+  - Uses `tcolorbox-no-titlebar` option for seamless integration with keytheorems
+  - All existing theorem/definition/remark/lemma/corollary content will automatically use new styles
+  - Proof environment added (non-numbered) for mathematical proofs
+  - Maintains backward compatibility with existing content files
+- **References**: Issue "Update LaTeX's theorem, proof, remark, corollary, lemma styles"
+- **Acknowledgements**: Style concept from TeX StackExchange (https://tex.stackexchange.com/questions/687560/theorem-style-format)
+- **Color Scheme**:
+  - Theorem boxes: Gray background (gray!12) with purple frame (bookpurple!80)
+  - Definition boxes: White background with purple left border (bookpurple!70)
+  - Remark boxes: White background with subtle gray left border (black!30)
+  - Proof boxes: White background with subtle gray top border (black!20)
+- **Styling Details**:
+  - Box rules: 1pt for theorems, 4pt left rule for definitions, 2pt left rule for remarks
+  - Padding: 8pt for theorems/definitions, 4pt for remarks/proofs
+  - Sharp corners for clean, modern appearance
+  - Sans-serif bold headings in bookpurple color
+  - Notes separator: " --- " with bold note text
+- **Counter System**:
+  - theorem, lemma, proposition, corollary, definition, example, remark: Shared counter per chapter
+  - problem/exercise: Separate counter per chapter (unchanged)
+  - proof: Non-numbered environment
+
 - Comprehensive content expansion for Chapter 10 (Sequence Modeling)
   - Enhanced "Advanced Topics" section with detailed explanations of beam search and bidirectional RNNs
   - Added mathematical explanations and metaphors for bidirectional RNNs

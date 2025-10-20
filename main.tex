@@ -127,6 +127,7 @@
 
 % --- Summary and Takeaways Boxes ---
 \usepackage[most]{tcolorbox}
+\usepackage{keytheorems}
 
 % Define custom summary box
 \newtcolorbox[auto counter]{summary}[1][]{
@@ -207,16 +208,148 @@
 }
 
 % --- Theorem Environments ---
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{problem}{Exercise}[chapter]
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]{Remark}
+% Define colors for theorem boxes (matching book color scheme)
+\colorlet{theoremblue}{bookpurple!80}
+\colorlet{theoremgray}{gray!12}
+\colorlet{definitionblue}{bookpurple!70}
+
+% Define theorem box style (for theorems, lemmas, propositions, corollaries)
+\newkeytheoremstyle{theorembox}
+  {
+    headfont=\bfseries\sffamily\color{bookpurple},
+    bodyfont=\normalfont,
+    noteseparator={ --- },
+    notebraces={}{},
+    notefont=\bfseries,
+    tcolorbox-no-titlebar=
+      {
+        colback=theoremgray,
+        colframe=theoremblue,
+        sharp corners,
+        boxrule=1pt,
+        left=8pt,
+        right=8pt,
+        top=8pt,
+        bottom=8pt,
+      },
+  }
+
+% Define definition box style (for definitions, examples)
+\newkeytheoremstyle{definitionbox}
+  {
+    headfont=\bfseries\sffamily\color{bookpurple},
+    bodyfont=\normalfont,
+    noteseparator={ --- },
+    notebraces={}{},
+    notefont=\bfseries,
+    tcolorbox-no-titlebar=
+      {
+        colback=white,
+        colframe=definitionblue,
+        sharp corners,
+        boxrule=0pt,
+        leftrule=4pt,
+        top=8pt,
+        bottom=8pt,
+        left=8pt,
+        right=8pt,
+      },
+  }
+
+% Define remark style (subtle, minimal styling)
+\newkeytheoremstyle{remarkbox}
+  {
+    headfont=\bfseries\sffamily\color{black!70},
+    bodyfont=\normalfont\itshape,
+    noteseparator={ --- },
+    notebraces={}{},
+    notefont=\bfseries,
+    tcolorbox-no-titlebar=
+      {
+        colback=white,
+        colframe=black!30,
+        sharp corners,
+        boxrule=0pt,
+        leftrule=2pt,
+        top=4pt,
+        bottom=4pt,
+        left=8pt,
+        right=8pt,
+      },
+  }
+
+% Define proof style
+\newkeytheoremstyle{proofbox}
+  {
+    headfont=\bfseries\sffamily\color{black!70},
+    bodyfont=\normalfont,
+    noteseparator={ --- },
+    notebraces={}{},
+    notefont=\bfseries,
+    tcolorbox-no-titlebar=
+      {
+        colback=white,
+        colframe=black!20,
+        sharp corners,
+        boxrule=0pt,
+        toprule=0.5pt,
+        top=4pt,
+        bottom=4pt,
+        left=8pt,
+        right=8pt,
+      },
+  }
+
+% Create theorem-like environments with shared counter
+\newkeytheorem{theorem}[
+  parent=chapter,
+  style=theorembox,
+  ]
+  
+\newkeytheorem{lemma}[
+  sibling=theorem,
+  style=theorembox,
+  ]
+  
+\newkeytheorem{proposition}[
+  sibling=theorem,
+  style=theorembox,
+  ]
+  
+\newkeytheorem{corollary}[
+  sibling=theorem,
+  style=theorembox,
+  ]
+
+% Define definition-like environments (sharing counter with theorems)
+\newkeytheorem{definition}[
+  sibling=theorem,
+  style=definitionbox,
+  ]
+  
+\newkeytheorem{example}[
+  sibling=theorem,
+  style=definitionbox,
+  ]
+
+% Define remark (sharing counter with theorems)
+\newkeytheorem{remark}[
+  sibling=theorem,
+  style=remarkbox,
+  ]
+
+% Define proof environment (non-numbered)
+\newkeytheorem{proof}[
+  style=proofbox,
+  numbered=false,
+  ]
+
+% Define problem/exercise with separate counter
+\newkeytheorem{problem}[
+  name=Exercise,
+  parent=chapter,
+  style=definitionbox,
+  ]
 
 % --- Custom Commands ---
 \newcommand{\vect}[1]{\boldsymbol{#1}}
