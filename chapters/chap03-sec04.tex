@@ -3,6 +3,8 @@
 \section{Common Probability Distributions \difficultyInline{beginner}}
 \label{sec:common-distributions}
 
+Understanding common probability distributions is essential for deep learning because different distributions model different types of data and uncertainty, from binary outcomes in classification tasks to continuous values in regression problems, and from simple univariate cases to complex multivariate scenarios. These distributions provide the mathematical foundation for modeling the behavior of neural network weights, activation functions, and output predictions, enabling us to make principled decisions about model architecture, loss functions, and regularization strategies. By learning these distributions, we can better understand how to design neural networks that can handle various types of data and uncertainty, from the simple Bernoulli distribution for binary classification to the complex multivariate Gaussian for high-dimensional feature representations.
+
 \subsection{Bernoulli Distribution}
 
 Models a binary random variable (0 or 1):
@@ -23,18 +25,7 @@ P(X=i) = p_i \quad \text{where} \quad \sum_{i=1}^{k} p_i = 1
 
 \subsection{Gaussian (Normal) Distribution}
 
-The most important continuous distribution in deep learning:
-
-\begin{equation}
-\mathcal{N}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
-\end{equation}
-
-Properties:
-\begin{itemize}
-    \item Mean: $\mu$
-    \item Variance: $\sigma^2$
-    \item Central limit theorem: sums of independent variables approach Gaussian
-\end{itemize}
+The Gaussian or normal distribution is the most important continuous distribution in deep learning, characterized by its bell-shaped curve and defined by its mean $\mu$ and variance $\sigma^2$. This distribution is particularly important because of the central limit theorem, which states that sums of independent variables approach a Gaussian distribution, making it a natural choice for modeling many real-world phenomena and neural network activations. The Gaussian distribution has several key properties that make it useful in deep learning: it has a single peak at the mean, it's symmetric around the mean, and it has the property that about 68% of the data falls within one standard deviation of the mean, 95% within two standard deviations, and 99.7% within three standard deviations.
 
 The multivariate Gaussian with mean vector $\boldsymbol{\mu}$ and covariance matrix $\boldsymbol{\Sigma}$ is:
 

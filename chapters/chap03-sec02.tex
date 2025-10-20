@@ -11,13 +11,7 @@ This is exactly what \textbf{conditional probability} helps us do - it tells us 
 
 \subsection{Conditional Probability}
 
-The \textbf{conditional probability} of $X$ given $Y$ is:
-
-\begin{equation}
-P(X|Y) = \frac{P(X, Y)}{P(Y)}
-\end{equation}
-
-This quantifies how the probability of $X$ changes when we know the value of $Y$.
+The conditional probability of $X$ given $Y$ is defined as $P(X|Y) = \frac{P(X, Y)}{P(Y)}$, which quantifies how the probability of $X$ changes when we know the value of $Y$. This concept is fundamental to understanding how new information updates our beliefs about uncertain events, allowing us to make more informed decisions based on the evidence we observe.
 
 \subsubsection{Example: Medical Diagnosis}
 
@@ -48,21 +42,7 @@ So even with the symptom, there's only about a 30\% chance the patient has the d
 
 \subsection{Independence}
 
-\subsubsection{Intuition: When Variables Don't Affect Each Other}
-
-Two events are \textbf{independent} if knowing one doesn't change our belief about the other. For example:
-\begin{itemize}
-    \item \textbf{Independent}: Rolling two dice - the result of the first die doesn't affect the second
-    \item \textbf{Dependent}: Weather and clothing choice - knowing it's raining affects the probability you'll wear a raincoat
-\end{itemize}
-
-Two random variables $X$ and $Y$ are \textbf{independent} if:
-
-\begin{equation}
-P(X, Y) = P(X)P(Y)
-\end{equation}
-
-Equivalently, $P(X|Y) = P(X)$ and $P(Y|X) = P(Y)$.
+Two events are independent if knowing one doesn't change our belief about the other, such as rolling two dice where the result of the first die doesn't affect the second, or they can be dependent like weather and clothing choice where knowing it's raining affects the probability you'll wear a raincoat. Two random variables $X$ and $Y$ are independent if $P(X, Y) = P(X)P(Y)$, which means that the joint probability equals the product of the individual probabilities, or equivalently, $P(X|Y) = P(X)$ and $P(Y|X) = P(Y)$, indicating that knowing the value of one variable doesn't change our belief about the other.
 
 \subsubsection{Example: Independent vs Dependent Variables}
 
@@ -129,13 +109,7 @@ The formula can be read as: "Posterior = (Likelihood × Prior) ÷ Evidence"
 
 \subsection{Application to Machine Learning}
 
-Bayes' theorem forms the basis of:
-\begin{itemize}
-    \item Bayesian inference
-    \item Naive Bayes classifiers
-    \item Maximum a posteriori (MAP) estimation
-    \item Bayesian neural networks
-\end{itemize}
+Bayes' theorem forms the basis of several important machine learning techniques. Bayesian inference provides a framework for updating beliefs about model parameters as new data becomes available, allowing for principled uncertainty quantification and decision-making under uncertainty. Naive Bayes classifiers use the assumption of feature independence to efficiently compute posterior probabilities for classification tasks, making them particularly useful for text classification and spam detection applications. Maximum a posteriori (MAP) estimation combines prior knowledge about parameters with observed data to find the most likely parameter values, providing a principled way to incorporate domain expertise into machine learning models. Bayesian neural networks extend traditional neural networks by treating weights as random variables with probability distributions, enabling uncertainty quantification in predictions and providing more robust estimates of model confidence.
 
 Given data $\mathcal{D}$ and model parameters $\theta$:
 

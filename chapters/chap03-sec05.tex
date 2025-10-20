@@ -74,11 +74,4 @@ Mutual information is symmetric and measures the dependence between variables.
 
 \subsection{Applications in Deep Learning}
 
-Information theory concepts are used in:
-\begin{itemize}
-    \item Loss functions (cross-entropy loss)
-    \item Model selection (AIC, BIC use information-theoretic principles)
-    \item Variational inference (minimizing KL divergence)
-    \item Information bottleneck theory
-    \item Mutual information maximization in self-supervised learning
-\end{itemize}
+Information theory concepts are used in several important applications in deep learning. Loss functions such as cross-entropy loss are directly based on information-theoretic principles, measuring the difference between predicted and true probability distributions to guide model training. Model selection techniques like AIC and BIC use information-theoretic principles to balance model complexity with goodness of fit, helping to prevent overfitting and select the most appropriate model architecture. Variational inference minimizes KL divergence between approximate and true posterior distributions, enabling efficient approximation of complex probabilistic models in deep learning. Information bottleneck theory provides a principled framework for understanding how neural networks learn to compress input information while preserving relevant features for the task at hand. Mutual information maximization in self-supervised learning helps models learn meaningful representations by maximizing the mutual information between different views or augmentations of the same data, enabling effective unsupervised representation learning.

@@ -3,21 +3,11 @@
 \section{Expectation, Variance, and Covariance \difficultyInline{beginner}}
 \label{sec:expectation-variance}
 
+Expectation, variance, and covariance are fundamental statistical measures that characterize the behavior of random variables, providing essential tools for understanding data distributions, relationships between variables, and uncertainty quantification in machine learning and deep learning applications.
+
 \subsection{Intuition: Characterizing Random Variables}
 
-When we have a random variable, we often want to summarize its behavior with a few key numbers:
-\begin{itemize}
-    \item \textbf{Expected value (mean)}: The "center" or "typical" value
-    \item \textbf{Variance}: How much the values spread out from the center
-    \item \textbf{Covariance}: How two variables move together
-\end{itemize}
-
-Think of it like describing a person:
-\begin{itemize}
-    \item \textbf{Mean height}: The average height of people in a group
-    \item \textbf{Variance in height}: How much heights vary (tall vs short people)
-    \item \textbf{Covariance of height and weight}: Do taller people tend to weigh more?
-\end{itemize}
+When we have a random variable, we often want to summarize its behavior with a few key numbers that capture the essential characteristics of the distribution. The expected value or mean represents the "center" or "typical" value around which the data is distributed, while variance measures how much the values spread out from the center, indicating the degree of uncertainty or variability in the data. Covariance tells us how two variables move together, revealing whether they tend to increase or decrease simultaneously, which is crucial for understanding relationships between different features or measurements. Think of it like describing a person: the mean height represents the average height of people in a group, the variance in height shows how much heights vary between tall and short people, and the covariance of height and weight reveals whether taller people tend to weigh more, providing insights into the relationships between different characteristics.
 
 \subsection{Expectation}
 
@@ -121,21 +111,7 @@ So $\sigma = \sqrt{2.92} \approx 1.71$.
 
 \subsection{Covariance}
 
-\subsubsection{Intuition: How Variables Move Together}
-
-Covariance tells us whether two variables tend to move in the same direction or opposite directions:
-\begin{itemize}
-    \item \textbf{Positive covariance}: When one goes up, the other tends to go up too
-    \item \textbf{Negative covariance}: When one goes up, the other tends to go down
-    \item \textbf{Zero covariance}: No clear relationship
-\end{itemize}
-
-Examples:
-\begin{itemize}
-    \item \textbf{Height and weight}: Positive covariance (taller people tend to weigh more)
-    \item \textbf{Price and demand}: Negative covariance (higher prices usually mean lower demand)
-    \item \textbf{Height and IQ}: Near zero covariance (no clear relationship)
-\end{itemize}
+Covariance tells us whether two variables tend to move in the same direction or opposite directions, with positive covariance indicating that when one variable goes up, the other tends to go up too, negative covariance indicating that when one goes up, the other tends to go down, and zero covariance indicating no clear relationship. Examples include height and weight having positive covariance because taller people tend to weigh more, price and demand having negative covariance because higher prices usually mean lower demand, and height and IQ having near zero covariance because there's no clear relationship between physical height and cognitive ability.
 
 The \textbf{covariance} measures how two variables vary together:
 
@@ -172,15 +148,4 @@ Positive covariance confirms that taller people tend to weigh more!
 
 \subsection{Correlation}
 
-The \textbf{correlation coefficient} normalizes covariance:
-
-\begin{equation}
-\rho(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}
-\end{equation}
-
-Properties:
-\begin{itemize}
-    \item $-1 \leq \rho \leq 1$
-    \item $|\rho| = 1$ indicates perfect linear relationship
-    \item $\rho = 0$ indicates no linear relationship (but variables may still be dependent)
-\end{itemize}
+The correlation coefficient normalizes covariance by dividing it by the product of the standard deviations, providing a standardized measure of linear relationship between variables that ranges from -1 to 1. A correlation of 1 indicates a perfect positive linear relationship, a correlation of -1 indicates a perfect negative linear relationship, and a correlation of 0 indicates no linear relationship, though the variables may still be dependent in non-linear ways.
