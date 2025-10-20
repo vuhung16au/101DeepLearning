@@ -3,6 +3,8 @@
 \section{Optimization Challenges \difficultyInline{intermediate}}
 \label{sec:challenges}
 
+Deep neural networks present unique optimisation challenges including vanishing or exploding gradients, saddle points, and plateaus, each requiring specific mitigation strategies.
+
 \subsection{Intuition: Why Training Gets Stuck}
 
 Deep networks combine nonlinearity and depth, creating landscapes with flat plateaus, narrow valleys, and saddle points. Noise (SGD), momentum, and schedules act like navigational aids to keep moving and avoid getting stuck.\index{optimization!challenges}
@@ -11,17 +13,9 @@ Deep networks combine nonlinearity and depth, creating landscapes with flat plat
 
 In deep networks, gradients can become exponentially small or large. See \gls{vanishing-gradient} and \gls{exploding-gradient}.
 
-\textbf{Vanishing gradients:}
-\begin{itemize}
-    \item Common with sigmoid/tanh activations
-    \item Mitigated by ReLU, batch normalization, residual connections
-\end{itemize}
+\textbf{Vanishing gradients} are particularly common with sigmoid or tanh activation functions and can be mitigated through the use of ReLU activations, batch normalisation, and residual connections.
 
-\textbf{Exploding gradients:}
-\begin{itemize}
-    \item Common in RNNs
-    \item Mitigated by gradient clipping, careful initialization
-\end{itemize}
+\textbf{Exploding gradients} occur frequently in recurrent neural networks and can be addressed through gradient clipping and careful weight initialisation strategies.
 
 \textbf{Gradient clipping:}\index{gradient clipping}
 \begin{equation}
@@ -32,13 +26,7 @@ In deep networks, gradients can become exponentially small or large. See \gls{va
 
 In high dimensions, saddle points are more common than local minima.
 
-Saddle points have:
-\begin{itemize}
-    \item Zero gradient
-    \item Mixed curvature (positive and negative eigenvalues)
-\end{itemize}
-
-Momentum and noise help escape saddle points.
+Saddle points are characterised by zero gradients and mixed curvature (with both positive and negative eigenvalues of the Hessian). Momentum and stochastic noise from SGD help the optimiser escape these saddle points effectively.
 
 \subsubsection{Example: Critical Points in Two Dimensions}
 
@@ -75,25 +63,8 @@ Flat regions with small gradients slow convergence. Adaptive methods and learnin
 
 \subsection{Practical Optimization Strategy}
 
-\textbf{Recommended approach:}
-\begin{enumerate}
-    \item Start with Adam \cite{Kingma2014} for rapid progress; tune $\alpha$ in $\{10^{-3},3\cdot10^{-4},10^{-4}\}$.
-    \item Use cosine decay with warmup for transformer-like models; step decay for CNNs with SGD+momentum \cite{WebOptimizationDLBook,D2LChapterOptimization,He2016}.
-    \item If validation accuracy saturates, consider switching from Adam to SGD+Nesterov with tuned $\alpha$ and $\beta$ to improve generalization.
-    \item Apply gradient clipping in recurrent models and when training becomes unstable.\index{gradient clipping}
-    \item Monitor training/validation loss, accuracy, and learning-rate schedule. Use early stopping when needed.\index{early stopping}
-\end{enumerate}
+\textbf{Recommended approach:} Begin with Adam \cite{Kingma2014} for rapid progress, tuning the learning rate $\alpha$ within $\{10^{-3},3\cdot10^{-4},10^{-4}\}$. For transformer-like models, use cosine decay with warmup; for CNNs trained with SGD and momentum, step decay is often more effective \cite{WebOptimizationDLBook,D2LChapterOptimization,He2016}. If validation accuracy saturates, consider switching from Adam to SGD with Nesterov momentum, carefully tuning both $\alpha$ and $\beta$ to improve generalisation. Apply gradient clipping in recurrent models and whenever training becomes unstable.\index{gradient clipping} Throughout training, monitor both training and validation loss, accuracy, and the learning-rate schedule, employing early stopping when appropriate.\index{early stopping}
 
-Applications and heuristics:
-\begin{itemize}
-    \item Vision: SGD+momentum or Nesterov often yields state-of-the-art with careful schedules and augmentations \cite{He2016}.
-    \item NLP/Transformers: Adam/AdamW with warmup+cosine is a strong default; clip global norm in seq2seq models.
-    \item Reinforcement learning: Adam with small $\alpha$ stabilizes non-stationary objectives.
-\end{itemize}
+Different domains benefit from different optimisation strategies. In computer vision, SGD with momentum or Nesterov acceleration often yields state-of-the-art results when paired with careful schedules and data augmentations \cite{He2016}. For NLP and transformer models, Adam or AdamW with warmup and cosine annealing is a strong default choice, with global norm clipping recommended for sequence-to-sequence models. In reinforcement learning, Adam with a small learning rate $\alpha$ helps stabilise non-stationary objectives.
 
-Common failure modes:
-\begin{itemize}
-    \item Divergence at start: reduce $\alpha$, add warmup, or increase \(\epsilon\) for Adam.
-    \item Plateau: try larger batch with warmup, use cosine schedule, or add momentum.
-    \item Overfitting: increase regularization (weight decay, dropout), add data augmentation.
-\end{itemize}
+Several common failure modes have well-established remedies. Divergence at the start of training can often be addressed by reducing $\alpha$, adding warmup, or increasing the numerical stability parameter \(\epsilon\) for Adam. When training reaches a plateau, try using a larger batch size with warmup, switching to a cosine schedule, or adding momentum if not already present. Overfitting can be mitigated by increasing regularisation through weight decay or dropout, or by incorporating additional data augmentation.
