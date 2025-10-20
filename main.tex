@@ -26,6 +26,13 @@
 \usepackage{setspace}
 \onehalfspacing
 
+% Refactored core styles
+\usepackage{styles/dl101-base}
+\usepackage{styles/dl101-colors}
+\usepackage{styles/dl101-fonts}
+\usepackage{styles/dl101-boxes}
+\usepackage{styles/dl101-theorems}
+
 % --- Essential Packages and Unicode Support ---
 % etoolbox already loaded above
 \usepackage{iftex}
@@ -76,9 +83,7 @@
 \usepackage[en-GB]{datetime2}
 \DTMsetstyle{en-GB}
 
-% --- Math Packages ---
-\usepackage{amsmath,amssymb,amsfonts,amsthm}
-\usepackage{mathtools}
+% (math packages loaded by styles/dl101-base)
 
 % --- Graphics and Colors ---
 \usepackage{graphicx}
@@ -88,18 +93,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage{eso-pic}
 
-% --- Custom Color Scheme ---
-% Primary Colors
-\definecolor{bookpurple}{RGB}{60,16,83}      % Main purple accent (Hex: #3C1053)
-\definecolor{bookred}{RGB}{242,18,12}        % Red for citations (Hex: #F2120C)
-\definecolor{bookblack}{RGB}{0,0,0}          % Standard black (Hex: #000000)
-\definecolor{bookwhite}{RGB}{255,255,255}    % Standard white (Hex: #FFFFFF)
-
-% Secondary Colors
-\definecolor{lawpurple}{RGB}{181,24,37}      % Faculty of Law and Business (Hex: #B51825)
-\definecolor{warmstone}{RGB}{145,139,131}    % Warm Stone neutral (Hex: #918B83)
-\definecolor{deepcharcoal}{RGB}{48,44,42}    % Deep Charcoal dark neutral (Hex: #302C2A)
-\definecolor{softivory}{RGB}{242,239,235}    % Soft Ivory light background (Hex: #F2EFEB)
+% (color scheme moved to styles/dl101-colors)
 
 % --- Tables and Lists ---
 \usepackage{booktabs}
@@ -110,390 +104,30 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
-% --- References and Links ---
-\usepackage[unicode]{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=bookpurple,
-    citecolor=bookred,
-    urlcolor=bookpurple,
-    bookmarksopen=true,
-}
-\usepackage[capitalise,noabbrev]{cleveref}
+% (hyperref and cleveref loaded and configured by styles/dl101-base)
 
 % --- Bibliography ---
 \usepackage[backend=biber,style=alphabetic,sorting=nyt]{biblatex}
 \addbibresource{references.bib}
 
-% --- Headers and Footers ---
-\usepackage{fancyhdr}
-% Read version string from version.txt if present
-\newcommand{\bookversion}{\IfFileExists{version.txt}{\input{version.txt}}{v1.0.0}}
-% Project URL for footer
-\newcommand{\bookurl}{https://vuhung16au.github.io/}
-% Define header/footer styles
-\pagestyle{fancy}
-\fancyhf{}
-% Running headers: chapter on even (left), section on odd (right)
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\fancyhead[LE]{\sffamily\small\textsc{\leftmark}}
-\fancyhead[RO]{\sffamily\small\textsc{\rightmark}}
-% Ensure sufficient head height for header content
-\setlength{\headheight}{20pt}
-% Subtle header rule
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{warmstone}\leaders\hrule height 0.3pt\hfill}}
-% Footers (mirrored)
-% Even pages: left page number; center URL; right license
-\fancyfoot[LE]{\sffamily\scriptsize\thepage}
-\fancyfoot[CE]{\sffamily\scriptsize\bookurl}
-\fancyfoot[RE]{\sffamily\scriptsize CC~BY~4.0}
-% Odd pages: left version+date; center URL; right page number
-\fancyfoot[LO]{\sffamily\scriptsize \bookversion{} \textendash{} \DTMtoday}
-\fancyfoot[CO]{\sffamily\scriptsize\bookurl}
-\fancyfoot[RO]{\sffamily\scriptsize\thepage}
-\renewcommand{\footrulewidth}{0pt}
-% Chapter-opening (plain) pages: keep footer, no header rule
-\fancypagestyle{plain}{%
-  \fancyhf{}
-  \fancyfoot[LE]{\sffamily\scriptsize\thepage}
-  \fancyfoot[CE]{\sffamily\scriptsize\bookurl}
-  \fancyfoot[RE]{\sffamily\scriptsize CC~BY~4.0}
-  \fancyfoot[LO]{\sffamily\scriptsize \bookversion{} \textendash{} \DTMtoday}
-  \fancyfoot[CO]{\sffamily\scriptsize\bookurl}
-  \fancyfoot[RO]{\sffamily\scriptsize\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-}
+% (headers/footers moved to styles/dl101-header-footer)
+\usepackage{styles/dl101-header-footer}
 
 % --- Glossary and Index ---
-\usepackage{makeidx}
 \usepackage{glossaries}
 \makeindex
 \makeglossaries
 \loadglsentries{chapters/glossary}
 
-% --- Summary and Takeaways Boxes ---
-\usepackage[most]{tcolorbox}
-\usepackage{keytheorems}
+% (boxes moved to styles)
 
-% Define custom summary box
-\newtcolorbox[auto counter]{summary}[1][]{
-  title={\bfseries Summary~\thetcbcounter},
-  enhanced,
-  drop shadow={black!50!white},
-  coltitle=deepcharcoal,
-  colback=softivory,
-  colframe=warmstone,
-  top=0.3in,
-  attach boxed title to top left={
-    xshift=1.5em,
-    yshift=-\tcboxedtitleheight/2
-  },
-  boxed title style={size=small,colback=lawpurple,coltitle=white},
-  #1
-}
+% (theorems moved to styles)
 
-% Define custom key takeaways box
-\newtcolorbox[auto counter]{keytakeaways}[1][]{
-  title={\bfseries Key Takeaways~\thetcbcounter},
-  enhanced,
-  drop shadow={black!50!white},
-  coltitle=bookwhite,
-  colback=softivory,
-  colframe=bookpurple,
-  top=0.3in,
-  attach boxed title to top left={
-    xshift=1.5em,
-    yshift=-\tcboxedtitleheight/2
-  },
-  boxed title style={size=small,colback=bookpurple,coltitle=white},
-  #1
-}
+% (math shortcuts moved to styles)
 
-% --- Exercise Boxes ---
-% Define color scheme for exercise difficulty levels
-\definecolor{easycolor}{RGB}{232,245,233}      % Light green for easy exercises
-\definecolor{mediumcolor}{RGB}{227,242,253}    % Light blue for medium exercises
-\definecolor{hardcolor}{RGB}{255,235,238}      % Light red/pink for hard exercises
+% (emoji and difficulty macros moved to styles)
 
-% Define exercise box environment with difficulty-based color coding
-\newtcolorbox{exercisebox}[1][easy]{
-  enhanced,
-  colback=#1color,
-  colframe=warmstone,
-  boxrule=0.5pt,
-  arc=3pt,
-  left=5pt,
-  right=5pt,
-  top=5pt,
-  bottom=5pt,
-  before skip=10pt,
-  after skip=10pt
-}
-
-% Define hint box environment
-\newtcolorbox{hintbox}{
-  enhanced,
-  colback=yellow!10,
-  colframe=orange!50,
-  boxrule=0.5pt,
-  arc=3pt,
-  left=5pt,
-  right=5pt,
-  top=5pt,
-  bottom=5pt,
-  before skip=5pt,
-  after skip=5pt,
-  fontupper=\small\itshape,
-  title={\small\bfseries Hint:},
-  coltitle=black,
-  attach boxed title to top left={
-    xshift=5pt,
-    yshift=-3pt
-  },
-  boxed title style={
-    size=small,
-    colback=yellow!30,
-    colframe=orange!50
-  }
-}
-
-% --- Theorem Environments ---
-% Define colors for theorem boxes (matching book color scheme)
-\colorlet{theoremblue}{bookpurple!80}
-\colorlet{theoremgray}{softivory}
-\colorlet{definitionblue}{bookpurple!70}
-
-% Define theorem box style (for theorems, lemmas, propositions, corollaries)
-\newkeytheoremstyle{theorembox}
-  {
-    headfont=\bfseries\sffamily\color{bookpurple},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{},
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=theoremgray,
-        colframe=theoremblue,
-        sharp corners,
-        boxrule=1pt,
-        left=8pt,
-        right=8pt,
-        top=8pt,
-        bottom=8pt,
-      },
-  }
-
-% Define definition box style (for definitions, examples)
-\newkeytheoremstyle{definitionbox}
-  {
-    headfont=\bfseries\sffamily\color{bookpurple},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{},
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=definitionblue,
-        sharp corners,
-        boxrule=0pt,
-        leftrule=4pt,
-        top=8pt,
-        bottom=8pt,
-        left=8pt,
-        right=8pt,
-      },
-  }
-
-% Define remark style (subtle, minimal styling)
-\newkeytheoremstyle{remarkbox}
-  {
-    headfont=\bfseries\sffamily\color{deepcharcoal},
-    bodyfont=\normalfont\itshape,
-    noteseparator={ --- },
-    notebraces={}{},
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=warmstone,
-        sharp corners,
-        boxrule=0pt,
-        leftrule=2pt,
-        top=4pt,
-        bottom=4pt,
-        left=8pt,
-        right=8pt,
-      },
-  }
-
-% Define proof style
-\newkeytheoremstyle{proofbox}
-  {
-    headfont=\bfseries\sffamily\color{deepcharcoal},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{},
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=warmstone!50,
-        sharp corners,
-        boxrule=0pt,
-        toprule=0.5pt,
-        top=4pt,
-        bottom=4pt,
-        left=8pt,
-        right=8pt,
-      },
-  }
-
-% Create theorem-like environments with shared counter
-\newkeytheorem{theorem}[
-  parent=chapter,
-  style=theorembox,
-  ]
-  
-\newkeytheorem{lemma}[
-  sibling=theorem,
-  style=theorembox,
-  ]
-  
-\newkeytheorem{proposition}[
-  sibling=theorem,
-  style=theorembox,
-  ]
-  
-\newkeytheorem{corollary}[
-  sibling=theorem,
-  style=theorembox,
-  ]
-
-% Define definition-like environments (sharing counter with theorems)
-\newkeytheorem{definition}[
-  sibling=theorem,
-  style=definitionbox,
-  ]
-  
-\newkeytheorem{example}[
-  sibling=theorem,
-  style=definitionbox,
-  ]
-
-% Define remark (sharing counter with theorems)
-\newkeytheorem{remark}[
-  sibling=theorem,
-  style=remarkbox,
-  ]
-
-% Define proof environment (non-numbered) only if not already defined by amsthm
-\makeatletter
-\@ifundefined{proof}{%
-  \newkeytheorem{proof}[
-    style=proofbox,
-    numbered=false,
-  ]
-}{}
-\makeatother
-
-% Define problem/exercise with separate counter
-\newkeytheorem{problem}[
-  name=Exercise,
-  parent=chapter,
-  style=definitionbox,
-  ]
-
-% --- Custom Commands ---
-\newcommand{\vect}[1]{\boldsymbol{#1}}
-\newcommand{\mat}[1]{\boldsymbol{#1}}
-\newcommand{\transpose}{^\top}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\abs}[1]{\left|#1\right|}
-
-% --- Emoji and Difficulty Level Commands ---
-% Provide a color emoji font and map common emoji code points.
-% Prefer Apple Color Emoji on macOS; fall back to Noto Color Emoji if available.
-\ifPDFTeX\else
-  \IfFontExistsTF{Apple Color Emoji}{%
-    \newfontfamily\emojifont{Apple Color Emoji}[Renderer=Harfbuzz,Scale=MatchUppercase]
-  }{%
-    \IfFontExistsTF{Noto Color Emoji}{%
-      \newfontfamily\emojifont{Noto Color Emoji}[Renderer=Harfbuzz,Scale=MatchUppercase]
-    }{%
-      % Last-resort monochrome fallback to Symbola
-      \newfontfamily\emojifont{Symbola}[Scale=MatchUppercase]
-    }}
-  \newcommand{\emoji}[1]{{\emojifont #1}}
-  % Handle variation selector U+FE0F (VS16) which often follows stars
-  \usepackage{newunicodechar}
-  \newunicodechar{️}{}
-  % Map specific emojis to the emoji font when typed inline
-  \newunicodechar{💫}{{\emojifont 💫}}
-  \newunicodechar{⭐}{{\emojifont ⭐}}
-  \newunicodechar{🌟}{{\emojifont 🌟}}
-\fi
-
-% Define individual difficulty indicator commands for reusability
-\newcommand{\difficultyBeginner}{\emoji{💫}}
-\newcommand{\difficultyIntermediate}{\emoji{⭐}}
-\newcommand{\difficultyAdvanced}{\emoji{🌟}}
-
-% Inline difficulty indicators with bookmark-safe fallbacks
-\newcommand{\difficultyInlineBeginner}{\texorpdfstring{\,\difficultyBeginner}{ [beginner] }}
-\newcommand{\difficultyInlineIntermediate}{\texorpdfstring{\,\difficultyIntermediate}{ [intermediate] }}
-\newcommand{\difficultyInlineAdvanced}{\texorpdfstring{\,\difficultyAdvanced}{ [advanced] }}
-\newcommand{\difficultyInlineOther}[1]{\texorpdfstring{\,\textbf{[#1]}}{ [#1] }}
-
-\newcommand{\difficultyInline}[1]{%
-  \ifstrequal{#1}{beginner}{\difficultyInlineBeginner}{%
-  \ifstrequal{#1}{intermediate}{\difficultyInlineIntermediate}{%
-  \ifstrequal{#1}{advanced}{\difficultyInlineAdvanced}{\difficultyInlineOther{#1}}}}}
-
-% Legacy \difficulty command used on its own line: make it a no-op now
-\newcommand{\difficulty}[1]{}
-
-% --- Learning Objectives Environment ---
-\usepackage{tcolorbox}
-\usepackage{enumitem}
-\usepackage{fontawesome}
-
-% Define colors for learning objectives
-\definecolor{objbg}{RGB}{248,249,250}     % Light background (legacy)
-\definecolor{objborder}{RGB}{74,144,226}  % Blue border (legacy)
-\definecolor{objtext}{RGB}{33,37,41}      % Dark text (legacy)
-% Use new color scheme for learning objectives
-\colorlet{objbg}{softivory}
-\colorlet{objborder}{bookpurple}
-\colorlet{objtext}{deepcharcoal}
-
-% Custom command for individual objectives
-\newcommand{\objective}[1]{%
-  \item \textcolor{objtext}{#1}
-}
-
-% Learning objectives environment
-\newenvironment{learningobjectives}{%
-  \begin{tcolorbox}[
-    colback=objbg,
-    colframe=objborder,
-    boxrule=1.5pt,
-    arc=3pt,
-    left=15pt,
-    right=15pt,
-    top=15pt,
-    bottom=15pt,
-    fonttitle=\bfseries\large,
-    title={\textcolor{objborder}{🎯} Learning Objectives}
-  ]
-  \begin{enumerate}[leftmargin=0pt,itemsep=8pt,parsep=0pt]
-}{%
-  \end{enumerate}
-  \end{tcolorbox}
-}
+% (learning objectives moved to styles)
 
 % --- Title and Author Information ---
 \title{\textbf{Deep Learning 101}}
@@ -590,53 +224,12 @@ Deep Learning Theory and Practice\par}
 \vspace*{\fill}
 \end{titlepage}
 
-% Copyright Page (Page 3)
-\newpage
-\thispagestyle{empty}
-\vspace*{\fill}
-\begin{flushleft}
-\textbf{Deep Learning 101}\\
-Copyright \copyright~\the\year~Vu Hung Nguyen\\[0.5em]
-This work is licensed under the Creative Commons Attribution 4.0 International License.\\
-To view a copy of this license, visit \url{http://creativecommons.org/licenses/by/4.0/}\\[0.5em]
-First Edition: \DTMtoday
-\end{flushleft}
-\vspace*{\fill}
-\clearpage
+% Copyright Page
+\input{copyright}
+
 
 % Preface Page (Page 4)
-\newpage
-\thispagestyle{empty}
-\vspace*{\fill}
-\begin{flushleft}
-\textbf{Preface}\\[1em]
-
-Dear ML/AI learners,\\[0.5em]
-
-Welcome to \textit{Deep Learning 101}, a comprehensive guide designed to take you from the fundamentals to advanced concepts in deep learning. This book is crafted for students, researchers, and practitioners who want to build a solid foundation in one of the most transformative fields of our time.\\[0.5em]
-
-I started this book as study notes for myself, because I couldn't find any book that fit my background. As I delved deeper into the field, I realised that many existing resources were either too basic or too advanced, leaving a gap for learners with a technical foundation seeking comprehensive yet accessible coverage.\\[0.5em]
-
-This book is a ``compressed version'' of the deep learning books out there---you'll find the most important concepts and mathematical formulae presented in a structured, coherent manner. Rather than overwhelming you with every detail, I've distilled the essential knowledge that forms the foundation of modern deep learning.\\[0.5em]
-
-This book assumes you have a fair understanding of mathematics, algorithms, and programming. But don't worry---you'll learn along the way if you miss any of them. The early chapters provide mathematical foundations, and examples throughout the book will help reinforce concepts you may need to review.\\[0.5em]
-
-The target audience includes those who want to learn the basics of deep learning with a focus on mathematics. If you're interested in research or want to dive a little deeper into the maths and algorithms underlying neural networks, this book will guide you through both theory and practice.\\[0.5em]
-
-Whether you're just beginning your journey into machine learning or looking to deepen your understanding of neural networks, this book provides the mathematical foundations, practical insights, and hands-on knowledge you need to succeed.\\[0.5em]
-
-I hope this resource serves you well in your learning journey.\\[1em]
-
-Best regards,\\
-Vu Hung Nguyen\\[1em]
-
-\textbf{Contact Information:}\\
-GitHub: \url{https://github.com/vuhung16au}\\
-LinkedIn: \url{https://www.linkedin.com/in/nguyenvuhung/}\\
-Website: \url{https://vuhung16au.github.io/}
-\end{flushleft}
-\vspace*{\fill}
-\clearpage
+\input{preface}
 
 % --- Front Matter ---
 % Now start front matter after cover and title pages

@@ -239,6 +239,6 @@ Prompt.md
 SUMMARY.txt
 *.pdf
 docs/
-styles/
+# styles/
 
 !Deep-Learning101-PDF-Books/*.pdf

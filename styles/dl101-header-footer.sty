@@ -1,0 +1,48 @@
+\ProvidesPackage{dl101-header-footer}[2025/10/20 DL101 header and footer]
+\RequirePackage{fancyhdr}
+\RequirePackage{datetime2}
+\RequirePackage{etoolbox}
+
+% Version string from version.txt if present
+\newcommand{\bookversion}{\IfFileExists{version.txt}{\input{version.txt}}{v1.0.0}}
+% Project URL (override in main if needed)
+\providecommand{\bookurl}{https://github.com/vuhung16au/101DeepLearning}
+
+% Page style
+\pagestyle{fancy}
+\fancyhf{}
+% Running headers: chapter on even (left), section on odd (right)
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancyhead[LE]{\sffamily\small\textsc{\leftmark}}
+\fancyhead[RO]{\sffamily\small\textsc{\rightmark}}
+% Ensure sufficient head height for header content
+\setlength{\headheight}{20pt}
+% Subtle header rule (uses warmstone from colors)
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{warmstone}\leaders\hrule height 0.3pt\hfill}}
+
+% Footers (mirrored)
+% Even pages: left page number; center URL; right license
+\fancyfoot[LE]{\sffamily\scriptsize\thepage}
+\fancyfoot[CE]{\sffamily\scriptsize\bookurl}
+\fancyfoot[RE]{\sffamily\scriptsize CC~BY~4.0}
+% Odd pages: left version+date; center URL; right page number
+\fancyfoot[LO]{\sffamily\scriptsize \bookversion{} \textendash{} \DTMtoday}
+\fancyfoot[CO]{\sffamily\scriptsize\bookurl}
+\fancyfoot[RO]{\sffamily\scriptsize\thepage}
+\renewcommand{\footrulewidth}{0pt}
+
+% Chapter-opening (plain) pages: keep footer, no header rule
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[LE]{\sffamily\scriptsize\thepage}
+  \fancyfoot[CE]{\sffamily\scriptsize\bookurl}
+  \fancyfoot[RE]{\sffamily\scriptsize CC~BY~4.0}
+  \fancyfoot[LO]{\sffamily\scriptsize \bookversion{} \textendash{} \DTMtoday}
+  \fancyfoot[CO]{\sffamily\scriptsize\bookurl}
+  \fancyfoot[RO]{\sffamily\scriptsize\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+

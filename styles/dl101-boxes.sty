@@ -1,0 +1,96 @@
+\ProvidesPackage{dl101-boxes}[2025/10/20 DL101 boxes and objectives]
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{enumitem}
+
+% Learning objectives color scheme (aligned with main.tex colors if loaded)
+\providecolor{objbg}{RGB}{248,249,250}
+\providecolor{objborder}{RGB}{74,144,226}
+\providecolor{objtext}{RGB}{33,37,41}
+% If book palette exists, remap to that scheme
+\colorlet{objbg}{softivory}
+\colorlet{objborder}{bookpurple}
+\colorlet{objtext}{deepcharcoal}
+
+% Summary box renamed to avoid conflicts; provide alias if free
+\newtcolorbox[auto counter]{dlsummary}[1][]{
+  title={\bfseries Summary~\thetcbcounter},
+  enhanced,
+  drop shadow={black!50!white},
+  coltitle=deepcharcoal,
+  colback=softivory,
+  colframe=warmstone,
+  top=0.3in,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=lawpurple,coltitle=white},
+  #1
+}
+\makeatletter
+\@ifundefined{summary}{\newenvironment{summary}{\begin{dlsummary}}{\end{dlsummary}}}{}
+\makeatother
+
+% Key takeaways box renamed; provide alias if free
+\newtcolorbox[auto counter]{dlkeytakeaways}[1][]{
+  title={\bfseries Key Takeaways~\thetcbcounter},
+  enhanced,
+  drop shadow={black!50!white},
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=bookpurple,
+  top=0.3in,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=bookpurple,coltitle=white},
+  #1
+}
+\makeatletter
+\@ifundefined{keytakeaways}{\newenvironment{keytakeaways}{\begin{dlkeytakeaways}}{\end{dlkeytakeaways}}}{}
+\makeatother
+
+% Exercise and hint boxes
+\definecolor{easycolor}{RGB}{232,245,233}
+\definecolor{mediumcolor}{RGB}{227,242,253}
+\definecolor{hardcolor}{RGB}{255,235,238}
+
+\newtcolorbox{exercisebox}[1][easy]{
+  enhanced,
+  colback=#1color,
+  colframe=warmstone,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=5pt,right=5pt,top=5pt,bottom=5pt,
+  before skip=10pt,after skip=10pt
+}
+
+\newtcolorbox{hintbox}{
+  enhanced,
+  colback=yellow!10,
+  colframe=orange!50,
+  boxrule=0.5pt,
+  arc=3pt,
+  left=5pt,right=5pt,top=5pt,bottom=5pt,
+  before skip=5pt,after skip=5pt,
+  fontupper=\small\itshape,
+  title={\small\bfseries Hint:},
+  coltitle=black,
+  attach boxed title to top left={xshift=5pt,yshift=-3pt},
+  boxed title style={size=small,colback=yellow!30,colframe=orange!50}
+}
+
+% Learning objectives
+\newcommand{\objective}[1]{\item \textcolor{objtext}{#1}}
+\newenvironment{learningobjectives}{%
+  \begin{tcolorbox}[
+    colback=objbg,
+    colframe=objborder,
+    boxrule=1.5pt,
+    arc=3pt,
+    left=15pt,right=15pt,top=15pt,bottom=15pt,
+    fonttitle=\bfseries\large,
+    title={\textcolor{objborder}{🎯} Learning Objectives}
+  ]
+  \begin{enumerate}[leftmargin=0pt,itemsep=8pt,parsep=0pt]
+}{%
+  \end{enumerate}
+  \end{tcolorbox}
+}
+
+

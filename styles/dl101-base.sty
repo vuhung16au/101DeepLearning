@@ -1,0 +1,44 @@
+\ProvidesPackage{dl101-base}[2025/10/20 DL101 base style]
+% Core packages
+\RequirePackage{etoolbox,iftex}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\RequirePackage{eso-pic}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{enumitem}
+% Index support
+\RequirePackage{makeidx}
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+% Math (load before hyperref/cleveref)
+\RequirePackage{amsmath,amssymb,amsfonts,amsthm}
+\RequirePackage{mathtools}
+% Hyperref and cleveref (after math)
+\RequirePackage[unicode]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=bookpurple,citecolor=bookred,urlcolor=bookpurple,bookmarksopen=true}
+\RequirePackage[capitalise,noabbrev]{cleveref}
+
+% Color palette (preserved from main.tex)
+% Primary Colors
+\definecolor{bookpurple}{RGB}{60,16,83}
+\definecolor{bookred}{RGB}{242,18,12}
+\definecolor{bookblack}{RGB}{0,0,0}
+\definecolor{bookwhite}{RGB}{255,255,255}
+% Secondary Colors
+\definecolor{lawpurple}{RGB}{181,24,37}
+\definecolor{warmstone}{RGB}{145,139,131}
+\definecolor{deepcharcoal}{RGB}{48,44,42}
+\definecolor{softivory}{RGB}{242,239,235}
+
+% Math shortcuts (guarded)
+\providecommand{\vect}[1]{\boldsymbol{#1}}
+\providecommand{\mat}[1]{\boldsymbol{#1}}
+\providecommand{\transpose}{^\top}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\abs}[1]{\left|#1\right|}
+
+
