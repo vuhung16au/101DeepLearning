@@ -3,6 +3,8 @@
 \section{Adaptive Learning Rate Methods \difficultyInline{intermediate}}
 \label{sec:adaptive-methods}
 
+Adaptive learning rate methods automatically adjust step sizes per parameter based on historical gradient information, allowing faster progress on rarely-updated dimensions while stabilizing highly-volatile parameters.
+
 \subsection{Intuition: Per-Parameter Step Sizes}
 
 Different parameters learn at different speeds: some directions are steep, others are flat. \textbf{Adaptive methods} adjust the step size per parameter based on recent gradient information, allowing faster progress on rarely-updated or low-variance dimensions while stabilizing steps on highly-volatile ones.\index{adaptive optimization}\index{AdaGrad}\index{RMSProp}\index{Adam}
@@ -45,26 +47,22 @@ Default hyperparameters: $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}
 
 \subsection{Learning Rate Schedules}\index{learning rate schedule}
 
-\textbf{Step Decay:}
+Learning rate schedules systematically adjust the learning rate during training to balance exploration and exploitation, often improving convergence speed and final performance. Different schedules provide various strategies for managing the learning rate over time, each suited to different optimization scenarios and model architectures.
+
+Step decay reduces the learning rate by a factor at predetermined intervals, providing a simple yet effective approach for many applications:
 \begin{equation}
 \alpha_t = \alpha_0 \cdot \gamma^{\lfloor t / s \rfloor}
 \end{equation}
 
-\textbf{Exponential Decay:}
+Exponential decay provides smooth reduction of the learning rate over time, often useful for fine-tuning and convergence:
 \begin{equation}
 \alpha_t = \alpha_0 e^{-\lambda t}
 \end{equation}
 
-\textbf{Cosine Annealing:}
+Cosine annealing creates a smooth, periodic learning rate schedule that can help escape local minima:
 \begin{equation}
 \alpha_t = \alpha_{\min} + \frac{1}{2}(\alpha_{\max} - \alpha_{\min})\left(1 + \cos\left(\frac{t}{T}\pi\right)\right)
 \end{equation}
 
-Other useful schedules:\index{learning-rate-schedule}
-\begin{itemize}
-    \item Warmup: start from a small \(\alpha\) and increase linearly over the first \(T_w\) steps to reduce early instabilities in large-batch training.
-    \item One-cycle policy: increase then anneal \(\alpha\), often paired with momentum decay, to speed convergence and improve generalization.
-\end{itemize}
-
-Practical recipe: Combine cosine decay with warmup for transformer-like models, step decay for CNNs trained with SGD, and exponential decay for simple baselines \cite{WebOptimizationDLBook,D2LChapterOptimization}.
+Additional scheduling strategies include warmup techniques that start from a small learning rate and increase linearly over the first \(T_w\) steps to reduce early instabilities in large-batch training. The one-cycle policy increases then anneals the learning rate, often paired with momentum decay, to speed convergence and improve generalization. Practical implementation typically combines cosine decay with warmup for transformer-like models, step decay for CNNs trained with SGD, and exponential decay for simple baselines.\index{learning-rate-schedule}\cite{WebOptimizationDLBook,D2LChapterOptimization}
 

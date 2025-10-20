@@ -9,20 +9,15 @@ We introduce algorithms progressively, starting from basic cross-correlation to 
 Given input $I\in\mathbb{R}^{H\times W\times C_{\text{in}}}$ and kernel $K\in\mathbb{R}^{k\times k\times C_{\text{in}}\times C_{\text{out}}}$, the output feature map $S\in\mathbb{R}^{H'\times W'\times C_{\text{out}}}$ under stride $s$ and padding $p$ is computed by cross-correlation as in \cref{sec:convolution}. Libraries often refer to this as "convolution" \cite{GoodfellowEtAl2016}.
 
 \subsection{Backpropagation Through Convolution}
-For loss $\mathcal{L}$ and pre-activation output $S = I * K$, the gradients are:
-\begin{align}
-\frac{\partial \mathcal{L}}{\partial K} &= I \star \frac{\partial \mathcal{L}}{\partial S},\\
-\frac{\partial \mathcal{L}}{\partial I} &= \frac{\partial \mathcal{L}}{\partial S} * K^\text{rot},
-\end{align}
-where $\star$ denotes cross-correlation, $*$ denotes convolution, and $K^\text{rot}$ is the kernel rotated by $180^{\circ}$. Implementations use efficient im2col/FFT variants \cite{GoodfellowEtAl2016}.
+Backpropagation through convolution follows the chain rule, where gradients flow backward through the cross-correlation operation to update both input and kernel parameters. For loss $\mathcal{L}$ and pre-activation output $S = I * K$, the gradients are computed as $\frac{\partial \mathcal{L}}{\partial K} = I \star \frac{\partial \mathcal{L}}{\partial S}$ and $\frac{\partial \mathcal{L}}{\partial I} = \frac{\partial \mathcal{L}}{\partial S} * K^\text{rot}$, where $\star$ denotes cross-correlation, $*$ denotes convolution, and $K^\text{rot}$ is the kernel rotated by $180^{\circ}$. The mathematical derivation shows that gradient computation mirrors the forward pass but with rotated kernels, enabling efficient parameter updates through cross-correlation operations.\cite{GoodfellowEtAl2016}
 
 \paragraph{Example (shape-aware):} For $I\in\mathbb{R}^{32\times32\times 64}$ and $K\in\mathbb{R}^{3\times3\times64\times128}$ with stride 1 and same padding, $S\in\mathbb{R}^{32\times32\times128}$. The gradient w.r.t. $K$ accumulates over spatial locations and batch.
 
 \subsection{Pooling Backpropagation}
-For max pooling, the upstream gradient is routed to the maximal input in each region; for average pooling, it is evenly divided among elements.
+Pooling backpropagation requires careful handling of gradient routing to maintain the mathematical properties of the forward pass. For max pooling, the upstream gradient is routed exclusively to the maximal input in each pooling region, since only the maximum value contributed to the output. For average pooling, the gradient is evenly divided among all elements in each region, reflecting the equal contribution of each input to the average. This gradient routing ensures that the backward pass accurately reflects the forward computation, enabling proper parameter updates during training.
 
 \subsection{Residual Connections}
-In a residual block with input $\vect{x}$ and residual mapping $\mathcal{F}$, the output is $\vect{y}=\mathcal{F}(\vect{x})+\vect{x}$. Backpropagation yields $\frac{\partial \mathcal{L}}{\partial \vect{x}}=\frac{\partial \mathcal{L}}{\partial \vect{y}}\left(\frac{\partial \mathcal{F}}{\partial \vect{x}}+\mat{I}\right)$, stabilizing gradients and enabling very deep nets \cite{He2016}.
+Residual connections introduce identity skip paths that fundamentally change gradient flow in deep networks. In a residual block with input $\vect{x}$ and residual mapping $\mathcal{F}$, the output becomes $\vect{y}=\mathcal{F}(\vect{x})+\vect{x}$, where the identity connection provides a direct path for information and gradients. The mathematical derivation of backpropagation yields $\frac{\partial \mathcal{L}}{\partial \vect{x}}=\frac{\partial \mathcal{L}}{\partial \vect{y}}\left(\frac{\partial \mathcal{F}}{\partial \vect{x}}+\mat{I}\right)$, where the identity matrix $\mat{I}$ ensures that gradients can flow directly through the skip connection, stabilizing training and enabling very deep networks.\cite{He2016}
 
 \subsection{Progressive Complexity: Depthwise Separable Convolutions}
 Depthwise separable convolution factors standard convolution into depthwise (per-channel) and pointwise ($1\times1$) operations, reducing FLOPs and parameters (used by MobileNet). This keeps representational power while improving efficiency.
@@ -34,14 +29,10 @@ Depthwise separable convolution factors standard convolution into depthwise (per
 \end{align}
 
 \subsection{Normalization and Activation}
-Batch normalization \cite{Ioffe2015} and ReLU-family activations improve optimization and generalization by smoothing the loss landscape and mitigating covariate shift.
+Batch normalization and ReLU-family activations play crucial roles in modern CNN training by improving optimization dynamics and generalization performance. Batch normalization addresses covariate shift by normalizing activations across the batch dimension, smoothing the loss landscape and enabling faster convergence with higher learning rates. ReLU and its variants provide sparse activations that reduce computational complexity while maintaining gradient flow, with techniques like Leaky ReLU and ELU addressing the "dying ReLU" problem. These components work together to create more stable training dynamics, allowing networks to learn more effectively from complex visual data.\cite{Ioffe2015}
 
 \subsection{Other Useful Variants}
-\begin{itemize}
-    \item \textbf{Group/Layer Normalization:} alternatives when batch sizes are small.
-    \item \textbf{Dilated Convolutions:} expand receptive field without pooling; effective in segmentation.
-    \item \textbf{Anti-aliased Downsampling:} blur pooling or low-pass before stride to reduce aliasing artifacts in features.
-\end{itemize}
+Modern CNN architectures incorporate several additional techniques that address specific challenges in deep learning. Group and Layer Normalization provide alternatives to batch normalization when batch sizes are small or when batch statistics are unreliable, offering different approaches to activation normalization that can improve training stability. Dilated convolutions expand the receptive field without requiring pooling operations, making them particularly effective in segmentation tasks where spatial resolution must be preserved. Anti-aliased downsampling techniques, including blur pooling and low-pass filtering before strided operations, reduce aliasing artifacts in feature maps, leading to more robust representations that better preserve spatial information during downsampling operations.
 
 % \subsection*{Key Takeaways}
 % \begin{itemize}

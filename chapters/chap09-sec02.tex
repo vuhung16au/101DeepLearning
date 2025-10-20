@@ -35,28 +35,16 @@ Average pooling computes the mean value across each pooling region, providing a 
 
 \subsection{Global Pooling}
 
-Pools over entire spatial dimensions:
-\begin{itemize}
-    \item \textbf{Global Average Pooling (GAP):} average over all spatial locations
-    \item \textbf{Global Max Pooling:} maximum over all spatial locations
-\end{itemize}
+Global pooling operations extend the concept of local pooling to cover entire spatial dimensions, providing powerful mechanisms for reducing feature map complexity while preserving essential information. Global Average Pooling (GAP) computes the average value across all spatial locations for each channel, while Global Max Pooling identifies the maximum value across all spatial locations. These operations prove particularly useful for reducing the parameter count before fully connected layers and for connecting convolutional backbones to classification heads, such as using GAP before softmax layers.
 
-Useful for reducing parameters before fully connected layers and for connecting convolutional backbones to classification heads (e.g., GAP before softmax).
-
-\paragraph{Note.} Global average pooling (GAP) can replace large fully connected layers by averaging each feature map to a single scalar, reducing overfitting and parameter count \cite{GoodfellowEtAl2016}.
+The strategic use of global average pooling can replace large fully connected layers by averaging each feature map to a single scalar value, dramatically reducing overfitting and parameter count while maintaining classification performance. This approach has become particularly popular in modern architectures where the final feature maps are globally pooled before classification, eliminating the need for expensive fully connected layers and providing better generalization properties.\cite{GoodfellowEtAl2016}
 
 \subsection{Alternative: Strided Convolutions\index{strided convolution}}
 \label{subsec:strided-convs}
 
-Instead of a non-learned pooling operator, a convolution with stride $s>1$ performs \emph{learned downsampling}. For kernel size $k$, stride $s$, and padding $p$, the output spatial dimension per axis is
-\begin{equation}
-H' = \left\lfloor \frac{H - k + 2p}{s} \right\rfloor + 1,\quad W' = \left\lfloor \frac{W - k + 2p}{s} \right\rfloor + 1.
-\end{equation}
-Pros and cons:
-\begin{itemize}
-    \item \textbf{Pros:} learnable, can combine feature extraction and downsampling in one step; used in stage transitions of ResNet\index{ResNet} \cite{He2016}.
-    \item \textbf{Cons:} may introduce aliasing if high-frequency content is not low-pass filtered prior to sub-sampling; anti-aliasing variants blur before stride.
-\end{itemize}
+Instead of relying on non-learned pooling operators, strided convolutions with stride $s>1$ perform learned downsampling that can adapt to the specific requirements of the task. For kernel size $k$, stride $s$, and padding $p$, the output spatial dimensions are calculated as $H' = \left\lfloor \frac{H - k + 2p}{s} \right\rfloor + 1$ and $W' = \left\lfloor \frac{W - k + 2p}{s} \right\rfloor + 1$, providing precise control over the downsampling process.
+
+The primary advantages of strided convolutions include their learnable nature and ability to combine feature extraction with downsampling in a single operation, making them particularly effective for stage transitions in modern architectures like ResNet. However, these operations may introduce aliasing artifacts if high-frequency content is not properly low-pass filtered before sub-sampling, leading to the development of anti-aliasing variants that apply blurring before strided operations to preserve signal quality.\index{ResNet}\cite{He2016}
 
 \paragraph{Example.} A $3\times3$ convolution with stride $2$ and padding $1$ keeps spatial size roughly halved (e.g., $32\to16$) while learning filters.
 

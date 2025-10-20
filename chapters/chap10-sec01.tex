@@ -7,9 +7,9 @@
 
 An RNN carries a running summary of the past—like a notepad you update after reading each word. This hidden state lets the model use prior context to influence current predictions. However, keeping reliable notes over long spans is hard: small errors can compound, and gradients may shrink or grow too much \cite{GoodfellowEtAl2016}.
 
-\subsection*{Historical Context}
+% \subsection*{Historical Context}
 
-Early sequence models struggled with long-term dependencies due to vanishing gradients, motivating gated designs such as LSTM \cite{Hochreiter1997}. Practical training stabilized with techniques like gradient clipping and better initialization \cite{GoodfellowEtAl2016}.
+% Early sequence models struggled with long-term dependencies due to vanishing gradients, motivating gated designs such as LSTM \cite{Hochreiter1997}. Practical training stabilized with techniques like gradient clipping and better initialization \cite{GoodfellowEtAl2016}.
 
 % Index and glossary
 \index{recurrent neural network}
@@ -17,14 +17,7 @@ Early sequence models struggled with long-term dependencies due to vanishing gra
 
 \subsection{Motivation}
 
-Sequential data exhibits \emph{temporal dependencies} and \emph{order-sensitive} structure that cannot be modeled well by i.i.d. assumptions or fixed-size context windows alone \cite{GoodfellowEtAl2016,Prince2023,Bishop2006}. Examples include:
-\begin{itemize}
-    \item Time series: forecasting energy load, financial returns, or physiological signals (ECG).
-    \item Natural language: the meaning of a word depends on its context; sentences conform to syntax and discourse structure.
-    \item Speech/audio: phonemes combine to form words; coarticulation effects span multiple frames.
-    \item Video: actions unfold over time; temporal cues disambiguate similar frames.
-    \item Control and reinforcement learning: actions influence future observations, requiring memory.
-\end{itemize}
+Sequential data exhibits \emph{temporal dependencies} and \emph{order-sensitive} structure that cannot be modeled well by i.i.d. assumptions or fixed-size context windows alone \cite{GoodfellowEtAl2016,Prince2023,Bishop2006}. Consider the diverse nature of sequential data: time series forecasting energy load, financial returns, or physiological signals like ECG readings; natural language where the meaning of a word depends entirely on its context and sentences must conform to syntax and discourse structure; speech and audio where phonemes combine to form words and coarticulation effects span multiple frames; video where actions unfold over time and temporal cues disambiguate similar frames; and control and reinforcement learning where actions influence future observations, requiring persistent memory.
 
 Classic feedforward networks assume fixed-size inputs and lack a persistent state, making them ill-suited for long-range dependencies. Recurrent architectures introduce a hidden state that acts as a compact, learned memory \index{memory!neural} and enables conditioning on arbitrary-length histories. Historically, recurrent ideas trace back to early neural sequence models and dynamical systems; practical training matured with BPTT \cite{Rumelhart1986} and later with gated units to mitigate vanishing/exploding gradients \cite{Hochreiter1997}. For further background see the RNN overview in \cite{GoodfellowEtAl2016} and educational treatments in \cite{D2LChapterRNN,WebRNNWikipedia,WebDLBRNN}.
 
@@ -32,13 +25,7 @@ Classic feedforward networks assume fixed-size inputs and lack a persistent stat
 
 \subsection{Why Sequences Matter}
 
-The unique value of sequence modeling:
-\begin{itemize}
-    \item \textbf{Context awareness:} Understanding how earlier elements affect later ones
-    \item \textbf{Variable-length handling:} Working with inputs of any length
-    \item \textbf{Temporal patterns:} Capturing how things change over time
-    \item \textbf{Natural interaction:} Enabling human-like communication with machines
-\end{itemize}
+The unique value of sequence modeling lies in its ability to understand how earlier elements affect later ones through context awareness, enabling the model to capture the rich dependencies that exist in temporal data. Unlike traditional approaches that treat each input independently, sequence models can work with inputs of any length, automatically adapting to the complexity and duration of the input sequence. This temporal pattern recognition capability allows the model to capture how things change over time, whether it's the evolution of language meaning, the progression of musical notes, or the development of market trends. Most importantly, this temporal understanding enables natural interaction with machines, allowing human-like communication where the system can maintain context across extended conversations and respond appropriately to the full history of the interaction.
 
 \subsection{Basic RNN Architecture}
 

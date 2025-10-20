@@ -46,15 +46,7 @@ The LSTM's key innovations address fundamental limitations of traditional RNNs a
 
 \subsection{Advantages}
 
-\begin{itemize}
-    \item \textbf{Addresses vanishing gradient problem:} LSTMs mitigate vanishing gradients through their cell state and gating mechanisms. The cell state acts as a memory highway, allowing gradients to flow relatively unimpeded across many time steps, preventing them from shrinking to zero. Unlike vanilla RNNs where gradients must pass through repeated nonlinear transformations, LSTMs provide direct paths for gradient flow.
-    
-    \item \textbf{Can learn long-term dependencies:} The forget and input gates explicitly control what information is retained or discarded from the cell state. This selective memory mechanism allows LSTMs to store relevant information for extended periods and access it when needed, effectively capturing long-term dependencies. The cell state can maintain information across hundreds of time steps without degradation.
-    
-    \item \textbf{Gradients flow more easily through cell state:} The cell state path often involves simple additions and multiplications by gate activations (which are typically between 0 and 1). This linear-like flow, especially when the forget gate is close to 1, prevents the repeated multiplication by small weights that causes gradients to vanish in vanilla RNNs. The gating mechanism creates a more stable gradient propagation environment.
-    
-    \item \textbf{Widely used for sequential tasks:} Due to their ability to handle long-term dependencies and mitigate gradient issues, LSTMs have become a de facto standard for various sequential data processing tasks. Their robust performance across diverse applications, from natural language processing to speech recognition, underscores their versatility and effectiveness. The architecture's success has made it a go-to choice for practitioners working with temporal data.
-\end{itemize}
+LSTMs address the vanishing gradient problem through their innovative cell state and gating mechanisms, where the cell state acts as a memory highway allowing gradients to flow relatively unimpeded across many time steps, preventing them from shrinking to zero. Unlike vanilla RNNs where gradients must pass through repeated nonlinear transformations, LSTMs provide direct paths for gradient flow, creating a more stable training environment. The architecture's ability to learn long-term dependencies stems from the forget and input gates that explicitly control what information is retained or discarded from the cell state, allowing LSTMs to store relevant information for extended periods and access it when needed, effectively capturing dependencies across hundreds of time steps without degradation. This selective memory mechanism, combined with the linear-like flow through the cell state path involving simple additions and multiplications by gate activations, has made LSTMs a de facto standard for various sequential data processing tasks, with robust performance across diverse applications from natural language processing to speech recognition.
 
 \begin{figure}[h]
     \centering

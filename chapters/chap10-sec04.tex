@@ -17,7 +17,7 @@ Proposed in the mid-2010s, GRU offered a practical alternative to LSTM with comp
 
 \subsection{Architecture}
 
-GRU simplifies LSTM with fewer parameters and merges the cell and hidden state into a single vector, often yielding comparable performance with less computation \cite{Cho2014,GoodfellowEtAl2016}:
+GRU simplifies LSTM with fewer parameters and merges the cell and hidden state into a single vector, often yielding comparable performance with less computation \cite{Cho2014,GoodfellowEtAl2016}. The mathematical formulation involves two key gates: the update gate $\vect{z}_t$ controls how much of the previous hidden state to retain, while the reset gate $\vect{r}_t$ determines how much of the previous hidden state to forget when computing the candidate hidden state. The candidate hidden state $\tilde{\vect{h}}_t$ is computed using the reset gate to selectively incorporate information from the previous state, and the final hidden state $\vect{h}_t$ is a weighted combination of the previous state and the candidate, where the weights are determined by the update gate.
 
 \begin{align}
 \vect{z}_t &= \sigma(\mat{W}_z [\vect{h}_{t-1}, \vect{x}_t]) \quad \text{(update gate)} \\
@@ -45,20 +45,6 @@ GRU simplifies LSTM with fewer parameters and merges the cell and hidden state i
 \end{figure}
 
 \subsection{Comparison with LSTM}
-\begin{table}[h]
-    \centering
-    \begin{tabular}{@{}p{3.2cm}p{5.2cm}p{5.2cm}@{}}
-    \toprule
-    & \textbf{GRU} & \textbf{LSTM} \\
-    \midrule
-    State & Single hidden state $\vect{h}_t$ & Hidden $\vect{h}_t$ and cell $\vect{c}_t$ \\
-    Gates & Update, reset & Input, forget, output \\
-    Parameters & Fewer (often faster) & More (more expressive) \\
-    Long-range deps. & Good in practice & Often stronger on very long spans \\
-    Simplicity & Simpler to implement & Slightly more complex \\
-    Typical use & Smaller data/compute budgets & Longer sequences or when capacity helps \\
-    \bottomrule
-    \end{tabular}
-    \caption{GRU vs. LSTM at a glance \cite{Cho2014,Hochreiter1997,GoodfellowEtAl2016}.}
-\end{table}
+
+GRU and LSTM represent two different approaches to solving the vanishing gradient problem in recurrent networks, each with distinct advantages depending on the application requirements. GRU uses a single hidden state $\vect{h}_t$ with two gates (update and reset), making it computationally more efficient and easier to implement, while LSTM maintains separate hidden $\vect{h}_t$ and cell $\vect{c}_t$ states with three gates (input, forget, and output), providing more expressive power for complex sequence modeling tasks. The choice between them often depends on the specific requirements: GRU is typically preferred for smaller datasets or when computational efficiency is crucial, while LSTM often performs better on very long sequences or when the additional model capacity is beneficial for capturing complex temporal dependencies.
 

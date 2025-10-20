@@ -3,6 +3,8 @@
 \section{Gradient Descent Variants \difficultyInline{intermediate}}
 \label{sec:gd-variants}
 
+Gradient descent variants differ in how they compute gradients, balancing computational efficiency with convergence stability through different batch sizes and update strategies.
+
 \subsection{Intuition: Following the Steepest Downhill Direction}
 
 Imagine standing on a foggy hillside trying to reach the valley. You feel the slope under your feet and take a step downhill. \textbf{Batch gradient descent} measures the average slope using the whole landscape (dataset) before each step: accurate but slow to gauge. \textbf{Stochastic gradient descent (SGD)} feels the slope at a single point: fast, but noisy. \textbf{Mini-batch} is a compromise: feel the slope at a handful of nearby points to get a reliable yet efficient direction. This trade-off underlies most practical training regimes.\index{optimization!gradient descent}\index{mini-batch}\gls{mini-batch}
@@ -11,71 +13,48 @@ Historical note: Early neural network training widely used batch gradient descen
 
 \subsection{Batch Gradient Descent}
 
-Computes gradient using entire training set:
+Batch gradient descent computes the gradient using the entire training set, providing the most accurate gradient estimate at each step. The mathematical formulation updates parameters by taking the average gradient across all training examples, ensuring each update is based on complete information about the loss landscape.
+
+The update rule computes the gradient of the average loss over all training examples:
 \begin{equation}
 \vect{\theta}_{t+1} = \vect{\theta}_t - \alpha \nabla_{\vect{\theta}} \frac{1}{n} \sum_{i=1}^{n} L(\vect{\theta}, \vect{x}^{(i)}, y^{(i)})
 \end{equation}
 
-Characteristics:\index{gradient descent!batch}
-\begin{itemize}
-    \item Deterministic and low-variance updates; well-suited for convex exercises.
-    \item Each step uses all \(n\) examples, incurring high computation and memory costs for large datasets.
-    \item In deep, non-convex landscapes, stable but often too slow to respond to curvature changes.
-\end{itemize}
+This approach provides deterministic and low-variance updates that are well-suited for convex optimization problems. However, each step requires processing all \(n\) examples, incurring high computational and memory costs for large datasets. In deep, non-convex landscapes, batch gradient descent remains stable but often responds too slowly to curvature changes, making it less practical for modern deep learning applications.\index{gradient descent!batch}
 
-Example (convex quadratic): Let \(L(\theta)=\tfrac{1}{2}a\theta^2\) with gradient \(a\theta\). Batch GD with step size \(\alpha\) yields \(\theta_{t+1}=(1-\alpha a)\theta_t\). Convergence occurs if \(0<\alpha<\tfrac{2}{a}\), illustrating the learning-rate–curvature interaction.\index{learning rate}\glsadd{gradient-descent}
-
-When to use:
-\begin{itemize}
-    \item Small datasets that fit comfortably in memory.
-    \item Convex or nearly convex objectives (e.g., linear/logistic regression) when precise convergence is desired.
-\end{itemize}
+The mathematical foundation becomes clear when examining a convex quadratic example. For a loss function \(L(\theta)=\tfrac{1}{2}a\theta^2\) with gradient \(a\theta\), batch gradient descent with step size \(\alpha\) yields the update \(\theta_{t+1}=(1-\alpha a)\theta_t\). Convergence occurs when \(0<\alpha<\tfrac{2}{a}\), illustrating the critical interaction between learning rate and curvature. This relationship demonstrates why batch gradient descent works well for small datasets and convex objectives like linear or logistic regression, where precise convergence is desired.\index{learning rate}\glsadd{gradient-descent}
 
 Historical context: Full-batch methods trace back to classical numerical optimization. For massive datasets, stochastic approximations dating to \cite{RobbinsMonro1951} became essential; modern deep learning typically favors mini-batches \cite{GoodfellowEtAl2016,WebOptimizationDLBook,D2LChapterOptimization}.
 
 \subsection{Stochastic Gradient Descent (SGD)}\index{SGD@stochastic gradient descent}
 
-Uses a single random example per update:
+Stochastic gradient descent uses a single random example per update, providing very fast and streaming-friendly updates that can begin learning immediately. The mathematical formulation updates parameters using the gradient of a single training example, introducing controlled randomness that helps escape local minima and saddle points.
+
+The update rule processes one example at a time:
 \begin{equation}
 \vect{\theta}_{t+1} = \vect{\theta}_t - \alpha \nabla_{\vect{\theta}} L(\vect{\theta}, \vect{x}^{(i)}, y^{(i)})
 \end{equation}
 
-Characteristics:\glsadd{stochastic-gradient-descent}
-\begin{itemize}
-    \item Very fast, streaming-friendly updates; one pass can begin learning immediately.
-    \item Noisy gradients add exploration, helping traverse saddle points and plateaus.\index{saddle point}\index{plateau}
-    \item High variance can hamper precise convergence; diminishing \(\alpha_t\) helps stabilize \cite{RobbinsMonro1951}.
-\end{itemize}
+The noisy gradients inherent in SGD add valuable exploration capabilities, helping the optimizer traverse saddle points and plateaus that might trap more deterministic methods. However, this high variance can hamper precise convergence, making it essential to use diminishing learning rates \(\alpha_t\) to stabilize the optimization process.\glsadd{stochastic-gradient-descent}\index{saddle point}\index{plateau}
 
-Practical tips:
-\begin{itemize}
-    \item Use a decaying schedule (e.g., \(\alpha_t = \alpha_0/(1+\lambda t)\)) or switch to momentum/Adam later for fine-tuning \cite{WebOptimizationDLBook,D2LChapterOptimization}.
-    \item Shuffle examples every epoch to avoid periodic bias.
-\end{itemize}
+Practical implementation requires careful attention to learning rate scheduling. Using a decaying schedule such as \(\alpha_t = \alpha_0/(1+\lambda t)\) helps stabilize convergence, while switching to momentum or Adam methods later can provide fine-tuning capabilities. Additionally, shuffling examples every epoch prevents periodic bias and ensures the stochastic nature remains beneficial rather than introducing systematic patterns.\cite{RobbinsMonro1951,WebOptimizationDLBook,D2LChapterOptimization}
 
 Applications: Early CNN training and many online/streaming scenarios employ SGD due to its simplicity and ability to handle large-scale data. In large vision models, SGD with momentum remains competitive \cite{He2016}.
 
 \subsection{Mini-Batch Gradient Descent}\index{gradient descent!mini-batch}
 
-Balances batch and stochastic approaches:
+Mini-batch gradient descent balances the computational efficiency of stochastic methods with the stability of batch methods by processing small subsets of the training data. This approach provides an optimal compromise between gradient variance and computational cost, making it the de facto standard for modern deep learning.
+
+The mathematical formulation processes a mini-batch of examples:
 \begin{equation}
 \vect{\theta}_{t+1} = \vect{\theta}_t - \alpha \nabla_{\vect{\theta}} \frac{1}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} L(\vect{\theta}, \vect{x}^{(i)}, y^{(i)})
 \end{equation}
 
-where $\mathcal{B}$ is a mini-batch (typically 32–1024 examples depending on model and hardware).\glsadd{mini-batch}
+where $\mathcal{B}$ is a mini-batch typically containing 32–1024 examples, depending on the model architecture and available hardware.\glsadd{mini-batch}
 
-Benefits:
-\begin{itemize}
-    \item Reduces gradient variance
-    \item Efficient GPU utilization
-    \item Good balance of speed and stability
-\end{itemize}
+This approach significantly reduces gradient variance compared to pure stochastic methods while maintaining computational efficiency through parallel processing on modern GPUs. The mini-batch size provides a crucial hyperparameter that balances training speed with gradient stability, enabling efficient utilization of hardware resources while maintaining good convergence properties.
 
-Further guidance:
-\begin{itemize}
-    \item Larger batches yield smoother estimates but may require proportionally larger learning rates; the ``linear scaling rule'' is a useful heuristic in some regimes.\index{mini-batch}
-    \item Very large batches can hurt generalization unless paired with warmup and appropriate regularization. See \cite{WebOptimizationDLBook,D2LChapterOptimization}.
-\end{itemize}
+The choice of mini-batch size involves important trade-offs that affect both optimization dynamics and computational efficiency. Larger batches yield smoother gradient estimates but may require proportionally larger learning rates following the "linear scaling rule" heuristic. However, very large batches can hurt generalization unless paired with appropriate warmup strategies and regularization techniques, making it essential to carefully balance batch size with learning rate and other hyperparameters.\index{mini-batch}\cite{WebOptimizationDLBook,D2LChapterOptimization}
 
 Illustrative example (variance vs. batch size): For a fixed \(\alpha\), increasing \(|\mathcal{B}|\) reduces the variance of the stochastic gradient approximately as \(\mathcal{O}(1/|\mathcal{B}|)\), improving stability but diminishing returns once hardware is saturated.
 

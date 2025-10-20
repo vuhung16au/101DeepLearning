@@ -11,42 +11,33 @@ Historical note: Momentum has deep roots in convex optimization and was populari
 
 \subsection{Momentum}
 
-Accumulates gradients over time:
+Momentum accumulates gradients over time to maintain velocity in consistently good directions, effectively smoothing out oscillations and accelerating convergence in relevant directions. The mathematical formulation builds an exponentially weighted moving average of past gradients, creating a low-pass filter that suppresses high-frequency noise while preserving important directional information.
+
+The update equations accumulate velocity and apply it to parameter updates:
 \begin{align}
 \vect{v}_t &= \beta \vect{v}_{t-1} - \alpha \nabla_{\vect{\theta}} L(\vect{\theta}_t) \\
 \vect{\theta}_{t+1} &= \vect{\theta}_t + \vect{v}_t
 \end{align}
 
-where $\beta \in [0, 1)$ is the momentum coefficient (typically 0.9).
+where $\beta \in [0, 1)$ is the momentum coefficient, typically set to 0.9, controlling how much past gradient information to retain.\index{optimization!momentum}
 
-Benefits:\index{optimization!momentum}
-\begin{itemize}
-    \item Accelerates convergence in relevant directions
-    \item Dampens oscillations
-    \item Helps escape local minima and saddle points
-\end{itemize}
+This approach accelerates convergence in relevant directions by maintaining velocity along consistent gradient directions while dampening oscillations that occur when gradients change rapidly. The momentum mechanism helps escape local minima and saddle points by providing sufficient inertia to overcome small gradient magnitudes that might otherwise trap the optimizer.
 
-Interpretation: Momentum is equivalent to an exponentially weighted moving average of past gradients, implementing a low-pass filter that suppresses high-frequency noise. In anisotropic valleys, it allows larger effective step along the shallow curvature direction while reducing zig-zag across the sharp direction \cite{Polyak1964,WebOptimizationDLBook,D2LChapterOptimization}.
-
-Choice of hyperparameters:
-\begin{itemize}
-    \item \(\beta\in[0.8,0.99]\); larger values increase smoothing and memory.
-    \item Couple with a tuned \(\alpha\); too-large \(\alpha\) can still diverge.
-\end{itemize}
+The mathematical interpretation reveals that momentum implements an exponentially weighted moving average of past gradients, effectively creating a low-pass filter that suppresses high-frequency noise. In anisotropic valleys with different curvatures along different dimensions, momentum allows larger effective steps along shallow curvature directions while reducing the characteristic zig-zag pattern across sharp directions. The choice of hyperparameters requires careful tuning, with \(\beta\in[0.8,0.99]\) providing different levels of smoothing and memory, while the learning rate \(\alpha\) must be balanced to prevent divergence.\cite{Polyak1964,WebOptimizationDLBook,D2LChapterOptimization}
 
 Example (ravine function): For \(L(\theta_1,\theta_2)=100\theta_1^2+\theta_2^2\), momentum reduces oscillations in the steep \(\theta_1\) direction and speeds travel along the gentle \(\theta_2\) direction.
 
 \subsection{Nesterov Accelerated Gradient (NAG)}\index{optimization!Nesterov}
 
-"Look-ahead" version of momentum:
+Nesterov Accelerated Gradient implements a "look-ahead" version of momentum that evaluates the gradient at an anticipated future position, providing more informed updates that often yield better convergence properties. This anticipatory approach allows the optimizer to correct its course earlier, reducing overshoot in curved valleys and improving convergence rates.
+
+The mathematical formulation computes gradients at the look-ahead position:
 \begin{align}
 \vect{v}_t &= \beta \vect{v}_{t-1} - \alpha \nabla_{\vect{\theta}} L(\vect{\theta}_t + \beta \vect{v}_{t-1}) \\
 \vect{\theta}_{t+1} &= \vect{\theta}_t + \vect{v}_t
 \end{align}
 
-Evaluates gradient at anticipated future position, often providing better updates.
-
-Rationale: By computing the gradient at the look-ahead point \(\theta_t+\beta v_{t-1}\), NAG corrects the course earlier, which reduces overshoot in curved valleys and can improve convergence rates in convex settings \cite{Nesterov1983,WebOptimizationDLBook,GoodfellowEtAl2016}.
+By computing the gradient at the look-ahead point \(\theta_t+\beta v_{t-1}\), NAG corrects the course earlier than standard momentum, which reduces overshoot in curved valleys and can significantly improve convergence rates, particularly in convex optimization settings. This anticipatory mechanism allows the optimizer to make more informed decisions by evaluating the gradient at where the momentum will take it, rather than just following the current momentum and correcting afterward.\cite{Nesterov1983,WebOptimizationDLBook,GoodfellowEtAl2016}
 
 Practice notes:
 \begin{itemize}

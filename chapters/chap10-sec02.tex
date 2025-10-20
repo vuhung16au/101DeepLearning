@@ -80,12 +80,7 @@ The behavior depends on the eigenvalues of the weight matrix $\mat{W}$:
 
 \subsection{Truncated BPTT}
 
-For very long sequences, truncate gradient computation by limiting backpropagation to a sliding window of $k$ steps \cite{GoodfellowEtAl2016}:
-\begin{itemize}
-    \item Process inputs in segments of length $k$ (possibly overlapping with stride $s$).
-    \item Backpropagate gradients only within each segment to reduce memory and time.
-    \item Hidden state is carried forward between segments but treated as a constant during the truncated backward step.
-\end{itemize}
+For very long sequences, truncate gradient computation by limiting backpropagation to a sliding window of $k$ steps \cite{GoodfellowEtAl2016}. This approach processes inputs in segments of length $k$, possibly overlapping with stride $s$, allowing the model to handle arbitrarily long sequences while maintaining computational efficiency. The key insight is that gradients are backpropagated only within each segment to reduce memory and computational time, making it feasible to train on very long sequences that would otherwise be computationally prohibitive. The hidden state is carried forward between segments but treated as a constant during the truncated backward step, creating a balance between maintaining temporal continuity and computational tractability.
 
 \begin{algorithm}[h]
 \caption{Truncated Backpropagation Through Time (Truncated BPTT)}

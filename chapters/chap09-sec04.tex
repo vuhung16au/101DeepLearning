@@ -7,45 +7,22 @@
 Backbones of stacked convolutions extract spatially local features that become increasingly abstract with depth. Task-specific heads (classification, detection, segmentation) transform backbone features into outputs appropriate to the problem \cite{GoodfellowEtAl2016,Prince2023}.
 \subsection{Image Classification}
 
-\textbf{Task:} assign a label to the entire image.
+Image classification represents the foundational task of assigning a single label to an entire image, serving as the basis for most computer vision applications. The standard approach combines a convolutional backbone that extracts hierarchical features with a task-specific head that produces the final classification. The backbone processes the input through multiple convolutional layers with downsampling via pooling or strided convolutions, progressively building more abstract and semantically meaningful representations. The head typically uses global average pooling followed by a small fully connected layer or $1\times1$ convolution with softmax activation to produce class probabilities.
 
-\textbf{Backbone + head:}
-\begin{itemize}
-    \item Convolutional backbone extracts hierarchical features.
-    \item Downsampling via pooling or strided convolutions.
-    \item Global average pooling and a small fully connected (or $1\times1$ conv) layer with softmax.
-\end{itemize}
-
-\textbf{Examples and datasets:} CIFAR-10/100, ImageNet (ILSVRC). Transfer learning from ImageNet pretraining commonly improves downstream tasks.
+This architecture has proven remarkably effective across diverse datasets including CIFAR-10/100 and ImageNet (ILSVRC), establishing the foundation for transfer learning where ImageNet pretraining commonly improves performance on downstream tasks. The hierarchical feature extraction enables the network to learn from low-level edges and textures to high-level object parts and complete objects, making it particularly suitable for natural image classification where spatial structure and local patterns provide strong discriminative signals.
 
 \subsection{Object Detection}
 
-\textbf{Task:} localize and classify objects with bounding boxes.
+Object detection extends image classification to simultaneously localize and classify multiple objects within a single image, requiring the network to predict bounding boxes and class labels for each detected object. This task presents unique challenges as it combines spatial localization with classification, demanding architectures that can handle variable numbers of objects at different scales and positions.
 
-\textbf{Region-based (two-stage):}
-\begin{itemize}
-    \item R-CNN: region proposals + CNN features (slow).
-    \item Fast/Faster R-CNN: integrate feature extraction; Faster learns proposals (RPN).
-    \item Mask R-CNN: extends with an instance segmentation branch.
-\end{itemize}
+Region-based approaches, also known as two-stage methods, first generate region proposals and then classify each region. R-CNN pioneered this approach by applying CNN features to region proposals, though it was computationally expensive. Fast R-CNN and Faster R-CNN improved efficiency by integrating feature extraction, with Faster R-CNN learning region proposals through a Region Proposal Network (RPN). Mask R-CNN extended this framework with an additional instance segmentation branch for pixel-level object boundaries.
 
-\textbf{Single-shot (one-stage):}
-\begin{itemize}
-    \item YOLO: dense predictions at multiple scales with real-time speed.
-    \item SSD: default boxes across feature maps; efficient multi-scale detection.
-\end{itemize}
-
-\textbf{Heads and losses:} classification (cross-entropy/focal loss), box regression (smooth-$\ell_1$ or IoU losses), non-maximum suppression (NMS) at inference.
+Single-shot approaches like YOLO and SSD perform detection in a single pass, making dense predictions at multiple scales for real-time performance. YOLO processes the entire image at once, predicting bounding boxes and class probabilities directly, while SSD uses default boxes across different feature map scales for efficient multi-scale detection. These methods employ specialized heads and losses including classification losses (cross-entropy or focal loss), box regression losses (smooth-$\ell_1$ or IoU losses), and non-maximum suppression (NMS) at inference to eliminate duplicate detections.
 
 \subsection{Semantic Segmentation}
 
-\textbf{Task:} assign a class label to each pixel.
+Semantic segmentation represents the most fine-grained computer vision task, requiring the assignment of a class label to each individual pixel in the image. This pixel-level classification demands architectures that can maintain spatial resolution while providing rich semantic understanding, making it particularly challenging compared to classification or detection tasks.
 
-\textbf{Architectures:}
-\begin{itemize}
-    \item FCN: replace dense layers with $1\times1$ convs and upsample (deconvolution) to input resolution.
-    \item U-Net: encoder-decoder with skip connections for precise localization; widely used in medical imaging \cite{Ronneberger2015}.
-    \item Atrous/dilated convolutions: enlarge receptive field without losing resolution.
-\end{itemize}
+Fully Convolutional Networks (FCNs) revolutionized semantic segmentation by replacing dense layers with $1\times1$ convolutions and upsampling through deconvolution to restore input resolution. U-Net introduced the encoder-decoder architecture with skip connections that preserve fine-grained spatial details for precise localization, becoming particularly popular in medical imaging applications where pixel-level accuracy is critical. Atrous or dilated convolutions provide an alternative approach by enlarging the receptive field without losing spatial resolution, enabling the network to capture both local details and global context simultaneously.
 
-\textbf{Losses and metrics:} pixel-wise cross-entropy, Dice/IoU; mIoU for evaluation.
+The training and evaluation of semantic segmentation models requires specialized losses and metrics that account for the pixel-level nature of the task. Pixel-wise cross-entropy loss provides the foundation for training, while Dice and IoU losses offer better handling of class imbalance. Mean Intersection over Union (mIoU) serves as the standard evaluation metric, measuring the overlap between predicted and ground truth segmentations across all classes to provide a comprehensive assessment of segmentation quality.\cite{Ronneberger2015}

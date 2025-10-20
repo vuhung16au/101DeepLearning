@@ -8,13 +8,9 @@ CNNs evolved from early biologically inspired work to practical systems. \textbf
 \subsection{LeNet-5 (1998)\index{LeNet-5}}
 \label{subsec:lenet}
 
-LeNet-5 demonstrated the viability of CNNs for handwritten digit recognition (MNIST) \cite{LeCun1989}. It combined convolution, subsampling (pooling), and small fully connected layers.
-\begin{itemize}
-    \item \textbf{Topology:} \(\text{Conv}(6@5\times5)\to\text{Pool}(2\times2)\to\text{Conv}(16@5\times5)\to\text{Pool}(2\times2)\to\text{FC}(120)\to\text{FC}(84)\to\text{Softmax}(10)\).
-    \item \textbf{Activations:} sigmoid/tanh; later works often retrofit ReLU for pedagogy.
-    \item \textbf{Properties:} local receptive fields, parameter sharing, and early evidence of translation invariance via pooling.
-    \item \textbf{Impact:} established the core conv-pool pattern and end-to-end learning for vision \cite{GoodfellowEtAl2016}.
-\end{itemize}
+LeNet-5 demonstrated the viability of CNNs for handwritten digit recognition on the MNIST dataset, establishing the foundational architecture that would influence all subsequent convolutional networks. The network combined convolution, subsampling through pooling, and small fully connected layers in a carefully designed topology: \(\text{Conv}(6@5\times5)\to\text{Pool}(2\times2)\to\text{Conv}(16@5\times5)\to\text{Pool}(2\times2)\to\text{FC}(120)\to\text{FC}(84)\to\text{Softmax}(10)\).
+
+The architecture utilized sigmoid and tanh activation functions, though later pedagogical treatments often retrofit ReLU activations to demonstrate modern practices. LeNet-5's key properties included local receptive fields that captured spatial patterns, parameter sharing that dramatically reduced the number of learnable parameters, and early evidence of translation invariance through pooling operations. The network's impact extended far beyond digit recognition, establishing the core conv-pool pattern and demonstrating end-to-end learning for computer vision tasks, fundamentally changing how researchers approached image classification problems.\cite{LeCun1989,GoodfellowEtAl2016}
 
 \begin{figure}[h]
     \centering
@@ -55,37 +51,22 @@ LeNet-5 demonstrated the viability of CNNs for handwritten digit recognition (MN
 
 \subsection{AlexNet (2012)\index{AlexNet}}
 
-AlexNet won ILSVRC 2012 by a large margin, catalyzing deep learning in vision \cite{Krizhevsky2012}.
-\begin{itemize}
-    \item \textbf{Design:} 5 conv + 3 FC layers; local response normalization (LRN) and overlapping pooling.
-    \item \textbf{Optimization:} ReLU activations enabled faster training; heavy data augmentation; dropout in FC reduced overfitting.
-    \item \textbf{Systems:} trained on 2 GPUs with model parallelism; used large kernels early and stride for rapid downsampling.
-    \item \textbf{Impact:} established large-scale supervised pretraining on ImageNet as a standard.
-\end{itemize}
+AlexNet achieved a decisive victory at ILSVRC 2012, winning by a large margin and catalyzing the deep learning revolution in computer vision. The network's design featured 5 convolutional layers followed by 3 fully connected layers, incorporating local response normalization (LRN) and overlapping pooling to improve feature extraction. The optimization strategy proved equally important, with ReLU activations enabling significantly faster training compared to traditional sigmoid and tanh functions, while heavy data augmentation and dropout in the fully connected layers effectively reduced overfitting.
+
+The systems engineering aspects of AlexNet were equally groundbreaking, as the network was trained on 2 GPUs using model parallelism to handle the computational demands. The architecture used large kernels in early layers combined with stride for rapid downsampling, creating an efficient pipeline for processing high-resolution images. AlexNet's impact extended far beyond its immediate performance gains, establishing large-scale supervised pretraining on ImageNet as the standard approach for computer vision research and demonstrating the practical viability of deep learning for real-world applications.\cite{Krizhevsky2012}
 
 \subsection{VGG Networks (2014)\index{VGG}}
 
-VGG emphasized depth with a simple recipe \cite{GoodfellowEtAl2016}: stacks of $3\times3$ convolutions with stride 1 and $2\times2$ max pooling for downsampling.
-\begin{itemize}
-    \item \textbf{Uniform blocks:} replacing large kernels by multiple $3\times3$ layers increases nonlinearity and receptive field with fewer parameters.
-    \item \textbf{Models:} VGG-16 and VGG-19; very large parameter counts in dense layers.
-    \item \textbf{Trade-offs:} strong accuracy but memory/computation heavy; often used as feature extractors.
-\end{itemize}
+VGG networks emphasized architectural depth through a simple yet effective recipe: stacks of $3\times3$ convolutions with stride 1 combined with $2\times2$ max pooling for downsampling. The uniform block design represented a key innovation, where replacing large kernels with multiple $3\times3$ layers increased nonlinearity and receptive field while using fewer parameters than equivalent single large kernels. This approach demonstrated that depth could be achieved through careful architectural choices rather than simply adding more layers.
+
+The VGG-16 and VGG-19 models achieved strong accuracy on ImageNet, though they came with significant computational costs due to very large parameter counts in the dense layers. The trade-offs inherent in VGG networks included strong classification accuracy balanced against heavy memory and computation requirements, making them particularly suitable as feature extractors for transfer learning applications. Despite their computational demands, VGG networks established the importance of systematic architectural design and demonstrated that simple, uniform building blocks could achieve competitive performance when properly scaled.\cite{GoodfellowEtAl2016}
 
 \subsection{ResNet (2015)\index{ResNet}}
 \label{subsec:resnet}
 
-ResNet introduced \textbf{identity skip connections} to learn residual functions \cite{He2016}:
-\begin{equation}
-\vect{y} = \mathcal{F}(\vect{x}, \{\mat{W}_i\}) + \vect{x},
-\end{equation}
-where $\mathcal{F}$ is typically a small stack of convolutions and normalization/activation.
+ResNet introduced identity skip connections to learn residual functions, fundamentally changing how deep networks could be trained and optimized. The core equation $\vect{y} = \mathcal{F}(\vect{x}, \{\mat{W}_i\}) + \vect{x}$ represents a simple yet powerful idea: instead of learning the direct mapping from input to output, the network learns the residual function $\mathcal{F}$ that represents the difference between input and desired output, where $\mathcal{F}$ is typically a small stack of convolutions with normalization and activation.
 
-\begin{itemize}
-    \item \textbf{Depth:} enabled 50/101/152-layer models with stable optimization.
-    \item \textbf{Gradient flow:} the Jacobian includes an identity term, mitigating vanishing gradients.
-    \item \textbf{Blocks:} basic (two $3\times3$) and bottleneck ($1\times1$-$3\times3$-$1\times1$) with projection shortcuts for dimension changes.
-\end{itemize}
+This architectural innovation enabled unprecedented depth, allowing stable training of 50, 101, and 152-layer models that would have been impossible to train with traditional architectures. The gradient flow benefits were equally important, as the Jacobian includes an identity term that mitigates vanishing gradients by providing direct paths for gradient propagation. ResNet blocks come in two main variants: basic blocks with two $3\times3$ convolutions and bottleneck blocks with $1\times1$-$3\times3$-$1\times1$ convolutions, both incorporating projection shortcuts to handle dimension changes between layers.\cite{He2016}
 
 \begin{figure}[h]
     \centering
@@ -115,12 +96,9 @@ where $\mathcal{F}$ is typically a small stack of convolutions and normalization
 \subsection{Inception/GoogLeNet (2014)\index{Inception}\index{GoogLeNet}}
 \label{subsec:inception}
 
-GoogLeNet popularized \textbf{Inception modules} with parallel multi-scale branches and $1\times1$ bottlenecks for efficiency.
-\begin{itemize}
-    \item \textbf{Branches:} $1\times1$, $3\times3$, $5\times5$ convolutions and a pooled branch, then channel-wise concatenation.
-    \item \textbf{Efficiency:} $1\times1$ convolutions reduce channel dimensions before larger kernels, cutting FLOPs while preserving capacity.
-    \item \textbf{Impact:} competitive accuracy with fewer parameters than VGG; design influenced later hybrid networks.
-\end{itemize}
+GoogLeNet popularized Inception modules that revolutionized CNN design through parallel multi-scale processing and strategic use of $1\times1$ bottlenecks for computational efficiency. The Inception architecture featured parallel branches with $1\times1$, $3\times3$, and $5\times5$ convolutions alongside a pooled branch, all followed by channel-wise concatenation to combine multi-scale features. This design philosophy recognized that different scales of features are important for visual recognition and that processing them in parallel could capture more diverse patterns than sequential processing.
+
+The efficiency gains came primarily from $1\times1$ convolutions that reduced channel dimensions before applying larger kernels, dramatically cutting floating-point operations while preserving network capacity. This approach proved particularly effective for reducing computational costs in deeper layers where channel counts are high. GoogLeNet's impact extended beyond its immediate performance, achieving competitive accuracy with significantly fewer parameters than VGG networks while influencing the design of later hybrid networks that incorporated multi-scale processing and efficient channel mixing techniques.
 
 \begin{figure}[h]
     \centering
