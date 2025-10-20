@@ -233,6 +233,7 @@ luatex*
 
 # Project specific files
 TODO/
+TODO/*.md
 refs*/
 Prompt.md
 SUMMARY.txt
