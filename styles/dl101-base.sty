@@ -42,4 +42,41 @@
 \providecommand{\norm}[1]{\left\lVert#1\right\rVert}
 \providecommand{\abs}[1]{\left|#1\right|}
 
+% List commands (fallback definitions)
+\providecommand{\listofexamples}{\@starttoc{exa}}
+\providecommand{\listofremarks}{\@starttoc{rem}}
+\providecommand{\listoftakeaways}{\@starttoc{tak}}
+
+% Create custom list files for examples and remarks
+\makeatletter
+\newwrite\@exafile
+\newwrite\@remfile
+\newwrite\@takfile
+
+% Open files at begin document
+\AtBeginDocument{%
+  \immediate\openout\@exafile=\jobname.exa
+  \immediate\openout\@remfile=\jobname.rem
+  \immediate\openout\@takfile=\jobname.tak
+}
+
+% Close files at end document
+\AtEndDocument{%
+  \immediate\closeout\@exafile
+  \immediate\closeout\@remfile
+  \immediate\closeout\@takfile
+}
+
+% Simple write commands for our custom lists
+\newcommand{\@writeexample}[1]{%
+  \immediate\write\@exafile{\unexpanded{example}{#1}}%
+}
+\newcommand{\@writeremark}[1]{%
+  \immediate\write\@remfile{\unexpanded{remark}{#1}}%
+}
+\newcommand{\@writetakeaway}[1]{%
+  \immediate\write\@takfile{\unexpanded{takeaways}{#1}}%
+}
+\makeatother
+
 

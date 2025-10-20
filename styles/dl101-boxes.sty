@@ -45,6 +45,17 @@
 \@ifundefined{keytakeaways}{\newenvironment{keytakeaways}{\begin{dlkeytakeaways}}{\end{dlkeytakeaways}}}{}
 \makeatother
 
+% Add list entry for keytakeaways - DISABLED
+% \makeatletter
+% \let\oldkeytakeaways\keytakeaways
+% \renewenvironment{keytakeaways}{%
+%   \begin{dlkeytakeaways}%
+%   \addcontentsline{tak}{takeaways}{\protect\numberline{\thetcbcounter}Key Takeaways}%
+% }{%
+%   \end{dlkeytakeaways}%
+% }
+% \makeatother
+
 % Exercise and hint boxes
 \definecolor{easycolor}{RGB}{232,245,233}
 \definecolor{mediumcolor}{RGB}{227,242,253}

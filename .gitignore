@@ -222,6 +222,10 @@ miktex/
 *.xef
 *.xref
 
+# Additional LaTeX auxiliary files
+*.dvi
+*.tmp
+
 
 # luatex
 
@@ -230,6 +234,38 @@ luatex*
 # Optional: ignore general EPUB outputs except published ones
 *.epub
 !Deep-Learning101-PDF-Books/*.epub
+
+# LaTeX auxiliary files for custom lists
+main.exa
+main.loa
+main.rem
+main-a4.exa
+main-a4.loa
+main-a4.rem
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.glg
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
 
 # Project specific files
 TODO/

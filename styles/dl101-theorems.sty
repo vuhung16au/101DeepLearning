@@ -97,4 +97,31 @@
 % Exercises counter
 \newkeytheorem{problem}[name=Exercise,parent=chapter,style=definitionbox]
 
+% Custom list for takeaways (since keytakeaways uses tcolorbox) - DISABLED
+% \RequirePackage{tocloft}
+% \newlistof{takeaways}{tak}{List of Takeaways}
+
+% Add list entries for examples and remarks
+\makeatletter
+% Patch example environment to add to list - DISABLED
+% \let\old@example\example
+% \let\old@endexample\endexample
+% \renewenvironment{example}[1][]{%
+%   \old@example[#1]%
+%   \@writeexample{\protect\numberline{\theexample}#1}%
+% }{%
+%   \old@endexample%
+% }
+
+% Patch remark environment to add to list - DISABLED
+% \let\old@remark\remark
+% \let\old@endremark\endremark
+% \renewenvironment{remark}[1][]{%
+%   \old@remark[#1]%
+%   \@writeremark{\protect\numberline{\theremark}#1}%
+% }{%
+%   \old@endremark%
+% }
+\makeatother
+
 
