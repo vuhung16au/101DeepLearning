@@ -15,40 +15,17 @@ The Perceptron showed promise but faced significant limitations. In 1969, Marvin
 
 The field was revitalized in the 1980s with the rediscovery and popularization of the backpropagation algorithm by David Rumelhart, Geoffrey Hinton, and Ronald Williams. This algorithm enabled the training of multi-layer networks, overcoming the limitations of single-layer perceptrons.
 
-Key developments during this period include:
-\begin{itemize}
-    \item Convolutional Neural Networks (CNNs) by Yann LeCun
-    \item Recurrent Neural Networks (RNNs) for sequential data
-    \item Improved optimization techniques
-\end{itemize}
+Key developments during this period include Convolutional Neural Networks (CNNs) by Yann LeCun, which revolutionized computer vision by introducing the concept of local connectivity and weight sharing, enabling networks to efficiently process spatial data like images while dramatically reducing the number of parameters compared to fully connected networks. Recurrent Neural Networks (RNNs) emerged as a powerful solution for sequential data processing, introducing the concept of memory and temporal dependencies that allowed networks to understand and generate sequences of data, from natural language text to time series predictions. Improved optimization techniques, including better initialization methods, adaptive learning rates, and more sophisticated gradient descent variants, made it possible to train deeper networks more effectively, addressing many of the convergence issues that had plagued earlier attempts at multi-layer neural networks.
 
 \subsection{The Second AI Winter (1990s-2000s)}
 
-Despite theoretical advances, neural networks fell out of favor in the 1990s due to:
-\begin{itemize}
-    \item Limited computational resources
-    \item Difficulty training deep networks (vanishing gradient problem)
-    \item Success of alternative methods like Support Vector Machines (SVMs)
-    \item Lack of large labeled datasets
-\end{itemize}
+Despite theoretical advances, neural networks fell out of favor in the 1990s due to several critical limitations that made them impractical for real-world applications. Limited computational resources severely constrained the size and complexity of networks that could be trained, making it impossible to leverage the full potential of multi-layer architectures that had been theoretically proven to be more powerful. The difficulty of training deep networks, particularly the vanishing gradient problem where gradients became exponentially smaller as they propagated backward through layers, made it nearly impossible to train networks with more than a few layers effectively. The success of alternative methods like Support Vector Machines (SVMs), which provided strong theoretical guarantees and often outperformed neural networks on benchmark datasets, further diminished interest in neural network research. The lack of large labeled datasets, which are essential for training complex models, meant that neural networks could not demonstrate their true potential, as they require substantial amounts of data to learn meaningful representations and avoid overfitting.
 
 During this period, the term ``deep learning'' was coined to distinguish multi-layer neural networks from shallow architectures.
 
 \subsection{The Deep Learning Renaissance (2006-Present)}
 
-The modern era of deep learning began around 2006 with several breakthrough papers:
-
-\begin{enumerate}
-    \item \textbf{2006:} Geoffrey Hinton and colleagues introduced Deep Belief Networks (DBNs) and showed that deep networks could be trained using layer-wise pretraining.
-    
-    \item \textbf{2009:} Large-scale GPU computing for neural networks became practical, dramatically reducing training times.
-    
-    \item \textbf{2012:} AlexNet won the ImageNet competition by a large margin, demonstrating the power of deep CNNs trained on GPUs.
-    
-    \item \textbf{2014-2016:} Sequence-to-sequence models and attention mechanisms revolutionized NLP.
-    
-    \item \textbf{2017-Present:} Transformer architectures and large language models like GPT and BERT have achieved unprecedented performance.
-\end{enumerate}
+The modern era of deep learning began around 2006 with several breakthrough papers that fundamentally changed the landscape of artificial intelligence research and applications. Geoffrey Hinton and colleagues introduced Deep Belief Networks (DBNs) in 2006, demonstrating that deep networks could be trained using layer-wise pretraining, a technique that allowed networks to learn meaningful representations even when traditional backpropagation failed. Large-scale GPU computing for neural networks became practical in 2009, dramatically reducing training times and making it feasible to train networks with millions of parameters on consumer hardware. The watershed moment came in 2012 when AlexNet won the ImageNet competition by a large margin, demonstrating the power of deep CNNs trained on GPUs and sparking a renewed interest in neural networks across the entire machine learning community. The period from 2014 to 2016 saw sequence-to-sequence models and attention mechanisms revolutionize natural language processing, enabling breakthroughs in machine translation, text generation, and language understanding. Since 2017, Transformer architectures and large language models like GPT and BERT have achieved unprecedented performance across a wide range of tasks, fundamentally changing how we approach language processing and creating new possibilities for human-computer interaction that were previously unimaginable.
 
 \subsection{Key Milestones}
 
