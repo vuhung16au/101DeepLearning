@@ -29,6 +29,28 @@ Deep Learning 101 is a comprehensive LaTeX educational book with advanced featur
 - **Weight/Mass**: Use kilograms (kg) or grams (g), not pounds or ounces
 - **Exception**: Metaphorical or idiomatic uses of imperial terms (e.g., "feel the slope under your feet") are acceptable as they are not measurements
 
+## Color Scheme Policy
+
+The book uses a consistent color scheme throughout for visual identity and readability:
+
+### Primary Colors
+- **Purple**: RGB(60, 16, 83), Hex: #3C1053 - Used for main accents, links, and theorem boxes
+- **Red**: RGB(242, 18, 12), Hex: #F2120C - Used for citations and emphasis
+- **Black**: RGB(0, 0, 0), Hex: #000000 - Standard text color
+- **White**: RGB(255, 255, 255), Hex: #FFFFFF - Background color
+
+### Secondary Colors
+- **Law Purple**: RGB(181, 24, 37), Hex: #B51825 - Faculty of Law and Business accent
+- **Warm Stone**: RGB(145, 139, 131), Hex: #918B83 - Neutral accent for backgrounds
+- **Deep Charcoal**: RGB(48, 44, 42), Hex: #302C2A - Dark neutral for text variants
+- **Soft Ivory**: RGB(242, 239, 235), Hex: #F2EFEB - Light background for boxes
+
+### Color Usage Guidelines
+- Use primary colors for main structural elements
+- Use secondary colors for subtle accents and backgrounds
+- Maintain sufficient contrast for readability
+- Exercise boxes use separate color coding (green/blue/red for easy/medium/hard)
+
 ## Paper Margin Policy
 
 The book uses standardised margins for both A4 and A5 paper sizes to ensure optimal readability and binding:

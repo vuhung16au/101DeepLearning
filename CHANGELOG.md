@@ -8,9 +8,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- New comprehensive color scheme with primary and secondary colors
+  - Added four new secondary colors: Law Purple, Warm Stone, Deep Charcoal, and Soft Ivory
+  - Updated all policy files (.github/copilot-instructions.md and .github/instructions/gemini.instructions.md) with new color scheme documentation
+  - Applied new colors throughout the book for improved visual identity and consistency
+
+### Changed
+- Updated color scheme in main.tex with new color definitions
+  - Summary boxes now use Soft Ivory background, Warm Stone frame, and Law Purple title
+  - Key Takeaways boxes now use Soft Ivory background with Purple frame and title
+  - Theorem boxes now use Soft Ivory background (previously gray!12)
+  - Remark boxes now use Warm Stone frame and Deep Charcoal header
+  - Proof boxes now use Warm Stone!50 frame and Deep Charcoal header
+  - Exercise boxes now use Warm Stone frame (previously black!20)
+  - Learning objectives now use Soft Ivory background, Purple border, and Deep Charcoal text
+
+### Technical Details (Color Scheme Update)
+- **Version**: 1.3.0 (New Color Scheme)
+- **Author**: GitHub Copilot
+- **Date**: 20 Oct 2025
+- **License**: CC BY 4.0
+- **Source**: 
+  - `main.tex` (lines 91-99, 140-167, 222-224, 271-289, 293-310, 419-425)
+  - `.github/copilot-instructions.md`
+  - `.github/instructions/gemini.instructions.md`
+- **Dependencies**: No additional dependencies required
+- **Instructions**: Standard `make pdf` workflow; no additional build steps required
+- **Notes**:
+  - All colors verified for correct RGB to Hex conversion
+  - Color scheme maintains sufficient contrast for readability
+  - Exercise boxes retain their separate color coding (green/blue/red for easy/medium/hard)
+  - Backwards compatible with existing content
+- **References**: Issue "Update github/gemini policies" - Color scheme specification
+- **Acknowledgements**: Color values from university/faculty branding guidelines
+- **New Color Definitions**:
+  - **Primary Colors** (existing, documented):
+    - Purple: RGB(60, 16, 83), Hex: #3C1053 - Main accents, links, theorem boxes
+    - Red: RGB(242, 18, 12), Hex: #F2120C - Citations and emphasis
+    - Black: RGB(0, 0, 0), Hex: #000000 - Standard text
+    - White: RGB(255, 255, 255), Hex: #FFFFFF - Background
+  - **Secondary Colors** (new):
+    - Law Purple: RGB(181, 24, 37), Hex: #B51825 - Faculty of Law and Business accent
+    - Warm Stone: RGB(145, 139, 131), Hex: #918B83 - Neutral accent for frames
+    - Deep Charcoal: RGB(48, 44, 42), Hex: #302C2A - Dark neutral for text variants
+    - Soft Ivory: RGB(242, 239, 235), Hex: #F2EFEB - Light background for boxes
+- **Color Usage Guidelines**:
+  - Primary colors for main structural elements
+  - Secondary colors for subtle accents and backgrounds
+  - Maintains professional academic appearance
+  - Enhanced visual hierarchy and document readability
+
+## [1.2.0] - 20 Oct 2025
+
+### Added
 - Enhanced theorem environment styling using keytheorems package
   - Implemented styled theorem boxes with colored backgrounds and frames
-  - Added "theorembox" style for theorems, lemmas, propositions, and corollaries (grey background with purple frame)
+  - Added "theorembox" style for theorems, lemmas, propositions, and corollaries (Soft Ivory background as of v1.3.0)
   - Added "definitionbox" style for definitions and examples (white background with left purple border)
   - Added "remarkbox" style for remarks (white background with subtle left border, italic text)
   - Added "proofbox" style for proofs (white background with top border, non-numbered)
@@ -19,9 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Colors match existing book theme (bookpurple, bookred) for consistency
 
 ### Technical Details (Theorem Styles)
-- **Version**: 1.2.0 (Enhanced Theorem Styles)
 - **Author**: GitHub Copilot
-- **Date**: 20 Oct 2025
 - **License**: CC BY 4.0
 - **Source**: `main.tex` (lines 129-330)
 - **Dependencies**: Added `keytheorems` package (requires recent TeX distribution with keytheorems support)
@@ -32,13 +83,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All existing theorem/definition/remark/lemma/corollary content will automatically use new styles
   - Proof environment added (non-numbered) for mathematical proofs
   - Maintains backward compatibility with existing content files
+  - **Updated in v1.3.0**: Theorem boxes now use Soft Ivory background instead of gray!12
 - **References**: Issue "Update LaTeX's theorem, proof, remark, corollary, lemma styles"
 - **Acknowledgements**: Style concept from TeX StackExchange (https://tex.stackexchange.com/questions/687560/theorem-style-format)
-- **Color Scheme**:
-  - Theorem boxes: Gray background (gray!12) with purple frame (bookpurple!80)
+- **Color Scheme** (as of v1.3.0):
+  - Theorem boxes: Soft Ivory background with purple frame (bookpurple!80)
   - Definition boxes: White background with purple left border (bookpurple!70)
-  - Remark boxes: White background with subtle gray left border (black!30)
-  - Proof boxes: White background with subtle gray top border (black!20)
+  - Remark boxes: White background with Warm Stone left border, Deep Charcoal header
+  - Proof boxes: White background with Warm Stone top border, Deep Charcoal header
 - **Styling Details**:
   - Box rules: 1pt for theorems, 4pt left rule for definitions, 2pt left rule for remarks
   - Padding: 8pt for theorems/definitions, 4pt for remarks/proofs
