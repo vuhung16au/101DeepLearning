@@ -3,16 +3,14 @@
 \section{Importance Sampling \difficultyInline{advanced}}
 \label{sec:importance-sampling}
 
-Sample from proposal $q(x)$ instead of target $p(x)$:
+Importance sampling is a variance reduction technique that allows us to estimate expectations under a target distribution $p(x)$ by sampling from a different, more convenient proposal distribution $q(x)$. The mathematical foundation is the importance sampling identity:
 \begin{equation}
 \mathbb{E}_{p}[f(x)] = \mathbb{E}_{q}\left[\frac{p(x)}{q(x)} f(x)\right] \approx \frac{1}{N} \sum_{i=1}^{N} \frac{p(x^{(i)})}{q(x^{(i)})} f(x^{(i)})
 \end{equation}
 
-\textbf{Effective when:}
-\begin{itemize}
-    \item $q$ is easy to sample from
-    \item $q$ has heavier tails than $p$
-\end{itemize}
+This equation shows that we can estimate the expectation under $p(x)$ by sampling from $q(x)$ and reweighting the samples by the importance weights $w(x) = \frac{p(x)}{q(x)}$. The key insight is that we can choose $q(x)$ to be easier to sample from than $p(x)$, as long as we account for the difference in probability mass through the importance weights.
+
+The method is most effective when the proposal distribution $q(x)$ is easy to sample from and has heavier tails than the target distribution $p(x)$, ensuring that the importance weights don't become too large and cause high variance in the estimator. In deep learning, importance sampling is particularly valuable for estimating gradients in reinforcement learning, where we need to compute expectations over policy distributions that may be difficult to sample from directly. It also plays a crucial role in training generative models, where we can use importance sampling to estimate intractable likelihoods and gradients more efficiently.
 
 
 % \subsection{Visual aids}

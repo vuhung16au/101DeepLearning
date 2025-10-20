@@ -3,6 +3,8 @@
 \section{Sampling and Monte Carlo Estimators \difficultyInline{advanced}}
 \label{sec:mc-estimators}
 
+These methods approximate complex expectations by drawing random samples and computing sample averages, providing a powerful framework for handling intractable integrals in high-dimensional spaces.
+
 \subsection{Monte Carlo Estimation}
 
 Approximate expectations using samples:
@@ -10,17 +12,15 @@ Approximate expectations using samples:
 \mathbb{E}_{p(x)}[f(x)] \approx \frac{1}{N} \sum_{i=1}^{N} f(x^{(i)}), \quad x^{(i)} \sim p(x)
 \end{equation}
 
-\textbf{Law of large numbers:} Estimate converges to true expectation as $N \to \infty$.
+This fundamental equation (17.1) states that we can approximate the expected value of any function $f(x)$ under distribution $p(x)$ by drawing $N$ independent samples $x^{(i)}$ from $p(x)$ and computing their average. The law of large numbers guarantees that this estimate converges to the true expectation as $N \to \infty$.
+
+In deep learning, Monte Carlo estimation enables us to approximate intractable expectations in Bayesian neural networks, where we need to compute expectations over the posterior distribution of network weights. This is particularly crucial for uncertainty quantification, where we estimate the expected prediction and its variance by sampling from the posterior distribution of model parameters.
 
 \subsection{Variance Reduction}
 
-Reduce variance of estimators:
+Variance reduction refers to techniques that decrease the statistical variance of Monte Carlo estimators without increasing the computational cost, leading to more accurate estimates with fewer samples. The goal is to design estimators that converge faster to the true expectation by exploiting structure in the problem or using clever sampling strategies.
 
-\textbf{Rao-Blackwellization:} Use conditional expectations
-
-\textbf{Control variates:} Subtract correlated zero-mean terms
-
-\textbf{Antithetic sampling:} Use negatively correlated samples
+Rao-Blackwellization leverages the power of conditional expectations by analytically computing expectations over some variables while sampling others, effectively reducing the dimensionality of the sampling problem. Control variates work by subtracting correlated zero-mean terms that are highly correlated with our estimator, effectively canceling out some of the variance. Antithetic sampling uses negatively correlated samples to create a form of variance cancellation, where high and low values tend to be paired together, reducing the overall variance of the estimator. These techniques are particularly valuable in deep learning when estimating gradients or expectations in high-dimensional parameter spaces, where naive sampling can be prohibitively expensive.
 
 
 % \subsection{Visual aids}

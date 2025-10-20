@@ -3,41 +3,47 @@
 \section{Markov Chain Monte Carlo \difficultyInline{advanced}}
 \label{sec:mcmc}
 
+MCMC methods construct dependent sequences of samples that eventually converge to the target distribution, enabling sampling from complex posterior distributions that cannot be sampled directly.
+
 \subsection{Markov Chains}
 
-Sequence where $p(x_t|x_{t-1}, \ldots, x_1) = p(x_t|x_{t-1})$.
+A Markov chain is a sequence of random variables where the future state depends only on the current state, not the entire history. This is captured by the Markov property: $p(x_t|x_{t-1}, \ldots, x_1) = p(x_t|x_{t-1})$, meaning the conditional distribution of $x_t$ given all previous states depends only on the immediate previous state $x_{t-1}$.
 
-\textbf{Stationary distribution:} $\pi(x)$ such that if $x_t \sim \pi$, then $x_{t+1} \sim \pi$.
+The stationary distribution $\pi(x)$ is a probability distribution such that if $x_t \sim \pi$, then $x_{t+1} \sim \pi$. This means that once the chain reaches the stationary distribution, it remains there, making it the target distribution we want to sample from.
+
+In deep learning, Markov chains are fundamental to understanding how MCMC algorithms explore the parameter space of neural networks. When we want to sample from the posterior distribution of network weights, we construct a Markov chain whose stationary distribution is exactly the posterior we're interested in. This enables us to explore the complex, high-dimensional space of neural network parameters and understand the uncertainty in our model predictions.
 
 \subsection{Metropolis-Hastings Algorithm}
 
-Sample from target distribution $p(x)$:
-\begin{enumerate}
-    \item Propose: $x' \sim q(x'|x_t)$
-    \item Accept with probability:
-    \begin{equation}
-    A(x', x_t) = \min\left(1, \frac{p(x')q(x_t|x')}{p(x_t)q(x'|x_t)}\right)
-    \end{equation}
-    \item If accepted, $x_{t+1} = x'$; otherwise $x_{t+1} = x_t$
-\end{enumerate}
+The Metropolis-Hastings algorithm is a general framework for sampling from any target distribution $p(x)$ using a proposal distribution $q(x'|x_t)$. The algorithm works by proposing new states and accepting or rejecting them based on a carefully designed acceptance probability.
+
+The mathematical foundation lies in the acceptance probability:
+\begin{equation}
+A(x', x_t) = \min\left(1, \frac{p(x')q(x_t|x')}{p(x_t)q(x'|x_t)}\right)
+\end{equation}
+
+This formula ensures that the resulting Markov chain has the correct stationary distribution by balancing the probability of moving from the current state to the proposed state with the probability of the reverse move. The algorithm proceeds by: (1) proposing a new state $x' \sim q(x'|x_t)$ from the proposal distribution, (2) computing the acceptance probability $A(x', x_t)$, (3) accepting the proposal with probability $A(x', x_t)$ or staying at the current state otherwise.
+
+In deep learning, Metropolis-Hastings enables sampling from the posterior distribution of neural network parameters, which is crucial for Bayesian neural networks. This allows us to quantify uncertainty in predictions by sampling multiple sets of weights from the posterior and computing prediction distributions, providing a principled way to understand model confidence and make robust decisions under uncertainty.
 
 \subsection{Gibbs Sampling}
 
-Special case where each variable updated conditionally:
+Gibbs sampling is a special case of Metropolis-Hastings where we update one variable at a time by sampling from its conditional distribution given all other variables. The mathematical foundation is captured by the update rule:
 \begin{equation}
 x_i^{(t+1)} \sim p(x_i | x_{-i}^{(t)})
 \end{equation}
 
-Simple when conditional distributions are tractable.
+This equation states that we sample the new value of variable $x_i$ from its conditional distribution given all other variables $x_{-i}$ at their current values. The algorithm cycles through all variables, updating each one in turn, which ensures that the resulting Markov chain has the correct stationary distribution.
+
+In deep learning, Gibbs sampling is particularly useful for Bayesian neural networks where we can sample individual parameters or groups of parameters from their conditional distributions. This approach is especially powerful when the conditional distributions are tractable, such as in conjugate models or when using variational approximations. Gibbs sampling enables efficient exploration of the posterior distribution of network parameters, allowing us to understand the uncertainty in different parts of the model and make more robust predictions.
 
 \subsection{Hamiltonian Monte Carlo}
 
-Uses gradient information for efficient exploration:
-\begin{itemize}
-    \item Treats parameters as position in physics simulation
-    \item Uses momentum for faster mixing
-    \item More efficient than random walk methods
-\end{itemize}
+Hamiltonian Monte Carlo (HMC) leverages gradient information to achieve more efficient exploration of the target distribution compared to random walk methods. The algorithm treats the parameters as positions in a physics simulation and introduces auxiliary momentum variables to guide the exploration.
+
+The mathematical foundation involves simulating Hamiltonian dynamics, where the total energy $H(x, p) = U(x) + K(p)$ consists of potential energy $U(x) = -\log p(x)$ (the negative log-probability) and kinetic energy $K(p) = \frac{1}{2}p^T M^{-1} p$ (where $M$ is the mass matrix). The algorithm alternates between sampling momentum from a Gaussian distribution and simulating the Hamiltonian dynamics to propose new states, which are then accepted or rejected based on the Metropolis criterion.
+
+In deep learning, HMC is particularly valuable for sampling from the posterior distribution of neural network parameters because it can efficiently navigate the complex, high-dimensional parameter space using gradient information. The momentum component allows the sampler to move more efficiently through the parameter space, avoiding the slow random walk behavior of traditional Metropolis-Hastings methods. This makes HMC especially useful for Bayesian neural networks where we need to explore the posterior distribution of weights to quantify uncertainty in predictions.
 
 
 % \subsection{Visual aids}

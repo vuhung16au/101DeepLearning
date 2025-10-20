@@ -3,23 +3,13 @@
 \section{Applications in Deep Learning \difficultyInline{advanced}}
 \label{sec:mc-applications}
 
-\textbf{Bayesian deep learning:}
-\begin{itemize}
-    \item Sample network weights
-    \item Uncertainty quantification
-\end{itemize}
+Monte Carlo methods have become indispensable tools in modern deep learning, enabling practitioners to handle uncertainty, explore complex parameter spaces, and train models that would otherwise be intractable. These applications span across multiple domains of machine learning, from Bayesian inference to reinforcement learning and generative modeling.
 
-\textbf{Reinforcement learning:}
-\begin{itemize}
-    \item Policy gradient estimation
-    \item Monte Carlo tree search
-\end{itemize}
+In Bayesian deep learning, Monte Carlo methods enable us to sample from the posterior distribution of network weights, providing a principled way to quantify uncertainty in predictions. Rather than learning a single set of parameters, we can sample multiple sets of weights from the posterior and compute prediction distributions, giving us confidence intervals and measures of model uncertainty that are crucial for safety-critical applications.
 
-\textbf{Generative models:}
-\begin{itemize}
-    \item Training energy-based models
-    \item Sampling from learned distributions
-\end{itemize}
+Reinforcement learning heavily relies on Monte Carlo methods for policy gradient estimation, where we need to compute expectations over trajectories and action distributions. Monte Carlo tree search, used in game-playing algorithms like AlphaGo, explores possible future states by sampling from the action space, enabling agents to make informed decisions in complex environments with large state spaces.
+
+Generative models benefit from Monte Carlo methods in training energy-based models, where we need to sample from complex distributions to estimate gradients and likelihoods. These methods also enable sampling from learned distributions, allowing us to generate new data points that follow the patterns learned by our models, which is essential for applications like image synthesis, text generation, and data augmentation.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (MC applications)}
