@@ -13,6 +13,91 @@ Dropout is like asking different subsets of a team to work on the same task on d
 
 Training with dropout involves sampling a binary mask $\vect{m}$ with $P(m_i = 1) = p$ for each layer at each training step, then applying the mask to the activations: $\vect{h} = \vect{m} \odot \vect{h}$. Mathematically, this is expressed as $\vect{h}_{\text{dropout}} = \vect{m} \odot f(\mat{W}\vect{x} + \vect{b})$ where $m_i \sim \text{Bernoulli}(p)$, effectively randomly deactivating neurons with probability $1-p$ during training to prevent co-adaptation and improve generalization.
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node/.style={circle, draw, thick},
+  ]
+
+  \def\layersep{2}
+  \def\nodesep{1.5}
+
+  % Input layer
+  \foreach \y in {1,...,5}{
+      \node[node] (i\y) at (0,\nodesep*\y) {};
+    }
+
+  % Hidden layer 1
+  \foreach \y in {1,...,5}{
+      \node[node] (h1\y) at (\layersep,\nodesep*\y) {};
+    }
+
+  % Hidden layer 2
+  \foreach \y in {1,...,5}{
+      \node[node] (h2\y) at (2*\layersep,\nodesep*\y) {};
+    }
+
+  % Output layer
+  \node[node] (o1) at (3*\layersep,\nodesep*2) {};
+  \node[node] (o2) at (3*\layersep,\nodesep*4) {};
+
+  % Connections
+  \foreach \source in {1,...,5}
+  \foreach \dest in {1,...,5}{
+      \path[-stealth, thick] (i\source) edge (h1\dest);
+      \path[-stealth, thick] (h1\source) edge (h2\dest);
+    }
+  \foreach \source in {1,...,5}
+  \foreach \dest in {1,2}
+  \draw[-stealth, thick] (h2\source) -- (o\dest);
+
+  % Dropout arrow
+  \draw[-stealth, thick] (7.5,3*\nodesep) -- node[above,font=\Large\bfseries] {dropout} (9.5, 3*\nodesep);
+
+  % After dropout - Input layer
+  \foreach \y in {1,...,5}
+  \node[node] (di\y) at (10,\nodesep*\y) {};
+
+  \node[red,font=\huge] at (di1) {$\times$};
+  \node[red,font=\huge] at (di3) {$\times$};
+
+  % After dropout - Hidden layer 1
+  \foreach \y in {1,...,5}
+  \node[node] (dh1\y) at (10+\layersep,\nodesep*\y) {};
+
+  \node[red,font=\huge] at (dh11) {$\times$};
+  \node[red,font=\huge] at (dh13) {$\times$};
+  \node[red,font=\huge] at (dh14) {$\times$};
+
+  % After dropout - Hidden layer 2
+  \foreach \y in {1,...,5}
+  \node[node] (dh2\y) at (10+2*\layersep,\nodesep*\y) {};
+
+  \node[red,font=\huge] at (dh22) {$\times$};
+  \node[red,font=\huge] at (dh24) {$\times$};
+
+  % After dropout - Output layer
+  \node[node] (do1) at (10+3*\layersep,\nodesep*2) {};
+  \node[node] (do2) at (10+3*\layersep,\nodesep*4) {};
+
+  % After dropout connections
+  \foreach \source in {2,4,5}
+  \foreach \dest in {2,5}
+  \draw[-stealth, thick] (di\source) -- (dh1\dest);
+
+  \foreach \source in {2,5}
+  \foreach \dest in {1,3,5}
+  \draw[-stealth, thick] (dh1\source) -- (dh2\dest);
+
+  \foreach \source in {1,3,5}
+  \foreach \dest in {1,2}
+  \draw[-stealth, thick] (dh2\source) -- (do\dest);
+
+\end{tikzpicture}
+\caption{Dropout training process: randomly deactivating neurons (marked with $\times$) creates different subnetworks during each training step, forcing the network to learn robust representations that don't rely on specific neurons.}
+\label{fig:dropout-training-process}
+\end{figure}
+
 \subsection{Inference}
 
 At test time, scale outputs by dropout probability:
