@@ -35,13 +35,7 @@ Average pooling computes the mean value across each pooling region, providing a 
 
 \subsection{Global Pooling}
 
-Pools over entire spatial dimensions:
-\begin{itemize}
-    \item \textbf{Global Average Pooling (GAP):} average over all spatial locations
-    \item \textbf{Global Max Pooling:} maximum over all spatial locations
-\end{itemize}
-
-Useful for reducing parameters before fully connected layers and for connecting convolutional backbones to classification heads (e.g., GAP before softmax).
+Global pooling operates over entire spatial dimensions. \textbf{Global Average Pooling (GAP)} computes the average over all spatial locations, while \textbf{Global Max Pooling} takes the maximum over all spatial locations. These operations are useful for reducing parameters before fully connected layers and for connecting convolutional backbones to classification heads (e.g., GAP before softmax).
 
 \paragraph{Note.} Global average pooling (GAP) can replace large fully connected layers by averaging each feature map to a single scalar, reducing overfitting and parameter count \cite{GoodfellowEtAl2016}.
 
@@ -52,11 +46,7 @@ Instead of a non-learned pooling operator, a convolution with stride $s>1$ perfo
 \begin{equation}
 H' = \left\lfloor \frac{H - k + 2p}{s} \right\rfloor + 1,\quad W' = \left\lfloor \frac{W - k + 2p}{s} \right\rfloor + 1.
 \end{equation}
-Pros and cons:
-\begin{itemize}
-    \item \textbf{Pros:} learnable, can combine feature extraction and downsampling in one step; used in stage transitions of ResNet\index{ResNet} \cite{He2016}.
-    \item \textbf{Cons:} may introduce aliasing if high-frequency content is not low-pass filtered prior to sub-sampling; anti-aliasing variants blur before stride.
-\end{itemize}
+This approach offers several advantages: it is learnable and can combine feature extraction with downsampling in one step, as used in stage transitions of ResNet\index{ResNet} \cite{He2016}. However, it may introduce aliasing if high-frequency content is not low-pass filtered prior to sub-sampling. Anti-aliasing variants address this by applying blur before stride.
 
 \paragraph{Example.} A $3\times3$ convolution with stride $2$ and padding $1$ keeps spatial size roughly halved (e.g., $32\to16$) while learning filters.
 

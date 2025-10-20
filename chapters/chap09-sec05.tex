@@ -37,11 +37,8 @@ Depthwise separable convolution factors standard convolution into depthwise (per
 Batch normalization \cite{Ioffe2015} and ReLU-family activations improve optimization and generalization by smoothing the loss landscape and mitigating covariate shift.
 
 \subsection{Other Useful Variants}
-\begin{itemize}
-    \item \textbf{Group/Layer Normalization:} alternatives when batch sizes are small.
-    \item \textbf{Dilated Convolutions:} expand receptive field without pooling; effective in segmentation.
-    \item \textbf{Anti-aliased Downsampling:} blur pooling or low-pass before stride to reduce aliasing artifacts in features.
-\end{itemize}
+
+\textbf{Group and Layer Normalisation} provide alternatives to batch normalisation when batch sizes are small. \textbf{Dilated Convolutions} expand the receptive field without pooling, making them particularly effective in segmentation tasks. \textbf{Anti-aliased Downsampling} applies blur pooling or low-pass filtering before stride operations to reduce aliasing artefacts in features.
 
 % \subsection*{Key Takeaways}
 % \begin{itemize}

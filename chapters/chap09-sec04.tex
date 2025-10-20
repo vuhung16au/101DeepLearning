@@ -9,43 +9,24 @@ Backbones of stacked convolutions extract spatially local features that become i
 
 \textbf{Task:} assign a label to the entire image.
 
-\textbf{Backbone + head:}
-\begin{itemize}
-    \item Convolutional backbone extracts hierarchical features.
-    \item Downsampling via pooling or strided convolutions.
-    \item Global average pooling and a small fully connected (or $1\times1$ conv) layer with softmax.
-\end{itemize}
+\textbf{Backbone + head:} the architecture combines a convolutional backbone that extracts hierarchical features with downsampling via pooling or strided convolutions. This is followed by global average pooling and a small fully connected (or $1\times1$ conv) layer with softmax.
 
-\textbf{Examples and datasets:} CIFAR-10/100, ImageNet (ILSVRC). Transfer learning from ImageNet pretraining commonly improves downstream tasks.
+\textbf{Examples and datasets:} common benchmarks include CIFAR-10/100 and ImageNet (ILSVRC). Transfer learning from ImageNet pretraining commonly improves downstream tasks.
 
 \subsection{Object Detection}
 
-\textbf{Task:} localize and classify objects with bounding boxes.
+\textbf{Task:} localise and classify objects with bounding boxes.
 
-\textbf{Region-based (two-stage):}
-\begin{itemize}
-    \item R-CNN: region proposals + CNN features (slow).
-    \item Fast/Faster R-CNN: integrate feature extraction; Faster learns proposals (RPN).
-    \item Mask R-CNN: extends with an instance segmentation branch.
-\end{itemize}
+\textbf{Region-based (two-stage):} R-CNN uses region proposals combined with CNN features, though it is slow. Fast R-CNN and Faster R-CNN integrate feature extraction more efficiently, with Faster R-CNN learning proposals through its Region Proposal Network (RPN). Mask R-CNN extends this framework with an instance segmentation branch.
 
-\textbf{Single-shot (one-stage):}
-\begin{itemize}
-    \item YOLO: dense predictions at multiple scales with real-time speed.
-    \item SSD: default boxes across feature maps; efficient multi-scale detection.
-\end{itemize}
+\textbf{Single-shot (one-stage):} YOLO performs dense predictions at multiple scales with real-time speed, whilst SSD uses default boxes across feature maps for efficient multi-scale detection.
 
-\textbf{Heads and losses:} classification (cross-entropy/focal loss), box regression (smooth-$\ell_1$ or IoU losses), non-maximum suppression (NMS) at inference.
+\textbf{Heads and losses:} these architectures employ classification losses (cross-entropy or focal loss), box regression losses (smooth-$\ell_1$ or IoU losses), and non-maximum suppression (NMS) at inference.
 
 \subsection{Semantic Segmentation}
 
 \textbf{Task:} assign a class label to each pixel.
 
-\textbf{Architectures:}
-\begin{itemize}
-    \item FCN: replace dense layers with $1\times1$ convs and upsample (deconvolution) to input resolution.
-    \item U-Net: encoder-decoder with skip connections for precise localization; widely used in medical imaging \cite{Ronneberger2015}.
-    \item Atrous/dilated convolutions: enlarge receptive field without losing resolution.
-\end{itemize}
+\textbf{Architectures:} Fully Convolutional Networks (FCN) replace dense layers with $1\times1$ convolutions and upsample (via deconvolution) to input resolution. U-Net employs an encoder-decoder architecture with skip connections for precise localisation, making it widely used in medical imaging \cite{Ronneberger2015}. Atrous or dilated convolutions enlarge the receptive field without losing resolution.
 
-\textbf{Losses and metrics:} pixel-wise cross-entropy, Dice/IoU; mIoU for evaluation.
+\textbf{Losses and metrics:} typical losses include pixel-wise cross-entropy and Dice or IoU losses, whilst mean IoU (mIoU) serves as the standard evaluation metric.
