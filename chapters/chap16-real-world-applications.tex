@@ -8,49 +8,23 @@ Structured probabilistic models capture dependencies and uncertainties in comple
 
 \subsection{Autonomous Vehicle Decision Making}
 
-Safe navigation requires reasoning about uncertainties:
-
-\begin{itemize}
-    \item \textbf{Predicting pedestrian behavior:} Will that person step into the street or wait? Probabilistic models capture uncertainty about pedestrian intentions based on their position, posture, and gaze direction. The vehicle uses these probability distributions to make conservative decisions—slowing down when a pedestrian might cross, rather than assuming they won't.
-    
-    \item \textbf{Sensor fusion with uncertainty:} Self-driving cars combine cameras, radar, and lidar, each with different strengths and noise characteristics. Probabilistic graphical models integrate these sensors, weighing each according to reliability in current conditions (cameras work poorly in fog; radar penetrates fog better). This provides robust perception despite individual sensor limitations.
-    
-    \item \textbf{Planning under uncertainty:} Routes to destinations involve uncertain travel times due to traffic, weather, and road conditions. Structured probabilistic models help vehicles plan routes considering these uncertainties, balancing expected arrival time with reliability and providing realistic time estimates.
-\end{itemize}
+Autonomous vehicle decision making requires reasoning about uncertainties in complex environments, where predicting pedestrian behavior involves capturing uncertainty about pedestrian intentions based on their position, posture, and gaze direction, enabling the vehicle to make conservative decisions by slowing down when a pedestrian might cross rather than assuming they won't. Sensor fusion with uncertainty combines cameras, radar, and lidar data using probabilistic graphical models that weigh each sensor according to reliability in current conditions, where cameras work poorly in fog while radar penetrates fog better, providing robust perception despite individual sensor limitations. Planning under uncertainty involves route planning that considers uncertain travel times due to traffic, weather, and road conditions, where structured probabilistic models help vehicles balance expected arrival time with reliability and provide realistic time estimates.
 
 \subsection{Medical Diagnosis and Treatment}
 
-Healthcare requires careful uncertainty quantification:
-
-\begin{itemize}
-    \item \textbf{Bayesian diagnosis systems:} Medical diagnosis involves uncertainty—symptoms might indicate multiple diseases with different probabilities. Structured probabilistic models encode relationships between symptoms, diseases, and test results, computing probability distributions over possible diagnoses. This helps doctors order appropriate tests and consider differential diagnoses systematically.
-    
-    \item \textbf{Personalized treatment planning:} Cancer treatment response varies by patient. Probabilistic models integrate genetic markers, tumor characteristics, and treatment histories to estimate probability distributions over treatment outcomes. Doctors use these to discuss risks and benefits with patients, making informed shared decisions about treatment options.
-    
-    \item \textbf{Drug interaction modeling:} Patients taking multiple medications face interaction risks. Structured models capture dependencies between drugs, considering individual patient factors (age, kidney function, genetics) to estimate risk probabilities. This enables safer prescribing, especially for elderly patients on many medications.
-\end{itemize}
+Medical diagnosis and treatment require careful uncertainty quantification, where Bayesian diagnosis systems handle the uncertainty inherent in medical diagnosis by encoding relationships between symptoms, diseases, and test results using structured probabilistic models that compute probability distributions over possible diagnoses, helping doctors order appropriate tests and consider differential diagnoses systematically. Personalized treatment planning uses probabilistic models that integrate genetic markers, tumor characteristics, and treatment histories to estimate probability distributions over treatment outcomes, where doctors use these estimates to discuss risks and benefits with patients, enabling informed shared decisions about treatment options. Drug interaction modeling addresses the risks faced by patients taking multiple medications by using structured models that capture dependencies between drugs while considering individual patient factors like age, kidney function, and genetics to estimate risk probabilities, enabling safer prescribing especially for elderly patients on many medications.
 
 \subsection{Natural Language Understanding}
 
-Language has inherent ambiguity and structure:
+Natural language understanding involves handling the inherent ambiguity and structure of language, where machine translation quality uses probabilistic models to capture ambiguity in words that have multiple possible translations depending on context, with structured models representing sentence structure helping to select appropriate translations and providing confidence estimates for different interpretations, enabling highlighting of uncertain translations for human review. Information extraction requires understanding relationships between entities to extract structured information about who did what to whom, when, and where, where probabilistic graphical models capture these dependencies and provide uncertainty estimates about extracted information, enabling news aggregators to reconcile potentially conflicting reports from multiple sources. Voice assistant intent recognition handles ambiguous queries like "Book a table for two" that could mean restaurant reservations or furniture arrangements, where structured models use conversation context and user history to estimate intent probabilities, asking clarifying questions when uncertainty is high rather than guessing incorrectly.
 
-\begin{itemize}
-    \item \textbf{Machine translation quality:} Translation systems use probabilistic models to capture ambiguity—words have multiple possible translations depending on context. Structured models representing sentence structure help select appropriate translations, providing confidence estimates for different interpretations. This enables highlighting uncertain translations for human review.
-    
-    \item \textbf{Information extraction:} Extracting structured information (who did what to whom, when, where) from text requires understanding relationships between entities. Probabilistic graphical models capture these dependencies, providing uncertainty estimates about extracted information. News aggregators use these to reconcile potentially conflicting reports from multiple sources.
-    
-    \item \textbf{Voice assistant intent recognition:} "Book a table for two" could mean restaurant reservations or furniture arrangements. Structured models use conversation context and user history to estimate intent probabilities, asking clarifying questions when uncertainty is high rather than guessing incorrectly.
-\end{itemize}
+\subsection{Social Media Network Analysis}
+
+Social media networks provide rich examples of how deep learning and graph neural networks are applied to understand complex social structures and behaviors. In social media platforms like Facebook, Twitter, and LinkedIn, GNNs are used to model user interactions, content propagation, and community detection, where the graph structure represents users as nodes and relationships like friendships, follows, or interactions as edges. These models can predict user behavior, identify influential users, detect fake news propagation, and recommend relevant content by learning representations that capture both individual user characteristics and their position within the social network structure.
 
 \subsection{Value of Structured Models}
 
-Why explicit structure matters:
-\begin{itemize}
-    \item \textbf{Interpretability:} Model structure reflects domain knowledge and causal relationships
-    \item \textbf{Uncertainty quantification:} Provides principled probability estimates
-    \item \textbf{Data efficiency:} Structure reduces parameters and sample complexity
-    \item \textbf{Reasoning:} Enables inference, prediction, and decision-making under uncertainty
-\end{itemize}
+Structured models provide several key advantages including interpretability where the model structure reflects domain knowledge and causal relationships, enabling users to understand how the model makes decisions and what factors influence the predictions. Uncertainty quantification provides principled probability estimates that are crucial for decision-making in high-stakes applications, where knowing not just what the model predicts but how confident it is in that prediction can be the difference between success and failure. Data efficiency is achieved through structure that reduces parameters and sample complexity, where the explicit modeling of dependencies allows the model to learn more effectively from limited data. Reasoning capabilities enable inference, prediction, and decision-making under uncertainty, where the structured approach allows the model to handle complex scenarios that would be difficult for unstructured models.
 
 These applications show how structured probabilistic models provide principled frameworks for dealing with uncertainty in safety-critical and high-stakes applications.
 

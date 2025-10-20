@@ -3,38 +3,19 @@
 \section{Graphical Models \difficultyInline{advanced}}
 \label{sec:graphical-models}
 
+Graphical models provide a powerful framework for representing complex probability distributions using graph structures, where nodes represent random variables and edges encode probabilistic dependencies, enabling efficient representation and inference in high-dimensional spaces.
+
 \subsection{Motivation}
 
-Graphical models represent complex probability distributions using graphs:
-\begin{itemize}
-    \item Nodes: Random variables
-    \item Edges: Probabilistic dependencies
-\end{itemize}
+Graphical models represent complex probability distributions using graphs, where nodes represent random variables and edges encode probabilistic dependencies, enabling the efficient representation of high-dimensional joint distributions through factorization. This approach is particularly valuable in deep learning because it allows us to encode domain knowledge and structural assumptions directly into the model, where the graph structure provides inductive biases that guide the learning process and improve generalization. The graphical representation makes the model more interpretable by explicitly showing which variables interact and how, where this transparency is crucial for understanding model behavior and debugging complex systems. Furthermore, graphical models enable efficient inference by exploiting the conditional independence structure encoded in the graph, where this computational efficiency is essential for practical applications with large-scale data.
 
 \subsection{Bayesian Networks}
 
-\textbf{Directed acyclic graphs} (DAGs) represent conditional dependencies:
-\begin{equation}
-p(\vect{x}) = \prod_{i=1}^{n} p(x_i | \text{Pa}(x_i))
-\end{equation}
-
-where $\text{Pa}(x_i)$ are parents of $x_i$.
-
-\textbf{Example:} Naive Bayes classifier
-\begin{equation}
-p(y, \vect{x}) = p(y) \prod_{i=1}^{d} p(x_i|y)
-\end{equation}
+Bayesian networks use directed acyclic graphs (DAGs) to represent conditional dependencies, where the joint probability distribution factorizes as $p(\vect{x}) = \prod_{i=1}^{n} p(x_i | \text{Pa}(x_i))$ with $\text{Pa}(x_i)$ being the parents of $x_i$. In deep learning, Bayesian networks are particularly useful for modeling causal relationships and incorporating domain knowledge, where the directed structure allows for natural representation of cause-effect relationships that can guide the learning process. The Naive Bayes classifier exemplifies this approach with $p(y, \vect{x}) = p(y) \prod_{i=1}^{d} p(x_i|y)$, where the assumption of feature independence given the class enables efficient learning and inference, making it a fundamental building block for more complex graphical models in deep learning applications.
 
 \subsection{Markov Random Fields}
 
-\textbf{Undirected graphs} with potential functions:
-\begin{equation}
-p(\vect{x}) = \frac{1}{Z} \prod_{c \in \mathcal{C}} \psi_c(\vect{x}_c)
-\end{equation}
-
-where $\mathcal{C}$ are cliques and $Z$ is the partition function.
-
-\textbf{Example:} Ising model, Conditional Random Fields (CRFs)
+Markov Random Fields use undirected graphs with potential functions, where the joint probability distribution is given by $p(\vect{x}) = \frac{1}{Z} \prod_{c \in \mathcal{C}} \psi_c(\vect{x}_c)$ with $\mathcal{C}$ being cliques and $Z$ the partition function. In deep learning, Markov Random Fields are particularly valuable for modeling symmetric relationships and spatial dependencies, where the undirected structure allows for natural representation of mutual influences between variables without imposing causal directionality. Examples like the Ising model and Conditional Random Fields (CRFs) demonstrate how MRFs can capture complex spatial and temporal dependencies in data, where CRFs are widely used in sequence labeling tasks like named entity recognition and part-of-speech tagging, enabling the model to consider the context of neighboring labels when making predictions.
 
 
 % \subsection{Visual aids}

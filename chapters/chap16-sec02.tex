@@ -3,21 +3,15 @@
 \section{Inference in Graphical Models \difficultyInline{advanced}}
 \label{sec:inference}
 
+Inference in graphical models involves computing marginal probabilities and conditional distributions from the joint distribution, where the goal is to answer queries about the model's behavior given observed evidence, enabling prediction and decision-making in complex probabilistic systems.
+
 \subsection{Exact Inference}
 
-\textbf{Variable elimination:} Marginalize variables sequentially
-
-\textbf{Belief propagation:} Message passing on tree-structured graphs
-
-Complexity exponential in tree-width, often intractable.
+Exact inference methods compute exact marginal probabilities and conditional distributions, where variable elimination marginalizes variables sequentially by summing over their possible values, while belief propagation uses message passing on tree-structured graphs to efficiently compute marginals. The complexity of exact inference grows exponentially with the tree-width of the graph, making it often intractable for large, densely connected models, where this computational bottleneck motivates the need for approximate inference methods in practical applications. Despite their computational limitations, exact inference methods provide valuable theoretical foundations and are essential for understanding the structure of probabilistic models, where they serve as benchmarks for evaluating the quality of approximate methods.
 
 \subsection{Approximate Inference}
 
-\textbf{Variational inference:} Optimize tractable approximation (Chapter 19)
-
-\textbf{Sampling methods:} Monte Carlo approaches (Chapter 17)
-
-\textbf{Loopy belief propagation:} Approximate inference on graphs with cycles
+Approximate inference methods provide computationally tractable alternatives to exact inference, where variational inference optimizes a tractable approximation to the true posterior distribution by minimizing the KL divergence between the approximation and the target distribution. Sampling methods use Monte Carlo approaches to approximate expectations and marginal probabilities by drawing samples from the distribution, where these methods are particularly useful for high-dimensional models where exact inference is intractable. Loopy belief propagation extends belief propagation to graphs with cycles by iteratively passing messages until convergence, where this approach provides approximate solutions for complex graphical models that would otherwise be computationally intractable.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (inference)}
