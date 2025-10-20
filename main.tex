@@ -89,10 +89,17 @@
 \usepackage{eso-pic}
 
 % --- Custom Color Scheme ---
-\definecolor{bookpurple}{RGB}{60,16,83}
-\definecolor{bookred}{RGB}{242,18,12}
-\definecolor{bookblack}{RGB}{0,0,0}
-\definecolor{bookwhite}{RGB}{255,255,255}
+% Primary Colors
+\definecolor{bookpurple}{RGB}{60,16,83}      % Main purple accent (Hex: #3C1053)
+\definecolor{bookred}{RGB}{242,18,12}        % Red for citations (Hex: #F2120C)
+\definecolor{bookblack}{RGB}{0,0,0}          % Standard black (Hex: #000000)
+\definecolor{bookwhite}{RGB}{255,255,255}    % Standard white (Hex: #FFFFFF)
+
+% Secondary Colors
+\definecolor{lawpurple}{RGB}{181,24,37}      % Faculty of Law and Business (Hex: #B51825)
+\definecolor{warmstone}{RGB}{145,139,131}    % Warm Stone neutral (Hex: #918B83)
+\definecolor{deepcharcoal}{RGB}{48,44,42}    % Deep Charcoal dark neutral (Hex: #302C2A)
+\definecolor{softivory}{RGB}{242,239,235}    % Soft Ivory light background (Hex: #F2EFEB)
 
 % --- Tables and Lists ---
 \usepackage{booktabs}
@@ -134,13 +141,15 @@
   title={\bfseries Summary~\thetcbcounter},
   enhanced,
   drop shadow={black!50!white},
-  coltitle=black,
+  coltitle=deepcharcoal,
+  colback=softivory,
+  colframe=warmstone,
   top=0.3in,
   attach boxed title to top left={
     xshift=1.5em,
     yshift=-\tcboxedtitleheight/2
   },
-  boxed title style={size=small,colback=pink},
+  boxed title style={size=small,colback=lawpurple,coltitle=white},
   #1
 }
 
@@ -149,13 +158,15 @@
   title={\bfseries Key Takeaways~\thetcbcounter},
   enhanced,
   drop shadow={black!50!white},
-  coltitle=black,
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=bookpurple,
   top=0.3in,
   attach boxed title to top left={
     xshift=1.5em,
     yshift=-\tcboxedtitleheight/2
   },
-  boxed title style={size=small,colback=yellow!50},
+  boxed title style={size=small,colback=bookpurple,coltitle=white},
   #1
 }
 
@@ -169,7 +180,7 @@
 \newtcolorbox{exercisebox}[1][easy]{
   enhanced,
   colback=#1color,
-  colframe=black!20,
+  colframe=warmstone,
   boxrule=0.5pt,
   arc=3pt,
   left=5pt,
@@ -210,7 +221,7 @@
 % --- Theorem Environments ---
 % Define colors for theorem boxes (matching book color scheme)
 \colorlet{theoremblue}{bookpurple!80}
-\colorlet{theoremgray}{gray!12}
+\colorlet{theoremgray}{softivory}
 \colorlet{definitionblue}{bookpurple!70}
 
 % Define theorem box style (for theorems, lemmas, propositions, corollaries)
@@ -259,7 +270,7 @@
 % Define remark style (subtle, minimal styling)
 \newkeytheoremstyle{remarkbox}
   {
-    headfont=\bfseries\sffamily\color{black!70},
+    headfont=\bfseries\sffamily\color{deepcharcoal},
     bodyfont=\normalfont\itshape,
     noteseparator={ --- },
     notebraces={}{},
@@ -267,7 +278,7 @@
     tcolorbox-no-titlebar=
       {
         colback=white,
-        colframe=black!30,
+        colframe=warmstone,
         sharp corners,
         boxrule=0pt,
         leftrule=2pt,
@@ -281,7 +292,7 @@
 % Define proof style
 \newkeytheoremstyle{proofbox}
   {
-    headfont=\bfseries\sffamily\color{black!70},
+    headfont=\bfseries\sffamily\color{deepcharcoal},
     bodyfont=\normalfont,
     noteseparator={ --- },
     notebraces={}{},
@@ -289,7 +300,7 @@
     tcolorbox-no-titlebar=
       {
         colback=white,
-        colframe=black!20,
+        colframe=warmstone!50,
         sharp corners,
         boxrule=0pt,
         toprule=0.5pt,
@@ -406,9 +417,13 @@
 \usepackage{fontawesome}
 
 % Define colors for learning objectives
-\definecolor{objbg}{RGB}{248,249,250}
-\definecolor{objborder}{RGB}{74,144,226}
-\definecolor{objtext}{RGB}{33,37,41}
+\definecolor{objbg}{RGB}{248,249,250}     % Light background (legacy)
+\definecolor{objborder}{RGB}{74,144,226}  % Blue border (legacy)
+\definecolor{objtext}{RGB}{33,37,41}      % Dark text (legacy)
+% Use new color scheme for learning objectives
+\colorlet{objbg}{softivory}
+\colorlet{objborder}{bookpurple}
+\colorlet{objtext}{deepcharcoal}
 
 % Custom command for individual objectives
 \newcommand{\objective}[1]{%
