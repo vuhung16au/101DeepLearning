@@ -3,36 +3,23 @@
 \section{Variational Autoencoders \difficultyInline{intermediate}}
 \label{sec:vae}
 
+Variational Autoencoders (VAEs) are probabilistic generative models that learn to encode data into a latent space and generate new samples by combining the encoder-decoder architecture with variational inference techniques.
+
 \subsection{Probabilistic Framework}
 
-VAE is a generative model:
-\begin{align}
-p(\vect{x}) &= \int p(\vect{x}|\vect{z}) p(\vect{z}) d\vect{z} \\
-p(\vect{z}) &= \mathcal{N}(\boldsymbol{0}, \mat{I}) \\
-p(\vect{x}|\vect{z}) &= \mathcal{N}(\vect{x}; \boldsymbol{\mu}_{\theta}(\vect{z}), \boldsymbol{\sigma}^2_{\theta}(\vect{z})\mat{I})
-\end{align}
+VAE is a generative model with the marginal likelihood $p(\vect{x}) = \int p(\vect{x}|\vect{z}) p(\vect{z}) d\vect{z}$, where the prior $p(\vect{z}) = \mathcal{N}(\boldsymbol{0}, \mat{I})$ is a standard normal distribution and the likelihood $p(\vect{x}|\vect{z}) = \mathcal{N}(\vect{x}; \boldsymbol{\mu}_{\theta}(\vect{z}), \boldsymbol{\sigma}^2_{\theta}(\vect{z})\mat{I})$ is parameterized by neural networks that output the mean and variance of the reconstruction distribution.
 
 \subsection{Evidence Lower Bound (ELBO)}
 
-Cannot directly maximize $\log p(\vect{x})$. Instead maximize ELBO:
-\begin{equation}
-\mathcal{L} = \mathbb{E}_{q(\vect{z}|\vect{x})}[\log p(\vect{x}|\vect{z})] - D_{KL}(q(\vect{z}|\vect{x}) \| p(\vect{z}))
-\end{equation}
-
-where $q(\vect{z}|\vect{x}) = \mathcal{N}(\vect{z}; \boldsymbol{\mu}_{\phi}(\vect{x}), \boldsymbol{\sigma}^2_{\phi}(\vect{x})\mat{I})$ is the encoder.
+Since we cannot directly maximize $\log p(\vect{x})$, we instead maximize the ELBO $\mathcal{L} = \mathbb{E}_{q(\vect{z}|\vect{x})}[\log p(\vect{x}|\vect{z})] - D_{KL}(q(\vect{z}|\vect{x}) \| p(\vect{z}))$, where the first term encourages accurate reconstruction and the second term regularizes the encoder distribution $q(\vect{z}|\vect{x}) = \mathcal{N}(\vect{z}; \boldsymbol{\mu}_{\phi}(\vect{x}), \boldsymbol{\sigma}^2_{\phi}(\vect{x})\mat{I})$ to match the prior.
 
 \subsection{Reparameterization Trick}
 
-To backpropagate through sampling:
-\begin{equation}
-\vect{z} = \boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})
-\end{equation}
-
-Enables end-to-end gradient-based training.
+The reparameterization trick enables backpropagation through sampling by expressing the latent variable as $\vect{z} = \boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}$ where $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$, allowing gradients to flow through the deterministic transformation while maintaining the stochastic nature of the sampling process.
 
 \subsection{Generation}
 
-Sample from prior $\vect{z} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$ and decode to generate new data.
+Generation in VAEs involves sampling from the prior $\vect{z} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$ and decoding to generate new data, where the decoder network learns to map latent samples to realistic data samples by training on the reconstruction task. This process enables the generation of new samples that follow the learned data distribution, where the quality of generated samples depends on how well the model has learned to capture the underlying data structure and the effectiveness of the latent space representation. The generation process is particularly powerful because it allows for controlled sampling and interpolation in the latent space, enabling the creation of new data points that maintain the statistical properties of the training data while potentially exploring new combinations of learned features.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (VAE)}
@@ -50,6 +37,28 @@ Sample from prior $\vect{z} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$ and decod
 %   \label{fig:vae-latent}
 % \end{figure}
 
+\begin{algorithm}[htbp]
+\caption{Variational Autoencoder Training Algorithm}
+\label{alg:vae-training}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Dataset $\mathcal{D} = \{\vect{x}^{(i)}\}_{i=1}^{N}$, learning rate $\alpha$
+\State Initialize encoder parameters $\phi$ and decoder parameters $\theta$
+\For{epoch = 1 to max\_epochs}
+    \For{batch $\mathcal{B} \subset \mathcal{D}$}
+        \State Compute encoder outputs: $\boldsymbol{\mu}_{\phi}(\vect{x})$, $\boldsymbol{\sigma}_{\phi}(\vect{x})$
+        \State Sample $\boldsymbol{\epsilon} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$
+        \State Reparameterize: $\vect{z} = \boldsymbol{\mu}_{\phi}(\vect{x}) + \boldsymbol{\sigma}_{\phi}(\vect{x}) \odot \boldsymbol{\epsilon}$
+        \State Compute decoder outputs: $\boldsymbol{\mu}_{\theta}(\vect{z})$, $\boldsymbol{\sigma}_{\theta}(\vect{z})$
+        \State Compute reconstruction loss: $\mathcal{L}_{rec} = \mathbb{E}_{q(\vect{z}|\vect{x})}[\log p(\vect{x}|\vect{z})]$
+        \State Compute KL divergence: $\mathcal{L}_{KL} = D_{KL}(q(\vect{z}|\vect{x}) \| p(\vect{z}))$
+        \State Total loss: $\mathcal{L} = \mathcal{L}_{rec} - \mathcal{L}_{KL}$
+        \State Update parameters: $\phi \leftarrow \phi - \alpha \nabla_{\phi} \mathcal{L}$, $\theta \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}$
+    \EndFor
+\EndFor
+\State \textbf{Return} trained encoder $q(\vect{z}|\vect{x})$ and decoder $p(\vect{x}|\vect{z})$
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Notes and references}
 
-VAEs provide a principled probabilistic framework for representation learning and generation \textcite{Kingma2013,GoodfellowEtAl2016,Prince2023}.
+VAEs provide a principled probabilistic framework for representation learning and generation, representing a significant milestone in generative modeling that combines the power of neural networks with variational inference techniques. The work by Kingma and Welling in 2013 introduced the reparameterization trick that made VAEs trainable, while subsequent research has extended VAEs to various domains including image generation, text modeling, and molecular design. These models have achieved remarkable success in applications ranging from image compression and denoising to drug discovery and creative applications, demonstrating their versatility and practical impact in modern machine learning systems.

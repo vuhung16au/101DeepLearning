@@ -3,31 +3,73 @@
 \section{Undercomplete Autoencoders \difficultyInline{intermediate}}
 \label{sec:undercomplete-ae}
 
+Undercomplete autoencoders are neural networks with a bottleneck architecture that forces the model to learn compressed representations by constraining the latent space to have fewer dimensions than the input space.
+
 \subsection{Architecture}
 
-An autoencoder consists of:
-\begin{itemize}
-    \item \textbf{Encoder:} $\vect{h} = f(\vect{x})$ maps input to latent representation
-    \item \textbf{Decoder:} $\hat{\vect{x}} = g(\vect{h})$ reconstructs from latent code
-\end{itemize}
+An autoencoder consists of an encoder $\vect{h} = f(\vect{x})$ that maps input to latent representation and a decoder $\hat{\vect{x}} = g(\vect{h})$ that reconstructs from latent code, where the encoder compresses the input data into a lower-dimensional representation and the decoder attempts to reconstruct the original input from this compressed representation. Autoencoders differ from PCA in that they can learn non-linear transformations and capture complex patterns in the data, while PCA is limited to linear transformations, making autoencoders more powerful for handling non-linear data structures. Shannon's Information Theory is relevant to autoencoders because it provides the theoretical foundation for understanding how much information can be compressed without loss, where the bottleneck constraint forces the model to learn the most efficient representation that preserves the essential information needed for reconstruction. The architecture typically consists of a symmetric network where the encoder gradually reduces dimensionality through hidden layers, creating a bottleneck at the latent layer, and the decoder mirrors this structure to reconstruct the original input, with the mathematical formulation being $\vect{h} = f(\vect{x}) = \sigma(\mat{W}_e \vect{x} + \vect{b}_e)$ for the encoder and $\hat{\vect{x}} = g(\vect{h}) = \sigma(\mat{W}_d \vect{h} + \vect{b}_d)$ for the decoder, where $\sigma$ is the activation function and the weights are learned through training.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.8]
+% Input layer
+\foreach \i in {1,2,3,4,5,6,7,8}
+    \node[circle, draw, fill=orange!70, minimum size=0.6cm] (x\i) at (0,-\i*0.8) {$x_\i$};
+
+% Hidden layer 1
+\foreach \i in {1,2,3,4,5}
+    \node[circle, draw, fill=bookpurple!30, minimum size=0.6cm] (h1\i) at (3,-\i*1.2) {$h_1^{(\i)}$};
+
+% Latent representation
+\foreach \i in {1,2,3}
+    \node[circle, draw, fill=bookpurple!50, minimum size=0.6cm] (z\i) at (6,-\i*1.5) {$z_\i$};
+
+% Hidden layer 2
+\foreach \i in {1,2,3,4,5}
+    \node[circle, draw, fill=bookpurple!30, minimum size=0.6cm] (h2\i) at (9,-\i*1.2) {$h_2^{(\i)}$};
+
+% Output layer
+\foreach \i in {1,2,3,4,5,6,7,8}
+    \node[circle, draw, fill=blue!60!black, text=white, minimum size=0.6cm] (xh\i) at (12,-\i*0.8) {$\hat{x}_\i$};
+
+% Connections from input to hidden1
+\foreach \i in {1,2,3,4,5,6,7,8}
+    \foreach \j in {1,2,3,4,5}
+        \draw[->] (x\i) -- (h1\j);
+
+% Connections from hidden1 to latent
+\foreach \i in {1,2,3,4,5}
+    \foreach \j in {1,2,3}
+        \draw[->] (h1\i) -- (z\j);
+
+% Connections from latent to hidden2
+\foreach \i in {1,2,3}
+    \foreach \j in {1,2,3,4,5}
+        \draw[->] (z\i) -- (h2\j);
+
+% Connections from hidden2 to output
+\foreach \i in {1,2,3,4,5}
+    \foreach \j in {1,2,3,4,5,6,7,8}
+        \draw[->] (h2\i) -- (xh\j);
+
+% Labels
+\node at (0, 0.5) {\textbf{Input Layer}};
+\node at (3, 0.5) {\textbf{Encoder}};
+\node at (6, 0.5) {\textbf{Latent Representation}};
+\node at (9, 0.5) {\textbf{Decoder}};
+\node at (12, 0.5) {\textbf{Output Layer}};
+\end{tikzpicture}
+\caption{Undercomplete autoencoder architecture with a bottleneck at the latent layer.}
+\label{fig:autoencoder-architecture}
+\end{figure}
 
 \subsection{Training Objective}
 
-Minimize reconstruction error:
-\begin{equation}
-L = \|\vect{x} - g(f(\vect{x}))\|^2
-\end{equation}
-
-or more generally:
-\begin{equation}
-L = -\log p(\vect{x} | g(f(\vect{x})))
-\end{equation}
+The training objective is to minimize reconstruction error, where the loss function $L = \|\vect{x} - g(f(\vect{x}))\|^2$ measures the difference between the original input and its reconstruction, or more generally $L = -\log p(\vect{x} | g(f(\vect{x})))$ for probabilistic reconstruction, where the model learns to encode and decode data by minimizing the reconstruction error between input and output.
 
 \subsection{Undercomplete Constraint}
 
-If $\dim(\vect{h}) < \dim(\vect{x})$, the autoencoder learns compressed representation.
-
-Acts as dimensionality reduction (similar to PCA but non-linear).
+The undercomplete constraint requires that $\dim(\vect{h}) < \dim(\vect{x})$, forcing the autoencoder to learn compressed representations by constraining the latent space to have fewer dimensions than the input space, where this bottleneck forces the model to learn the most important features and discard redundant information, acting as dimensionality reduction similar to PCA but with non-linear transformations.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (autoencoder)}

@@ -3,32 +3,19 @@
 \section{Applications of Autoencoders \difficultyInline{intermediate}}
 \label{sec:ae-applications}
 
+Autoencoders find widespread applications in dimensionality reduction, anomaly detection, denoising, and generative modeling, where their ability to learn compressed representations makes them valuable for various machine learning tasks.
+
 \subsection{Dimensionality Reduction}
 
-Learn compact representations for:
-\begin{itemize}
-    \item Visualization (like t-SNE, UMAP)
-    \item Preprocessing for downstream tasks
-    \item Feature extraction
-\end{itemize}
+Autoencoders learn compact representations for visualization tasks similar to t-SNE and UMAP, where they can reduce high-dimensional data to lower dimensions while preserving important structure and relationships. They serve as effective preprocessing tools for downstream tasks by extracting meaningful features that can improve the performance of subsequent machine learning models. The learned representations are particularly valuable for feature extraction in domains where the original data is high-dimensional and contains redundant information, enabling more efficient processing and analysis.
 
 \subsection{Anomaly Detection}
 
-High reconstruction error indicates anomalies:
-\begin{itemize}
-    \item Fraud detection
-    \item Manufacturing defects
-    \item Network intrusion detection
-\end{itemize}
+Autoencoders excel at anomaly detection because high reconstruction error indicates anomalies, where the model learns to reconstruct normal patterns well but struggles with unusual or anomalous data. This principle is applied in fraud detection systems that identify suspicious transactions by measuring reconstruction error, in manufacturing quality control where defects produce high reconstruction errors, and in network intrusion detection where unusual network patterns are flagged based on their reconstruction difficulty.
 
 \subsection{Denoising}
 
-DAEs remove noise from:
-\begin{itemize}
-    \item Images
-    \item Audio signals
-    \item Sensor data
-\end{itemize}
+Denoising autoencoders (DAEs) remove noise from various types of data by learning to reconstruct clean signals from corrupted inputs, where they are particularly effective for image denoising by learning to identify and remove various types of noise while preserving important image features. They also excel at audio signal processing where they can separate speech from background noise, and in sensor data applications where they can filter out measurement noise while preserving the underlying signal patterns.
 
 
 % \subsection{Visual aids}
@@ -49,4 +36,4 @@ DAEs remove noise from:
 
 \subsection{References}
 
-For autoencoder variants and use-cases, see \textcite{GoodfellowEtAl2016,Prince2023}.
+Autoencoders have evolved significantly since their introduction, with key milestones including the development of denoising autoencoders that improved robustness, sparse autoencoders that learned interpretable features, and variational autoencoders that enabled generative modeling. The work by Goodfellow and colleagues has been particularly influential in establishing the theoretical foundations and practical applications of autoencoders, while Prince's contributions have advanced our understanding of their connections to other machine learning techniques. These models have achieved remarkable success in applications ranging from image compression and denoising to drug discovery and creative applications, demonstrating their versatility and practical impact in modern machine learning systems.

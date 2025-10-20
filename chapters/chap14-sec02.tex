@@ -3,42 +3,19 @@
 \section{Regularized Autoencoders \difficultyInline{intermediate}}
 \label{sec:regularized-ae}
 
+Regularized autoencoders extend basic autoencoders by adding various forms of regularization to encourage learning of more useful and robust representations through constraints on the latent space or training process.
+
 \subsection{Sparse Autoencoders}
 
-Add sparsity penalty on hidden activations:
-\begin{equation}
-L = \|\vect{x} - \hat{\vect{x}}\|^2 + \lambda \sum_j |h_j|
-\end{equation}
-
-Encourages learning of sparse, interpretable features.
+Sparse autoencoders add a sparsity penalty on hidden activations through the loss function $L = \|\vect{x} - \hat{\vect{x}}\|^2 + \lambda \sum_j |h_j|$, where the L1 penalty encourages learning of sparse, interpretable features by forcing most hidden units to be inactive for any given input, promoting the discovery of meaningful and independent features.
 
 \subsection{Denoising Autoencoders (DAE)}
 
-Train to reconstruct clean input from corrupted version:
-\begin{enumerate}
-    \item Corrupt input: $\tilde{\vect{x}} \sim q(\tilde{\vect{x}}|\vect{x})$
-    \item Encode corrupted input: $\vect{h} = f(\tilde{\vect{x}})$
-    \item Decode and reconstruct: $\hat{\vect{x}} = g(\vect{h})$
-    \item Minimize: $L = \|\vect{x} - \hat{\vect{x}}\|^2$
-\end{enumerate}
-
-\textbf{Corruption types:}
-\begin{itemize}
-    \item Additive Gaussian noise
-    \item Masking (randomly set inputs to zero)
-    \item Salt-and-pepper noise
-\end{itemize}
-
-Learns robust representations.
+Denoising autoencoders train to reconstruct clean input from corrupted versions by first corrupting the input $\tilde{\vect{x}} \sim q(\tilde{\vect{x}}|\vect{x})$, then encoding the corrupted input $\vect{h} = f(\tilde{\vect{x}})$, decoding and reconstructing $\hat{\vect{x}} = g(\vect{h})$, and minimizing the loss $L = \|\vect{x} - \hat{\vect{x}}\|^2$. This approach learns robust representations by forcing the model to recover the original signal from noisy inputs, where corruption types include additive Gaussian noise, masking that randomly sets inputs to zero, and salt-and-pepper noise, with the model learning to identify and remove these corruptions while preserving the essential structure of the data.
 
 \subsection{Contractive Autoencoders (CAE)}
 
-Add penalty on Jacobian of encoder:
-\begin{equation}
-L = \|\vect{x} - \hat{\vect{x}}\|^2 + \lambda \left\|\frac{\partial f(\vect{x})}{\partial \vect{x}}\right\|_F^2
-\end{equation}
-
-Encourages locally contractive mappings (robust to small perturbations).
+Contractive autoencoders add a penalty on the Jacobian of the encoder through the loss function $L = \|\vect{x} - \hat{\vect{x}}\|^2 + \lambda \left\|\frac{\partial f(\vect{x})}{\partial \vect{x}}\right\|_F^2$, where the Frobenius norm penalty encourages locally contractive mappings that are robust to small perturbations by penalizing large gradients in the encoder function.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (regularized AEs)}

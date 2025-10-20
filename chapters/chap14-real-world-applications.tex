@@ -8,49 +8,38 @@ Autoencoders learn to compress and reconstruct data, finding compact representat
 
 \subsection{Image and Video Compression}
 
-Efficient storage and transmission of visual data:
-
-\begin{itemize}
-    \item \textbf{Next-generation image compression:} Traditional formats like JPEG use hand-crafted compression algorithms. Learned autoencoder-based compression achieves better quality at the same file size or smaller files at the same quality. This matters for websites, cloud storage, and mobile apps where bandwidth and storage costs are significant.
-    
-    \item \textbf{Video streaming optimization:} Netflix and YouTube experiment with autoencoder-based video compression to stream higher quality video at lower bitrates. This reduces buffering, saves bandwidth costs, and enables HD streaming in areas with limited internet connectivity. The autoencoders learn to preserve perceptually important details humans notice while discarding subtle information we don't.
-    
-    \item \textbf{Satellite imagery compression:} Earth observation satellites generate terabytes of imagery daily. Autoencoder compression reduces transmission bandwidth from space to ground stations, allowing more frequent imagery updates or higher resolution within bandwidth constraints. This improves applications from weather forecasting to agriculture monitoring.
-\end{itemize}
+Autoencoders enable efficient storage and transmission of visual data through next-generation image compression that achieves better quality at the same file size or smaller files at the same quality compared to traditional formats like JPEG, where learned compression algorithms matter significantly for websites, cloud storage, and mobile apps where bandwidth and storage costs are substantial. Video streaming optimization applications by Netflix and YouTube experiment with autoencoder-based video compression to stream higher quality video at lower bitrates, reducing buffering, saving bandwidth costs, and enabling HD streaming in areas with limited internet connectivity by learning to preserve perceptually important details humans notice while discarding subtle information we don't. Satellite imagery compression applications handle the terabytes of imagery generated daily by Earth observation satellites, where autoencoder compression reduces transmission bandwidth from space to ground stations, allowing more frequent imagery updates or higher resolution within bandwidth constraints and improving applications from weather forecasting to agriculture monitoring.
 
 \subsection{Denoising and Enhancement}
 
-Improving signal quality in degraded data:
-
-\begin{itemize}
-    \item \textbf{Medical image enhancement:} Denoising autoencoders improve quality of MRI and CT scans, reducing radiation exposure needed for diagnostic-quality images or enabling faster scanning. The autoencoder learns the manifold of healthy tissue appearance, removing noise while preserving medically relevant details like tumor boundaries.
-    
-    \item \textbf{Old photo restoration:} Consumer apps use autoencoders to remove scratches, stains, and aging artifacts from old photographs. The models learn the structure of clean images and infer what damaged regions likely looked like originally. This helps preserve family histories and restore historical photographs.
-    
-    \item \textbf{Audio enhancement:} Autoencoders clean up audio recordings, removing background noise, hum, or compression artifacts. This improves voice clarity in phone calls, enhances podcast quality, and helps restore old audio recordings. Unlike simple filtering, autoencoders understand speech structure and preserve natural sound.
-\end{itemize}
+Autoencoders improve signal quality in degraded data through medical image enhancement where denoising autoencoders improve quality of MRI and CT scans, reducing radiation exposure needed for diagnostic-quality images or enabling faster scanning by learning the manifold of healthy tissue appearance and removing noise while preserving medically relevant details like tumor boundaries. Old photo restoration applications use autoencoders to remove scratches, stains, and aging artifacts from old photographs, where the models learn the structure of clean images and infer what damaged regions likely looked like originally, helping preserve family histories and restore historical photographs. Audio enhancement applications clean up audio recordings by removing background noise, hum, or compression artifacts, improving voice clarity in phone calls, enhancing podcast quality, and helping restore old audio recordings, where unlike simple filtering, autoencoders understand speech structure and preserve natural sound.
 
 \subsection{Anomaly Detection}
 
-Identifying unusual patterns in complex systems:
-
-\begin{itemize}
-    \item \textbf{Credit card fraud detection:} Autoencoders learn to represent normal spending patterns compactly. Fraudulent transactions often don't fit these patterns well, resulting in poor reconstruction. High reconstruction error flags potential fraud for investigation. This catches novel fraud schemes without requiring examples of every possible type of fraud.
-    
-    \item \textbf{Industrial equipment monitoring:} Manufacturing plants use autoencoders to monitor vibration patterns, temperatures, and other sensor data from machinery. Normal operation reconstructs well; unusual patterns indicating bearing wear, misalignment, or impending failure show high reconstruction error, triggering maintenance before catastrophic breakdowns.
-    
-    \item \textbf{Cybersecurity threat detection:} Network security systems use autoencoders trained on normal traffic patterns. Malware, intrusions, and data exfiltration create unusual patterns that reconstruct poorly, alerting security teams. This detects zero-day attacks and insider threats that evade signature-based detection.
-\end{itemize}
+Autoencoders identify unusual patterns in complex systems through credit card fraud detection where they learn to represent normal spending patterns compactly, with fraudulent transactions often not fitting these patterns well and resulting in poor reconstruction, where high reconstruction error flags potential fraud for investigation and catches novel fraud schemes without requiring examples of every possible type of fraud. Industrial equipment monitoring applications use autoencoders to monitor vibration patterns, temperatures, and other sensor data from machinery, where normal operation reconstructs well but unusual patterns indicating bearing wear, misalignment, or impending failure show high reconstruction error, triggering maintenance before catastrophic breakdowns. Cybersecurity threat detection systems use autoencoders trained on normal traffic patterns, where malware, intrusions, and data exfiltration create unusual patterns that reconstruct poorly, alerting security teams and detecting zero-day attacks and insider threats that evade signature-based detection.
 
 \subsection{Why Autoencoders Excel}
 
-Key advantages in practical applications:
-\begin{itemize}
-    \item \textbf{Unsupervised learning:} Don't require labeled examples, just normal data
-    \item \textbf{Dimensionality reduction:} Capture essential information compactly
-    \item \textbf{Noise robustness:} Learn underlying structure despite corrupted inputs
-    \item \textbf{Reconstruction ability:} Can generate clean versions of corrupted data
-\end{itemize}
+Autoencoders excel in practical applications because they enable unsupervised learning without requiring labeled examples, just normal data, where they capture essential information compactly through dimensionality reduction and learn underlying structure despite corrupted inputs through noise robustness. Their reconstruction ability allows them to generate clean versions of corrupted data, making them particularly valuable for applications where data quality is important but labels are scarce or expensive to obtain.
+
+\subsection{Autoencoders Compared to other NN Algorithms}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lccc}
+\toprule
+Feature & Autoencoder (AE) & Supervised NN (e.g., MLP, CNN) & Generative Adversarial Network (GAN) \\
+\midrule
+Primary Goal & Data Compression, Feature Learning, Anomaly Detection & Classification or Regression (Mapping input to a specific output label) & Data Generation (Creating new, realistic samples) \\
+Learning Type & Unsupervised (Learns from data structure itself) & Supervised (Requires labelled data) & Unsupervised (Learns via a competitive game) \\
+Input/Output & Input (x) = Output (x′) (It learns the identity function under constraints) & Input (x) → Output (y) (Target is a label) & Input (Random Noise) → Output (Realistic Data Sample) \\
+Loss Function & Reconstruction Error (e.g., Mean Squared Error) & Classification Loss (e.g., Cross-Entropy) or Regression Loss (e.g., MSE) & Adversarial Loss (between Generator and Discriminator) \\
+Key Use Case & Dimensionality reduction, Denoising, Anomaly detection (poor reconstruction = anomaly) & Image recognition, Natural Language Processing, Stock prediction & Image synthesis, Deepfakes, Generating realistic data \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of Autoencoders with other neural network algorithms.}
+\label{tab:autoencoder-comparison}
+\end{table}
 
 These applications show how autoencoders bridge classical compression and modern deep learning, providing practical solutions for data efficiency, quality enhancement, and anomaly detection.
 
