@@ -25,7 +25,7 @@ S(i,j) = (I * K)(i,j) = \sum_m \sum_n I(i+m, j+n) K(m, n)
 
 \subsection{Properties}
 
-\textbf{Parameter sharing:} same kernel applied across spatial locations\index{parameter sharing}. The same kernel is applied across all spatial locations, which dramatically reduces parameters compared to fully connected layers acting on flattened images. This parameter sharing yields \emph{translation equivariance}: if the input shifts, the feature map shifts in the same way \cite{GoodfellowEtAl2016,Prince2023}. Formally, letting \(T_\delta\) denote a spatial shift, we have \((T_\delta I) * K = T_\delta (I * K)\) under appropriate boundary conditions.
+\textbf{Parameter sharing:} same kernel applied across spatial locations\index{parameter sharing}. This dramatically reduces parameters compared to fully connected layers acting on flattened images. Parameter sharing yields \emph{translation equivariance}: if the input shifts, the feature map shifts in the same way \cite{GoodfellowEtAl2016,Prince2023}. Formally, letting \(T_\delta\) denote a spatial shift, we have \((T_\delta I) * K = T_\delta (I * K)\) under appropriate boundary conditions.
 
 \textbf{Local connectivity:} each output depends on a local input region (\gls{receptive-field})\index{receptive field}. This local connectivity exploits spatial locality, recognising that nearby pixels are statistically dependent in natural images. Through \emph{compositionality}, stacking layers grows the effective receptive field, enabling detection of increasingly complex patterns—from edges to corners to object parts \cite{GoodfellowEtAl2016}.
 
