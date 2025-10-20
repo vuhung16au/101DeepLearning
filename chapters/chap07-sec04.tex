@@ -11,18 +11,7 @@ Dropout is like asking different subsets of a team to work on the same task on d
 
 \subsection{Training with Dropout}
 
-At each training step, for each layer:
-\begin{enumerate}
-    \item Sample binary mask $\vect{m}$ with $P(m_i = 1) = p$
-    \item Apply mask: $\vect{h} = \vect{m} \odot \vect{h}$
-\end{enumerate}
-
-Mathematically:
-\begin{equation}
-\vect{h}_{\text{dropout}} = \vect{m} \odot f(\mat{W}\vect{x} + \vect{b})
-\end{equation}
-
-where $m_i \sim \text{Bernoulli}(p)$.
+Training with dropout involves sampling a binary mask $\vect{m}$ with $P(m_i = 1) = p$ for each layer at each training step, then applying the mask to the activations: $\vect{h} = \vect{m} \odot \vect{h}$. Mathematically, this is expressed as $\vect{h}_{\text{dropout}} = \vect{m} \odot f(\mat{W}\vect{x} + \vect{b})$ where $m_i \sim \text{Bernoulli}(p)$, effectively randomly deactivating neurons with probability $1-p$ during training to prevent co-adaptation and improve generalization.
 
 \subsection{Inference}
 
@@ -37,12 +26,7 @@ In practice, modern frameworks implement \emph{inverted dropout}: during trainin
 
 \subsection{Interpretation}
 
-Dropout can be viewed as:
-\begin{itemize}
-    \item \textbf{Implicit ensemble:} Sampling masks trains an ensemble of $2^n$ subnetworks whose shared weights yield a form of model averaging \cite{Srivastava2014}.
-    \item \textbf{Noise injection:} Multiplicative Bernoulli noise on activations acts like data-dependent regularization analogous to adding Gaussian noise for linear models \cite{GoodfellowEtAl2016}.
-    \item \textbf{Approximate Bayesian inference:} With appropriate priors, dropout relates to variational inference; applying dropout at test time with multiple passes (MC dropout) estimates predictive uncertainty \cite{Gal2016MCDropout}.
-\end{itemize}
+Dropout can be viewed as an implicit ensemble where sampling masks trains an ensemble of $2^n$ subnetworks whose shared weights yield a form of model averaging. It also acts as noise injection where multiplicative Bernoulli noise on activations provides data-dependent regularization analogous to adding Gaussian noise for linear models. Additionally, dropout relates to approximate Bayesian inference where with appropriate priors, it connects to variational inference, and applying dropout at test time with multiple passes (MC dropout) estimates predictive uncertainty, making it useful for uncertainty quantification in safety-critical applications.
 
 \begin{example}
 \textbf{Example (uncertainty):} Run $T=20$ stochastic forward passes with dropout enabled at test time and average predictions to obtain mean and variance; high variance flags low-confidence inputs.
@@ -50,15 +34,7 @@ Dropout can be viewed as:
 
 \subsection{Variants}
 
-\textbf{DropConnect:} Drop individual weights instead of activations, promoting sparsity at the parameter level.
-
-\textbf{Spatial Dropout:} Drop entire feature maps in CNNs to preserve spatial coherence and regularize channel reliance.
-
-\textbf{Variational Dropout:} Use the same dropout mask across time steps in RNNs to avoid injecting different noise per step that can harm temporal consistency.
-
-\textbf{MC Dropout:} Keep dropout active at inference and average predictions to quantify epistemic uncertainty \cite{Gal2016MCDropout}, useful in safety-critical applications.
-
-\textbf{Concrete/Alpha Dropout:} Continuous relaxations or distributions tailored for specific activations (e.g., SELU) to maintain self-normalizing properties.
+DropConnect drops individual weights instead of activations, promoting sparsity at the parameter level and providing a different form of regularization. Spatial Dropout drops entire feature maps in CNNs to preserve spatial coherence and regularize channel reliance, which is particularly useful for convolutional layers. Variational Dropout uses the same dropout mask across time steps in RNNs to avoid injecting different noise per step that can harm temporal consistency, making it more suitable for sequential data. MC Dropout keeps dropout active at inference and averages predictions to quantify epistemic uncertainty, which is useful in safety-critical applications where uncertainty estimation is crucial. Concrete and Alpha Dropout provide continuous relaxations or distributions tailored for specific activations like SELU to maintain self-normalizing properties, offering more sophisticated regularization approaches for specific network architectures.
 
 \begin{figure}[htbp]
 \centering

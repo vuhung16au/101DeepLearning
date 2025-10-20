@@ -11,12 +11,7 @@ Imagine studying for an exam. Initially, practice improves your understanding (t
 
 \subsection{Algorithm}
 
-\begin{enumerate}
-    \item Train model and evaluate on validation set periodically
-    \item Track best validation performance
-    \item If no improvement for $p$ epochs (patience), stop
-    \item Return model with best validation performance
-\end{enumerate}
+The early stopping algorithm works by training the model and evaluating it on the validation set periodically, tracking the best validation performance throughout training. If there is no improvement for $p$ epochs (patience), the training stops, and the algorithm returns the model with the best validation performance, ensuring that the network is saved at its optimal generalization point rather than continuing to overfit.
 
 \begin{algorithm}
 \caption{Early stopping meta-algorithm}
@@ -45,26 +40,11 @@ Imagine studying for an exam. Initially, practice improves your understanding (t
 
 \subsection{Benefits}
 
-\begin{itemize}
-    \item \textbf{Simple and effective:} Requires only tracking validation performance and a patience parameter; widely used in practice \cite{GoodfellowEtAl2016,Prince2023}.
-    \item \textbf{Automatically determines training duration:} Finds a good stopping time without a pre-fixed epoch budget, often saving substantial compute.
-    \item \textbf{Implicit regularization:} Halting before convergence limits effective capacity by keeping weights smaller and preventing memorization; in some regimes it mimics an L2 constraint under gradient descent \cite{GoodfellowEtAl2016}.
-    \item \textbf{Compatible with many settings:} Works with any loss, architecture (MLPs, CNNs, Transformers), and optimizer.
-    \item \textbf{Reduces computational cost:} Training stops as soon as overfitting begins, reducing energy/time.
-    \item \textbf{Improves generalization stability:} Curbs validation variance late in training when overfitting spikes.
-\end{itemize}
+Early stopping is simple and effective, requiring only tracking validation performance and a patience parameter while being widely used in practice. It automatically determines training duration by finding a good stopping time without a pre-fixed epoch budget, often saving substantial compute resources. Early stopping provides implicit regularization by halting before convergence, which limits effective capacity by keeping weights smaller and preventing memorization, where in some regimes it mimics an L2 constraint under gradient descent. It is compatible with many settings, working with any loss function, architecture including MLPs, CNNs, and Transformers, and any optimizer. Early stopping reduces computational cost by stopping training as soon as overfitting begins, reducing energy and time requirements, while improving generalization stability by curbing validation variance late in training when overfitting spikes.
 
 \subsection{Considerations}
 
-\begin{itemize}
-    \item \textbf{Validation protocol:} Requires a reliable validation set and evaluation cadence; noisy metrics may trigger premature stops. Use smoothing or require monotone improvements.
-    \item \textbf{Patience and frequency:} Patience $p$ and evaluation interval $n$ interact with LR schedules; too small $p$ can stop before a scheduled LR drop helps.
-    \item \textbf{Checkpointing:} Always restore the best model (not the last); keep track of the weights at the best validation step.
-    \item \textbf{Warmup and plateaus:} With warmup or long plateaus, consider larger patience or metric smoothing.
-    \item \textbf{Multi-metric objectives:} For tasks with multiple metrics (e.g., accuracy and calibration), pick the primary metric or a composite.
-    \item \textbf{Distributed training:} Ensure validation statistics are aggregated consistently across devices to avoid spurious decisions.
-    \item \textbf{Historical context:} Early stopping predates modern deep learning and was popular in classical neural nets and boosting as a strong regularizer; it remains a standard baseline \cite{GoodfellowEtAl2016,Bishop2006}.
-\end{itemize}
+Early stopping requires a reliable validation protocol with a proper validation set and evaluation cadence, where noisy metrics may trigger premature stops and should be addressed using smoothing or requiring monotone improvements. The patience parameter $p$ and evaluation interval $n$ interact with learning rate schedules, where too small $p$ can stop before a scheduled learning rate drop helps. Checkpointing is crucial, as you should always restore the best model rather than the last one, keeping track of the weights at the best validation step. With warmup or long plateaus, consider larger patience or metric smoothing to avoid premature stopping. For tasks with multiple metrics like accuracy and calibration, pick the primary metric or create a composite metric. In distributed training, ensure validation statistics are aggregated consistently across devices to avoid spurious decisions. Early stopping predates modern deep learning and was popular in classical neural nets and boosting as a strong regularizer, remaining a standard baseline technique.
 
 \begin{example}
 \textbf{Example (vision):} Train a ResNet on CIFAR-10 with validation accuracy checked each epoch; use patience $p=20$. Accuracy peaks at epoch 142; training halts at 162 without improvement, and the checkpoint from 142 is used for testing.

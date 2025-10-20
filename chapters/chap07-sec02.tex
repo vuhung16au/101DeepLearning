@@ -11,28 +11,7 @@ Humans recognize an object despite different viewpoints, lighting, or small occl
 
 \subsection{Image Augmentation}
 
-Common transformations:
-\begin{itemize}
-    \item \textbf{Geometric:} rotation, translation, scaling, flipping, cropping
-    
-    These transformations change the spatial properties of images while preserving the semantic content. Rotation and translation help models become invariant to object orientation and position, while scaling and cropping teach robustness to different object sizes and partial views.
-    
-    \item \textbf{Color:} brightness, contrast, saturation adjustments
-    
-    These modifications simulate different lighting conditions and camera settings that occur in real-world scenarios. By varying these color properties, models learn to focus on structural features rather than specific color characteristics, improving generalization across different environments.
-    
-    \item \textbf{Noise:} Gaussian noise, blur
-    
-    Adding controlled noise and blur helps models become more robust to sensor imperfections and motion blur that occur in real images. This regularization technique prevents overfitting to pixel-perfect training data and improves performance on noisy real-world inputs.
-    
-    \item \textbf{Cutout/Erasing:} randomly mask regions
-    
-    This technique randomly removes rectangular regions from images, forcing the model to learn from partial information. It encourages the network to not rely on specific spatial locations and instead learn more distributed, robust feature representations.
-    
-    \item \textbf{Mixup:} blend pairs of images and labels
-    
-    Mixup creates new training examples by linearly interpolating between pairs of images and their corresponding labels. This technique encourages smoother decision boundaries and reduces overconfident predictions, leading to better calibration and generalization.
-\end{itemize}
+Image augmentation employs various transformations to artificially expand the training dataset while preserving semantic content. Geometric transformations including rotation, translation, scaling, flipping, and cropping change the spatial properties of images while preserving the semantic content, where rotation and translation help models become invariant to object orientation and position, while scaling and cropping teach robustness to different object sizes and partial views. Color modifications such as brightness, contrast, and saturation adjustments simulate different lighting conditions and camera settings that occur in real-world scenarios, where by varying these color properties, models learn to focus on structural features rather than specific color characteristics, improving generalization across different environments. Noise augmentation including Gaussian noise and blur helps models become more robust to sensor imperfections and motion blur that occur in real images, where this regularization technique prevents overfitting to pixel-perfect training data and improves performance on noisy real-world inputs. Cutout and erasing techniques randomly remove rectangular regions from images, forcing the model to learn from partial information and encouraging the network to not rely on specific spatial locations, instead learning more distributed, robust feature representations. Mixup creates new training examples by linearly interpolating between pairs of images and their corresponding labels, encouraging smoother decision boundaries and reducing overconfident predictions, leading to better calibration and generalization.
 
 Example: horizontal flip
 \begin{equation}
@@ -41,45 +20,11 @@ Example: horizontal flip
 
 \subsection{Text Augmentation}
 
-For NLP:
-\begin{itemize}
-    \item Synonym replacement
-    
-    This technique replaces words with their synonyms while preserving the original meaning and label. It helps models become more robust to vocabulary variations and reduces overfitting to specific word choices, improving generalization to unseen text variations.
-    
-    \item Random insertion/deletion
-    
-    These operations randomly add or remove words from sentences, simulating natural language variations and typos. This augmentation helps models become more robust to noisy text inputs and teaches them to focus on important content rather than exact word sequences.
-    
-    \item Back-translation
-    
-    This method translates text to another language and then back to the original language, creating paraphrased versions with the same meaning. It generates diverse sentence structures while preserving semantic content, helping models learn more robust language representations.
-    
-    \item Paraphrasing
-    
-    This technique rewrites sentences using different wording while maintaining the same meaning and label. It exposes models to various ways of expressing the same concept, improving their ability to generalize to different writing styles and linguistic variations.
-\end{itemize}
+Text augmentation techniques for natural language processing include synonym replacement, which replaces words with their synonyms while preserving the original meaning and label, helping models become more robust to vocabulary variations and reducing overfitting to specific word choices, improving generalization to unseen text variations. Random insertion and deletion operations randomly add or remove words from sentences, simulating natural language variations and typos, where this augmentation helps models become more robust to noisy text inputs and teaches them to focus on important content rather than exact word sequences. Back-translation translates text to another language and then back to the original language, creating paraphrased versions with the same meaning, generating diverse sentence structures while preserving semantic content and helping models learn more robust language representations. Paraphrasing rewrites sentences using different wording while maintaining the same meaning and label, exposing models to various ways of expressing the same concept and improving their ability to generalize to different writing styles and linguistic variations.
 
 \subsection{Audio Augmentation}
 
-For speech/audio:
-\begin{itemize}
-    \item Time stretching
-    
-    This technique changes the duration of audio signals without affecting pitch, simulating different speaking rates. It helps models become robust to variations in speech tempo while preserving the fundamental frequency characteristics and semantic content of the audio.
-    
-    \item Pitch shifting
-    
-    This augmentation modifies the fundamental frequency of audio while keeping the duration constant, simulating different voice characteristics. It helps models learn pitch-invariant features and improves generalization across speakers with different vocal ranges.
-    
-    \item Adding background noise
-    
-    This technique introduces various types of noise to simulate real-world acoustic environments. It helps models become robust to environmental factors like room acoustics, background conversations, and equipment noise, improving performance in noisy conditions.
-    
-    \item SpecAugment (masking frequency/time regions)
-    
-    This method randomly masks frequency bands or time segments in spectrograms, forcing models to learn from partial information. It encourages the network to develop more robust acoustic representations that don't rely on specific frequency or temporal patterns.
-\end{itemize}
+Audio augmentation techniques for speech and audio processing include time stretching, which changes the duration of audio signals without affecting pitch, simulating different speaking rates and helping models become robust to variations in speech tempo while preserving the fundamental frequency characteristics and semantic content of the audio. Pitch shifting modifies the fundamental frequency of audio while keeping the duration constant, simulating different voice characteristics and helping models learn pitch-invariant features while improving generalization across speakers with different vocal ranges. Adding background noise introduces various types of noise to simulate real-world acoustic environments, helping models become robust to environmental factors like room acoustics, background conversations, and equipment noise, improving performance in noisy conditions. SpecAugment randomly masks frequency bands or time segments in spectrograms, forcing models to learn from partial information and encouraging the network to develop more robust acoustic representations that don't rely on specific frequency or temporal patterns.
 
 \begin{figure}[htbp]
 \centering
