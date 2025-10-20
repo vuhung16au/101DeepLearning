@@ -25,23 +25,11 @@ S(i,j) = (I * K)(i,j) = \sum_m \sum_n I(i+m, j+n) K(m, n)
 
 \subsection{Properties}
 
-\textbf{Parameter sharing:} same kernel applied across spatial locations\index{parameter sharing}
-\begin{itemize}
-    \item Dramatically reduces parameters compared to fully connected layers acting on flattened images.
-    \item Yields \emph{translation equivariance}: if the input shifts, the feature map shifts in the same way \cite{GoodfellowEtAl2016,Prince2023}. Formally, letting \(T_\delta\) denote a spatial shift, we have \((T_\delta I) * K = T_\delta (I * K)\) under appropriate boundary conditions.
-\end{itemize}
+\textbf{Parameter sharing:} same kernel applied across spatial locations\index{parameter sharing}. The same kernel is applied across all spatial locations, which dramatically reduces parameters compared to fully connected layers acting on flattened images. This parameter sharing yields \emph{translation equivariance}: if the input shifts, the feature map shifts in the same way \cite{GoodfellowEtAl2016,Prince2023}. Formally, letting \(T_\delta\) denote a spatial shift, we have \((T_\delta I) * K = T_\delta (I * K)\) under appropriate boundary conditions.
 
-\textbf{Local connectivity:} each output depends on a local input region (\gls{receptive-field})\index{receptive field}
-\begin{itemize}
-    \item Exploits spatial locality: nearby pixels are statistically dependent in natural images.
-    \item \emph{Compositionality}: stacking layers grows the effective receptive field, enabling detection of increasingly complex patterns (edges \(\to\) corners \(\to\) object parts) \cite{GoodfellowEtAl2016}.
-\end{itemize}
+\textbf{Local connectivity:} each output depends on a local input region (\gls{receptive-field})\index{receptive field}. This local connectivity exploits spatial locality, recognising that nearby pixels are statistically dependent in natural images. Through \emph{compositionality}, stacking layers grows the effective receptive field, enabling detection of increasingly complex patterns—from edges to corners to object parts \cite{GoodfellowEtAl2016}.
 
-\textbf{Linearity and nonlinearity:}
-\begin{itemize}
-    \item A single convolution is linear; CNNs interleave it with pointwise nonlinearities (e.g., ReLU) to model complex functions.
-    \item With stride and padding fixed, convolution is a sparse matrix multiplication with a Toeplitz structure \cite{GoodfellowEtAl2016}.
-\end{itemize}
+\textbf{Linearity and nonlinearity:} a single convolution is linear, so CNNs interleave it with pointwise nonlinearities (e.g., ReLU) to model complex functions. With stride and padding fixed, convolution is a sparse matrix multiplication with a Toeplitz structure \cite{GoodfellowEtAl2016}.
 
 \textbf{Padding and boundary effects}\index{padding}: padding preserves spatial size and mitigates edge shrinkage. Without padding (``valid''), repeated convolutions rapidly reduce feature map size and bias features toward the center.
 
@@ -65,21 +53,14 @@ Multi-channel convolution is the fundamental operation that enables CNNs to proc
 
 \subsection{Hyperparameters}
 
-\textbf{Kernel size:} Typically $3 \times 3$ or $5 \times 5$ (stacked $3\times3$ often preferred over a single $5\times5$ as in VGG \cite{GoodfellowEtAl2016})
+\textbf{Kernel size:} typical choices are $3 \times 3$ or $5 \times 5$, with stacked $3\times3$ filters often preferred over a single $5\times5$ as demonstrated in VGG \cite{GoodfellowEtAl2016}.
 
-\textbf{Stride:} Step size for sliding kernel (stride $s$)\index{stride}:
+\textbf{Stride:} the step size for sliding the kernel (stride $s$)\index{stride} determines the output size according to:
 \begin{equation}
 \text{Output size} = \left\lfloor \frac{n - k}{s} \right\rfloor + 1
 \end{equation}
 
-\textbf{Padding:} Add zeros around input\index{padding}
-\begin{itemize}
-    \item \textbf{Valid:} no padding
-    \item \textbf{Same:} padding to preserve spatial size
-    \item \textbf{Full:} maximum padding
-\end{itemize}
-
-For "same" padding with stride 1:
+\textbf{Padding:} adding zeros around the input\index{padding} offers different strategies. \textbf{Valid} padding means no padding is added. \textbf{Same} padding adds just enough padding to preserve spatial size. \textbf{Full} padding adds maximum padding. For "same" padding with stride 1, the required padding is:
 \begin{equation}
 p = \left\lfloor \frac{k-1}{2} \right\rfloor
 \end{equation}
