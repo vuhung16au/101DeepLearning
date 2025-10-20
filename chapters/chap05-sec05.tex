@@ -46,13 +46,7 @@ The key insight is that we can make good predictions by finding the most similar
 
 \subsection{Algorithm}
 
-For a query point $\vect{x}$:
-
-\begin{enumerate}
-    \item Find the $k$ closest training examples based on a distance metric
-    \item For classification: return the majority class among the $k$ neighbors
-    \item For regression: return the average of the target values of the $k$ neighbors
-\end{enumerate}
+For a query point $\vect{x}$, the k-NN algorithm works by finding the $k$ closest training examples based on a distance metric, then for classification returning the majority class among the $k$ neighbors, and for regression returning the average of the target values of the $k$ neighbors. The key ideas of the algorithm include using distance-based similarity to find relevant examples, leveraging the assumption that similar examples have similar outcomes, and making predictions based on local patterns in the data rather than global models.
 
 \subsubsection{Mathematical Formulation}
 
@@ -70,7 +64,7 @@ where $y^{(i)}$ are the target values of the $k$ nearest neighbors.
 
 \subsection{Distance Metrics}
 
-The choice of distance metric significantly affects k-NN performance. Here are the most common ones:
+The choice of distance metric significantly affects k-NN performance, where different metrics are used in various machine learning algorithms to measure similarity between data points. Euclidean distance is commonly used in k-NN and clustering algorithms, Manhattan distance is useful in recommendation systems and text analysis, and Minkowski distance provides a flexible framework for different distance measures in various machine learning applications.
 
 \subsubsection{Euclidean Distance}
 
@@ -103,24 +97,7 @@ This is a generalization where:
 
 \subsection{Choosing k}
 
-The choice of $k$ is crucial and involves a bias-variance trade-off:
-
-\begin{itemize}
-    \item \textbf{Small $k$ (e.g., k=1):}
-    \begin{itemize}
-        \item Low bias, high variance
-        \item Flexible decision boundary
-        \item Sensitive to noise and outliers
-        \item May overfit to training data
-    \end{itemize}
-    \item \textbf{Large $k$ (e.g., k=n):}
-    \begin{itemize}
-        \item High bias, low variance
-        \item Smooth decision boundary
-        \item May miss local patterns
-        \item Underfits the data
-    \end{itemize}
-\end{itemize}
+The choice of $k$ is crucial and involves a bias-variance trade-off, where small $k$ values like k=1 result in low bias and high variance with flexible decision boundaries that are sensitive to noise and outliers and may overfit to training data, while large $k$ values like k=n result in high bias and low variance with smooth decision boundaries that may miss local patterns and underfit the data. The optimal $k$ is typically found through cross-validation, balancing the need for local pattern recognition with robustness to noise.
 
 \begin{figure}[htbp]
 \centering
@@ -157,73 +134,19 @@ where $w_i = \frac{1}{d(\vect{x}, \vect{x}^{(i)})}$ is the weight based on dista
 
 \subsection{Computational Considerations}
 
-k-NN has several computational characteristics:
-
-\subsubsection{Training Time}
-\begin{itemize}
-    \item \textbf{No training time:} k-NN is a lazy learner
-    \item \textbf{Memory usage:} Must store all training examples
-    \item \textbf{Scalability:} Performance degrades with large datasets
-\end{itemize}
-
-\subsubsection{Prediction Time}
-\begin{itemize}
-    \item \textbf{Naive approach:} $O(n \cdot d)$ for each prediction
-    \item \textbf{Optimized approaches:} Can be reduced using data structures
-\end{itemize}
+k-NN has several computational characteristics including no training time since it's a lazy learner that defers all computation to prediction time, memory usage that requires storing all training examples, and scalability issues where performance degrades with large datasets. The naive approach has $O(n \cdot d)$ complexity for each prediction, but optimized approaches using data structures like KD-trees, ball trees, and locality sensitive hashing can significantly reduce this complexity for large-scale applications.
 
 \subsubsection{Speedup Techniques}
 
-\textbf{KD-Trees:}
-\begin{itemize}
-    \item Partition space into regions
-    \item Reduce search time to $O(\log n)$ in low dimensions
-    \item Less effective in high dimensions
-\end{itemize}
-
-\textbf{Ball Trees:}
-\begin{itemize}
-    \item Use hyperspheres instead of hyperplanes
-    \item Better for high-dimensional data
-    \item More complex to implement
-\end{itemize}
-
-\textbf{Locality Sensitive Hashing (LSH):}
-\begin{itemize}
-    \item Approximate nearest neighbor search
-    \item Significant speedup for very large datasets
-    \item May sacrifice some accuracy
-\end{itemize}
+Several speedup techniques can be employed to improve the computational efficiency of k-NN algorithms. KD-Trees partition the space into regions using hyperplanes, reducing search time to $O(\log n)$ in low dimensions, though they become less effective in high dimensions where the curse of dimensionality affects their performance. Ball Trees use hyperspheres instead of hyperplanes to partition the space, making them better suited for high-dimensional data, though they are more complex to implement than KD-trees. Locality Sensitive Hashing (LSH) provides approximate nearest neighbor search capabilities, offering significant speedup for very large datasets, though it may sacrifice some accuracy in exchange for computational efficiency, making it suitable for applications where approximate results are acceptable.
 
 \subsection{Advantages and Limitations}
 
-\textbf{Advantages:}
-\begin{itemize}
-    \item \textbf{Simple:} Easy to understand and implement
-    \item \textbf{No assumptions:} Works with any data type
-    \item \textbf{Non-parametric:} No model to fit
-    \item \textbf{Local patterns:} Can capture complex decision boundaries
-    \item \textbf{Incremental:} Easy to add new training examples
-\end{itemize}
-
-\textbf{Limitations:}
-\begin{itemize}
-    \item \textbf{Computational cost:} Slow for large datasets
-    \item \textbf{Memory usage:} Must store all training data
-    \item \textbf{Sensitive to irrelevant features:} All features are treated equally
-    \item \textbf{Curse of dimensionality:} Performance degrades in high dimensions
-    \item \textbf{No interpretability:} Hard to understand why a prediction was made
-\end{itemize}
+k-NN has several advantages including being simple and easy to understand and implement, making no assumptions about data distribution and working with any data type, being non-parametric with no model to fit, being able to capture complex decision boundaries through local patterns, and being incremental by making it easy to add new training examples. However, it also has limitations including computational cost where it's slow for large datasets, memory usage where it must store all training data, sensitivity to irrelevant features where all features are treated equally, the curse of dimensionality where performance degrades in high dimensions, and lack of interpretability where it's hard to understand why a prediction was made.
 
 \subsection{Curse of Dimensionality}
 
-In high-dimensional spaces, k-NN faces the \textbf{curse of dimensionality}:
-
-\begin{itemize}
-    \item \textbf{Distance concentration:} All points become roughly equidistant
-    \item \textbf{Empty space:} Most of the space is empty
-    \item \textbf{Irrelevant features:} Performance degrades with irrelevant features
-\end{itemize}
+In high-dimensional spaces, k-NN faces the curse of dimensionality where all points become roughly equidistant due to distance concentration, most of the space is empty making it difficult to find meaningful neighbors, and performance degrades with irrelevant features that can dominate the distance calculations, making the algorithm less effective in high-dimensional spaces.
 
 \begin{example}
 In a 1000-dimensional space, even if only 10 features are relevant, the 990 irrelevant features can dominate the distance calculations, making k-NN ineffective.
@@ -231,12 +154,5 @@ In a 1000-dimensional space, even if only 10 features are relevant, the 990 irre
 
 \subsection{Feature Selection and Scaling}
 
-To improve k-NN performance:
-
-\begin{itemize}
-    \item \textbf{Feature selection:} Remove irrelevant features
-    \item \textbf{Feature scaling:} Normalize features to the same scale
-    \item \textbf{Dimensionality reduction:} Use PCA or other techniques
-    \item \textbf{Distance weighting:} Weight features by importance
-\end{itemize}
+To improve k-NN performance, several techniques can be employed including feature selection to remove irrelevant features that can hurt performance, feature scaling to normalize features to the same scale so that all features contribute equally to distance calculations, dimensionality reduction using PCA or other techniques to reduce the curse of dimensionality, and distance weighting to weight features by importance so that more relevant features have greater influence on the similarity calculations.
 

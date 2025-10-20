@@ -3,19 +3,11 @@
 \section{Output Units and Loss Functions \difficultyInline{intermediate}}
 \label{sec:output-loss}
 
+Output units and loss functions are the final components of neural networks that determine how predictions are formatted and how the network learns from errors, with different choices required for different types of machine learning tasks.
+
 \subsection{Intuition: Matching Output to Task}
 
-Think of the output layer as the "final decision maker" in your network. Just like different jobs require different tools, different machine learning tasks require different output formats:
-
-\begin{itemize}
-    \item \textbf{Regression (predicting prices):} You want a real number. "This house costs \$250,000"
-    \item \textbf{Binary Classification (spam detection):} You want a probability. "This email is 95\% likely to be spam"
-    \item \textbf{Multiclass Classification (image recognition):} You want probabilities for each class. "This image is 80\% cat, 15\% dog, 5\% bird"
-\end{itemize}
-
-The loss function is like a "teacher" that tells the network how wrong it is. A good teacher gives clear, helpful feedback that guides learning in the right direction.
-
-The choice of output layer and loss function depends on the task.
+Think of the output layer as the "final decision maker" in your network, where just like different jobs require different tools, different machine learning tasks require different output formats. For regression tasks like predicting prices, you want a real number such as "This house costs \$250,000", for binary classification tasks like spam detection, you want a probability such as "This email is 95\% likely to be spam", and for multiclass classification tasks like image recognition, you want probabilities for each class such as "This image is 80\% cat, 15\% dog, 5\% bird". The loss function is like a "teacher" that tells the network how wrong it is, where a good teacher gives clear, helpful feedback that guides learning in the right direction, and the choice of output layer and loss function depends on the specific task requirements.
 
 \subsection{Linear Output for Regression}
 

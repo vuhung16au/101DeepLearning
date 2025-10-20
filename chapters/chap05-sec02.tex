@@ -36,16 +36,7 @@ Think of logistic regression as answering: "Given these features, what's the pro
 
 \subsection{Binary Classification}
 
-For binary classification with classes $\{0, 1\}$, logistic regression models the probability of the positive class using the sigmoid function:
-
-\begin{equation}
-\sigma(z) = \frac{1}{1 + e^{-z}}
-\end{equation}
-
-The prediction probability is:
-\begin{equation}
-P(y=1|\vect{x}) = \sigma(\vect{w}^\top \vect{x} + b) = \frac{1}{1 + e^{-(\vect{w}^\top \vect{x} + b)}}
-\end{equation}
+For binary classification with classes $\{0, 1\}$, logistic regression models the probability of the positive class using the sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$, which smoothly maps any real number to a probability between 0 and 1. The prediction probability is $P(y=1|\vect{x}) = \sigma(\vect{w}^\top \vect{x} + b) = \frac{1}{1 + e^{-(\vect{w}^\top \vect{x} + b)}}$, where the linear combination of features and weights determines the input to the sigmoid function, and the output represents the probability that the input belongs to the positive class.
 
 \subsubsection{Properties of the Sigmoid Function}
 
@@ -94,11 +85,7 @@ The gradient has a simple form: it's the average of the prediction errors multip
 
 \subsection{Multiclass Classification}
 
-For $K$ classes, we extend logistic regression to \textbf{softmax regression} (also called multinomial logistic regression). Instead of a single sigmoid function, we use the softmax function:
-
-\begin{equation}
-P(y=k|\vect{x}) = \frac{\exp(\vect{w}_k^\top \vect{x} + b_k)}{\sum_{j=1}^{K} \exp(\vect{w}_j^\top \vect{x} + b_j)}
-\end{equation}
+For $K$ classes, we extend logistic regression to softmax regression (also called multinomial logistic regression), where instead of a single sigmoid function, we use the softmax function $P(y=k|\vect{x}) = \frac{\exp(\vect{w}_k^\top \vect{x} + b_k)}{\sum_{j=1}^{K} \exp(\vect{w}_j^\top \vect{x} + b_j)}$ to compute the probability of each class. The softmax function normalizes the exponential scores so that they sum to 1, creating a valid probability distribution over all possible classes.
 
 \subsubsection{Properties of Softmax}
 
@@ -170,20 +157,5 @@ L(\vect{w}) = -\frac{1}{n} \sum_{i=1}^{n} \left[y^{(i)} \log \hat{y}^{(i)} + (1-
 
 \subsection{Advantages and Limitations}
 
-\textbf{Advantages:}
-\begin{itemize}
-    \item Simple and interpretable
-    \item Fast training and prediction
-    \item Provides probability estimates
-    \item Works well with small datasets
-    \item No assumptions about feature distributions
-\end{itemize}
-
-\textbf{Limitations:}
-\begin{itemize}
-    \item Assumes linear relationship between features and log-odds
-    \item Sensitive to outliers
-    \item May not work well with highly correlated features
-    \item Limited to linear decision boundaries
-\end{itemize}
+Logistic regression has several advantages including being simple and interpretable with clear mathematical foundations, fast training and prediction due to efficient gradient computation, providing probability estimates that are useful for decision-making, working well with small datasets where complex models might overfit, and making no assumptions about feature distributions. However, it also has limitations including assuming a linear relationship between features and log-odds which may not hold for complex data, being sensitive to outliers that can significantly affect the decision boundary, potentially not working well with highly correlated features that can cause numerical instability, and being limited to linear decision boundaries which may not be sufficient for non-linearly separable data.
 

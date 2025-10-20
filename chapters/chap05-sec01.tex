@@ -7,14 +7,7 @@
 
 \subsection{Intuition and Motivation}
 
-Imagine you're trying to predict house prices based on features like size, number of bedrooms, and location. Linear regression assumes that the price can be expressed as a weighted sum of these features plus a base price (bias). The algorithm learns the optimal weights that best explain the relationship between features and prices in your training data.
-
-The key insight is that linear relationships are often sufficient for many real-world problems, and they have several advantages:
-\begin{itemize}
-    \item \textbf{Interpretability:} Each weight tells us how much the output changes when a feature increases by one unit
-    \item \textbf{Computational efficiency:} Fast training and prediction
-    \item \textbf{Statistical properties:} Well-understood theoretical guarantees
-\end{itemize}
+Imagine you're trying to predict house prices based on features like size, number of bedrooms, and location. Linear regression assumes that the price can be expressed as a weighted sum of these features plus a base price (bias), where the algorithm learns the optimal weights that best explain the relationship between features and prices in your training data. The key insight is that linear relationships are often sufficient for many real-world problems, and they have several advantages including interpretability where each weight tells us how much the output changes when a feature increases by one unit, computational efficiency with fast training and prediction, and statistical properties with well-understood theoretical guarantees that make the method reliable and predictable.
 
 \begin{figure}[htbp]
 \centering
@@ -43,18 +36,7 @@ The key insight is that linear relationships are often sufficient for many real-
 
 \subsection{Model Formulation}
 
-For input $\vect{x} \in \mathbb{R}^d$ and output $y \in \mathbb{R}$, linear regression models the relationship as:
-
-\begin{equation}
-\hat{y} = \vect{w}^\top \vect{x} + b
-\end{equation}
-
-where:
-\begin{itemize}
-    \item $\vect{w} \in \mathbb{R}^d$ are the \textbf{weights} (regression coefficients)
-    \item $b \in \mathbb{R}$ is the \textbf{bias} (intercept term)
-    \item $\hat{y}$ is the predicted output
-\end{itemize}
+For input $\vect{x} \in \mathbb{R}^d$ and output $y \in \mathbb{R}$, linear regression models the relationship as $\hat{y} = \vect{w}^\top \vect{x} + b$, where $\vect{w} \in \mathbb{R}^d$ are the weights (regression coefficients) that determine how much each feature contributes to the prediction, $b \in \mathbb{R}$ is the bias (intercept term) that represents the base value when all features are zero, and $\hat{y}$ is the predicted output that represents our model's estimate of the true target value.
 
 \subsection{Ordinary Least Squares}
 

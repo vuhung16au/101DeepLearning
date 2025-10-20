@@ -7,59 +7,11 @@ Understanding the relationship between classical machine learning methods and de
 
 \subsection{When Classical Methods Excel}
 
-Classical machine learning methods have several advantages that make them preferable in certain situations:
-
-\subsubsection{Interpretability and Debugging}
-\begin{itemize}
-    \item \textbf{Linear models:} Coefficients directly show feature importance
-    \item \textbf{Decision trees:} Rules are human-readable
-    \item \textbf{SVM:} Support vectors provide insight into decision boundary
-    \item \textbf{Easier debugging:} Can trace predictions step by step
-\end{itemize}
-
-\subsubsection{Small to Medium Datasets}
-\begin{itemize}
-    \item \textbf{Less prone to overfitting:} Classical methods have fewer parameters
-    \item \textbf{Faster training:} Require less computational resources
-    \item \textbf{Better generalization:} Often perform better with limited data
-    \item \textbf{No need for data augmentation:} Work well with original data
-\end{itemize}
-
-\subsubsection{Computational Efficiency}
-\begin{itemize}
-    \item \textbf{Lower memory requirements:} Don't need to store large networks
-    \item \textbf{Faster inference:} Simple mathematical operations
-    \item \textbf{No GPU required:} Can run on standard hardware
-    \item \textbf{Real-time applications:} Suitable for embedded systems
-\end{itemize}
+Classical machine learning methods have several advantages that make them preferable in certain situations, including interpretability and debugging where linear models have coefficients that directly show feature importance, decision trees have rules that are human-readable, SVMs have support vectors that provide insight into decision boundaries, and easier debugging where predictions can be traced step by step. For small to medium datasets, classical methods are less prone to overfitting with fewer parameters, have faster training requiring less computational resources, often perform better with limited data through better generalization, and work well with original data without needing data augmentation. In terms of computational efficiency, classical methods have lower memory requirements without needing to store large networks, faster inference through simple mathematical operations, no GPU requirements allowing them to run on standard hardware, and suitability for real-time applications and embedded systems.
 
 \subsection{When Deep Learning Excels}
 
-Deep learning addresses several fundamental limitations of classical methods:
-
-\subsubsection{Automatic Feature Learning}
-\begin{itemize}
-    \item \textbf{No manual feature engineering:} Networks learn relevant features automatically
-    \item \textbf{Hierarchical representations:} Lower layers learn simple features, higher layers learn complex combinations
-    \item \textbf{End-to-end learning:} Single model handles feature extraction and classification
-    \item \textbf{Adaptive features:} Features adapt to the specific problem
-\end{itemize}
-
-\subsubsection{Scalability with Data and Model Size}
-\begin{itemize}
-    \item \textbf{Data scalability:} Performance typically improves with more data
-    \item \textbf{Model capacity:} Can handle very large models with millions of parameters
-    \item \textbf{Distributed training:} Can leverage multiple GPUs/TPUs
-    \item \textbf{Transfer learning:} Pre-trained models can be fine-tuned for new tasks
-\end{itemize}
-
-\subsubsection{Handling Complex Data Types}
-\begin{itemize}
-    \item \textbf{Images:} Convolutional networks excel at computer vision
-    \item \textbf{Text:} Recurrent and transformer networks handle natural language
-    \item \textbf{Audio:} Can process raw audio signals
-    \item \textbf{Multimodal:} Can combine different data types
-\end{itemize}
+Deep learning addresses several fundamental limitations of classical methods through automatic feature learning where networks learn relevant features automatically without manual feature engineering, hierarchical representations where lower layers learn simple features and higher layers learn complex combinations, end-to-end learning where a single model handles feature extraction and classification, and adaptive features that adapt to the specific problem. In terms of scalability with data and model size, deep learning has data scalability where performance typically improves with more data, model capacity to handle very large models with millions of parameters, distributed training capabilities that can leverage multiple GPUs/TPUs, and transfer learning where pre-trained models can be fine-tuned for new tasks. For handling complex data types, deep learning excels with images through convolutional networks that excel at computer vision, text through recurrent and transformer networks that handle natural language, audio by processing raw audio signals, and multimodal applications that can combine different data types.
 
 \subsection{Performance Comparison}
 
@@ -83,93 +35,36 @@ Feature Engineering & Manual & Automatic & Complex domains \\
 
 \subsection{Hybrid Approaches}
 
-In practice, the best solutions often combine classical and deep learning methods:
-
-\subsubsection{Feature Engineering with Deep Learning}
-\begin{itemize}
-    \item Use deep networks to extract features
-    \item Apply classical methods (SVM, random forest) on extracted features
-    \item Combine interpretability of classical methods with representation power of deep learning
-\end{itemize}
-
-\subsubsection{Ensemble Methods}
-\begin{itemize}
-    \item Combine predictions from classical and deep learning models
-    \item Use classical methods for interpretable components
-    \item Use deep learning for complex pattern recognition
-\end{itemize}
-
-\subsubsection{Two-Stage Approaches}
-\begin{itemize}
-    \item Use classical methods for initial screening
-    \item Apply deep learning for final classification
-    \item Balance efficiency and accuracy
-\end{itemize}
+In practice, the best solutions often combine classical and deep learning methods through feature engineering with deep learning where deep networks are used to extract features and classical methods like SVM and random forest are applied on the extracted features, combining the interpretability of classical methods with the representation power of deep learning. Ensemble methods combine predictions from classical and deep learning models, using classical methods for interpretable components and deep learning for complex pattern recognition. Two-stage approaches use classical methods for initial screening and apply deep learning for final classification, balancing efficiency and accuracy.
 
 \subsection{Choosing the Right Approach}
 
-The choice between classical and deep learning methods depends on several factors:
-
-\subsubsection{Data Characteristics}
-\begin{itemize}
-    \item \textbf{Small dataset (< 10k examples):} Classical methods often better
-    \item \textbf{Medium dataset (10k-100k examples):} Both approaches viable
-    \item \textbf{Large dataset (> 100k examples):} Deep learning typically better
-    \item \textbf{High-dimensional data:} Deep learning excels
-    \item \textbf{Structured data:} Classical methods often sufficient
-\end{itemize}
-
-\subsubsection{Problem Requirements}
-\begin{itemize}
-    \item \textbf{Interpretability needed:} Classical methods preferred
-    \item \textbf{Real-time inference:} Classical methods often faster
-    \item \textbf{Complex patterns:} Deep learning better
-    \item \textbf{Unstructured data:} Deep learning necessary
-\end{itemize}
-
-\subsubsection{Resource Constraints}
-\begin{itemize}
-    \item \textbf{Limited computational resources:} Classical methods
-    \item \textbf{Limited labeled data:} Classical methods or transfer learning
-    \item \textbf{Need for quick prototyping:} Classical methods
-    \item \textbf{Production deployment:} Consider inference costs
-\end{itemize}
+The choice between classical and deep learning methods depends on several factors including data characteristics where small datasets (< 10k examples) often favor classical methods, medium datasets (10k-100k examples) make both approaches viable, large datasets (> 100k examples) typically favor deep learning, high-dimensional data excels with deep learning, and structured data often works well with classical methods. Problem requirements include interpretability needs where classical methods are preferred, real-time inference where classical methods are often faster, complex patterns where deep learning is better, and unstructured data where deep learning is necessary. Resource constraints include limited computational resources favoring classical methods, limited labeled data favoring classical methods or transfer learning, need for quick prototyping favoring classical methods, and production deployment requiring consideration of inference costs.
 
 \subsection{Future Directions}
 
-The field continues to evolve with several promising directions:
-
-\subsubsection{Automated Machine Learning (AutoML)}
-\begin{itemize}
-    \item \textbf{Neural Architecture Search (NAS):} Automatically design network architectures
-    \item \textbf{Hyperparameter optimization:} Automatically tune classical methods
-    \item \textbf{Model selection:} Automatically choose between classical and deep learning
-\end{itemize}
-
-\subsubsection{Explainable AI}
-\begin{itemize}
-    \item \textbf{SHAP values:} Explain predictions from any model
-    \item \textbf{LIME:} Local interpretable model-agnostic explanations
-    \item \textbf{Attention mechanisms:} Understand what deep networks focus on
-\end{itemize}
-
-\subsubsection{Efficient Deep Learning}
-\begin{itemize}
-    \item \textbf{Model compression:} Reduce model size while maintaining performance
-    \item \textbf{Quantization:} Use lower precision arithmetic
-    \item \textbf{Knowledge distillation:} Transfer knowledge from large to small models
-\end{itemize}
+The field continues to evolve with several promising directions including automated machine learning (AutoML) with neural architecture search that automatically designs network architectures, hyperparameter optimization that automatically tunes classical methods, and model selection that automatically chooses between classical and deep learning. Explainable AI includes SHAP values that explain predictions from any model, LIME for local interpretable model-agnostic explanations, and attention mechanisms that help understand what deep networks focus on. Efficient deep learning involves model compression to reduce model size while maintaining performance, quantization to use lower precision arithmetic, and knowledge distillation to transfer knowledge from large to small models.
 
 \subsection{Conclusion}
 
-Classical machine learning methods and deep learning are not competing approaches but complementary tools in the machine learning toolkit. The key is to understand the strengths and limitations of each approach and choose the right tool for your specific problem.
+Classical machine learning methods and deep learning are not competing approaches but complementary tools in the machine learning toolkit, where the key is to understand the strengths and limitations of each approach and choose the right tool for your specific problem. The approach should start simple by beginning with classical methods for baseline performance, consider complexity by only using deep learning if classical methods are insufficient, think about requirements by considering interpretability, speed, and resource constraints, combine approaches by using hybrid methods when appropriate, and stay updated as the field continues to evolve rapidly. The goal is not to use the most complex method, but to use the most appropriate method for your specific problem and constraints.
 
-\begin{itemize}
-    \item \textbf{Start simple:} Begin with classical methods for baseline performance
-    \item \textbf{Consider complexity:} Only use deep learning if classical methods are insufficient
-    \item \textbf{Think about requirements:} Consider interpretability, speed, and resource constraints
-    \item \textbf{Combine approaches:} Use hybrid methods when appropriate
-    \item \textbf{Stay updated:} The field continues to evolve rapidly
-\end{itemize}
-
-The goal is not to use the most complex method, but to use the most appropriate method for your specific problem and constraints.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lcc}
+\toprule
+Aspect & Classical ML & Deep Learning \\
+\midrule
+Interpretability & High & Low \\
+Training Speed & Fast & Slow \\
+Inference Speed & Fast & Medium \\
+Data Requirements & Low & High \\
+Computational Cost & Low & High \\
+Feature Engineering & Manual & Automatic \\
+Best for Small Data & Yes & No \\
+Best for Large Data & No & Yes \\
+\bottomrule
+\end{tabular}
+\caption{Comparison of pros and cons between classical machine learning and deep learning approaches.}
+\label{tab:ml-dl-pros-cons}
+\end{table}

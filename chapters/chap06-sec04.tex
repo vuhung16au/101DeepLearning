@@ -3,25 +3,11 @@
 \section{Backpropagation \difficultyInline{intermediate}}
 \label{sec:backpropagation}
 
+Backpropagation is the fundamental algorithm for training neural networks that efficiently computes gradients by propagating errors backward through the network using the chain rule of calculus.
+
 \subsection{Intuition: Learning from Mistakes}
 
-Imagine you're learning to play basketball. After each shot, you need to know:
-\begin{itemize}
-    \item How far off was your shot? (the error)
-    \item Which part of your technique needs adjustment? (which parameters to change)
-    \item How much should you adjust each part? (how much to change each parameter)
-\end{itemize}
-
-Backpropagation is like having a coach who watches your shot and tells you exactly what to adjust:
-\begin{itemize}
-    \item "Your elbow was too high" (gradient for elbow angle)
-    \item "You need to follow through more" (gradient for follow-through)
-    \item "Your timing was off" (gradient for release timing)
-\end{itemize}
-
-The key insight is that we can efficiently compute how much each parameter contributed to the final error by working backwards through the network.
-
-\textbf{Backpropagation} efficiently computes gradients using the chain rule.
+Imagine you're learning to play basketball, where after each shot, you need to know how far off your shot was (the error), which part of your technique needs adjustment (which parameters to change), and how much you should adjust each part (how much to change each parameter). Backpropagation is like having a coach who watches your shot and tells you exactly what to adjust, such as "Your elbow was too high" (gradient for elbow angle), "You need to follow through more" (gradient for follow-through), and "Your timing was off" (gradient for release timing). The key insight is that we can efficiently compute how much each parameter contributed to the final error by working backwards through the network, where backpropagation efficiently computes gradients using the chain rule to determine the precise adjustments needed for each parameter.
 
 \subsection{The Chain Rule}
 
@@ -54,11 +40,7 @@ Parameter gradients:
 
 \subsection{Computational Graph}
 
-Modern frameworks use automatic differentiation on computational graphs:
-\begin{itemize}
-    \item \textbf{Forward mode:} efficient when outputs $\gg$ inputs
-    \item \textbf{Reverse mode (backprop):} efficient when inputs $\gg$ outputs
-\end{itemize}
+Modern frameworks use automatic differentiation on computational graphs, where forward mode is efficient when outputs greatly exceed inputs, and reverse mode (backprop) is efficient when inputs greatly exceed outputs, allowing for optimal gradient computation based on the specific network architecture and task requirements.
 
 % Index entries
 \index{backpropagation!algorithm}

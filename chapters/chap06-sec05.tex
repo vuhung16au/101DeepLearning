@@ -3,33 +3,15 @@
 \section{Design Choices \difficultyInline{intermediate}}
 \label{sec:design-choices}
 
+Design choices in neural networks involve critical decisions about architecture, initialization, and training procedures that significantly impact the network's ability to learn and generalize to new data.
+
 \subsection{Intuition: Building the Right Network}
 
-Designing a neural network is like designing a building:
-\begin{itemize}
-    \item \textbf{Depth (layers):} Like floors in a building - more floors can house more complex functions, but they're harder to build and maintain
-    \item \textbf{Width (neurons per layer):} Like rooms per floor - more rooms give more space, but you need to fill them efficiently
-    \item \textbf{Initialization:} Like the foundation - if it's wrong, the whole building might collapse
-    \item \textbf{Training:} Like the construction process - you need the right tools and techniques
-\end{itemize}
-
-The key is finding the right balance for your specific task and data.
+Designing a neural network is like designing a building, where depth (layers) is like floors in a building where more floors can house more complex functions, but they're harder to build and maintain, width (neurons per layer) is like rooms per floor where more rooms give more space, but you need to fill them efficiently, initialization is like the foundation where if it's wrong, the whole building might collapse, and training is like the construction process where you need the right tools and techniques. The key is finding the right balance for your specific task and data, where each design choice affects the network's capacity, trainability, and performance.
 
 \subsection{Network Depth and Width}
 
-\textbf{Depth} (number of layers):
-\begin{itemize}
-    \item Deeper networks can learn more complex functions
-    \item Can be harder to optimize (vanishing/exploding gradients)
-    \item Modern techniques enable very deep networks (100+ layers)
-\end{itemize}
-
-\textbf{Width} (neurons per layer):
-\begin{itemize}
-    \item Wider networks have more capacity
-    \item Trade-off between width and depth
-    \item Very wide shallow networks vs. narrow deep networks
-\end{itemize}
+The choice of network depth and width involves important trade-offs, where deeper networks can learn more complex functions but can be harder to optimize due to vanishing or exploding gradients, though modern techniques enable very deep networks with 100+ layers. Wider networks have more capacity but there's a trade-off between width and depth, where very wide shallow networks compete with narrow deep networks in terms of representational power and computational efficiency, with the optimal choice depending on the specific task and available computational resources.
 
 \subsection{Weight Initialization}
 
@@ -47,13 +29,7 @@ W_{ij} \sim \mathcal{N}\left(0, \frac{2}{n_{\text{in}}}\right)
 
 \subsection{Batch Training}
 
-\textbf{Mini-batch gradient descent:}
-\begin{itemize}
-    \item Compute gradients on small batches (typically 32-256 examples)
-    \item Provides regularization through noise
-    \item Enables efficient parallel computation
-    \item Balances between SGD and full-batch GD
-\end{itemize}
+Mini-batch gradient descent computes gradients on small batches of typically 32-256 examples, providing regularization through noise and enabling efficient parallel computation. This approach balances between stochastic gradient descent and full-batch gradient descent, offering a compromise between computational efficiency and gradient stability that is well-suited for modern deep learning applications.
 
 % Index entries
 \index{network design!depth}

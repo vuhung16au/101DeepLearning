@@ -7,15 +7,7 @@
 
 \subsection{Intuition and Motivation}
 
-Think of a decision tree as a flowchart for making decisions. For example, to classify whether someone will buy a product, you might ask: "Is their income > \$50k?" If yes, ask "Are they under 30?" If no, ask "Do they have children?" Each question splits the data into smaller, more homogeneous groups.
-
-The key advantages of decision trees are:
-\begin{itemize}
-    \item \textbf{Interpretability:} Easy to understand and explain
-    \item \textbf{No feature scaling:} Works with mixed data types
-    \item \textbf{Handles missing values:} Can deal with incomplete data
-    \item \textbf{Non-parametric:} No assumptions about data distribution
-\end{itemize}
+Think of a decision tree as a flowchart for making decisions, where to classify whether someone will buy a product, you might ask "Is their income > \$50k?" and if yes, ask "Are they under 30?" or if no, ask "Do they have children?" Each question splits the data into smaller, more homogeneous groups that become easier to classify. The key advantages of decision trees include interpretability where they are easy to understand and explain, no feature scaling requirements since they work with mixed data types, handling missing values by being able to deal with incomplete data, and being non-parametric with no assumptions about data distribution, making them flexible and robust across different problem domains.
 
 \begin{figure}[htbp]
 \centering
@@ -41,15 +33,7 @@ The key advantages of decision trees are:
 
 \subsection{Decision Trees}
 
-A \textbf{decision tree} recursively partitions the input space based on feature values. The algorithm works by:
-
-\begin{enumerate}
-    \item Starting with all training examples at the root
-    \item Finding the best feature and threshold to split on
-    \item Creating child nodes for each split
-    \item Repeating recursively until a stopping criterion is met
-    \item Assigning a prediction to each leaf node
-\end{enumerate}
+A decision tree recursively partitions the input space based on feature values, where the algorithm works by starting with all training examples at the root, finding the best feature and threshold to split on that maximizes information gain, creating child nodes for each split that represent the different outcomes, repeating recursively until a stopping criterion is met such as maximum depth or minimum samples per leaf, and assigning a prediction to each leaf node based on the majority class or mean value of the examples that reach that node.
 
 \subsubsection{Splitting Criteria}
 
@@ -86,7 +70,7 @@ We choose the split that maximizes information gain.
 
 \subsection{Random Forests}
 
-\textbf{Random forests} address the overfitting problem of individual trees by combining multiple trees trained on different subsets of the data.
+Random forests address the overfitting problem of individual trees by combining multiple trees trained on different subsets of the data, where each tree is trained on a bootstrap sample of the original data and considers only a random subset of features at each split, creating diversity among the trees that reduces overfitting and improves generalization performance.
 
 \subsubsection{Bootstrap Aggregating (Bagging)}
 
@@ -142,61 +126,49 @@ where $B$ is the number of trees.
 
 \subsection{Gradient Boosting}
 
-\textbf{Gradient boosting} builds an ensemble sequentially, where each new tree corrects the errors of the previous ensemble. Unlike random forests, trees are trained one after another.
+Gradient boosting builds an ensemble sequentially, where each new tree corrects the errors of the previous ensemble by learning to predict the residuals of the current model, unlike random forests where trees are trained independently. This sequential approach allows the ensemble to focus on the most difficult examples and gradually improve its performance through iterative refinement.
 
 \subsubsection{Algorithm}
 
-For iteration $m$:
-\begin{enumerate}
-    \item Compute residuals: $r_i^{(m)} = y^{(i)} - \hat{y}^{(m-1)}(\vect{x}^{(i)})$
-    \item Fit tree $f_m$ to residuals
-    \item Update: $\hat{y}^{(m)} = \hat{y}^{(m-1)} + \nu f_m(\vect{x}^{(i)})$
-\end{enumerate}
+\begin{algorithm}[htbp]
+\caption{Gradient Boosting Algorithm}
+\label{alg:gradient-boosting}
+\begin{algorithmic}[1]
+\State Initialize $\hat{y}^{(0)} = \frac{1}{n} \sum_{i=1}^{n} y^{(i)}$ \Comment{Start with mean for regression}
+\For{$m = 1$ to $M$}
+    \State Compute residuals: $r_i^{(m)} = y^{(i)} - \hat{y}^{(m-1)}(\vect{x}^{(i)})$ for $i = 1, \ldots, n$
+    \State Fit tree $f_m$ to residuals $\{(\vect{x}^{(i)}, r_i^{(m)})\}_{i=1}^{n}$
+    \State Update: $\hat{y}^{(m)} = \hat{y}^{(m-1)} + \nu f_m(\vect{x}^{(i)})$ for all $i$
+\EndFor
+\State \textbf{Return} final ensemble $\hat{y}^{(M)}$
+\end{algorithmic}
+\end{algorithm}
 
-where $\nu$ is the learning rate (shrinkage parameter).
+where $\nu$ is the learning rate (shrinkage parameter) and $M$ is the number of boosting iterations.
 
 \subsubsection{Intuition}
 
-Gradient boosting works by:
-\begin{enumerate}
-    \item Start with a simple model (e.g., mean for regression)
-    \item Calculate the errors (residuals) of the current model
-    \item Train a new model to predict these errors
-    \item Add the new model to the ensemble (with a small weight)
-    \item Repeat until convergence
-\end{enumerate}
+Gradient boosting works by starting with a simple model like the mean for regression, calculating the errors (residuals) of the current model to identify where it fails, training a new model to predict these errors and correct the mistakes, adding the new model to the ensemble with a small weight to avoid overfitting, and repeating this process until convergence where the ensemble can no longer be improved significantly.
 
 \begin{example}
 For regression with target values $[10, 20, 30, 40]$:
-\begin{enumerate}
-    \item Initial prediction: $\hat{y}^{(0)} = 25$ (mean)
-    \item Residuals: $[-15, -5, 5, 15]$
-    \item Train tree on residuals
-    \item Add tree to ensemble: $\hat{y}^{(1)} = 25 + \nu \cdot \text{tree}_1(\vect{x})$
-    \item Repeat with new residuals
-\end{enumerate}
+
+\begin{algorithm}[htbp]
+\caption{Gradient Boosting Example}
+\label{alg:gradient-boosting-example}
+\begin{algorithmic}[1]
+\State Initial prediction: $\hat{y}^{(0)} = 25$ \Comment{mean of target values}
+\State Residuals: $[-15, -5, 5, 15]$ \Comment{computed as $y^{(i)} - \hat{y}^{(0)}$}
+\State Train tree on residuals $\{(\vect{x}^{(i)}, r_i^{(1)})\}_{i=1}^{4}$
+\State Add tree to ensemble: $\hat{y}^{(1)} = 25 + \nu \cdot \text{tree}_1(\vect{x})$
+\State Repeat with new residuals for next iteration
+\end{algorithmic}
+\end{algorithm}
 \end{example}
 
 \subsection{Advanced Ensemble Methods}
 
-\subsubsection{AdaBoost}
-
-\textbf{AdaBoost} (Adaptive Boosting) is an early boosting algorithm that:
-\begin{itemize}
-    \item Assigns higher weights to misclassified examples
-    \item Combines weak learners with weights based on their performance
-    \item Focuses on the hardest examples
-\end{itemize}
-
-\subsubsection{XGBoost and LightGBM}
-
-Modern gradient boosting implementations like XGBoost and LightGBM add:
-\begin{itemize}
-    \item \textbf{Regularization:} L1 and L2 penalties
-    \item \textbf{Pruning:} Remove splits that don't improve performance
-    \item \textbf{Feature subsampling:} Random feature selection at each split
-    \item \textbf{Efficient implementation:} Optimized for speed and memory
-\end{itemize}
+Advanced ensemble methods extend the basic boosting and bagging approaches with sophisticated techniques that improve performance and efficiency. AdaBoost (Adaptive Boosting) is an early boosting algorithm that assigns higher weights to misclassified examples, combines weak learners with weights based on their performance, and focuses on the hardest examples to improve the overall ensemble. Modern gradient boosting implementations like XGBoost and LightGBM add regularization with L1 and L2 penalties to prevent overfitting, pruning to remove splits that don't improve performance, feature subsampling with random feature selection at each split, and efficient implementation optimized for speed and memory usage.
 
 \subsection{Comparison of Ensemble Methods}
 
@@ -217,21 +189,5 @@ Gradient Boosting & Low & Low & Low \\
 
 \subsection{Advantages and Limitations}
 
-\textbf{Advantages:}
-\begin{itemize}
-    \item \textbf{Interpretable:} Easy to understand and explain
-    \item \textbf{Flexible:} Handles mixed data types and missing values
-    \item \textbf{No assumptions:} Works with any data distribution
-    \item \textbf{Feature importance:} Can identify important features
-    \item \textbf{Robust:} Less sensitive to outliers than linear methods
-\end{itemize}
-
-\textbf{Limitations:}
-\begin{itemize}
-    \item \textbf{Overfitting:} Individual trees can overfit easily
-    \item \textbf{Instability:} Small changes in data can lead to very different trees
-    \item \textbf{Computational cost:} Ensemble methods can be slow to train
-    \item \textbf{Memory usage:} Storing many trees requires significant memory
-    \item \textbf{Less effective with high-dimensional data:} Performance can degrade with many features
-\end{itemize}
+Decision trees and ensemble methods have several advantages including being interpretable and easy to understand and explain, being flexible by handling mixed data types and missing values, making no assumptions about data distribution, providing feature importance measures that can identify important features, and being robust with less sensitivity to outliers than linear methods. However, they also have limitations including overfitting where individual trees can overfit easily, instability where small changes in data can lead to very different trees, computational cost where ensemble methods can be slow to train, memory usage where storing many trees requires significant memory, and being less effective with high-dimensional data where performance can degrade with many features.
 

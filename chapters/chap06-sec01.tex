@@ -3,28 +3,15 @@
 \section{Introduction to Feedforward Networks \difficultyInline{intermediate}}
 \label{sec:intro-feedforward}
 
+Feedforward neural networks are the fundamental building blocks of deep learning, consisting of interconnected layers of neurons that process information sequentially from input to output without feedback loops.
+
 \subsection{Intuition: What is a Feedforward Network?}
 
-Imagine you're trying to recognize handwritten digits. A feedforward neural network is like having a team of experts, each specialized in detecting different features:
-
-\begin{itemize}
-    \item \textbf{First layer experts} look for basic patterns like edges, curves, and lines
-    \item \textbf{Middle layer experts} combine these basic patterns to detect more complex shapes like loops, corners, and curves
-    \item \textbf{Final layer experts} combine these complex shapes to make the final decision: "This is a 3" or "This is a 7"
-\end{itemize}
-
-The key insight is that each layer builds upon the previous one, creating increasingly sophisticated representations. This hierarchical approach mirrors how our own visual system works, from detecting simple edges to recognizing complex objects.
-
-A \textbf{feedforward neural network} approximates a function $f^*$. For input $\vect{x}$, the network computes $y = f(\vect{x}; \vect{\theta})$ and learns parameters $\vect{\theta}$ such that $f \approx f^*$.
+Imagine you're trying to recognize handwritten digits, where a feedforward neural network is like having a team of experts, each specialized in detecting different features. First layer experts look for basic patterns like edges, curves, and lines, middle layer experts combine these basic patterns to detect more complex shapes like loops, corners, and curves, and final layer experts combine these complex shapes to make the final decision like "This is a 3" or "This is a 7". The key insight is that each layer builds upon the previous one, creating increasingly sophisticated representations that mirror how our own visual system works, from detecting simple edges to recognizing complex objects. A feedforward neural network approximates a function $f^*$ where for input $\vect{x}$, the network computes $y = f(\vect{x}; \vect{\theta})$ and learns parameters $\vect{\theta}$ such that $f \approx f^*$.
 
 \subsection{Network Architecture}
 
-A feedforward network consists of layers:
-\begin{itemize}
-    \item \textbf{Input layer:} receives raw features $\vect{x}$
-    \item \textbf{Hidden layers:} intermediate representations $\vect{h}^{(1)}, \vect{h}^{(2)}, \ldots$
-    \item \textbf{Output layer:} produces predictions $\hat{y}$
-\end{itemize}
+A feedforward network consists of layers including an input layer that receives raw features $\vect{x}$, hidden layers that create intermediate representations $\vect{h}^{(1)}, \vect{h}^{(2)}, \ldots$ through nonlinear transformations, and an output layer that produces predictions $\hat{y}$ based on the processed information from the hidden layers.
 
 \begin{figure}[htbp]
 \centering
@@ -80,27 +67,26 @@ where $\vect{h}^{(0)} = \vect{x}$, $\mat{W}^{(l)}$ are weights, $\vect{b}^{(l)}$
 
 \subsection{Forward Propagation}
 
-The computation proceeds from input to output:
+The computation proceeds from input to output through a series of matrix multiplications and nonlinear transformations. For each layer $l$, the network computes pre-activations $\vect{z}^{(l)} = \mat{W}^{(l)} \vect{h}^{(l-1)} + \vect{b}^{(l)}$ followed by activations $\vect{h}^{(l)} = \sigma(\vect{z}^{(l)})$ where $\sigma$ is the activation function. The process continues through all hidden layers until reaching the output layer, where the final prediction $\hat{y} = \vect{h}^{(L)}$ is produced.
 
-\begin{align}
-\vect{z}^{(1)} &= \mat{W}^{(1)} \vect{x} + \vect{b}^{(1)} \\
-\vect{h}^{(1)} &= \sigma(\vect{z}^{(1)}) \\
-\vect{z}^{(2)} &= \mat{W}^{(2)} \vect{h}^{(1)} + \vect{b}^{(2)} \\
-&\vdots \\
-\hat{y} &= \vect{h}^{(L)}
-\end{align}
+\begin{algorithm}[htbp]
+\caption{Forward Propagation Algorithm}
+\label{alg:forward-propagation}
+\begin{algorithmic}[1]
+\State \textbf{Input:} $\vect{x}$, weights $\{\mat{W}^{(l)}\}_{l=1}^{L}$, biases $\{\vect{b}^{(l)}\}_{l=1}^{L}$
+\State Initialize $\vect{h}^{(0)} = \vect{x}$
+\For{$l = 1$ to $L$}
+    \State Compute pre-activation: $\vect{z}^{(l)} = \mat{W}^{(l)} \vect{h}^{(l-1)} + \vect{b}^{(l)}$
+    \State Apply activation function: $\vect{h}^{(l)} = \sigma(\vect{z}^{(l)})$
+\EndFor
+\State \textbf{Return} $\hat{y} = \vect{h}^{(L)}$
+\end{algorithmic}
+\end{algorithm}
 
 \begin{example}[Simple Forward Pass]
 \label{ex:forward-pass}
 
-Consider a simple network with 2 inputs, 2 hidden neurons, and 1 output for binary classification:
-
-\begin{itemize}
-    \item Input: $\vect{x} = [1, 0.5]$
-    \item Weights to hidden layer: $\mat{W}^{(1)} = \begin{bmatrix} 0.5 & -0.3 \\ 0.8 & 0.2 \end{bmatrix}$
-    \item Bias: $\vect{b}^{(1)} = [0.1, -0.2]$
-    \item Activation: ReLU
-\end{itemize}
+Consider a simple network with 2 inputs, 2 hidden neurons, and 1 output for binary classification, where the input is $\vect{x} = [1, 0.5]$, weights to hidden layer are $\mat{W}^{(1)} = \begin{bmatrix} 0.5 & -0.3 \\ 0.8 & 0.2 \end{bmatrix}$, bias is $\vect{b}^{(1)} = [0.1, -0.2]$, and the activation function is ReLU. This example demonstrates how the network processes information through matrix multiplication and nonlinear transformation to produce meaningful representations.
 
 \textbf{Step 1:} Compute pre-activation
 \begin{align}

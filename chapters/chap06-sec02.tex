@@ -3,61 +3,23 @@
 \section{Activation Functions \difficultyInline{intermediate}}
 \label{sec:activation-functions}
 
+Activation functions are nonlinear transformations applied to neuron outputs that introduce the essential non-linearity needed for neural networks to learn complex patterns and relationships in data.
+
 \subsection{Intuition: Why Do We Need Activation Functions?}
 
-Imagine you're building a house with only straight lines and right angles. No matter how many rooms you add, you can only create rectangular spaces. But what if you want curved walls, arches, or domes? You need curved tools!
-
-Similarly, without activation functions, neural networks can only learn linear relationships, no matter how many layers you add. Activation functions are the "curved tools" that allow networks to learn non-linear patterns.
-
-Think of an activation function as a decision maker:
-\begin{itemize}
-    \item \textbf{Input:} A weighted sum of information from other neurons
-    \item \textbf{Decision:} How much should this neuron "fire" or contribute to the next layer?
-    \item \textbf{Output:} A transformed value that becomes input to the next layer
-\end{itemize}
-
-Activation functions introduce non-linearity, enabling networks to learn complex patterns.
+Imagine you're building a house with only straight lines and right angles, where no matter how many rooms you add, you can only create rectangular spaces, but what if you want curved walls, arches, or domes? You need curved tools! Similarly, without activation functions, neural networks can only learn linear relationships, no matter how many layers you add, where activation functions are the "curved tools" that allow networks to learn non-linear patterns. Think of an activation function as a decision maker that takes a weighted sum of information from other neurons as input, decides how much this neuron should "fire" or contribute to the next layer, and outputs a transformed value that becomes input to the next layer. Activation functions introduce non-linearity, enabling networks to learn complex patterns that would be impossible with linear transformations alone.
 
 \subsection{Sigmoid}
 
-\begin{equation}
-\sigma(z) = \frac{1}{1 + e^{-z}}
-\end{equation}
-
-Properties:
-\begin{itemize}
-    \item Range: $(0, 1)$
-    \item Saturates for large $|z|$ (vanishing gradients)
-    \item Not zero-centered
-    \item Historically important but less common in hidden layers
-\end{itemize}
+The sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$ is an S-shaped curve that maps any real number to a value between 0 and 1, making it useful for binary classification and probability estimation. However, the sigmoid function has several limitations including saturating for large absolute values of $z$ which causes vanishing gradients during backpropagation, not being zero-centered which can slow down learning, and being historically important but less common in hidden layers due to these issues, though it remains useful in output layers for binary classification tasks.
 
 \subsection{Hyperbolic Tangent (tanh)}
 
-\begin{equation}
-\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}
-\end{equation}
-
-Properties:
-\begin{itemize}
-    \item Range: $(-1, 1)$
-    \item Zero-centered
-    \item Still suffers from saturation
-\end{itemize}
+The hyperbolic tangent function $\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$ is a zero-centered S-shaped curve that maps any real number to a value between -1 and 1, making it an improvement over sigmoid for hidden layers. The tanh function is zero-centered which helps with gradient flow and learning dynamics, though it still suffers from saturation at extreme values which can cause vanishing gradients in deep networks, making it better than sigmoid but still not ideal for very deep architectures.
 
 \subsection{Rectified Linear Unit (ReLU)}
 
-\begin{equation}
-\text{ReLU}(z) = \max(0, z)
-\end{equation}
-
-Properties:
-\begin{itemize}
-    \item Simple and computationally efficient
-    \item No saturation for positive values
-    \item Can cause "dead neurons" (always output 0)
-    \item Most widely used activation
-\end{itemize}
+The Rectified Linear Unit (ReLU) function $\text{ReLU}(z) = \max(0, z)$ is a simple piecewise linear function that outputs the input directly if it's positive, otherwise outputs zero. ReLU is simple and computationally efficient with no saturation for positive values, making it the most widely used activation function in modern deep learning. However, ReLU can cause "dead neurons" that always output 0 when the input is negative, which can slow down learning, though this issue is often mitigated by proper initialization and other techniques.
 
 \subsection{Leaky ReLU and Variants}
 
@@ -82,16 +44,7 @@ z & \text{if } z > 0 \\
 
 \subsection{Swish and GELU}
 
-\textbf{Swish:}
-\begin{equation}
-\text{Swish}(z) = z \cdot \sigma(z)
-\end{equation}
-
-\textbf{Gaussian Error Linear Unit (GELU):}
-\begin{equation}
-\text{GELU}(z) = z \cdot \Phi(z)
-\end{equation}
-where $\Phi$ is the Gaussian CDF. Used in modern transformers.
+The Swish activation function $\text{Swish}(z) = z \cdot \sigma(z)$ is a smooth, non-monotonic function that combines the benefits of ReLU with smooth gradients, often outperforming ReLU in many tasks. The Gaussian Error Linear Unit (GELU) $\text{GELU}(z) = z \cdot \Phi(z)$ where $\Phi$ is the Gaussian CDF, is used in modern transformers because it provides smooth gradients and better performance in transformer architectures, particularly in the attention mechanisms and feedforward layers of models like BERT, GPT, and other large language models where the smooth activation helps with training stability and convergence.
 
 \begin{figure}[htbp]
 \centering

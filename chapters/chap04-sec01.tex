@@ -129,14 +129,4 @@ c &= \max(1000, 1001, 1002) = 1002 \\
 
 \subsection{Other Numerical Issues}
 
-\textbf{Catastrophic cancellation:} Loss of precision when subtracting nearly equal numbers.
-
-\textbf{Accumulated rounding errors:} Small errors compound through many operations.
-
-\textbf{Solutions:}
-\begin{itemize}
-    \item Use higher precision (64-bit floats)
-    \item Algorithmic modifications (like log-sum-exp)
-    \item Batch normalization
-    \item Gradient clipping
-\end{itemize}
+Beyond overflow and underflow, several other numerical issues can affect deep learning computations. Catastrophic cancellation occurs when subtracting nearly equal numbers, leading to loss of precision that can significantly impact gradient calculations and model training. Accumulated rounding errors represent another critical concern where small errors compound through many operations, potentially causing the model to converge to suboptimal solutions or fail to train entirely. To address these issues, several solutions can be employed including using higher precision arithmetic with 64-bit floats to reduce rounding errors, implementing algorithmic modifications like the log-sum-exp trick to maintain numerical stability, applying batch normalization to stabilize activations and gradients, and using gradient clipping to prevent exploding gradients that can cause numerical instability during training.
