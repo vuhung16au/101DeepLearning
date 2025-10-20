@@ -172,6 +172,63 @@ make pdf      # Complete compilation process
 - Include practical examples and applications
 - Maintain consistent terminology throughout
 
+### Learning Objectives Policy
+
+**All learning objectives must be under 121 characters (including spaces) to ensure they fit on a single line in the PDF output.**
+
+#### Rationale
+- **Readability**: Single-line objectives are easier to scan and read
+- **Consistency**: Ensures uniform formatting across all chapters
+- **PDF Layout**: Prevents text wrapping and maintains clean visual appearance
+- **User Experience**: Improves the overall learning experience
+
+#### Implementation Guidelines
+
+**✅ Good Examples (Under 121 characters):**
+- "Deep learning concepts and differences from traditional machine learning" (89 chars)
+- "Vector and matrix operations including addition, multiplication, and transposition" (95 chars)
+- "Activation functions and their role in introducing non-linearity" (78 chars)
+
+**❌ Bad Examples (Over 121 characters):**
+- "The architecture of feedforward neural networks and how they process information from input to output" (125 chars)
+- "Appropriate output layers and loss functions for different types of machine learning tasks (regression, binary classification, multiclass classification)" (165 chars)
+
+#### Writing Guidelines
+1. **Be Concise**: Remove unnecessary words while keeping essential information
+2. **Use Abbreviations**: Use standard abbreviations (e.g., "CNN" instead of "Convolutional Neural Network")
+3. **Focus on Key Concepts**: Highlight the most important learning outcomes
+4. **Avoid Redundancy**: Don't repeat information already in the chapter title
+5. **Use Active Voice**: Write in clear, direct language
+
+#### Character Count Tools
+- Use any text editor with character count feature
+- Online character counters: https://charactercountonline.com/
+- LaTeX: Use `\StrLen{}` command for automatic counting
+
+#### Enforcement
+- **Pre-commit**: Check character count before committing changes
+- **Review Process**: All learning objectives must be reviewed for length
+- **Automated Checks**: Consider implementing automated character count validation
+
+#### Examples of Shortening Techniques
+
+**Before (Over 121 chars):**
+"The architecture of feedforward neural networks and how they process information from input to output"
+
+**After (Under 121 chars):**
+"Feedforward neural network architecture and information processing from input to output"
+
+**Techniques Used:**
+- Removed "The" (unnecessary article)
+- Shortened "neural networks" to "neural network" (singular)
+- Removed "how they" (redundant)
+- Kept essential meaning intact
+
+#### Maintenance
+- Review learning objectives during each chapter update
+- Ensure new objectives follow the 121-character rule
+- Update this policy as needed based on experience
+
 ### Chapter Structure Requirements
 - **Each chapter must have a brief introduction at the start**: A 1-2 paragraph overview that introduces the chapter's topic and provides context
 - **Each chapter must have 15-20 Hands-On Exercises**: Practical exercises categorised by difficulty (Easy/Medium/Hard) to reinforce learning
