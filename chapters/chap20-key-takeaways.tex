@@ -5,9 +5,11 @@
 
 \begin{keytakeaways}
 \begin{itemize}[leftmargin=2em]
-    \item \textbf{Model families} differ in training signal and guarantees.
-    \item \textbf{Evaluation} must consider likelihood, fidelity, diversity, and downstream utility.
-    \item \textbf{Trade-offs} are inevitable: choose for the target application.
+    \item \textbf{Model families} differ in training signal and guarantees: VAEs use likelihood-based training with explicit density modeling, GANs employ adversarial training for implicit modeling, flows provide exact likelihoods through invertible transformations, and diffusion models learn to reverse noise corruption processes.
+    \item \textbf{Evaluation} must consider likelihood, fidelity, diversity, and downstream utility: Different metrics capture different aspects of generation quality, and the choice of evaluation method should align with the intended application and user requirements.
+    \item \textbf{Trade-offs} are inevitable: choose for the target application: Each approach offers distinct advantages—VAEs provide stable training and exact likelihoods, GANs excel at sample quality, flows enable exact sampling, and diffusion models achieve state-of-the-art results with strong theoretical foundations.
+    \item \textbf{Training dynamics} vary significantly across approaches: VAEs and flows use standard maximum likelihood optimization, GANs require careful balance between generator and discriminator, while diffusion models benefit from stable training with principled noise schedules.
+    \item \textbf{Applications} drive architectural choices: The specific requirements of creative content generation, scientific discovery, data augmentation, and personalization should guide the selection of appropriate generative modeling approaches and evaluation metrics.
 \end{itemize}
 \end{keytakeaways}
 

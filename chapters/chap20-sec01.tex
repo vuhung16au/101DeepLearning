@@ -12,6 +12,8 @@ VAE learns latent representation $\vect{z}$ and decoder $p_{\theta}(\vect{x}|\ve
 \max_{\theta, \phi} \mathbb{E}_{q_{\phi}(\vect{z}|\vect{x})}[\log p_{\theta}(\vect{x}|\vect{z})] - D_{KL}(q_{\phi}(\vect{z}|\vect{x}) \| p(\vect{z}))
 \end{equation}
 
+The VAE objective consists of two terms: the reconstruction loss $\mathbb{E}_{q_{\phi}(\vect{z}|\vect{x})}[\log p_{\theta}(\vect{x}|\vect{z})]$ encourages the decoder to accurately reconstruct input data from latent codes, while the KL divergence term $D_{KL}(q_{\phi}(\vect{z}|\vect{x}) \| p(\vect{z}))$ regularizes the encoder to produce latent distributions close to the prior $p(\vect{z})$. This balance ensures both faithful reconstruction and meaningful latent representations.
+
 \subsection{Conditional VAEs}
 
 Generate conditioned on class or attributes:
@@ -19,12 +21,16 @@ Generate conditioned on class or attributes:
 \max \mathbb{E}_{q(\vect{z}|\vect{x}, y)}[\log p(\vect{x}|\vect{z}, y)] - D_{KL}(q(\vect{z}|\vect{x}, y) \| p(\vect{z}))
 \end{equation}
 
+Conditional VAEs extend the standard VAE framework by incorporating conditioning information $y$ (such as class labels or attributes) into both the encoder and decoder. The encoder $q(\vect{z}|\vect{x}, y)$ learns to map input data and conditioning information to latent codes, while the decoder $p(\vect{x}|\vect{z}, y)$ generates samples conditioned on both the latent code and the conditioning variable. This enables controlled generation of specific types of content.
+
 \subsection{Disentangled Representations}
 
 \textbf{$\beta$-VAE:} Increase KL weight for disentanglement
 \begin{equation}
 \mathcal{L} = \mathbb{E}_{q}[\log p(\vect{x}|\vect{z})] - \beta D_{KL}(q(\vect{z}|\vect{x}) \| p(\vect{z}))
 \end{equation}
+
+The $\beta$-VAE introduces a hyperparameter $\beta$ that controls the strength of the KL regularization term. When $\beta > 1$, the model is encouraged to learn more independent latent factors, where each dimension of $\vect{z}$ corresponds to a distinct, interpretable attribute of the data. This disentanglement is achieved by penalizing the mutual information between latent dimensions, forcing the model to encode different aspects of variation in separate latent variables.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (VAE recap)}

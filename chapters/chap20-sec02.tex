@@ -3,13 +3,43 @@
 \section{Generative Adversarial Networks (GANs) \difficultyInline{advanced}}
 \label{sec:gans}
 
+GANs train two competing neural networks—a generator that creates fake data and a discriminator that tries to detect the fakes—in an adversarial game that eventually produces highly realistic synthetic samples.
+
 \subsection{Core Idea}
 
-Two networks compete:
-\begin{itemize}
-    \item \textbf{Generator} $G$: Creates fake samples from noise
-    \item \textbf{Discriminator} $D$: Distinguishes real from fake
-\end{itemize}
+The fundamental concept behind GANs is elegantly simple yet powerful. Imagine an art forger trying to create paintings so convincing that even expert art critics cannot distinguish them from genuine masterpieces. The forger (generator) continuously improves their technique based on feedback from the critics (discriminator), while the critics become more sophisticated at detecting fakes. This adversarial relationship drives both parties to become increasingly skilled—the forger learns to create more realistic art, while the critics develop sharper detection abilities.
+
+In the GAN framework, the generator $G$ takes random noise as input and transforms it into synthetic data samples that should be indistinguishable from real data. The discriminator $D$ acts as a binary classifier, receiving both real and generated samples and learning to distinguish between them. As training progresses, the generator becomes increasingly adept at fooling the discriminator, while the discriminator becomes better at detecting subtle differences between real and fake samples.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[
+    ->, thick,
+    node/.style={circle, fill=teal!60},
+    label/.style={below, font=\footnotesize},
+  ]
+
+  \node[node] (zin) {$\vec z_\text{in}$};
+  \node[node, right=5em of zin] (fake) {$\vec x_\text{fake}$};
+  \draw (zin) -- node[above] {$G(\vec x)$} node[label] {generator} (fake);
+
+  \draw[<-] (zin) -- node[above] {$p_\theta(\vec z)$} node[label] {latent noise} ++(-3,0);
+  \node[node, above=of fake] (real) {$\vec x_\text{real}$};
+  \draw[<-] (real) -- node[above] {$p_\text{data}(\vec x)$} ++(-3,0);
+  \node[node, right=6em of fake] (D) at ($(fake)!0.5!(real)$) {$\vec x$};
+  \node[right=7em of D] (out) {real?};
+  \draw (D) -- node[above] {$D(\vec x)$} node[label] {discriminator} (out);
+
+  \coordinate[right=2.5em of fake, circle, fill, inner sep=0.15em] (pt1);
+  \coordinate[right=2.5em of real, circle, fill, inner sep=0.15em] (pt2);
+
+  \draw[-, dashed] (pt1) edge[bend left] coordinate[circle, fill=orange, inner sep=1mm, pos=0.7] (pt3) (pt2);
+  \draw (fake) -- (pt1) (real) -- (pt2) (pt3) -- (D);
+
+\end{tikzpicture}
+\caption{GAN architecture showing the adversarial relationship between generator and discriminator.}
+\label{fig:gan-architecture}
+\end{figure}
 
 \subsection{Objective}
 
@@ -18,40 +48,25 @@ Minimax game:
 \min_G \max_D \mathbb{E}_{\vect{x} \sim p_{\text{data}}}[\log D(\vect{x})] + \mathbb{E}_{\vect{z} \sim p(\vect{z})}[\log(1 - D(G(\vect{z})))]
 \end{equation}
 
+The GAN objective represents a minimax game where the discriminator aims to maximize its ability to distinguish real from fake samples, while the generator seeks to minimize the discriminator's accuracy. The first term $\mathbb{E}_{\vect{x} \sim p_{\text{data}}}[\log D(\vect{x})]$ encourages the discriminator to assign high probability to real samples, while the second term $\mathbb{E}_{\vect{z} \sim p(\vect{z})}[\log(1 - D(G(\vect{z})))]$ penalizes the discriminator for correctly identifying generated samples, simultaneously training the generator to produce more convincing fakes.
+
 \subsection{Training Procedure}
 
-Alternate updates:
-\begin{enumerate}
-    \item \textbf{Update D:} Maximize discrimination
-    \begin{equation}
-    \max_D \mathbb{E}_{\vect{x}}[\log D(\vect{x})] + \mathbb{E}_{\vect{z}}[\log(1 - D(G(\vect{z})))]
-    \end{equation}
-    
-    \item \textbf{Update G:} Minimize discrimination (or maximize $\log D(G(\vect{z}))$)
-    \begin{equation}
-    \min_G \mathbb{E}_{\vect{z}}[\log(1 - D(G(\vect{z})))]
-    \end{equation}
-\end{enumerate}
+The training process alternates between updating the discriminator and generator in a carefully orchestrated dance. During each training iteration, the discriminator is first updated to improve its ability to distinguish real from fake samples. This involves maximizing the objective $\max_D \mathbb{E}_{\vect{x}}[\log D(\vect{x})] + \mathbb{E}_{\vect{z}}[\log(1 - D(G(\vect{z})))]$, which simultaneously rewards correct identification of real samples and penalizes misclassification of generated samples.
+
+Following the discriminator update, the generator is trained to produce samples that are more likely to fool the updated discriminator. The generator's objective $\min_G \mathbb{E}_{\vect{z}}[\log(1 - D(G(\vect{z})))]$ encourages it to generate samples that the discriminator will classify as real. This alternating optimization process continues until the generator produces samples that are indistinguishable from real data, at which point the discriminator can no longer provide meaningful gradients for further improvement.
 
 \subsection{Training Challenges}
 
-\textbf{Mode collapse:} Generator produces limited variety
+GAN training presents several formidable challenges that can derail the delicate balance between generator and discriminator. Mode collapse occurs when the generator discovers a small subset of samples that consistently fool the discriminator, causing it to generate only these limited variations rather than exploring the full diversity of the data distribution. This phenomenon is particularly problematic when the discriminator becomes too strong relative to the generator, creating a feedback loop where the generator finds it easier to repeatedly generate the same convincing samples rather than learning the full data manifold.
 
-\textbf{Training instability:} Oscillations, non-convergence
-
-\textbf{Vanishing gradients:} When discriminator too strong
+Training instability manifests as oscillatory behavior where the generator and discriminator continuously outmaneuver each other without reaching a stable equilibrium. The discriminator may become too powerful, providing vanishing gradients to the generator, or the generator may become too skilled, causing the discriminator to lose its ability to provide meaningful learning signals. This instability often leads to non-convergence, where the training process fails to reach a meaningful solution despite extensive optimization efforts.
 
 \subsection{GAN Variants}
 
-\textbf{DCGAN:} Deep Convolutional GAN with architectural guidelines
+The evolution of GAN architectures has addressed many of the fundamental challenges in adversarial training through innovative design choices and theoretical insights. DCGAN introduced architectural guidelines that stabilized training by using strided convolutions, batch normalization, and ReLU activations, establishing a foundation for successful deep convolutional GANs. WGAN revolutionized the field by replacing the Jensen-Shannon divergence with the Wasserstein distance, providing more stable gradients and better convergence properties that significantly reduced training instability.
 
-\textbf{WGAN:} Wasserstein GAN with improved training stability
-
-\textbf{StyleGAN:} High-quality image generation with style control
-
-\textbf{Conditional GAN:} Generate from class labels
-
-\textbf{CycleGAN:} Unpaired image-to-image translation
+StyleGAN represents a breakthrough in high-quality image generation by introducing a style-based generator architecture that separates high-level attributes from stochastic variation, enabling fine-grained control over generated images. Conditional GANs extend the basic framework by incorporating auxiliary information such as class labels, allowing for controlled generation of specific types of content. CycleGAN addresses the challenge of unpaired image-to-image translation by introducing cycle consistency constraints, enabling style transfer between domains without requiring paired training data.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (GANs)}

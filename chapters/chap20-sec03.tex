@@ -3,12 +3,16 @@
 \section{Normalizing Flows \difficultyInline{advanced}}
 \label{sec:normalizing-flows}
 
+Normalizing flows transform simple probability distributions through a series of invertible mappings to model complex data distributions while maintaining exact likelihood computation.
+
 \subsection{Key Idea}
 
 Transform simple distribution (e.g., Gaussian) through invertible mappings:
 \begin{equation}
 \vect{x} = f_{\theta}(\vect{z}), \quad \vect{z} \sim p_z(\vect{z})
 \end{equation}
+
+The fundamental insight of normalizing flows is that complex probability distributions can be constructed by applying a series of invertible transformations to a simple base distribution. Starting from a tractable distribution like a standard Gaussian $p_z(\vect{z})$, the flow model learns a bijective function $f_{\theta}$ that maps samples from this simple distribution to the complex data distribution. The invertibility requirement ensures that we can compute exact likelihoods and perform exact sampling, making flows particularly attractive for applications requiring precise probability estimates.
 
 \subsection{Change of Variables}
 
@@ -22,29 +26,23 @@ or equivalently:
 \log p_x(\vect{x}) = \log p_z(\vect{z}) - \log\left|\det \frac{\partial f}{\partial \vect{z}}\right|
 \end{equation}
 
+The change of variables formula is the mathematical foundation that enables normalizing flows to compute exact likelihoods. When transforming a random variable through an invertible function, the probability density changes according to the Jacobian determinant of the transformation. The first equation shows how the density at a point $\vect{x}$ in the data space relates to the density at the corresponding point $f^{-1}(\vect{x})$ in the latent space, scaled by the absolute value of the Jacobian determinant. The log-space formulation is computationally more stable and directly relates the log-likelihood of the data to the log-likelihood of the latent variable minus the log-determinant of the transformation.
+
 \subsection{Requirements}
 
-Function $f$ must be:
-\begin{itemize}
-    \item Invertible
-    \item Have tractable Jacobian determinant
-\end{itemize}
+The success of normalizing flows depends critically on the design of the transformation function $f$, which must satisfy two fundamental requirements. First, the function must be invertible, meaning that for every output $\vect{x}$, there exists a unique input $\vect{z}$ such that $\vect{x} = f(\vect{z})$. This bijectivity is essential for both likelihood computation and sampling, as it ensures a one-to-one correspondence between the latent and data spaces. Second, the function must have a tractable Jacobian determinant, as computing $\log|\det \frac{\partial f}{\partial \vect{z}}|$ is required for likelihood evaluation. These constraints significantly limit the class of functions that can be used in practice, leading to the development of specialized architectures that satisfy both requirements while maintaining sufficient expressiveness to model complex distributions.
 
 \subsection{Flow Architectures}
 
-\textbf{Coupling layers:} Split dimensions and transform half conditioned on other half
+The design of invertible transformations has led to several innovative architectural paradigms that balance expressiveness with computational tractability. Coupling layers represent a particularly elegant solution by partitioning the input dimensions into two halves, where one half is transformed based on the other half, ensuring invertibility while allowing complex dependencies. This approach enables the modeling of intricate conditional relationships while maintaining the ability to compute exact likelihoods through the structured Jacobian.
 
-\textbf{Autoregressive flows:} Each dimension depends on previous ones
-
-\textbf{Continuous normalizing flows:} Use neural ODEs
+Autoregressive flows extend this idea by modeling each dimension as a function of all previous dimensions, creating a natural ordering that facilitates both sampling and likelihood computation. This autoregressive structure allows for highly expressive transformations while maintaining computational efficiency through the triangular nature of the resulting Jacobian matrix. Continuous normalizing flows represent a more recent innovation that leverages neural ordinary differential equations to model continuous-time transformations, providing a more flexible framework for learning complex flow dynamics while maintaining the theoretical guarantees of normalizing flows.
 
 \subsection{Advantages}
 
-\begin{itemize}
-    \item Exact likelihood computation
-    \item Exact sampling
-    \item Stable training (no adversarial dynamics)
-\end{itemize}
+Normalizing flows offer several compelling advantages that distinguish them from other generative modeling approaches. The ability to compute exact likelihoods provides a principled way to evaluate model performance and compare different architectures, addressing a fundamental limitation of GANs where likelihood estimation is intractable. This exact likelihood computation also enables applications requiring precise probability estimates, such as anomaly detection and uncertainty quantification.
+
+The exact sampling capability ensures that generated samples are drawn from the true learned distribution, eliminating the approximation errors inherent in other methods. Unlike GANs, which require careful balance between generator and discriminator, normalizing flows provide stable training dynamics through standard maximum likelihood optimization. This stability makes flows particularly attractive for applications where reliable convergence is crucial, while their invertibility enables bidirectional mapping between latent and data spaces, opening up possibilities for data compression and representation learning.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (flows)}

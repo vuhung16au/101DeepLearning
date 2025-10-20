@@ -3,6 +3,8 @@
 \section{Diffusion Models \difficultyInline{advanced}}
 \label{sec:diffusion-models}
 
+Diffusion models learn to reverse a gradual noise corruption process, starting from pure noise and iteratively denoising to generate high-quality samples through a learned denoising network.
+
 \subsection{Forward Process}
 
 Gradually add noise over $T$ steps:
@@ -12,12 +14,16 @@ q(\vect{x}_t|\vect{x}_{t-1}) = \mathcal{N}(\vect{x}_t; \sqrt{1-\beta_t} \vect{x}
 
 Eventually $\vect{x}_T \approx \mathcal{N}(\boldsymbol{0}, \mat{I})$.
 
+The forward process systematically corrupts clean data by adding Gaussian noise at each timestep, following a predefined noise schedule $\{\beta_t\}_{t=1}^T$. The parameterization $\sqrt{1-\beta_t} \vect{x}_{t-1}$ ensures that the signal-to-noise ratio decreases gradually, while $\beta_t \mat{I}$ controls the amount of noise added at each step. This process is designed to be analytically tractable, allowing efficient sampling and training. The key insight is that after sufficient timesteps, the data becomes approximately Gaussian noise, providing a well-defined starting point for the reverse process.
+
 \subsection{Reverse Process}
 
 Learn to denoise (reverse diffusion):
 \begin{equation}
 p_{\theta}(\vect{x}_{t-1}|\vect{x}_t) = \mathcal{N}(\vect{x}_{t-1}; \boldsymbol{\mu}_{\theta}(\vect{x}_t, t), \boldsymbol{\Sigma}_{\theta}(\vect{x}_t, t))
 \end{equation}
+
+The reverse process represents the core learning challenge in diffusion models, where a neural network must learn to reverse the forward corruption process. The model $p_{\theta}(\vect{x}_{t-1}|\vect{x}_t)$ predicts the parameters of a Gaussian distribution that should generate the previous timestep $\vect{x}_{t-1}$ given the current noisy state $\vect{x}_t$ and timestep $t$. The mean $\boldsymbol{\mu}_{\theta}(\vect{x}_t, t)$ and covariance $\boldsymbol{\Sigma}_{\theta}(\vect{x}_t, t)$ are learned functions that capture the complex dependencies needed to reverse the noise corruption, effectively learning to "denoise" the data step by step.
 
 \subsection{Training}
 
@@ -26,6 +32,8 @@ Predict noise $\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$ at each step:
 \mathcal{L} = \mathbb{E}_{t, \vect{x}_0, \boldsymbol{\epsilon}}\left[\|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)\|^2\right]
 \end{equation}
 
+The training objective simplifies the complex reverse process by focusing on noise prediction rather than directly modeling the reverse distribution. The loss function $\mathcal{L}$ trains the network $\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$ to predict the noise $\boldsymbol{\epsilon}$ that was added to the clean data $\vect{x}_0$ to produce the noisy observation $\vect{x}_t$. This approach leverages the fact that the forward process is analytically tractable, allowing efficient computation of the training targets. The expectation is taken over random timesteps $t$, clean data samples $\vect{x}_0$, and noise realizations $\boldsymbol{\epsilon}$, ensuring the model learns to denoise across all noise levels and data types.
+
 \subsection{Sampling}
 
 Start from noise and iteratively denoise:
@@ -33,14 +41,35 @@ Start from noise and iteratively denoise:
 \vect{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\vect{x}_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)\right) + \sigma_t \vect{z}
 \end{equation}
 
+The sampling process begins with pure Gaussian noise $\vect{x}_T \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$ and iteratively applies the learned denoising function to generate clean samples. The sampling equation combines the predicted noise $\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$ with the current noisy state $\vect{x}_t$ to estimate the previous timestep $\vect{x}_{t-1}$. The coefficients $\alpha_t$ and $\bar{\alpha}_t$ are derived from the noise schedule and ensure consistency with the forward process, while $\sigma_t \vect{z}$ adds stochasticity to prevent the sampling from becoming deterministic. This iterative denoising process gradually transforms noise into realistic data samples.
+
+\subsection{The Algorithm}
+
+The diffusion model sampling algorithm can be expressed as follows:
+
+\begin{algorithm}[h]
+\caption{Diffusion Model Sampling Algorithm}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Trained denoising network $\boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$, noise schedule $\{\alpha_t, \bar{\alpha}_t\}_{t=1}^T$
+\State \textbf{Output:} Generated sample $\vect{x}_0$
+\State
+\State Sample initial noise: $\vect{x}_T \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$
+\For{$t = T, T-1, \ldots, 1$}
+    \State Predict noise: $\hat{\boldsymbol{\epsilon}} = \boldsymbol{\epsilon}_{\theta}(\vect{x}_t, t)$
+    \State Compute denoised estimate: $\vect{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(\vect{x}_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}}\hat{\boldsymbol{\epsilon}}\right)$
+    \If{$t > 1$}
+        \State Add stochasticity: $\vect{x}_{t-1} = \vect{x}_{t-1} + \sigma_t \vect{z}$ where $\vect{z} \sim \mathcal{N}(\boldsymbol{0}, \mat{I})$
+    \EndIf
+\EndFor
+\State \textbf{return} $\vect{x}_0$
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Advantages}
 
-\begin{itemize}
-    \item High-quality generation (DALL-E 2, Stable Diffusion, Midjourney)
-    \item Stable training
-    \item Strong theoretical foundations
-    \item Can condition on text, images, etc.
-\end{itemize}
+Diffusion models have emerged as the state-of-the-art approach for high-quality generative modeling, powering breakthrough applications like DALL-E 2, Stable Diffusion, and Midjourney. Their success stems from several key advantages that address fundamental limitations of previous approaches. Unlike GANs, diffusion models provide stable training dynamics without the delicate balance required between generator and discriminator, making them more reliable for large-scale applications.
+
+The strong theoretical foundations of diffusion models provide principled guarantees about convergence and sample quality, addressing the theoretical gaps that plagued earlier generative approaches. The iterative denoising process naturally supports conditioning on various modalities, enabling text-to-image generation, image editing, and other controlled generation tasks. This flexibility, combined with their proven ability to generate photorealistic images and coherent text, has established diffusion models as the dominant paradigm for modern generative AI systems.
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (diffusion)}
