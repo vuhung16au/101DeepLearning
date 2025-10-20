@@ -26,7 +26,7 @@ Autoencoders excel in practical applications because they enable unsupervised le
 
 \begin{table}[htbp]
 \centering
-\begin{tabular}{lccc}
+\begin{tabularx}{0.9\textwidth}{p{0.20\textwidth} *{3}{X}}
 \toprule
 Feature & Autoencoder (AE) & Supervised NN (e.g., MLP, CNN) & Generative Adversarial Network (GAN) \\
 \midrule
@@ -36,7 +36,7 @@ Input/Output & Input (x) = Output (x′) (It learns the identity function under 
 Loss Function & Reconstruction Error (e.g., Mean Squared Error) & Classification Loss (e.g., Cross-Entropy) or Regression Loss (e.g., MSE) & Adversarial Loss (between Generator and Discriminator) \\
 Key Use Case & Dimensionality reduction, Denoising, Anomaly detection (poor reconstruction = anomaly) & Image recognition, Natural Language Processing, Stock prediction & Image synthesis, Deepfakes, Generating realistic data \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Comparison of Autoencoders with other neural network algorithms.}
 \label{tab:autoencoder-comparison}
 \end{table}
