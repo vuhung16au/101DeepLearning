@@ -100,21 +100,21 @@ This view connects RNNs to dynamic Bayesian networks and emphasizes that trainin
 
 \begin{table}[h]
 \centering
-\begin{tabular}{|l|p{0.5\textwidth}|p{0.3\textwidth}|}
-\hline
+\begin{tabularx}{0.9\textwidth}{p{0.15\textwidth} *{2}{X}}
+\toprule
 \textbf{Type} & \textbf{Description} & \textbf{Examples} \\
-\hline
+\midrule
 One-to-one & Fixed-size input to fixed-size output with temporal structure ignored or not present & Static image classification \\
-\hline
+\midrule
 One-to-many & Single input to sequence output & Image captioning \\
-\hline
+\midrule
 Many-to-one & Sequence input to single output & Sentiment classification; keyword spotting \\
-\hline
+\midrule
 Many-to-many (synchronous) & Sequence labeling with aligned input/output lengths & Part-of-speech tagging; frame labeling \\
-\hline
+\midrule
 Many-to-many (asynchronous) & Sequence transduction with potentially different lengths. Attention helps bridge length mismatch by learning soft alignments \cite{Bahdanau2014} & Machine translation; speech recognition \\
-\hline
-\end{tabular}
+\bottomrule
+\end{tabularx}
 \caption{Types of sequence models and their characteristics.}
 \label{tab:sequence-types}
 \end{table}

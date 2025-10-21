@@ -27,7 +27,7 @@ Think of a decision tree as a flowchart for making decisions, where to classify 
 \draw[->] (right) -- (rl) node[midway, left] {Yes};
 \draw[->] (right) -- (rr) node[midway, right] {No};
 \end{tikzpicture}
-\caption{A simple decision tree for predicting product purchases. Each internal node represents a decision, and leaf nodes represent the final prediction.}
+\caption{Decision tree for product purchases: internal nodes are decisions, leaves are predictions.}
 \label{fig:decision-tree-example}
 \end{figure}
 
@@ -139,7 +139,7 @@ where $B$ is the number of trees.
 
 \node at (3,-4) {Average/Vote};
 \end{tikzpicture}
-\caption{Random forests combine multiple decision trees. Each tree is trained on a different bootstrap sample and makes its own prediction. The final prediction is the average (regression) or majority vote (classification) of all trees.}
+\caption{Random forests: multiple trees trained on bootstrap samples, final prediction by averaging/voting.}
 \label{fig:random-forest}
 \end{figure}
 

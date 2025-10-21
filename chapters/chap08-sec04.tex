@@ -38,7 +38,7 @@ where $\mat{H}$ is the Hessian matrix containing second-order derivatives. The H
   % Optimum
   \fill[bookblack] (0,0) circle (1.2pt) node[below right] {\small $\theta^*$};
 \end{tikzpicture}
-\caption{Newton's method rescales the gradient by curvature, taking longer steps along shallow directions and shorter steps along steep directions.}
+\caption{Newton's method rescales gradient by curvature: longer steps in shallow, shorter in steep.}
 \label{fig:newton-bowl}
 \end{figure}
 
@@ -77,7 +77,7 @@ Provides parameter updates invariant to reparameterization. In probabilistic mod
   % Optimum
   \fill[bookblack] (0,0) circle (1.2pt) node[below right] {\small $\theta^*$};
 \end{tikzpicture}
-\caption{Natural gradient accounts for the local geometry (Fisher metric), often directing updates more orthogonally to level sets than Euclidean gradient.}
+\caption{Natural gradient accounts for local geometry (Fisher metric), directing updates orthogonally.}
 \label{fig:natural-gradient}
 \end{figure}
 

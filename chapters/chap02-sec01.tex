@@ -80,6 +80,18 @@ A batch of color images can be represented as a 4-D tensor:
 where $B$ is the batch size, $H$ and $W$ are height and width, and $C$ is the number of color channels (e.g., 3 for RGB).
 \end{example}
 
+\begin{remark}[Tensors in Programming Languages]
+In Python, numbers are stored as tensors. Even simple scalars like $x = 5$ are internally represented as 0-dimensional tensors, while arrays like $[1, 2, 3]$ are 1-dimensional tensors. This unified representation allows for consistent mathematical operations across different data types and dimensions.
+\end{remark}
+
+\begin{remark}[Tensors in Deep Learning Frameworks]
+With TensorFlow and PyTorch, tensors are the main data structure for deep learning. These frameworks treat all data as tensors, from simple scalars to complex multi-dimensional arrays, enabling seamless computation across CPUs, GPUs, and specialized hardware. Tensors in these frameworks support automatic differentiation, making gradient computation for backpropagation straightforward and efficient.
+\end{remark}
+
+\begin{remark}[Tensor Processing Units (TPUs)]
+Google's Tensor Processing Unit (TPU) is specifically designed to accelerate tensor operations, which are the core computations in deep learning. TPUs use a systolic array architecture optimized for matrix multiplication and tensor contractions, the fundamental operations in neural networks. The name "Tensor" in TPU reflects the unit's specialization for high-dimensional array operations, making it particularly effective for training large neural networks with massive tensor computations.
+\end{remark}
+
 \subsection{Notation Conventions}
 
 Throughout this book, we adopt consistent notation conventions that help distinguish between different types of mathematical objects and make the mathematical formulations of deep learning algorithms more readable and intuitive. Scalars are represented using lowercase italic letters such as $a$, $b$, and $x$, which helps identify them as single numerical values that can represent parameters like learning rates, biases, or individual elements. Vectors are denoted using bold lowercase letters like $\vect{a}$, $\vect{x}$, and $\vect{w}$, making it clear that these represent ordered collections of numbers that can represent feature vectors, weight vectors, or gradients in neural networks. Matrices are represented using bold uppercase letters such as $\mat{A}$, $\mat{X}$, and $\mat{W}$, clearly indicating that these are two-dimensional arrays that can represent weight matrices, data matrices, or transformation matrices in neural network layers. Tensors are denoted using calligraphic uppercase letters like $\mathcal{A}$ and $\mathcal{X}$, distinguishing these higher-dimensional arrays that can represent batches of data, multi-channel images, or complex data structures in deep learning applications. Understanding these fundamental objects and their properties is essential for working with the mathematical formulations of deep learning algorithms, as they form the building blocks upon which all neural network computations are constructed.

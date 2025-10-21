@@ -40,7 +40,7 @@ The key insight is that we can make good predictions by finding the most similar
 \legend{Class 0, Class 1, Query point, Neighbors}
 \end{axis}
 \end{tikzpicture}
-\caption{k-NN finds the k nearest neighbors to a query point and makes predictions based on their labels. Here, with k=3, the query point would be classified as class 0 (2 out of 3 neighbors are class 0).}
+\caption{k-NN finds k nearest neighbors. With k=3, query classified as class 0 (2/3 neighbors).}
 \label{fig:knn-example}
 \end{figure}
 
@@ -118,7 +118,7 @@ The choice of $k$ is crucial and involves a bias-variance trade-off, where small
 \node at (axis cs:20,0.15) [anchor=west] {High bias};
 \end{axis}
 \end{tikzpicture}
-\caption{The effect of k on k-NN performance. Small k leads to high variance (overfitting), while large k leads to high bias (underfitting). The optimal k is typically found through cross-validation.}
+\caption{Effect of k on k-NN: small k→high variance, large k→high bias. Optimal k via CV.}
 \label{fig:knn-k-selection}
 \end{figure}
 
