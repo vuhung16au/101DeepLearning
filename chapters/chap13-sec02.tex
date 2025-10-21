@@ -5,11 +5,11 @@
 
 Factor analysis extends probabilistic PCA by allowing different noise variances for each observed dimension, providing more flexibility in modeling measurement error and enabling better handling of heterogeneous data where different variables may have different levels of reliability. The model assumes that observed data $\vect{x} | \vect{z} \sim \mathcal{N}(\mat{W}\vect{z} + \boldsymbol{\mu}, \boldsymbol{\Psi})$ is generated from latent factors through linear transformation plus diagonal noise covariance $\boldsymbol{\Psi}$, where each observed dimension has its own noise variance, allowing for more realistic modeling of real-world data where different measurements may have different levels of precision. In deep learning, factor analysis is particularly useful for understanding the underlying structure of high-dimensional data and for preprocessing steps where we need to account for different levels of noise in different features.
 
-\textbf{Applications:} Psychology, social sciences, finance - Factor analysis has been extensively used in psychology to identify underlying personality traits and cognitive abilities from questionnaire responses, in social sciences to understand latent social factors from survey data, and in finance to identify common risk factors in portfolio management and asset pricing models.
+% \textbf{Applications:} Psychology, social sciences, finance - Factor analysis has been extensively used in psychology to identify underlying personality traits and cognitive abilities from questionnaire responses, in social sciences to understand latent social factors from survey data, and in finance to identify common risk factors in portfolio management and asset pricing models.
 
 \subsection{Learning via EM}
 
-EM alternates between inferring posteriors over factors and updating loadings $\mat{W}$ and noise $\boldsymbol{\Psi}$. Diagonal noise permits modeling idiosyncratic measurement error per dimension \textcite{Bishop2006}.
+EM alternates between inferring posteriors over factors and updating loadings $\mat{W}$ and noise $\boldsymbol{\Psi}$. Diagonal noise permits modeling idiosyncratic measurement error per dimension.
 
 \begin{figure}[h]
   \centering

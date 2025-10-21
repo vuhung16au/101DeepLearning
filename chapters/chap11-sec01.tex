@@ -9,7 +9,8 @@ Performance metrics provide quantitative measures to evaluate model effectivenes
 
 Robust model evaluation depends on selecting metrics aligned with task requirements and operational costs \index{metrics}. Accuracy alone can be misleading under class imbalance \index{class imbalance}; prefer precision/recall, AUC, PR-AUC, calibration, and cost-sensitive metrics when appropriate \textcite{GoodfellowEtAl2016,Prince2023}.
 
-\paragraph{Confusion matrix} For binary classification with positive/negative classes, define true positives (TP), false positives (FP), true negatives (TN), and false negatives (FN). The confusion matrix \index{confusion matrix} summarizes counts:
+\begin{definition}[Confusion Matrix]
+For binary classification with positive/negative classes, define true positives (TP), false positives (FP), true negatives (TN), and false negatives (FN). The confusion matrix \index{confusion matrix} summarizes counts:
 
 \begin{center}
 \begin{tabular}{@{}lcc@{}}\toprule
@@ -20,6 +21,7 @@ Robust model evaluation depends on selecting metrics aligned with task requireme
 \bottomrule
 \end{tabular}
 \end{center}
+\end{definition}
 
 \begin{figure}[h]
   \centering
@@ -57,32 +59,45 @@ Robust model evaluation depends on selecting metrics aligned with task requireme
   \label{fig:confusion-heatmap}
 \end{figure}
 
-\paragraph{Accuracy} \gls{accuracy} \index{accuracy} measures overall correctness but can obscure minority-class performance:
+\begin{definition}[Accuracy]
+\gls{accuracy} \index{accuracy} measures overall correctness but can obscure minority-class performance:
 \begin{equation}
 \text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{FP} + \text{TN} + \text{FN}}.
 \end{equation}
+\end{definition}
 
-\paragraph{Precision and recall} \gls{precision} and \gls{recall} quantify quality on the positive class:
+\begin{definition}[Precision and Recall]
+\gls{precision} and \gls{recall} quantify quality on the positive class:
 \begin{align}
 \text{Precision} &= \frac{\text{TP}}{\text{TP} + \text{FP}}, \\
 \text{Recall} &= \frac{\text{TP}}{\text{TP} + \text{FN}}.
 \end{align}
+\end{definition}
 
-\paragraph{F1 score} The harmonic mean balances precision and recall:
+\begin{definition}[F1 Score]
+The harmonic mean balances precision and recall:
 \begin{equation}
 F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}.
 \end{equation}
+\end{definition}
 
-\paragraph{ROC and AUC} The ROC curve \index{ROC curve} plots TPR vs. FPR as the decision threshold varies; AUC summarizes ranking quality and is threshold-independent.
+\begin{definition}[ROC and AUC]
+The ROC curve \index{ROC curve} plots TPR vs. FPR as the decision threshold varies; AUC summarizes ranking quality and is threshold-independent.
 \begin{align}
 \text{TPR} &= \frac{\text{TP}}{\text{TP} + \text{FN}}, & \text{FPR} &= \frac{\text{FP}}{\text{FP} + \text{TN}}.
 \end{align}
+\end{definition}
 
-\paragraph{Precision--Recall (PR) curve} Under heavy class imbalance, the PR curve \index{precision--recall curve} and average precision (AP) are often more informative than ROC \textcite{Prince2023}.
+\begin{definition}[Precision-Recall (PR) Curve]
+Under heavy class imbalance, the PR curve \index{precision--recall curve} and average precision (AP) are often more informative than ROC \textcite{Prince2023}.
+\end{definition}
 
-\paragraph{Calibration} A calibrated classifier's predicted probabilities match observed frequencies. Use reliability diagrams and expected calibration error (ECE) \index{calibration}. Calibration matters in risk-sensitive applications \textcite{GoodfellowEtAl2016}.
+\begin{definition}[Calibration]
+A calibrated classifier's predicted probabilities match observed frequencies. Use reliability diagrams and expected calibration error (ECE) \index{calibration}. Calibration matters in risk-sensitive applications \textcite{GoodfellowEtAl2016}.
+\end{definition}
 
-\subsubsection*{Visual aids}
+% \subsubsection*{Visual aids}
+
 \addcontentsline{toc}{subsubsection}{Visual aids (classification)}
 
 \paragraph{ROC and PR curves.} The following figures illustrate key classification metrics:
@@ -159,7 +174,20 @@ Choose metrics that reflect business loss and robustness to outliers \index{regr
 \text{RMSE} &= \sqrt{\text{MSE}}.
 \end{align}
 
-For heavy-tailed noise, consider Huber loss and quantile losses for pinball objectives \textcite{Prince2023}.
+\begin{remark}[Regression Metrics for Robustness]
+For heavy-tailed noise, consider Huber loss and quantile losses for pinball objectives. Huber loss is a robust loss function that combines the benefits of squared loss (for small errors) and absolute loss (for large errors), making it less sensitive to outliers than mean squared error while still being differentiable everywhere.
+\end{remark}
+
+\begin{definition}[Huber Loss]
+Huber loss is defined as:
+\begin{equation}
+L_\delta(y, \hat{y}) = \begin{cases}
+\frac{1}{2}(y - \hat{y})^2 & \text{if } |y - \hat{y}| \leq \delta \\
+\delta|y - \hat{y}| - \frac{1}{2}\delta^2 & \text{otherwise}
+\end{cases}
+\end{equation}
+where $\delta$ is a threshold parameter that determines the transition point between squared and absolute loss.
+\end{definition}
 
 \begin{figure}[h]
   \centering
@@ -184,15 +212,33 @@ Sequence generation quality is commonly measured by \gls{bleu} \index{BLEU} and 
 \text{PPL} = \exp\left(-\frac{1}{N} \sum_{i=1}^{N} \log P(x_i)\right).
 \end{equation}
 
-For retrieval and ranking, report mean average precision (mAP), normalized discounted cumulative gain (nDCG), and recall@k. Mean Average Precision (mAP) measures how well a system ranks relevant items by computing the average precision across different recall levels, making it crucial for information retrieval where ranking quality matters more than binary classification. Normalized Discounted Cumulative Gain (nDCG) evaluates ranking quality by considering both relevance and position, giving higher weight to items ranked earlier in the list, which reflects real-world user behavior where top results are most important. Recall@k measures the proportion of relevant items found in the top-k results, providing a practical metric for applications where users only examine the first few results. These metrics are essential because they capture the nuanced performance of ranking systems where the order of results significantly impacts user experience, unlike traditional classification metrics that treat all predictions equally regardless of their position in a ranked list.
+\begin{remark}[Mean Average Precision (mAP)]
+Mean Average Precision (mAP) measures how well a system ranks relevant items by computing the average precision across different recall levels, making it crucial for information retrieval where ranking quality matters more than binary classification.
+\end{remark}
+
+\begin{remark}[Normalized Discounted Cumulative Gain (nDCG)]
+Normalized Discounted Cumulative Gain (nDCG) evaluates ranking quality by considering both relevance and position, giving higher weight to items ranked earlier in the list, which reflects real-world user behavior where top results are most important.
+\end{remark}
+
+\begin{remark}[Recall@k]
+Recall@k measures the proportion of relevant items found in the top-k results, providing a practical metric for applications where users only examine the first few results.
+\end{remark}
+
+For retrieval and ranking, report mean average precision (mAP), normalized discounted cumulative gain (nDCG), and recall@k. These metrics are essential because they capture the nuanced performance of ranking systems where the order of results significantly impacts user experience, unlike traditional classification metrics that treat all predictions equally regardless of their position in a ranked list.
 
 \index{mAP}\index{nDCG}\index{recall@k}
 
 \subsection{Worked examples}
 
-\paragraph{Imbalanced disease detection} In a 1\% prevalence setting, a classifier with 99\% accuracy can be worthless. Reporting PR-AUC and calibration surfaces early detection quality and absolute risk estimates valued by clinicians \textcite{Ronneberger2015}.
+\begin{example}[Imbalanced Disease Detection]
+In a 1\% prevalence setting, a classifier with 99\% accuracy can be worthless. Reporting PR-AUC and calibration surfaces early detection quality and absolute risk estimates valued by clinicians \textcite{Ronneberger2015}.
+\end{example}
 
-\paragraph{Threshold selection} Optimize thresholds against a cost matrix or utility function (e.g., false negative cost \(\gg\) false positive). Plot utility vs. threshold to choose operating points.
+\begin{example}[Threshold Selection]
+Optimize thresholds against a cost matrix or utility function (e.g., false negative cost \(\gg\) false positive). Plot utility vs. threshold to choose operating points.
+\end{example}
 
-\paragraph{Macro vs. micro averaging} For multi-class, macro-averaged F1 treats classes equally; micro-averaged F1 weights by support. Choose based on fairness vs. prevalence alignment \textcite{Prince2023}.
+\begin{example}[Macro vs. Micro Averaging]
+For multi-class, macro-averaged F1 treats classes equally; micro-averaged F1 weights by support. Choose based on fairness vs. prevalence alignment \textcite{Prince2023}.
+\end{example}
 

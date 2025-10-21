@@ -7,7 +7,9 @@ Baseline models and systematic debugging strategies are essential for establishi
 
 \subsection{Establishing Baselines}
 
-A \textbf{baseline model} is a simple, well-understood reference system that provides a performance floor for comparison against more complex approaches. Strong baselines de-risk projects by validating data quality, metrics, and feasibility \textcite{GoodfellowEtAl2016,Prince2023}. They serve as sanity checks to ensure that sophisticated models actually improve upon simple solutions rather than introducing unnecessary complexity. Baselines help identify whether poor performance stems from model limitations or fundamental issues with data quality, preprocessing, or evaluation methodology. By establishing multiple baselines across different complexity levels, practitioners can quantify the marginal value of each architectural choice and avoid over-engineering solutions. These reference points become immutable benchmarks that prevent performance regression and provide confidence that improvements are genuine rather than artifacts of experimental variance. \index{baseline}
+\begin{definition}[Baseline Model]
+A baseline model is a simple, well-understood reference system that provides a performance floor for comparison against more complex approaches.
+\end{definition} Strong baselines de-risk projects by validating data quality, metrics, and feasibility \textcite{GoodfellowEtAl2016,Prince2023}. They serve as sanity checks to ensure that sophisticated models actually improve upon simple solutions rather than introducing unnecessary complexity. Baselines help identify whether poor performance stems from model limitations or fundamental issues with data quality, preprocessing, or evaluation methodology. By establishing multiple baselines across different complexity levels, practitioners can quantify the marginal value of each architectural choice and avoid over-engineering solutions. These reference points become immutable benchmarks that prevent performance regression and provide confidence that improvements are genuine rather than artifacts of experimental variance. \index{baseline}
 
 Start with simple baselines:
 \begin{enumerate}
@@ -17,9 +19,17 @@ Start with simple baselines:
     \item \textbf{Simple neural networks:} Small architectures
 \end{enumerate}
 
-Compare deep learning improvements against these baselines. Use \emph{data leakage} \index{data leakage} checks (e.g., time-based splits, patient-level splits) and ensure identical preprocessing across baselines.
+Compare deep learning improvements against these baselines. 
+
+\begin{example}[Data Leakage Prevention]
+Use data leakage checks (e.g., time-based splits, patient-level splits) and ensure identical preprocessing across baselines. Data leakage occurs when information from the future or test set inadvertently influences model training, leading to overly optimistic performance estimates that don't generalize to real-world scenarios.
+\end{example}
 
 \subsection{Debugging Strategy}
+
+\begin{remark}[Debugging Deep Learning vs Traditional Software]
+Debugging deep learning models is fundamentally different from traditional software debugging because DL models fail silently with no clear error messages, have non-deterministic behavior due to random initialization and data ordering, and require understanding of both code and mathematical concepts like gradients and optimization landscapes. Unlike traditional software where bugs cause immediate crashes, DL models can appear to work while producing incorrect results, making systematic debugging essential for identifying whether failures stem from implementation bugs, data quality issues, hyperparameter choices, or fundamental model limitations.
+\end{remark}
 
 Deep learning models often fail silently or produce unexpected results due to the complexity of neural architectures and the non-convex optimization landscape. Systematic debugging is essential because model failures can stem from multiple sources: implementation bugs, data quality issues, hyperparameter choices, or fundamental limitations of the approach. Without proper debugging methodology, practitioners may waste significant time pursuing ineffective solutions or miss critical insights about their data and model behavior.
 
@@ -48,6 +58,15 @@ Deep learning models often fail silently or produce unexpected results due to th
 
 \subsection{Common Issues}
 
+\begin{remark}[Most Common Deep Learning Issues]
+The three most common issues in deep learning are:
+\begin{itemize}
+    \item \textbf{Vanishing/Exploding Gradients:} Gradients become too small or large during backpropagation, preventing effective learning
+    \item \textbf{Dead ReLUs:} Neurons never activate due to negative weights, reducing model capacity
+    \item \textbf{Loss Not Decreasing:} Training fails due to incorrect learning rates, gradient bugs, or data preprocessing errors
+\end{itemize}
+\end{remark}
+
 Vanishing and exploding gradients represent fundamental challenges in deep network training that can prevent effective learning. Batch normalization stabilizes training by normalizing inputs to each layer, preventing gradients from becoming too small or large during backpropagation—for example, in a 50-layer network without batch norm, gradients might vanish to near-zero values by layer 20, but with batch norm they remain stable throughout the entire network. Gradient clipping prevents exploding gradients by capping gradient magnitudes at a threshold (e.g., 1.0 or 5.0), which is particularly important in RNNs where gradients can grow exponentially over long sequences, causing training instability and preventing convergence. Proper weight initialization (Xavier/He initialization) ensures gradients start at reasonable magnitudes rather than vanishing or exploding from the first forward pass, with He initialization for ReLU networks setting weights to $\sqrt{2/n}$ where $n$ is the input size, preventing the "dead neuron" problem where all activations become zero. Residual connections provide direct paths for gradient flow, allowing information to bypass layers where gradients might vanish, as seen in ResNet architectures where the skip connection $y = F(x) + x$ ensures that even if $F(x)$ becomes zero, the gradient can still flow through the identity connection.
 
 Dead ReLUs occur when neurons never activate because their weights become too negative, often due to aggressive learning rates, where reducing the learning rate from 0.01 to 0.001 can prevent neurons from being "killed" during early training, allowing them to recover and contribute to learning. Unlike standard ReLU which outputs zero for negative inputs, Leaky ReLU allows small negative values (e.g., 0.01x) and ELU provides smooth negative outputs, preventing the "dying ReLU" problem where neurons become permanently inactive, as seen in networks where 30-50\% of neurons might never fire after initialization.
@@ -59,6 +78,14 @@ Loss not decreasing can stem from multiple sources that require systematic inves
 \subsection{Ablation and sanity checks}
 
 Perform \emph{ablation studies} \index{ablation study} to quantify the contribution of each component (augmentation, architecture blocks, regularizers). Use \emph{label shuffling} to verify the pipeline cannot learn when labels are randomized. Train with \emph{frozen features} to isolate head capacity.
+
+\begin{remark}[Ablation Studies and Sanity Checks]
+\begin{itemize}
+    \item \textbf{Ablation studies:} Systematically remove components to measure their individual contribution to model performance
+    \item \textbf{Label shuffling:} Randomize labels to verify the model cannot learn when ground truth is meaningless
+    \item \textbf{Frozen features:} Fix feature extractor weights to test if the classification head has sufficient capacity
+\end{itemize}
+\end{remark}
 
 % \subsection{Visual aids}
 % \addcontentsline{toc}{subsubsection}{Visual aids (debugging)}
@@ -107,7 +134,7 @@ Perform \emph{ablation studies} \index{ablation study} to quantify the contribut
   \label{fig:lr-sweep}
 \end{figure}
 
-\subsection{Historical notes and references}
-
+\begin{remark}[Historical Notes and References]
 Debugging by overfitting a tiny subset and systematic ablations has roots in classical ML practice and was emphasized in early deep learning methodology \textcite{GoodfellowEtAl2016}. Modern best practices are also surveyed in open textbooks \textcite{Prince2023,D2LChapterOptimization}.
+\end{remark}
 

@@ -7,6 +7,10 @@ Production environments present fundamentally different challenges compared to l
 
 \subsection{Model Deployment}
 
+\begin{remark}[P95 and P99 Percentiles]
+P95 and P99 percentiles represent the response time thresholds where 95% and 99% of requests complete faster than these values, providing critical performance metrics for production systems where user experience depends on consistent response times.
+\end{remark}
+
 \textbf{Model deployment} is the process of making trained models available to serve predictions in production environments, transforming research prototypes into reliable services that can handle real-world traffic and constraints. Unlike development environments where models run on single machines with unlimited resources, production deployment requires careful orchestration of infrastructure, monitoring, and continuous improvement to ensure models perform reliably at scale.
 
 Production environments often have strict resource constraints that require careful optimization of model size and computational requirements. Mobile devices with limited memory or edge servers with computational budgets necessitate model compression techniques like pruning, which removes unnecessary weights, and quantization, which reduces precision from 32-bit to 8-bit floating point numbers. These techniques can reduce model size by 70-90\% while maintaining acceptable accuracy, making them essential for deploying large models like BERT or GPT variants on resource-constrained devices. This compression enables real-time inference without requiring expensive cloud infrastructure, making advanced AI capabilities accessible on devices with limited computational resources.
@@ -45,8 +49,8 @@ Before full deployment, improved models are tested against the current productio
 
 \index{model compression}\index{performance metrics}\index{A/B test}\index{batch}\index{online}\index{drift}
 
-\subsection{Visual aids}
-\addcontentsline{toc}{subsubsection}{Visual aids (production)}
+\subsection{Model Drift}
+Model drift occurs when the statistical properties of input data change over time, causing model performance to degrade as the model was trained on data that no longer represents the current distribution.
 
 \begin{figure}[h]
   \centering
@@ -58,14 +62,22 @@ Before full deployment, improved models are tested against the current productio
       \addplot[bookred,dashed,very thick] coordinates{(1,0.2) (7,0.2)};
     \end{axis}
   \end{tikzpicture}
-  \caption{Simple drift monitor: KS statistic over time with an alert threshold.}
+  \caption{Simple drift monitor: KS statistic over time with an alert threshold. The purple line shows the Kolmogorov-Smirnov statistic measuring distribution shift between training and production data, while the red dashed line represents the alert threshold (0.2) that triggers when drift becomes significant.}
   \label{fig:drift-monitor}
 \end{figure}
+
+\begin{remark}[Model Monitoring]
+Model monitoring is about both model development and operation. Tools such as Hugging Face, PyTorch, and TensorFlow provide dashboards to monitor model performance during tuning, enabling practitioners to track training progress, identify issues early, and optimize hyperparameters effectively.
+\end{remark}
 
 \subsection{Applications and context}
 
 Production considerations vary significantly across different application domains, each with unique requirements and constraints that influence deployment strategies. Mobile applications prioritize model compression and low-latency serving, as edge devices have limited computational resources and users expect instant responses for vision and speech applications. Recommender systems require real-time inference with sub-100ms latency to maintain user engagement, making optimization techniques like quantization and caching essential for delivering personalized content at scale.
 
 Healthcare and finance applications demand the highest levels of model reliability and calibration, as prediction errors can have life-threatening or financially catastrophic consequences. These domains require extensive post-deployment monitoring, human-in-the-loop validation, and rigorous testing protocols to ensure models maintain their performance over time. The stakes are so high that even small calibration drift or distribution shifts can lead to incorrect diagnoses or fraudulent transactions going undetected.
+
+\begin{remark}[Agile Methodology and MLOps]
+Agile methodology and MLOps pipelines can significantly help with deploying models by enabling rapid iteration, continuous integration, and automated testing that catches issues early in the development cycle. These practices ensure that model improvements are systematically validated, deployed, and monitored, reducing the risk of production failures while accelerating the delivery of valuable AI capabilities to users.
+\end{remark}
 
 The choice of production strategies depends heavily on the specific application requirements: real-time systems prioritize latency optimization, safety-critical applications emphasize monitoring and validation, while resource-constrained environments focus on compression and efficient serving architectures \textcite{Ronneberger2015,Prince2023}.

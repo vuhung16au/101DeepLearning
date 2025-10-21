@@ -5,6 +5,10 @@
 
 \subsection{Data Splitting}
 
+\begin{remark}[Data Splitting in Deep Learning]
+Data splitting is not new to deep learning—it is already widely used in classical ML. However, it becomes even more critical in deep learning because neural networks have high capacity and can easily overfit to small datasets, making proper train/validation/test splits essential for reliable evaluation and preventing data leakage that could lead to overly optimistic performance estimates.
+\end{remark}
+
 \textbf{Train/Validation/Test split:} This three-way split ensures unbiased model evaluation by keeping the test set completely isolated until final assessment, while the validation set guides hyperparameter tuning without contaminating the final performance estimate. The validation set acts as a proxy for the test set during development, allowing you to make informed decisions about model architecture and hyperparameters without peeking at the true test performance.
 
 \begin{figure}[h]
@@ -109,21 +113,29 @@
 
 Normalization is essential because neural networks are sensitive to the scale of input features, and features with vastly different ranges can cause training instability and poor convergence. When one feature ranges from 0 to 1 while another spans 0 to 1000, the larger-scale feature dominates the learning process, causing the network to ignore the smaller-scale feature entirely. This scale imbalance leads to slow convergence, as the optimizer struggles to find appropriate learning rates that work for both features simultaneously.
 
-\textbf{Min-Max Scaling:} This method rescales features to a fixed range, typically [0,1], by subtracting the minimum value and dividing by the range. Min-max scaling preserves the original distribution shape and is particularly useful when you know the expected range of your data or when you need features to have the same scale for distance-based algorithms.
+\begin{definition}[Min-Max Scaling]
+This method rescales features to a fixed range, typically [0,1], by subtracting the minimum value and dividing by the range. Min-max scaling preserves the original distribution shape and is particularly useful when you know the expected range of your data or when you need features to have the same scale for distance-based algorithms.
 \begin{equation}
 x' = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
 \end{equation}
+\end{definition}
 
-\textbf{Standardization (Z-score):} This approach transforms features to have zero mean and unit variance, making them follow a standard normal distribution. Standardization is more robust to outliers than min-max scaling and is the preferred method for most deep learning applications, as it centers the data around zero and gives equal importance to all features regardless of their original scale.
+\begin{definition}[Standardization (Z-score)]
+This approach transforms features to have zero mean and unit variance, making them follow a standard normal distribution. Standardization is more robust to outliers than min-max scaling and is the preferred method for most deep learning applications, as it centers the data around zero and gives equal importance to all features regardless of their original scale.
 \begin{equation}
 x' = \frac{x - \mu}{\sigma}
 \end{equation}
+\end{definition}
 
 Always compute statistics on training set only! \index{data leakage} Using validation or test set statistics would create data leakage, as the model would have access to information from future data during training, leading to overly optimistic performance estimates that don't generalize to truly unseen data.
 
 \index{min-max scaling}\index{normalization}\index{standardization}
 
 \subsection{Handling Imbalanced Data}
+
+\begin{example}[Imbalanced Data in Social Media]
+Consider a social media platform with 1 million posts where 950,000 are normal content and only 50,000 are spam (5% spam rate). A naive classifier that always predicts "normal" would achieve 95% accuracy, but would miss all spam posts. This severe class imbalance makes it crucial to use techniques like class weighting, SMOTE, or focal loss to ensure the model learns to detect the minority class effectively.
+\end{example}
 
 Imbalanced data occurs when one or more classes have significantly fewer examples than others, creating a skewed class distribution that can severely bias model training toward the majority class, which is problematic because standard machine learning algorithms assume balanced class distributions and will naturally favor the majority class, leading to poor performance on minority classes that are often the most important to identify correctly. Oversampling duplicates minority class examples to balance the dataset artificially, increasing the representation of minority classes by creating exact copies of existing examples, which helps the model see more minority class instances during training, though simple duplication can lead to overfitting since the model sees identical examples multiple times, potentially memorizing specific patterns rather than learning generalizable features.
 
@@ -179,6 +191,10 @@ For images: flips, crops, color jitter; for text: back-translation; for audio: t
   \caption{Min-max scaling (purple) vs. standardization (red) schematic.}
   \label{fig:scaling}
 \end{figure}
+
+\begin{remark}[Transfer Learning]
+Transfer learning is like using a pre-trained chef's knowledge to cook a new dish—instead of learning cooking from scratch, you start with someone who already knows how to handle ingredients and techniques, then adapt their skills to your specific recipe. In deep learning, this means using a model trained on a large dataset (like ImageNet) as a starting point for your specific task, dramatically reducing the data and time needed to achieve good performance.
+\end{remark}
 
 \subsection{Historical notes}
 
