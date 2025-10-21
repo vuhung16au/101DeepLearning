@@ -11,6 +11,10 @@ PCA finds orthogonal directions of maximum variance through the transformation $
 
 \subsection{Probabilistic Formulation}
 
+\begin{remark}[Key Differences between PCA and Probabilistic PCA]
+The key difference is that classical PCA is deterministic and finds orthogonal directions of maximum variance, while Probabilistic PCA provides a probabilistic framework that models uncertainty through a generative process with noise, enabling principled treatment of missing data and uncertainty quantification.
+\end{remark}
+
 The probabilistic formulation models observations through a generative process:
 \begin{align}
 \vect{z} &\sim \mathcal{N}(\boldsymbol{0}, \mat{I}) \\
@@ -27,7 +31,15 @@ Marginalizing the latent variable yields
 \end{equation}
 Here $\mat{W}\mat{W}^\top + \sigma^2\mat{I}$ is the \emph{covariance matrix} of the observed data: $\mat{W}\mat{W}^\top$ captures variance explained by latent factors and $\sigma^2\mat{I}$ is residual (isotropic) noise.
 
+\begin{definition}[Probabilistic PCA]
+Probabilistic PCA is a probabilistic extension of classical PCA that models observed data through a generative process where latent variables $\vect{z}$ follow a standard normal distribution and observed data $\vect{x}$ is generated as a linear transformation of the latent variables plus Gaussian noise, enabling principled treatment of uncertainty and missing data.
+\end{definition}
+
 \subsection{Learning}
+
+\begin{remark}[EM Algorithm]
+The EM (Expectation-Maximization) algorithm is an iterative optimization method for maximum likelihood estimation in latent variable models, defined as $\theta^{(t+1)} = \arg\max_\theta \mathbb{E}_{p(\vect{z}|\vect{x},\theta^{(t)})}[\log p(\vect{x},\vect{z}|\theta)]$ where the E-step computes the posterior expectation and the M-step maximizes the expected log-likelihood.
+\end{remark}
 
 Learning in probabilistic PCA maximizes the likelihood using the EM algorithm, where the E-step computes the posterior distribution $p(\vect{z}|\vect{x})$ to estimate the latent variables given the observed data, and the M-step updates the parameters $\mat{W}$, $\boldsymbol{\mu}$, and $\sigma^2$ to maximize the expected log-likelihood. This iterative process allows the model to learn the optimal linear transformation and noise parameters that best explain the observed data, where the EM algorithm is particularly useful because it handles the latent variables naturally and provides a principled way to estimate parameters in the presence of missing data. As the noise variance $\sigma^2 \to 0$, the probabilistic PCA recovers standard PCA, showing that classical PCA is a special case of the probabilistic formulation when we assume no noise in the data generation process.
 

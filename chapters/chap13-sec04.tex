@@ -11,7 +11,7 @@ Sparse coding learns an overcomplete dictionary where data has sparse representa
 
 \subsection{Optimization and interpretation}
 
-The $\ell_1$ penalty promotes sparsity, yielding parts-based representations and robust denoising. Alternating minimization over dictionary $\mat{D}$ and codes $\vect{z}$ is common; convolutional variants are used in images \textcite{GoodfellowEtAl2016}.
+The $\ell_1$ penalty promotes sparsity, yielding parts-based representations and robust denoising. The $\ell_1$ penalty promotes sparsity by encouraging many coefficients to become exactly zero, leading to sparse solutions where only a few features are selected. Alternating minimization over dictionary $\mat{D}$ and codes $\vect{z}$ is common; convolutional variants are used in images \textcite{GoodfellowEtAl2016}.
 
 \begin{figure}[h]
   \centering
