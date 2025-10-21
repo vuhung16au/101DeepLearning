@@ -9,9 +9,19 @@
 \else
   \RequirePackage{fontspec}
   \defaultfontfeatures{Ligatures=TeX}
-  \setmainfont{Times New Roman}
-  \setsansfont{Arial}
-  \setmonofont{Courier New}
+  % Platform-specific font setup
+  % Check if running in Docker (Ubuntu) by looking for /etc/os-release
+  \IfFileExists{/etc/os-release}{%
+    % Running in Docker/Ubuntu - use Liberation fonts
+    \setmainfont{Liberation Serif}
+    \setsansfont{Liberation Sans}
+    \setmonofont{Liberation Mono}
+  }{%
+    % Running on Mac - use system fonts
+    \setmainfont{Times New Roman}
+    \setsansfont{Arial}
+    \setmonofont{Courier New}
+  }
   \ifXeTeX
     \RequirePackage{xeCJK}
     \setCJKmainfont{PingFang SC}
@@ -39,21 +49,33 @@
     \IfFontExistsTF{Noto Color Emoji}{%
       \newfontfamily\emojifont{Noto Color Emoji}[Renderer=Harfbuzz,Scale=MatchUppercase]
     }{%
-      \newfontfamily\emojifont{Symbola}[Scale=MatchUppercase]
+      \IfFontExistsTF{Symbola}{%
+        \newfontfamily\emojifont{Symbola}[Scale=MatchUppercase]
+      }{%
+        \newfontfamily\emojifont{Liberation Sans}[Scale=MatchUppercase]
+      }
     }}
   \newcommand{\emoji}[1]{{\emojifont #1}}
   % Handle variation selector
   \newunicodechar{️}{}
-  % Map common emojis
+  % Map common emojis with better fallbacks - use direct font switching
   \newunicodechar{💫}{{\emojifont 💫}}
   \newunicodechar{⭐}{{\emojifont ⭐}}
   \newunicodechar{🌟}{{\emojifont 🌟}}
+  % Additional emoji mappings for better coverage
+  \newunicodechar{🎯}{{\emojifont 🎯}}
+  
+  % Alternative Unicode characters that work better with CJK fonts
+  \newunicodechar{★}{{\emojifont ★}}
+  \newunicodechar{☆}{{\emojifont ☆}}
+  \newunicodechar{●}{{\emojifont ●}}
+  \newunicodechar{◆}{{\emojifont ◆}}
 \fi
 
 % Difficulty inline helpers (mirroring main.tex)
-\newcommand{\difficultyBeginner}{\emoji{💫}}
-\newcommand{\difficultyIntermediate}{\emoji{⭐}}
-\newcommand{\difficultyAdvanced}{\emoji{🌟}}
+\newcommand{\difficultyBeginner}{\emoji{●}}
+\newcommand{\difficultyIntermediate}{\emoji{◆}}
+\newcommand{\difficultyAdvanced}{\emoji{★}}
 \newcommand{\difficultyInlineBeginner}{\texorpdfstring{\,\difficultyBeginner}{ [beginner] }}
 \newcommand{\difficultyInlineIntermediate}{\texorpdfstring{\,\difficultyIntermediate}{ [intermediate] }}
 \newcommand{\difficultyInlineAdvanced}{\texorpdfstring{\,\difficultyAdvanced}{ [advanced] }}

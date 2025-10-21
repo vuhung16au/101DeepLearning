@@ -1,6 +1,6 @@
 # Makefile for Deep Learning 101 Book
 
-.PHONY: help pdf pdf-a4 pdf-a5 pdf-letter pdf-a6 pdf-b5 pdf-trade all clean glossary index publish clean-temp clean-all temp
+.PHONY: help pdf pdf-a4 pdf-a5 pdf-letter pdf-a6 pdf-b5 pdf-trade pdf-docker pdf-docker-a4 pdf-docker-a5 pdf-docker-letter pdf-docker-a6 pdf-docker-b5 pdf-docker-trade docker-build docker-shell all clean glossary index publish clean-temp clean-all temp
 
 # Avoid parallel races across full-book builds which share chapters/*.aux
 .NOTPARALLEL: pdf-a4 pdf-a5 pdf-letter pdf-a6 pdf-b5 pdf-trade
@@ -22,6 +22,15 @@ help:
 	@echo "  make pdf-a6   - Build the complete book PDF (A6 paper)"
 	@echo "  make pdf-b5   - Build the complete book PDF (B5 paper)"
 	@echo "  make pdf-trade - Build the complete book PDF (6\"x9\" trade paper)"
+	@echo "  make pdf-docker - Build all PDF versions using Docker"
+	@echo "  make pdf-docker-a4 - Build A4 PDF using Docker"
+	@echo "  make pdf-docker-a5 - Build A5 PDF using Docker"
+	@echo "  make pdf-docker-letter - Build Letter PDF using Docker"
+	@echo "  make pdf-docker-a6 - Build A6 PDF using Docker"
+	@echo "  make pdf-docker-b5 - Build B5 PDF using Docker"
+	@echo "  make pdf-docker-trade - Build Trade PDF using Docker"
+	@echo "  make docker-build - Build Docker container with LaTeX environment"
+	@echo "  make docker-shell - Access Docker container with volume for exploration"
 	@echo "  make epub     - Build EPUB (via tex4ebook)"
 	@echo "  make tex4ebook - Alias of 'make epub'"
 	@echo "  make epub-pandoc - Build EPUB (via Pandoc fallback)"
@@ -166,6 +175,65 @@ main-trade.pdf: main.tex chapters/*.tex temp
 	@echo "Moving auxiliary files to temp directory..."
 	@mv main-trade.aux main-trade.log main-trade.out main-trade.toc main-trade.bbl main-trade.blg main-trade.bcf main-trade.run.xml main-trade.synctex.gz main-trade.idx main-trade.ind main-trade.ilg main-trade.ist main-trade.glo main-trade.gls main-trade.glg main-trade.exa main-trade.loa main-trade.rem temp/ 2>/dev/null || true
 	@echo "Book compiled successfully: main-trade.pdf"
+
+# Docker container name and volume
+DOCKER_CONTAINER_NAME = dl101-builder
+DOCKER_VOLUME_NAME = dl101-latex-builder-volume
+
+# Build Docker container with LaTeX environment
+docker-build:
+	@echo "Building Docker container with LaTeX environment..."
+	@docker build -t dl101-latex-builder .
+	@echo "Docker container built successfully!"
+
+# Access Docker container with volume for exploration
+docker-shell:
+	@echo "Starting Docker container with volume access..."
+	@echo "Volume '$(DOCKER_VOLUME_NAME)' is mounted at /workspace"
+	@echo "Project files are available at /data"
+	@echo "Type 'exit' to leave the container"
+	@docker run --rm -it --name $(DOCKER_CONTAINER_NAME)-shell -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash
+
+# Docker build for all paper sizes (reuses existing container)
+pdf-docker: docker-build pdf-docker-a4 pdf-docker-a5 pdf-docker-letter pdf-docker-a6 pdf-docker-b5 pdf-docker-trade
+	@echo "All PDF versions built successfully with Docker!"
+
+# Individual Docker build targets
+pdf-docker-a4: temp
+	@echo "Building A4 version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a4 \"\\def\\papersize{a4paper}\\input{main.tex}\" && biber main-a4 && makeglossaries main-a4 && makeindex main-a4 && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a4 \"\\def\\papersize{a4paper}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a4 \"\\def\\papersize{a4paper}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-a4.pdf /workspace/ && cp main-a4.aux main-a4.log main-a4.out main-a4.toc main-a4.bbl main-a4.blg main-a4.bcf main-a4.run.xml main-a4.synctex.gz main-a4.idx main-a4.ind main-a4.ilg main-a4.ist main-a4.glo main-a4.gls main-a4.glg main-a4.exa main-a4.loa main-a4.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-a4.aux main-a4.log main-a4.out main-a4.toc main-a4.bbl main-a4.blg main-a4.bcf main-a4.run.xml main-a4.synctex.gz main-a4.idx main-a4.ind main-a4.ilg main-a4.ist main-a4.glo main-a4.gls main-a4.glg main-a4.exa main-a4.loa main-a4.rem temp/ 2>/dev/null || true
+
+pdf-docker-a5: temp
+	@echo "Building A5 version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a5 \"\\def\\papersize{a5paper}\\input{main.tex}\" && biber main-a5 && makeglossaries main-a5 && makeindex main-a5 && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a5 \"\\def\\papersize{a5paper}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a5 \"\\def\\papersize{a5paper}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-a5.pdf /workspace/ && cp main-a5.aux main-a5.log main-a5.out main-a5.toc main-a5.bbl main-a5.blg main-a5.bcf main-a5.run.xml main-a5.synctex.gz main-a5.idx main-a5.ind main-a5.ilg main-a5.ist main-a5.glo main-a5.gls main-a5.glg main-a5.exa main-a5.loa main-a5.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-a5.aux main-a5.log main-a5.out main-a5.toc main-a5.bbl main-a5.blg main-a5.bcf main-a5.run.xml main-a5.synctex.gz main-a5.idx main-a5.ind main-a5.ilg main-a5.ist main-a5.glo main-a5.gls main-a5.glg main-a5.exa main-a5.loa main-a5.rem temp/ 2>/dev/null || true
+
+pdf-docker-letter: temp
+	@echo "Building Letter version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-letter \"\\def\\papersize{letterpaper}\\input{main.tex}\" && biber main-letter && makeglossaries main-letter && makeindex main-letter && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-letter \"\\def\\papersize{letterpaper}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-letter \"\\def\\papersize{letterpaper}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-letter.pdf /workspace/ && cp main-letter.aux main-letter.log main-letter.out main-letter.toc main-letter.bbl main-letter.blg main-letter.bcf main-letter.run.xml main-letter.synctex.gz main-letter.idx main-letter.ind main-letter.ilg main-letter.ist main-letter.glo main-letter.gls main-letter.glg main-letter.exa main-letter.loa main-letter.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-letter.aux main-letter.log main-letter.out main-letter.toc main-letter.bbl main-letter.blg main-letter.bcf main-letter.run.xml main-letter.synctex.gz main-letter.idx main-letter.ind main-letter.ilg main-letter.ist main-letter.glo main-letter.gls main-letter.glg main-letter.exa main-letter.loa main-letter.rem temp/ 2>/dev/null || true
+
+pdf-docker-a6: temp
+	@echo "Building A6 version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a6 \"\\def\\papersize{a6paper}\\input{main.tex}\" && biber main-a6 && makeglossaries main-a6 && makeindex main-a6 && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a6 \"\\def\\papersize{a6paper}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-a6 \"\\def\\papersize{a6paper}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-a6.pdf /workspace/ && cp main-a6.aux main-a6.log main-a6.out main-a6.toc main-a6.bbl main-a6.blg main-a6.bcf main-a6.run.xml main-a6.synctex.gz main-a6.idx main-a6.ind main-a6.ilg main-a6.ist main-a6.glo main-a6.gls main-a6.glg main-a6.exa main-a6.loa main-a6.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-a6.aux main-a6.log main-a6.out main-a6.toc main-a6.bbl main-a6.blg main-a6.bcf main-a6.run.xml main-a6.synctex.gz main-a6.idx main-a6.ind main-a6.ilg main-a6.ist main-a6.glo main-a6.gls main-a6.glg main-a6.exa main-a6.loa main-a6.rem temp/ 2>/dev/null || true
+
+pdf-docker-b5: temp
+	@echo "Building B5 version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-b5 \"\\def\\papersize{b5paper}\\input{main.tex}\" && biber main-b5 && makeglossaries main-b5 && makeindex main-b5 && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-b5 \"\\def\\papersize{b5paper}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-b5 \"\\def\\papersize{b5paper}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-b5.pdf /workspace/ && cp main-b5.aux main-b5.log main-b5.out main-b5.toc main-b5.bbl main-b5.blg main-b5.bcf main-b5.run.xml main-b5.synctex.gz main-b5.idx main-b5.ind main-b5.ilg main-b5.ist main-b5.glo main-b5.gls main-b5.glg main-b5.exa main-b5.loa main-b5.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-b5.aux main-b5.log main-b5.out main-b5.toc main-b5.bbl main-b5.blg main-b5.bcf main-b5.run.xml main-b5.synctex.gz main-b5.idx main-b5.ind main-b5.ilg main-b5.ist main-b5.glo main-b5.gls main-b5.glg main-b5.exa main-b5.loa main-b5.rem temp/ 2>/dev/null || true
+
+pdf-docker-trade: temp
+	@echo "Building Trade version with Docker..."
+	@docker run --name $(DOCKER_CONTAINER_NAME) -v "$(PWD):/data" -v $(DOCKER_VOLUME_NAME):/workspace -w /data dl101-latex-builder bash -c "lualatex -interaction=nonstopmode -halt-on-error -jobname=main-trade \"\\def\\papersize{trade}\\input{main.tex}\" && biber main-trade && makeglossaries main-trade && makeindex main-trade && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-trade \"\\def\\papersize{trade}\\input{main.tex}\" && lualatex -interaction=nonstopmode -halt-on-error -jobname=main-trade \"\\def\\papersize{trade}\\input{main.tex}\" && echo 'Copying files to volume...' && cp main-trade.pdf /workspace/ && cp main-trade.aux main-trade.log main-trade.out main-trade.toc main-trade.bbl main-trade.blg main-trade.bcf main-trade.run.xml main-trade.synctex.gz main-trade.idx main-trade.ind main-trade.ilg main-trade.ist main-trade.glo main-trade.gls main-trade.glg main-trade.exa main-trade.loa main-trade.rem /workspace/ 2>/dev/null || true && echo 'Files copied to volume successfully!'"
+	@docker rm $(DOCKER_CONTAINER_NAME) 2>/dev/null || true
+	@mv main-trade.aux main-trade.log main-trade.out main-trade.toc main-trade.bbl main-trade.blg main-trade.bcf main-trade.run.xml main-trade.synctex.gz main-trade.idx main-trade.ind main-trade.ilg main-trade.ist main-trade.glo main-trade.gls main-trade.glg main-trade.exa main-trade.loa main-trade.rem temp/ 2>/dev/null || true
 
 # Update glossary
 glossary: temp

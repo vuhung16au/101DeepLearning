@@ -91,15 +91,20 @@ The margins are configured using the geometry package in `main.tex`:
 - **Build Process**: Glossary and index are automatically processed during compilation
 
 ### 2. Difficulty Levels
-- **Inline rule**: Difficulty markers (💫/⭐/🌟) MUST appear inline with the heading text, never on a new line.
-  - Example: `6.2 Activation Functions ⭐`
+- **Inline rule**: Difficulty markers (●/◆/★) MUST appear inline with the heading text, never on a new line.
+  - Example: `6.2 Activation Functions ◆`
 - **Command**: Prefer `\\difficultyInline{level}` inside the section title; legacy `\\difficulty{level}` is deprecated.
 - **Levels**: 
-  - `beginner` - Basic concepts, intuitive explanations (displays as 💫)
-  - `intermediate` - Technical details, some background assumed (displays as ⭐️)
-  - `advanced` - Cutting-edge research, complex mathematics (displays as 🌟)
-- **Visual**: Emoji indicators appear next to section titles on the same line
+  - `beginner` - Basic concepts, intuitive explanations (displays as ● - Black Circle)
+  - `intermediate` - Technical details, some background assumed (displays as ◆ - Black Diamond)
+  - `advanced` - Cutting-edge research, complex mathematics (displays as ★ - Black Star)
+- **Visual**: Unicode character indicators appear next to section titles on the same line
 - **Implementation**: The LaTeX preamble provides `\\difficultyInline{}` for headings; do not put difficulty on a separate line
+- **Character Mapping**:
+  - **Beginner:** `●` (U+25CF) - Black Circle
+  - **Intermediate:** `◆` (U+25C6) - Black Diamond  
+  - **Advanced:** `★` (U+2605) - Black Star
+- **Cross-platform Compatibility**: These Unicode characters work reliably across Mac and Docker builds without font conflicts
 
 ### 3. LaTeX Structure
 - **Main File**: `main.tex` contains document structure and packages

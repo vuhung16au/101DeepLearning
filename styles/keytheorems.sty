@@ -1,0 +1,22 @@
+\ProvidesPackage{keytheorems}[2025/01/20 Key theorems package for DL101]
+
+\RequirePackage{amsthm}
+
+% Define newkeytheoremstyle command
+\newcommand{\newkeytheoremstyle}[2]{%
+  % For now, just use plain style
+  \theoremstyle{plain}%
+}
+
+% Define newkeytheorem command that creates theorem environments
+\newcommand{\newkeytheorem}[2][]{%
+  \ifx\relax#1\relax
+    % No optional argument - create simple theorem
+    \newtheorem{#2}{#2}%
+  \else
+    % With optional argument - create theorem with parent counter
+    \newtheorem{#2}[#1]{#2}%
+  \fi
+}
+
+\endinput

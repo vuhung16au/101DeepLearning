@@ -267,6 +267,9 @@ main-a4.rem
 *.snm
 *.vrb
 
+# Key takeaways files
+*.tak 
+
 # Project specific files
 TODO/
 TODO/*.md

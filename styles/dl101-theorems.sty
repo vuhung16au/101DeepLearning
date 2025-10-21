@@ -1,101 +1,52 @@
 \ProvidesPackage{dl101-theorems}[2025/10/20 DL101 theorem environments]
 \RequirePackage{tcolorbox}
-\RequirePackage{keytheorems}
+\RequirePackage{amsthm}
 % Colors (assume base palette)
 \colorlet{theoremblue}{bookpurple!80}
 \colorlet{theoremgray}{softivory}
 \colorlet{definitionblue}{bookpurple!70}
 
-% Theorem styles
-\newkeytheoremstyle{theorembox}
-  {
-    headfont=\bfseries\sffamily\color{bookpurple},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{} ,
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=theoremgray,
-        colframe=theoremblue,
-        sharp corners,
-        boxrule=1pt,
-        left=8pt,right=8pt,top=8pt,bottom=8pt,
-      }
-  }
+% Platform-specific theorem environment setup
+% Check if running in Docker (Ubuntu) by looking for /etc/os-release
+\IfFileExists{/etc/os-release}{%
+  % Running in Docker/Ubuntu - use standard amsthm
+  \theoremstyle{plain}
+  \newtheorem{theorem}{Theorem}[chapter]
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{corollary}[theorem]{Corollary}
 
-\newkeytheoremstyle{definitionbox}
-  {
-    headfont=\bfseries\sffamily\color{bookpurple},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{} ,
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=definitionblue,
-        sharp corners,
-        boxrule=0pt,
-        leftrule=4pt,
-        top=8pt,bottom=8pt,left=8pt,right=8pt,
-      }
-  }
+  \theoremstyle{definition}
+  \newtheorem{definition}[theorem]{Definition}
+  \newtheorem{example}[theorem]{Example}
 
-\newkeytheoremstyle{remarkbox}
-  {
-    headfont=\bfseries\sffamily\color{deepcharcoal},
-    bodyfont=\normalfont\itshape,
-    noteseparator={ --- },
-    notebraces={}{} ,
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=warmstone,
-        sharp corners,
-        boxrule=0pt,
-        leftrule=2pt,
-        top=4pt,bottom=4pt,left=8pt,right=8pt,
-      }
-  }
+  \theoremstyle{remark}
+  \newtheorem{remark}[theorem]{Remark}
 
-\newkeytheoremstyle{proofbox}
-  {
-    headfont=\bfseries\sffamily\color{deepcharcoal},
-    bodyfont=\normalfont,
-    noteseparator={ --- },
-    notebraces={}{} ,
-    notefont=\bfseries,
-    tcolorbox-no-titlebar=
-      {
-        colback=white,
-        colframe=warmstone!50,
-        sharp corners,
-        boxrule=0pt,
-        toprule=0.5pt,
-        top=4pt,bottom=4pt,left=8pt,right=8pt,
-      }
-  }
+  % proof environment is already defined by amsthm
 
-% Environments
-\newkeytheorem{theorem}[parent=chapter,style=theorembox]
-\newkeytheorem{lemma}[sibling=theorem,style=theorembox]
-\newkeytheorem{proposition}[sibling=theorem,style=theorembox]
-\newkeytheorem{corollary}[sibling=theorem,style=theorembox]
-\newkeytheorem{definition}[sibling=theorem,style=definitionbox]
-\newkeytheorem{example}[sibling=theorem,style=definitionbox]
-\newkeytheorem{remark}[sibling=theorem,style=remarkbox]
+  % Exercises counter
+  \newtheorem{problem}{Exercise}[chapter]
+}{%
+  % Running on Mac - use standard amsthm (same as Docker for now)
+  \theoremstyle{plain}
+  \newtheorem{theorem}{Theorem}[chapter]
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{corollary}[theorem]{Corollary}
 
-% proof (non-numbered), fallback if amsthm didn't define it
-\makeatletter
-\@ifundefined{proof}{%
-  \newkeytheorem{proof}[style=proofbox,numbered=false]
-}{}
-\makeatother
+  \theoremstyle{definition}
+  \newtheorem{definition}[theorem]{Definition}
+  \newtheorem{example}[theorem]{Example}
 
-% Exercises counter
-\newkeytheorem{problem}[name=Exercise,parent=chapter,style=definitionbox]
+  \theoremstyle{remark}
+  \newtheorem{remark}[theorem]{Remark}
+
+  % proof environment is already defined by amsthm
+
+  % Exercises counter
+  \newtheorem{problem}{Exercise}[chapter]
+}
 
 % Custom list for takeaways (since keytakeaways uses tcolorbox) - DISABLED
 % \RequirePackage{tocloft}

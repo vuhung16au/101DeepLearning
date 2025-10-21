@@ -50,10 +50,19 @@
   % XeLaTeX/LuaLaTeX path with native Unicode and CJK support
   \usepackage{fontspec}
   \defaultfontfeatures{Ligatures=TeX}
-  % Use commonly available fonts
-  \setmainfont{Times New Roman}
-  \setsansfont{Arial}
-  \setmonofont{Courier New}
+  % Use platform-specific fonts
+  % Check if running in Docker (Ubuntu) by looking for /etc/os-release
+  \IfFileExists{/etc/os-release}{%
+    % Running in Docker/Ubuntu - use Liberation fonts
+    \setmainfont{Liberation Serif}
+    \setsansfont{Liberation Sans}
+    \setmonofont{Liberation Mono}
+  }{%
+    % Running on Mac - use system fonts
+    \setmainfont{Times New Roman}
+    \setsansfont{Arial}
+    \setmonofont{Courier New}
+  }
   % Engine-specific CJK setup
   \ifXeTeX
     \RequirePackage{xeCJK}
@@ -76,7 +85,6 @@
       \setmonojfont{HaranoAjiGothic}
     }
   \fi
-\fi
 \usepackage{microtype}
 % Language and date formatting
 \usepackage[english]{babel}
