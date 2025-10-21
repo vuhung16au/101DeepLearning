@@ -7,6 +7,10 @@
 
 Encoder–decoder models compress a source sequence into a representation and then generate a target sequence step-by-step. Attention augments this by letting the decoder look back at encoder states as needed, creating a dynamic context per output token \cite{Cho2014,Bahdanau2014}.
 
+\begin{remark}[Sequence-to-Sequence Models]
+A Seq2Seq (Sequence-to-Sequence) model is a Encoder-Decoder model, a specific type of neural network architecture designed to transform one sequence of data (the input) into another sequence of data (the output). It is the backbone of many key applications in Natural Language Processing (NLP).
+\end{remark}
+
 % \subsection*{Historical Context}
 
 % Early seq2seq relied on fixed context vectors, which degraded on long inputs. Content-based attention \cite{Bahdanau2014} lifted this bottleneck and paved the way toward Transformer architectures \cite{Vaswani2017}.

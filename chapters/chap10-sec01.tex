@@ -19,6 +19,10 @@ An RNN carries a running summary of the past—like a notepad you update after r
 
 Sequential data exhibits \emph{temporal dependencies} and \emph{order-sensitive} structure that cannot be modeled well by i.i.d. assumptions or fixed-size context windows alone \cite{GoodfellowEtAl2016,Prince2023,Bishop2006}. Consider the diverse nature of sequential data: time series forecasting energy load, financial returns, or physiological signals like ECG readings; natural language where the meaning of a word depends entirely on its context and sentences must conform to syntax and discourse structure; speech and audio where phonemes combine to form words and coarticulation effects span multiple frames; video where actions unfold over time and temporal cues disambiguate similar frames; and control and reinforcement learning where actions influence future observations, requiring persistent memory.
 
+\begin{example}[Temporal Dependencies in Social Media]
+Consider a social media post sequence: "Just finished my final exam" → "Feeling relieved" → "Time to celebrate!" The meaning of "celebrate" depends entirely on the temporal context of the previous posts about completing an exam. A traditional model without temporal awareness might interpret "celebrate" in isolation, but an RNN can maintain the context that this celebration is specifically about academic achievement, demonstrating how temporal dependencies are crucial for understanding sequential social media content where each post builds upon previous context.
+\end{example}
+
 Classic feedforward networks assume fixed-size inputs and lack a persistent state, making them ill-suited for long-range dependencies. Recurrent architectures introduce a hidden state that acts as a compact, learned memory \index{memory!neural} and enables conditioning on arbitrary-length histories. Historically, recurrent ideas trace back to early neural sequence models and dynamical systems; practical training matured with BPTT \cite{Rumelhart1986} and later with gated units to mitigate vanishing/exploding gradients \cite{Hochreiter1997}. For further background see the RNN overview in \cite{GoodfellowEtAl2016} and educational treatments in \cite{D2LChapterRNN,WebRNNWikipedia,WebDLBRNN}.
 
 \index{sequence modeling}\index{temporal dependency}\glsadd{recurrent-neural-network}
@@ -67,7 +71,9 @@ RNNs can be "unrolled" into a deep feedforward computation graph over time with 
 \end{equation}
 
 % \paragraph{Visual aid.} 
-Unfolding reveals repeated applications of the same transition function across steps. We annotate inputs, hidden states, and outputs to emphasize sharing and the temporal chain rule during BPTT.
+Unfolding reveals repeated applications of the same transition function across steps. The equation $\vect{h}_t = f(\vect{h}_{t-1}, \vect{x}_t; \vect{\theta})$ represents the core RNN computation where the current hidden state $\vect{h}_t$ depends on both the previous hidden state $\vect{h}_{t-1}$ and the current input $\vect{x}_t$, with the same parameters $\vect{\theta}$ being reused at each time step. This recursive structure allows the network to maintain memory of past information while processing new inputs, enabling the modeling of temporal dependencies across arbitrary sequence lengths.
+
+We annotate inputs, hidden states, and outputs to emphasize sharing and the temporal chain rule during BPTT.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[>=stealth, node distance=2.4cm]
@@ -98,6 +104,8 @@ This view connects RNNs to dynamic Bayesian networks and emphasizes that trainin
 \index{unrolling in time}\index{shared parameters}
 
 \subsection{Types of Sequences}
+
+Modern sequence modeling encompasses various architectural patterns and training strategies that address different sequence-to-sequence mapping requirements. Teacher forcing is a training technique where the model receives the ground truth previous output as input during training, accelerating convergence but potentially causing exposure bias during inference. Bidirectionality allows models to process sequences in both forward and backward directions, capturing context from both past and future information simultaneously. Attention mechanisms enable models to focus on relevant parts of the input sequence dynamically, while beam search provides a decoding strategy that maintains multiple candidate sequences during generation to find more optimal outputs.
 
 \begin{table}[h]
 \centering

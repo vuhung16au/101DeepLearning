@@ -7,9 +7,11 @@
 
 The LSTM adds a highway for information (the cell state) that can pass signals forward with minimal modification. Gates act like valves to forget unhelpful information, write new content, and reveal outputs, which preserves gradients over long spans \cite{Hochreiter1997,GoodfellowEtAl2016}.
 
-\subsection*{Historical Context}
+LSTM (Long Short-Term Memory) is a type of recurrent neural network architecture designed to solve the vanishing gradient problem by using gating mechanisms to control information flow and maintain long-term memory through a dedicated cell state.
 
+\begin{remark}[Historical Context of LSTM]
 Introduced in the 1990s to address vanishing gradients \cite{Hochreiter1997}, LSTMs unlocked practical sequence learning across speech, language, and time-series tasks before attention-based Transformers became dominant \cite{Vaswani2017}.
+\end{remark}
 
 % Index and glossary
 \index{long short-term memory}
@@ -17,7 +19,15 @@ Introduced in the 1990s to address vanishing gradients \cite{Hochreiter1997}, LS
 
 \subsection{Architecture}
 
-LSTM uses \textbf{gating mechanisms} to control information flow and maintain a persistent cell state that supports long-range credit assignment \cite{Hochreiter1997,GoodfellowEtAl2016}:
+\begin{remark}[Gates in LSTM]
+Gates in LSTM are learnable mechanisms that control information flow by deciding what information to forget, what new information to store, and what to output, enabling the network to selectively maintain or discard information over long time spans.
+\end{remark}
+
+\begin{remark}[Recurrence and Hidden State - The Memory]
+The hidden state in LSTM serves as the network's working memory, carrying forward processed information from previous time steps while the cell state acts as long-term memory that can store information across extended sequences, with gates controlling how information flows between these memory components.
+\end{remark}
+
+LSTM uses \textbf{gating mechanisms} to control information flow and maintain a persistent cell state that supports long-range credit assignment \cite{Hochreiter1997,GoodfellowEtAl2016}. Gating mechanisms are essential because they allow the network to learn when to remember, forget, or output information, solving the fundamental problem of how to maintain useful information over long sequences while discarding irrelevant details.
 
 \begin{align}
 \vect{f}_t &= \sigma(\mat{W}_f [\vect{h}_{t-1}, \vect{x}_t] + \vect{b}_f) \quad \text{(forget gate)} \\

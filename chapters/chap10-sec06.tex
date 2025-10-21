@@ -29,11 +29,15 @@ The term "bidirectional" refers to processing the input sequence in both tempora
 
 The forward arrow $\overrightarrow{\vect{h}}_t$ processes the sequence from left to right (time $t-1$ to $t$), while the backward arrow $\overleftarrow{\vect{h}}_t$ processes from right to left (time $t+1$ to $t$). The final representation $\vect{h}_t$ concatenates both directions, giving each position access to both past and future context.
 
-\paragraph{Metaphor.} Imagine reading a sentence twice: first normally from left to right to understand the flow, then reading it backward from right to left to catch any nuances you might have missed. A bidirectional RNN does exactly this—it "reads" the sequence in both directions simultaneously, allowing each word to be understood in the full context of what comes before and after it.
+\begin{example}[Bidirectional Reading Metaphor]
+Imagine reading a sentence twice: first normally from left to right to understand the flow, then reading it backward from right to left to catch any nuances you might have missed. A bidirectional RNN does exactly this—it "reads" the sequence in both directions simultaneously, allowing each word to be understood in the full context of what comes before and after it.
+\end{example}
 
 Useful when future context is available.
 
-\paragraph{Use cases and caveats.} Effective for tagging, chunking, and ASR with full utterances, but not suitable for strictly causal, low-latency streaming since backward states require future tokens. Alternatives include limited-lookahead or online approximations.
+\begin{example}[Use Cases and Caveats]
+Effective for tagging, chunking, and ASR with full utterances, but not suitable for strictly causal, low-latency streaming since backward states require future tokens. Alternatives include limited-lookahead or online approximations.
+\end{example}
 
 \subsection{Deep RNNs}
 
@@ -75,9 +79,13 @@ Practical tips: residual connections, layer normalization, and dropout between l
 
 \subsection{Teacher Forcing}
 
+Teacher forcing is a training strategy where the model receives the ground truth previous output as input during training instead of using its own predictions, which accelerates convergence but can cause exposure bias during inference.
+
 During training, teacher forcing uses ground truth as decoder input instead of the model's own predictions, providing several key advantages for sequence learning. By providing the correct previous token during training, the model receives consistent, high-quality input signals that guide it toward the target distribution more directly, eliminating the compounding effect of early prediction errors that would otherwise propagate through the sequence. This approach allows the model to focus on learning the mapping from context to next token rather than recovering from its own mistakes, creating a more predictable gradient landscape where the model can learn the underlying sequence patterns without being derailed by cascading errors. However, teacher forcing may cause exposure bias at test time—a train–test mismatch where the model never learns to recover from its own errors, since during training it only sees ground truth inputs but at test time must generate sequences using its own predictions, which may contain errors that compound over time. Mitigations include scheduled sampling, where the model gradually transitions from using ground truth to its own predictions during training, and sequence-level training that optimizes end-to-end sequence quality rather than individual token predictions.
 \glsadd{backpropagation}
 
 \subsection{Beam Search}
+
+Beam search is a decoding algorithm that maintains multiple candidate sequences during generation, exploring the most promising paths rather than committing to a single greedy choice, which often leads to higher-quality outputs.
 
 For inference, beam search maintains top-$k$ hypotheses during sequence generation, providing significant advantages over greedy decoding approaches. Unlike greedy decoding that always selects the single most probable token at each step, which can lead to suboptimal global sequences since locally optimal choices don't guarantee globally optimal solutions, beam search explores multiple promising paths simultaneously, allowing it to recover from early mistakes and find sequences with higher overall probability. This is particularly important in sequence generation tasks where the best next word might not be the most probable one when considering the full sequence context. The approach creates a fundamental trade-off between quality and speed: larger beam sizes explore more hypotheses and generally produce higher-quality outputs, but require exponentially more computation as the beam width increases, with computational cost growing as $O(k \times V)$ where $k$ is the beam size and $V$ is the vocabulary size. Common beam sizes of 5–10 provide a good compromise for most applications, while length normalization and coverage penalties are often used in neural machine translation to prevent bias toward shorter sequences and encourage the model to attend to all parts of the input sequence.

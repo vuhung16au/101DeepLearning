@@ -5,11 +5,11 @@
 
 \subsection*{Intuition}
 
-GRU simplifies LSTM by merging cell and hidden state and combining gates, often matching performance with fewer parameters—useful when data or compute is limited \cite{Cho2014,GoodfellowEtAl2016}.
+Gated Recurrent Unit (GRU): A simplification of the LSTM that uses only two gates (Reset and Update) and merges the hidden state and cell state, making it faster to train with fewer parameters while achieving comparable performance in many tasks. GRU simplifies LSTM by merging cell and hidden state and combining gates, often matching performance with fewer parameters—useful when data or compute is limited \cite{Cho2014,GoodfellowEtAl2016}.
 
-\subsection*{Historical Context}
-
-Proposed in the mid-2010s, GRU offered a practical alternative to LSTM with competitive empirical results and simpler implementation \cite{Cho2014}.
+\begin{remark}[Historical Context of GRU]
+Proposed in the mid-2010s, GRU offered a practical alternative to LSTM with competitive empirical results and simpler implementation \cite{Cho2014}. GRU became important in modern deep learning as it provided a more efficient alternative to LSTM for many sequence modeling tasks, particularly valuable for resource-constrained applications and when computational efficiency is crucial.
+\end{remark}
 
 % Index and glossary
 \index{gated recurrent unit}
@@ -18,6 +18,27 @@ Proposed in the mid-2010s, GRU offered a practical alternative to LSTM with comp
 \subsection{Architecture}
 
 GRU simplifies LSTM with fewer parameters and merges the cell and hidden state into a single vector, often yielding comparable performance with less computation \cite{Cho2014,GoodfellowEtAl2016}. The mathematical formulation involves two key gates: the update gate $\vect{z}_t$ controls how much of the previous hidden state to retain, while the reset gate $\vect{r}_t$ determines how much of the previous hidden state to forget when computing the candidate hidden state. The candidate hidden state $\tilde{\vect{h}}_t$ is computed using the reset gate to selectively incorporate information from the previous state, and the final hidden state $\vect{h}_t$ is a weighted combination of the previous state and the candidate, where the weights are determined by the update gate.
+
+\begin{algorithm}[h]
+\caption{GRU Forward Pass}
+\label{alg:gru}
+\begin{algorithmic}[1]
+\State \textbf{Input:} $\vect{x}_t$ (input at time $t$), $\vect{h}_{t-1}$ (previous hidden state)
+\State \textbf{Output:} $\vect{h}_t$ (current hidden state)
+\State
+\State \Comment{Compute gates}
+\State $\vect{z}_t \leftarrow \sigma(\mat{W}_z [\vect{h}_{t-1}, \vect{x}_t])$ \Comment{Update gate}
+\State $\vect{r}_t \leftarrow \sigma(\mat{W}_r [\vect{h}_{t-1}, \vect{x}_t])$ \Comment{Reset gate}
+\State
+\State \Comment{Compute candidate hidden state}
+\State $\tilde{\vect{h}}_t \leftarrow \tanh(\mat{W} [\vect{r}_t \odot \vect{h}_{t-1}, \vect{x}_t])$
+\State
+\State \Comment{Compute final hidden state}
+\State $\vect{h}_t \leftarrow (1 - \vect{z}_t) \odot \vect{h}_{t-1} + \vect{z}_t \odot \tilde{\vect{h}}_t$
+\State
+\State \textbf{return} $\vect{h}_t$
+\end{algorithmic}
+\end{algorithm}
 
 \begin{align}
 \vect{z}_t &= \sigma(\mat{W}_z [\vect{h}_{t-1}, \vect{x}_t]) \quad \text{(update gate)} \\
