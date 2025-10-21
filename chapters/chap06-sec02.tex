@@ -11,7 +11,10 @@ Imagine you're building a house with only straight lines and right angles, where
 
 \subsection{Sigmoid}
 
-The sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$ is an S-shaped curve that maps any real number to a value between 0 and 1, making it useful for binary classification and probability estimation. However, the sigmoid function has several limitations including saturating for large absolute values of $z$ which causes vanishing gradients during backpropagation, not being zero-centered which can slow down learning, and being historically important but less common in hidden layers due to these issues, though it remains useful in output layers for binary classification tasks.
+The sigmoid function is an S-shaped curve that maps any real number to a value between 0 and 1, making it useful for binary classification and probability estimation:
+\begin{equation}
+\sigma(z) = \frac{1}{1 + e^{-z}}
+\end{equation} However, the sigmoid function has several limitations including saturating for large absolute values of $z$ which causes vanishing gradients during backpropagation, not being zero-centered which can slow down learning, and being historically important but less common in hidden layers due to these issues, though it remains useful in output layers for binary classification tasks.
 
 \begin{figure}[htbp]
 \centering
@@ -34,7 +37,10 @@ The sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$ is an S-shaped curve tha
 
 \subsection{Hyperbolic Tangent (tanh)}
 
-The hyperbolic tangent function $\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$ is a zero-centered S-shaped curve that maps any real number to a value between -1 and 1, making it an improvement over sigmoid for hidden layers. The tanh function is zero-centered which helps with gradient flow and learning dynamics, though it still suffers from saturation at extreme values which can cause vanishing gradients in deep networks, making it better than sigmoid but still not ideal for very deep architectures.
+The hyperbolic tangent function is a zero-centered S-shaped curve that maps any real number to a value between -1 and 1, making it an improvement over sigmoid for hidden layers:
+\begin{equation}
+\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}
+\end{equation} The tanh function is zero-centered which helps with gradient flow and learning dynamics, though it still suffers from saturation at extreme values which can cause vanishing gradients in deep networks, making it better than sigmoid but still not ideal for very deep architectures.
 
 \begin{figure}[htbp]
 \centering
@@ -57,28 +63,34 @@ The hyperbolic tangent function $\tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$ i
 
 \subsection{Rectified Linear Unit (ReLU)}
 
-The Rectified Linear Unit (ReLU) function $\text{ReLU}(z) = \max(0, z)$ is a simple piecewise linear function that outputs the input directly if it's positive, otherwise outputs zero. ReLU is simple and computationally efficient with no saturation for positive values, making it the most widely used activation function in modern deep learning. However, ReLU can cause "dead neurons" that always output 0 when the input is negative, which can slow down learning, though this issue is often mitigated by proper initialization and other techniques.
+The Rectified Linear Unit (ReLU) function is a simple piecewise linear function that outputs the input directly if it's positive, otherwise outputs zero:
+\begin{equation}
+\text{ReLU}(z) = \max(0, z)
+\end{equation} ReLU is simple and computationally efficient with no saturation for positive values, making it the most widely used activation function in modern deep learning. However, ReLU can cause "dead neurons" that always output 0 when the input is negative, which can slow down learning, though this issue is often mitigated by proper initialization and other techniques.
 
 \subsection{Leaky ReLU and Variants}
 
-\textbf{Leaky ReLU:}
+\begin{definition}[Leaky ReLU]
 \begin{equation}
 \text{LeakyReLU}(z) = \max(\alpha z, z), \quad \alpha \ll 1
 \end{equation}
+\end{definition}
 
-\textbf{Parametric ReLU (PReLU):}
+\begin{definition}[Parametric ReLU (PReLU)]
 \begin{equation}
 \text{PReLU}(z) = \max(\alpha z, z)
 \end{equation}
 where $\alpha$ is learned.
+\end{definition}
 
-\textbf{Exponential Linear Unit (ELU):}
+\begin{definition}[Exponential Linear Unit (ELU)]
 \begin{equation}
 \text{ELU}(z) = \begin{cases}
 z & \text{if } z > 0 \\
 \alpha(e^z - 1) & \text{if } z \leq 0
 \end{cases}
 \end{equation}
+\end{definition}
 
 \begin{figure}[htbp]
 \centering
@@ -155,7 +167,21 @@ z & \text{if } z > 0 \\
 
 \subsection{Swish and GELU}
 
-The Swish activation function $\text{Swish}(z) = z \cdot \sigma(z)$ is a smooth, non-monotonic function that combines the benefits of ReLU with smooth gradients, often outperforming ReLU in many tasks. The Gaussian Error Linear Unit (GELU) $\text{GELU}(z) = z \cdot \Phi(z)$ where $\Phi$ is the Gaussian CDF, is used in modern transformers because it provides smooth gradients and better performance in transformer architectures, particularly in the attention mechanisms and feedforward layers of models like BERT, GPT, and other large language models where the smooth activation helps with training stability and convergence.
+\begin{definition}[Swish Activation Function]
+The Swish activation function is defined as:
+\begin{equation}
+\text{Swish}(z) = z \cdot \sigma(z)
+\end{equation}
+where $\sigma(z)$ is the sigmoid function. Swish is a smooth, non-monotonic function that combines the benefits of ReLU with smooth gradients, often outperforming ReLU in many tasks.
+\end{definition}
+
+\begin{definition}[Gaussian Error Linear Unit (GELU)]
+The GELU activation function is defined as:
+\begin{equation}
+\text{GELU}(z) = z \cdot \Phi(z)
+\end{equation}
+where $\Phi(z)$ is the Gaussian CDF. GELU is used in modern transformers because it provides smooth gradients and better performance in transformer architectures, particularly in the attention mechanisms and feedforward layers of models like BERT, GPT, and other large language models where the smooth activation helps with training stability and convergence.
+\end{definition}
 
 \begin{figure}[htbp]
 \centering

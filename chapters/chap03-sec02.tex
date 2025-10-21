@@ -3,6 +3,8 @@
 \section{Conditional Probability and Bayes' Rule \difficultyInline{beginner}}
 \label{sec:conditional-probability}
 
+This section introduces the fundamental concepts of conditional probability and Bayes' theorem, which are essential for understanding how to update beliefs with new information in machine learning.
+
 \subsection{Intuition: Updating Beliefs with New Information}
 
 Imagine you're a doctor trying to diagnose a patient. Initially, you might think there's a 5\% chance the patient has a rare disease. But then the patient tells you they have a specific symptom that's present in 80\% of people with that disease. How should you update your belief?
@@ -11,7 +13,11 @@ This is exactly what \textbf{conditional probability} helps us do - it tells us 
 
 \subsection{Conditional Probability}
 
-The conditional probability of $X$ given $Y$ is defined as $P(X|Y) = \frac{P(X, Y)}{P(Y)}$, which quantifies how the probability of $X$ changes when we know the value of $Y$. This concept is fundamental to understanding how new information updates our beliefs about uncertain events, allowing us to make more informed decisions based on the evidence we observe.
+The conditional probability of $X$ given $Y$ is defined as:
+\begin{equation}
+P(X|Y) = \frac{P(X, Y)}{P(Y)}
+\end{equation}
+This quantifies how the probability of $X$ changes when we know the value of $Y$. This concept is fundamental to understanding how new information updates our beliefs about uncertain events, allowing us to make more informed decisions based on the evidence we observe.
 
 \begin{examplebox}{Medical Diagnosis}
 Let's make this concrete with our medical example:
@@ -68,11 +74,13 @@ Consider two scenarios:
 
 Bayes' theorem is like a "belief update machine." It tells us how to revise our initial beliefs (prior) when we observe new evidence, to get our updated beliefs (posterior).
 
-\textbf{Bayes' theorem} is fundamental to probabilistic inference:
+\begin{theorem}[Bayes' Theorem]
+Bayes' theorem is fundamental to probabilistic inference:
 
 \begin{equation}
 P(X|Y) = \frac{P(Y|X)P(X)}{P(Y)}
 \end{equation}
+\end{theorem}
 
 \subsubsection{Understanding Each Component}
 

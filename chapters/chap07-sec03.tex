@@ -13,6 +13,10 @@ Imagine studying for an exam. Initially, practice improves your understanding (t
 
 The early stopping algorithm works by training the model and evaluating it on the validation set periodically, tracking the best validation performance throughout training. If there is no improvement for $p$ epochs (patience), the training stops, and the algorithm returns the model with the best validation performance, ensuring that the network is saved at its optimal generalization point rather than continuing to overfit.
 
+\begin{remark}[Early Stopping in Modern Frameworks]
+Modern deep learning frameworks like Hugging Face Transformers, TensorFlow, and PyTorch provide built-in early stopping capabilities that can be configured manually or systematically. These frameworks offer options to monitor validation metrics, set patience parameters, save checkpoints automatically, and restore the best model, making early stopping implementation straightforward and robust across different model architectures and training scenarios.
+\end{remark}
+
 \begin{algorithm}
 \caption{Early stopping meta-algorithm}
 \label{alg:early-stopping}

@@ -7,9 +7,9 @@
 
 Encoder–decoder models compress a source sequence into a representation and then generate a target sequence step-by-step. Attention augments this by letting the decoder look back at encoder states as needed, creating a dynamic context per output token \cite{Cho2014,Bahdanau2014}.
 
-\subsection*{Historical Context}
+% \subsection*{Historical Context}
 
-Early seq2seq relied on fixed context vectors, which degraded on long inputs. Content-based attention \cite{Bahdanau2014} lifted this bottleneck and paved the way toward Transformer architectures \cite{Vaswani2017}.
+% Early seq2seq relied on fixed context vectors, which degraded on long inputs. Content-based attention \cite{Bahdanau2014} lifted this bottleneck and paved the way toward Transformer architectures \cite{Vaswani2017}.
 
 % Index and glossary
 \index{sequence-to-sequence}
@@ -27,7 +27,10 @@ For sequence transduction tasks like machine translation \cite{Cho2014,Bahdanau2
 \end{equation}
 
 \textbf{Decoder:} Generates output sequence from representation
-\paragraph{Visual aid.} A minimal encoder–decoder with context vector.
+
+% \paragraph{Visual aid.} 
+
+A minimal encoder–decoder with context vector.
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[>=stealth, node distance=2.2cm]
@@ -52,7 +55,7 @@ For sequence transduction tasks like machine translation \cite{Cho2014,Bahdanau2
 \vect{y}_t = g(\vect{y}_{t-1}, \vect{c}, \vect{s}_{t-1})
 \end{equation}
 
-\subsection{Attention Mechanism}
+\subsection{Attention Mechanism: Attention Is All You Need}
 
 Attention represents one of the most crucial breakthroughs in deep learning, so fundamental that the seminal paper "Attention Is All You Need" \cite{Vaswani2017} demonstrated that attention mechanisms alone could replace entire architectural components like recurrent layers. This paradigm shift occurred because attention solves the fundamental information bottleneck problem in sequence-to-sequence models, where standard approaches compress entire input sequences into a single fixed vector $\vect{c}$, inevitably losing critical information and context. The attention mechanism elegantly addresses this limitation by allowing the decoder to dynamically focus on different parts of the input sequence at each generation step, creating a flexible and context-aware representation that adapts to the specific requirements of each output token.
 
@@ -67,7 +70,7 @@ Common scoring functions $a(\cdot)$ include additive (Bahdanau) attention using 
 
 \paragraph{Training and inference.} Attention is trained end-to-end with the seq2seq objective. During inference, attention enables the model to retrieve the most relevant encoder features for each generated token, improving long-input performance and handling reordering. Variants include multi-head attention, local/monotonic attention for streaming, and coverage terms to reduce repetition.
 
-Benefits:
+% Benefits:
 
 \textbf{Dynamic context for each output:} Unlike traditional approaches that use a single, static context vector for all output positions, attention creates a unique, dynamically computed context vector for each decoding step. This means that when generating the word "cat" in a translation, the model can focus on the relevant source words like "gato" or "chat," while when generating "dog," it shifts its attention to "perro" or "chien." This adaptive context selection allows the model to maintain fine-grained relationships between source and target elements, dramatically improving translation quality and coherence across different linguistic structures.
 

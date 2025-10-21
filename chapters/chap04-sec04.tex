@@ -11,27 +11,29 @@ Imagine a house of cards where a tiny breeze can cause the entire structure to c
 
 \subsection{Condition Number}
 
-The \textbf{condition number} of matrix $\mat{A}$ is:
-
+\begin{definition}[Condition Number]
+The condition number of matrix $\mat{A}$ is:
 \begin{equation}
 \kappa(\mat{A}) = \|\mat{A}\| \|\mat{A}^{-1}\|
 \end{equation}
+\end{definition}
 
+\begin{definition}[Condition Number for Symmetric Matrices]
 For symmetric matrices with eigenvalues $\lambda_i$:
-
 \begin{equation}
 \kappa(\mat{A}) = \frac{\max_i |\lambda_i|}{\min_i |\lambda_i|}
 \end{equation}
+\end{definition}
 
 High condition numbers indicate numerical instability: small changes in input lead to large changes in output.
 
-\subsubsection{Example: Well-Conditioned vs Ill-Conditioned Matrices}
-
+\begin{example}[Well-Conditioned vs Ill-Conditioned Matrices]
 Consider two matrices:
 \begin{align}
 \mat{A}_1 &= \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} \quad \text{(well-conditioned)} \\
 \mat{A}_2 &= \begin{bmatrix} 1 & 0.99 \\ 0.99 & 1 \end{bmatrix} \quad \text{(ill-conditioned)}
 \end{align}
+\end{example}
 
 \begin{figure}[h]
 \centering
@@ -64,11 +66,15 @@ To verify gradient computations, we use \textbf{finite differences}:
 \frac{\partial f}{\partial \theta_i} \approx \frac{f(\theta_i + \epsilon) - f(\theta_i - \epsilon)}{2\epsilon}
 \end{equation}
 
-This is computationally expensive but useful for debugging.
+Finite differences approximate derivatives by computing the slope of the function between two nearby points, providing a numerical way to verify that analytical gradients are computed correctly. This is computationally expensive but useful for debugging gradient computations in neural networks.
 
 \subsection{Numerical Precision Trade-offs}
 
 Mixed precision training involves storing weights in FP32 for numerical stability while computing activations and gradients in FP16 for computational efficiency, using loss scaling to prevent underflow in the lower precision computations, and achieving 2-3x speedup with minimal accuracy loss by carefully managing the precision trade-offs between numerical stability and computational performance.
+
+\begin{remark}[Mixed Precision Training and Quantization]
+Mixed Precision Training (FP32/FP16/BF16). Activates FP16 mixed precision with `fp16=True` on Hugging Face. Quantization primarily targets inference and memory reduction by converting weights from floating-point (FP32/FP16/BF16) to low-bit integers (INT8, INT4).
+\end{remark}
 
 \subsection{Practical Tips}
 

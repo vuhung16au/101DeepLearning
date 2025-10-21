@@ -9,6 +9,47 @@ Feedforward neural networks are the fundamental building blocks of deep learning
 
 Imagine you're trying to recognize handwritten digits, where a feedforward neural network is like having a team of experts, each specialized in detecting different features. First layer experts look for basic patterns like edges, curves, and lines, middle layer experts combine these basic patterns to detect more complex shapes like loops, corners, and curves, and final layer experts combine these complex shapes to make the final decision like "This is a 3" or "This is a 7". The key insight is that each layer builds upon the previous one, creating increasingly sophisticated representations that mirror how our own visual system works, from detecting simple edges to recognizing complex objects. A feedforward neural network approximates a function $f^*$ where for input $\vect{x}$, the network computes $y = f(\vect{x}; \vect{\theta})$ and learns parameters $\vect{\theta}$ such that $f \approx f^*$.
 
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.7]
+    % Input layer (pixel values)
+    \foreach \i in {1,2,3,4}
+        \foreach \j in {1,2,3,4}
+            \node[circle, draw, fill=bookpurple!20, minimum size=0.4cm] (x\i\j) at (\j*0.5, -\i*0.5) {};
+    
+    % Hidden layer
+    \foreach \i in {1,2,3}
+        \node[circle, draw, fill=bookpurple!40, minimum size=0.6cm] (h\i) at (3, -\i*0.8) {$h_\i$};
+    
+    % Output layer
+    \node[circle, draw, fill=bookred!30, minimum size=0.8cm] (y3) at (5.5, -1.2) {3};
+    \node[circle, draw, fill=bookred!30, minimum size=0.8cm] (y7) at (5.5, -2.4) {7};
+    
+    % Connections from input to hidden
+    \foreach \i in {1,2,3,4}
+        \foreach \j in {1,2,3,4}
+            \foreach \k in {1,2,3}
+                \draw[->, thin] (x\i\j) -- (h\k);
+    
+    % Connections from hidden to output
+    \foreach \i in {1,2,3}
+        \draw[->, thick] (h\i) -- (y3);
+    \foreach \i in {1,2,3}
+        \draw[->, thick] (h\i) -- (y7);
+    
+    % Labels
+    \node at (1, 0.5) {\textbf{Input: 4×4 pixels}};
+    \node at (3, 0.5) {\textbf{Hidden Layer}};
+    \node at (5.5, 0.5) {\textbf{Output: "3" or "7"}};
+    
+    % Decision arrows
+    \draw[->, bookred, thick] (y3) -- (6.5, -1.2) node[right] {Confidence: 0.8};
+    \draw[->, bookred, thick] (y7) -- (6.5, -2.4) node[right] {Confidence: 0.2};
+\end{tikzpicture}
+\caption{Simple neural network for digit classification: "This is a 3" or "This is a 7". The network learns to distinguish between these two digits by analyzing pixel patterns.}
+\label{fig:digit-classification-nn}
+\end{figure}
+
 \subsection{Network Architecture}
 
 A feedforward network consists of layers including an input layer that receives raw features $\vect{x}$, hidden layers that create intermediate representations $\vect{h}^{(1)}, \vect{h}^{(2)}, \ldots$ through nonlinear transformations, and an output layer that produces predictions $\hat{y}$ based on the processed information from the hidden layers.
@@ -67,7 +108,11 @@ where $\vect{h}^{(0)} = \vect{x}$, $\mat{W}^{(l)}$ are weights, $\vect{b}^{(l)}$
 
 \subsection{Forward Propagation}
 
-The computation proceeds from input to output through a series of matrix multiplications and nonlinear transformations. For each layer $l$, the network computes pre-activations $\vect{z}^{(l)} = \mat{W}^{(l)} \vect{h}^{(l-1)} + \vect{b}^{(l)}$ followed by activations $\vect{h}^{(l)} = \sigma(\vect{z}^{(l)})$ where $\sigma$ is the activation function. The process continues through all hidden layers until reaching the output layer, where the final prediction $\hat{y} = \vect{h}^{(L)}$ is produced.
+The computation proceeds from input to output through a series of matrix multiplications and nonlinear transformations. For each layer $l$, the network computes pre-activations:
+\begin{equation}
+\vect{z}^{(l)} = \mat{W}^{(l)} \vect{h}^{(l-1)} + \vect{b}^{(l)}
+\end{equation}
+followed by activations $\vect{h}^{(l)} = \sigma(\vect{z}^{(l)})$ where $\sigma$ is the activation function. The process continues through all hidden layers until reaching the output layer, where the final prediction $\hat{y} = \vect{h}^{(L)}$ is produced.
 
 \begin{algorithm}[htbp]
 \caption{Forward Propagation Algorithm}
@@ -114,6 +159,9 @@ However, deeper networks often learn more efficiently.
 \index{feedforward network!introduction}
 \index{neural network!feedforward}
 \index{multilayer perceptron}
+\index{multilayer perceptrons (MLPs)}
+\index{activation functions}
+\index{loss functions}
 \index{forward propagation}
 \index{universal approximation theorem}
 \index{network architecture}

@@ -74,7 +74,7 @@ The behavior depends on the eigenvalues of the weight matrix $\mat{W}$:
     \item \textbf{Eigenvalues $> 1$:} Each multiplication amplifies the gradient, causing exponential growth that can lead to numerical instability and training divergence.
 \end{itemize}
 
-\textbf{Solutions:}
+% \textbf{Solutions:}
 
 \textbf{Gradient clipping} prevents exploding gradients by scaling down gradients when their norm exceeds a threshold, maintaining training stability while preserving gradient direction. \textbf{Careful initialization} techniques like Xavier/He initialization set initial weights to have appropriate variance, reducing the likelihood of extreme eigenvalues that cause gradient problems. \textbf{ReLU activation} helps because its derivative is either 0 or 1, avoiding the multiplicative shrinking effect of sigmoid/tanh derivatives that compound vanishing gradients. \textbf{LSTM/GRU architectures} introduce gating mechanisms that create direct paths for gradient flow, bypassing the problematic multiplicative chains and enabling learning of long-range dependencies.
 

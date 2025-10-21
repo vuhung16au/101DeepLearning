@@ -15,11 +15,13 @@ For regression, use linear output:
 \begin{equation}
 \hat{y} = \mat{W}^\top \vect{h} + b
 \end{equation}
+where $\mat{W}$ are the output weights, $\vect{h}$ is the final hidden layer activation, and $b$ is the bias term. This produces a continuous real-valued prediction.
 
 with MSE loss:
 \begin{equation}
 L = \frac{1}{n} \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)})^2
 \end{equation}
+where $y^{(i)}$ is the true target value and $\hat{y}^{(i)}$ is the predicted value. MSE loss penalizes large errors more heavily than small errors, making it suitable for regression tasks where we want to minimize the average squared difference between predictions and targets.
 
 \begin{figure}[htbp]
 \centering
@@ -67,6 +69,10 @@ with categorical cross-entropy loss:
 \begin{equation}
 L = -\frac{1}{n} \sum_{i=1}^{n} \sum_{k=1}^{K} y_k^{(i)} \log \hat{y}_k^{(i)}
 \end{equation}
+
+\begin{remark}[Softmax Loss in Deep Learning]
+The softmax function converts raw logits into a probability distribution over classes, ensuring all probabilities sum to 1. The categorical cross-entropy loss measures the difference between the predicted probability distribution and the true one-hot encoded target, providing strong gradients when predictions are wrong and encouraging the network to assign high probability to the correct class. This combination is the standard approach for multiclass classification in deep learning, used in image classification, natural language processing, and many other applications where we need to choose among multiple discrete categories.
+\end{remark}
 
 % Index entries
 \index{output layer!regression}

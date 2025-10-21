@@ -17,7 +17,8 @@ The choice of network depth and width involves important trade-offs, where deepe
 
 Poor initialization can prevent learning. Common strategies:
 
-\textbf{Xavier/Glorot initialization:} balances variance across layers by matching forward and backward signal scales for approximately linear activations (tanh/sigmoid in their linear regime). In the popular uniform variant:
+\begin{definition}[Xavier/Glorot Initialization]
+Xavier/Glorot initialization balances variance across layers by matching forward and backward signal scales for approximately linear activations (tanh/sigmoid in their linear regime). In the popular uniform variant:
 \begin{equation}
 W_{ij} \sim \mathcal{U}\Big(-\sqrt{\tfrac{6}{n_{\text{in}} + n_{\text{out}}}},\; \sqrt{\tfrac{6}{n_{\text{in}} + n_{\text{out}}}}\Big)
 \end{equation}
@@ -26,8 +27,10 @@ and in the normal variant:
 W_{ij} \sim \mathcal{N}\!\left(0, \; \frac{2}{n_{\text{in}} + n_{\text{out}}}\right)
 \end{equation}
 The scaling arises by setting $\mathrm{Var}[\text{preact}]$ and $\mathrm{Var}[\text{grad}]$ approximately constant layer-to-layer under independence assumptions.
+\end{definition}
 
-\textbf{He initialization} (for ReLU-family): uses a larger variance to compensate for half of activations being zeroed by $\max(0,\cdot)$. Common forms are
+\begin{definition}[He Initialization]
+He initialization (for ReLU-family) uses a larger variance to compensate for half of activations being zeroed by $\max(0,\cdot)$. Common forms are
 \begin{equation}
 W_{ij} \sim \mathcal{N}\!\left(0, \; \frac{2}{n_{\text{in}}}\right)
 \end{equation}
@@ -36,10 +39,15 @@ or the uniform analogue
 W_{ij} \sim \mathcal{U}\Big(-\sqrt{\tfrac{6}{n_{\text{in}}}},\; \sqrt{\tfrac{6}{n_{\text{in}}}}\Big)
 \end{equation}
 which maintains stable activation and gradient variances at initialization for ReLU/LeakyReLU networks.
+\end{definition}
 
 \subsection{Batch Training}
 
 Mini-batch gradient descent computes gradients on small batches of typically 32-256 examples, providing regularization through noise and enabling efficient parallel computation. This approach balances between stochastic gradient descent and full-batch gradient descent, offering a compromise between computational efficiency and gradient stability that is well-suited for modern deep learning applications.
+
+\begin{remark}[Online Learning vs Mini-batch Training]
+Online learning processes one example at a time, making it memory-efficient but potentially noisy, while mini-batch training processes small groups of examples simultaneously, providing a good balance between computational efficiency and gradient stability. Mini-batch training is preferred in modern deep learning because it enables parallel processing on GPUs, provides more stable gradient estimates than online learning, and allows for efficient memory usage while maintaining good convergence properties.
+\end{remark}
 
 % Index entries
 \index{network design!depth}

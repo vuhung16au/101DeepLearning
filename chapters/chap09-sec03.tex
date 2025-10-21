@@ -12,6 +12,10 @@ LeNet-5 demonstrated the viability of CNNs for handwritten digit recognition on 
 
 The architecture utilized sigmoid and tanh activation functions, though later pedagogical treatments often retrofit ReLU activations to demonstrate modern practices. LeNet-5's key properties included local receptive fields that captured spatial patterns, parameter sharing that dramatically reduced the number of learnable parameters, and early evidence of translation invariance through pooling operations. The network's impact extended far beyond digit recognition, establishing the core conv-pool pattern and demonstrating end-to-end learning for computer vision tasks, fundamentally changing how researchers approached image classification problems.\cite{LeCun1989,GoodfellowEtAl2016}
 
+\begin{remark}[LeNet-5's Historical Importance]
+LeNet-5 was the first successful deep convolutional network that demonstrated the practical viability of CNNs for real-world applications, establishing the fundamental conv-pool-FC architecture pattern that became the foundation for all subsequent CNN designs. Its success on MNIST digit recognition proved that deep learning could solve complex pattern recognition tasks, directly inspiring the development of modern CNN architectures and marking the beginning of the deep learning revolution in computer vision.
+\end{remark}
+
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[x=0.2cm,y=0.2cm]
@@ -60,6 +64,10 @@ The systems engineering aspects of AlexNet were equally groundbreaking, as the n
 VGG networks emphasized architectural depth through a simple yet effective recipe: stacks of $3\times3$ convolutions with stride 1 combined with $2\times2$ max pooling for downsampling. The uniform block design represented a key innovation, where replacing large kernels with multiple $3\times3$ layers increased nonlinearity and receptive field while using fewer parameters than equivalent single large kernels. This approach demonstrated that depth could be achieved through careful architectural choices rather than simply adding more layers.
 
 The VGG-16 and VGG-19 models achieved strong accuracy on ImageNet, though they came with significant computational costs due to very large parameter counts in the dense layers. The trade-offs inherent in VGG networks included strong classification accuracy balanced against heavy memory and computation requirements, making them particularly suitable as feature extractors for transfer learning applications. Despite their computational demands, VGG networks established the importance of systematic architectural design and demonstrated that simple, uniform building blocks could achieve competitive performance when properly scaled.\cite{GoodfellowEtAl2016}
+
+\begin{remark}[VGG Networks' Impact on Deep Learning]
+VGG networks revolutionized CNN design by proving that depth could be achieved through systematic use of small 3×3 filters, establishing the principle that multiple small convolutions are more effective than single large filters. Their uniform architecture design and strong performance made VGG networks the standard feature extractor for transfer learning, directly influencing the development of modern CNN architectures and demonstrating that systematic architectural choices could achieve state-of-the-art performance.
+\end{remark}
 
 \subsection{ResNet (2015)\index{ResNet}}
 \label{subsec:resnet}

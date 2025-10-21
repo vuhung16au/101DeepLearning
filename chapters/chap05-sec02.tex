@@ -36,7 +36,11 @@ Think of logistic regression as answering: "Given these features, what's the pro
 
 \subsection{Binary Classification}
 
-For binary classification with classes $\{0, 1\}$, logistic regression models the probability of the positive class using the sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$, which smoothly maps any real number to a probability between 0 and 1. The prediction probability is $P(y=1|\vect{x}) = \sigma(\vect{w}^\top \vect{x} + b) = \frac{1}{1 + e^{-(\vect{w}^\top \vect{x} + b)}}$, where the linear combination of features and weights determines the input to the sigmoid function, and the output represents the probability that the input belongs to the positive class.
+For binary classification with classes $\{0, 1\}$, logistic regression models the probability of the positive class using the sigmoid function $\sigma(z) = \frac{1}{1 + e^{-z}}$, which smoothly maps any real number to a probability between 0 and 1. The prediction probability is:
+\begin{equation}
+P(y=1|\vect{x}) = \sigma(\vect{w}^\top \vect{x} + b) = \frac{1}{1 + e^{-(\vect{w}^\top \vect{x} + b)}}
+\end{equation}
+where the linear combination of features and weights determines the input to the sigmoid function, and the output represents the probability that the input belongs to the positive class.
 
 \begin{remark}
 For categorical classification with more than 2 classes, we extend logistic regression to softmax regression, which uses the softmax function to compute probabilities for each class that sum to 1. This allows us to handle multi-class problems like image classification with 10 digit classes or natural language processing with hundreds of word categories.
@@ -54,25 +58,28 @@ The sigmoid function has several important properties:
 
 \subsection{Cross-Entropy Loss}
 
-Unlike linear regression, we can't use mean squared error for classification because the sigmoid function is non-linear. Instead, we use the \textbf{cross-entropy loss} (negative log-likelihood):
+Unlike linear regression, we can't use mean squared error for classification because the sigmoid function is non-linear. Instead, we use the cross-entropy loss (negative log-likelihood):
+
+\begin{definition}[Cross-Entropy Loss]
+The cross-entropy loss for binary classification is:
 
 \begin{equation}
 L(\vect{w}, b) = -\frac{1}{n} \sum_{i=1}^{n} \left[y^{(i)} \log \hat{y}^{(i)} + (1-y^{(i)}) \log(1-\hat{y}^{(i)})\right]
 \end{equation}
-
 where $\hat{y}^{(i)} = P(y=1|\vect{x}^{(i)})$.
+\end{definition}
 
 \begin{remark}
 Cross-entropy loss is the standard loss function for classification tasks in both classical machine learning and deep learning, providing better gradient properties than mean squared error for probability outputs. In deep neural networks, it's commonly used in the final layer for binary and multi-class classification, enabling efficient backpropagation and stable training across various architectures from simple logistic regression to complex convolutional and transformer networks.
 \end{remark}
 
-\subsubsection{Derivation of Cross-Entropy Loss}
-
+\begin{definition}[Derivation of Cross-Entropy Loss]
 The cross-entropy loss comes from maximum likelihood estimation. For a single example, the likelihood is:
 $$L_i = P(y^{(i)}|\vect{x}^{(i)}) = (\hat{y}^{(i)})^{y^{(i)}} (1-\hat{y}^{(i)})^{1-y^{(i)}}$$
 
 Taking the negative log-likelihood:
 $$-\log L_i = -y^{(i)} \log \hat{y}^{(i)} - (1-y^{(i)}) \log(1-\hat{y}^{(i)})$$
+\end{definition}
 
 \subsection{Gradient Descent for Logistic Regression}
 

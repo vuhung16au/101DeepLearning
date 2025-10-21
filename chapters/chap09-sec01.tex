@@ -7,11 +7,13 @@
 \subsection*{Intuition}
 Convolution extracts local patterns by sliding small filters across the input, producing feature maps that respond strongly where patterns occur. Parameter sharing means the same filter detects the same pattern anywhere, yielding translation equivariance \index{equivariance} and dramatic parameter efficiency \cite{GoodfellowEtAl2016,Prince2023}.
 
-\paragraph{Metaphor: The Detective's Magnifying Glass}
+\begin{example}[The Detective's Magnifying Glass]
 Imagine a detective examining a crime scene photograph with a magnifying glass, systematically scanning every area to look for specific patterns like fingerprints or footprints. The magnifying glass (convolution kernel) is the same tool used everywhere, but it can detect the same type of evidence whether it appears in the top-left corner or bottom-right corner of the photo. This is exactly how convolution works in neural networks—the same learned pattern detector scans across the entire image, finding similar features wherever they appear.
+\end{example}
 
-\paragraph{Example: Edge Detection}
+\begin{example}[Edge Detection]
 Consider a simple edge detection filter that looks for vertical edges in an image. This filter might have values like $[-1, 0, 1]$ for a horizontal line of pixels. When this filter slides across an image, it produces high responses where there are strong vertical edges (like the side of a building) and low responses in flat areas (like the sky). The same filter works identically whether the edge is in the center of the image or near the edges, demonstrating the translation equivariance property that makes CNNs so powerful for image processing.
+\end{example}
 
 \begin{figure}[h]
 \centering
@@ -106,17 +108,23 @@ Consider a simple edge detection filter that looks for vertical edges in an imag
 
 The \textbf{convolution} operation applies a filter (kernel) across an input:
 
+\begin{definition}[Discrete 2D Convolution]
 For discrete 2D convolution:
 \begin{equation}
 S(i,j) = (I * K)(i,j) = \sum_m \sum_n I(i-m, j-n) K(m, n)
 \end{equation}
+where $I$ is the input and $K$ is the kernel.
+\end{definition}
 
 where $I$ is the input and $K$ is the kernel. In deep learning libraries, the implemented operation is often cross-correlation (no kernel flip).
 
-In practice, we often use \textbf{cross-correlation}:
+\begin{definition}[Cross-Correlation]
+In practice, we often use cross-correlation:
 \begin{equation}
 S(i,j) = (I * K)(i,j) = \sum_m \sum_n I(i+m, j+n) K(m, n)
 \end{equation}
+where the kernel is not flipped, making it the standard operation in deep learning libraries.
+\end{definition}
 
 \subsection{Properties}
 
@@ -135,7 +143,8 @@ For input with $C_{\text{in}}$ channels and $C_{\text{out}}$ output channels:
 S_{c_{\text{out}}}(i,j) = \sum_{c_{\text{in}}=1}^{C_{\text{in}}} (I_{c_{\text{in}}} * K_{c_{\text{out}}, c_{\text{in}}})(i,j) + b_{c_{\text{out}}}
 \end{equation}
 
-\paragraph{Understanding Multi-Channel Convolution and S(i,j)}
+% \paragraph{Understanding Multi-Channel Convolution and S(i,j)}
+
 Multi-channel convolution is the fundamental operation that enables CNNs to process complex inputs like RGB images (3 channels) and produce rich feature representations. The notation $S_{c_{\text{out}}}(i,j)$ represents the output feature map value at spatial position $(i,j)$ for output channel $c_{\text{out}}$. This operation allows the network to learn both spatial patterns (through kernel sliding) and cross-channel interactions (by mixing information from different input channels). Each output channel $S_{c_{\text{out}}}(i,j)$ captures how strongly a particular learned pattern is detected at location $(i,j)$, where higher values indicate stronger pattern matches. This enables the network to detect complex features that span across multiple input channels while maintaining spatial locality and translation equivariance.
 
 \subsection{Hyperparameters}

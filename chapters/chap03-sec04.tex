@@ -109,7 +109,7 @@ Heavy-tailed alternative to Gaussian:
 \text{Laplace}(x; \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x-\mu|}{b}\right)
 \end{equation}
 
-Used in robust statistics and L1 regularization.
+where $\mu$ is the location parameter (mean) and $b$ is the scale parameter (controls the spread). The Laplace distribution is used in robust statistics because it's less sensitive to outliers than the Gaussian distribution, and in L1 regularization because its sharp peak at the mean encourages sparsity by penalizing small weights more heavily than the Gaussian distribution.
 
 \begin{figure}[h]
 \centering

@@ -26,7 +26,11 @@ The factor $(1 - \alpha\lambda)$ causes "weight decay."
 
 \subsection{L1 Regularization}
 
-L1 regularization adds the L1 norm of weights to the loss function: $\tilde{L}(\vect{\theta}) = L(\vect{\theta}) + \lambda \|\vect{w}\|_1$. L1 regularization promotes sparsity by driving many weights to become exactly zero, making it useful for feature selection where only the most important features are retained. The gradient of L1 regularization is $\text{sign}(\vect{w})$, which provides a constant magnitude update that encourages weights to move toward zero, effectively performing automatic feature selection by eliminating less important parameters.
+L1 regularization adds the L1 norm of weights to the loss function:
+\begin{equation}
+\tilde{L}(\vect{\theta}) = L(\vect{\theta}) + \lambda \|\vect{w}\|_1
+\end{equation}
+L1 regularization promotes sparsity by driving many weights to become exactly zero, making it useful for feature selection where only the most important features are retained. The gradient of L1 regularization is $\text{sign}(\vect{w})$, which provides a constant magnitude update that encourages weights to move toward zero, effectively performing automatic feature selection by eliminating less important parameters.
 
 % Index entries
 \index{regularization!L2}

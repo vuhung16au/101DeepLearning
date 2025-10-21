@@ -68,32 +68,35 @@ The choice of distance metric significantly affects k-NN performance, where diff
 
 \subsubsection{Euclidean Distance}
 
+\begin{definition}[Euclidean Distance]
 \begin{equation}
 d(\vect{x}, \vect{x}') = \sqrt{\sum_{i=1}^{d} (x_i - x_i')^2}
 \end{equation}
-
 This is the most common choice, measuring the straight-line distance between points.
+\end{definition}
 
 \subsubsection{Manhattan Distance}
 
+\begin{definition}[Manhattan Distance]
 \begin{equation}
 d(\vect{x}, \vect{x}') = \sum_{i=1}^{d} |x_i - x_i'|
 \end{equation}
-
 Also known as L1 distance, it measures the sum of absolute differences. Useful when features have different scales.
+\end{definition}
 
 \subsubsection{Minkowski Distance}
 
+\begin{definition}[Minkowski Distance]
 \begin{equation}
 d(\vect{x}, \vect{x}') = \left(\sum_{i=1}^{d} |x_i - x_i'|^p\right)^{1/p}
 \end{equation}
-
 This is a generalization where:
 \begin{itemize}
     \item $p = 1$: Manhattan distance
     \item $p = 2$: Euclidean distance
     \item $p \to \infty$: Chebyshev distance (maximum coordinate difference)
 \end{itemize}
+\end{definition}
 
 \subsection{Choosing k}
 
