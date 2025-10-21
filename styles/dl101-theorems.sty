@@ -9,9 +9,9 @@
 % Platform-specific theorem environment setup
 % Check if running in Docker (Ubuntu) by looking for /etc/os-release
 \IfFileExists{/etc/os-release}{%
-  % Running in Docker/Ubuntu - use standard amsthm
-  \theoremstyle{plain}
+  % Running in Docker/Ubuntu - define theorem counter first, then use tcolorbox
   \newtheorem{theorem}{Theorem}[chapter]
+  \theoremstyle{plain}
   \newtheorem{lemma}[theorem]{Lemma}
   \newtheorem{proposition}[theorem]{Proposition}
   \newtheorem{corollary}[theorem]{Corollary}
@@ -28,9 +28,9 @@
   % Exercises counter
   \newtheorem{problem}{Exercise}[chapter]
 }{%
-  % Running on Mac - use standard amsthm (same as Docker for now)
-  \theoremstyle{plain}
+  % Running on Mac - define theorem counter first, then use tcolorbox
   \newtheorem{theorem}{Theorem}[chapter]
+  \theoremstyle{plain}
   \newtheorem{lemma}[theorem]{Lemma}
   \newtheorem{proposition}[theorem]{Proposition}
   \newtheorem{corollary}[theorem]{Corollary}
@@ -47,6 +47,14 @@
   % Exercises counter
   \newtheorem{problem}{Exercise}[chapter]
 }
+
+% Redefine theorem environments to use tcolorbox from dl101-boxes
+\makeatletter
+\renewenvironment{theorem}[1][]{\begin{theorembox}[title={\bfseries Theorem~\thetcbcounter\ifx\relax#1\relax\else: #1\fi}]}{\end{theorembox}}
+\renewenvironment{example}[1][]{\begin{examplebox}[title={\bfseries Example~\thetcbcounter\ifx\relax#1\relax\else: #1\fi}]}{\end{examplebox}}
+\renewenvironment{remark}[1][]{\begin{remarkbox}[title={\bfseries Remark~\thetcbcounter\ifx\relax#1\relax\else: #1\fi}]}{\end{remarkbox}}
+\renewenvironment{definition}[1][]{\begin{definitionbox}[title={\bfseries Definition~\thetcbcounter\ifx\relax#1\relax\else: #1\fi}]}{\end{definitionbox}}
+\makeatother
 
 % Custom list for takeaways (since keytakeaways uses tcolorbox) - DISABLED
 % \RequirePackage{tocloft}

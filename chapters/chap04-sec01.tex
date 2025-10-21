@@ -85,8 +85,7 @@ Similarly, when computing $\log(\sum_i \exp(x_i))$, we use the \textbf{log-sum-e
 \log\left(\sum_i \exp(x_i)\right) = c + \log\left(\sum_i \exp(x_i - c)\right)
 \end{equation}
 
-\subsubsection{Example: Softmax Numerical Issues}
-
+\begin{examplebox}{Softmax Numerical Issues}
 Consider computing softmax for $\vect{x} = [1000, 1001, 1002]$:
 
 \textbf{Naive approach:}
@@ -106,8 +105,7 @@ c &= \max(1000, 1001, 1002) = 1002 \\
 \text{softmax}(\vect{x}) &= [0.090, 0.245, 0.665]
 \end{align}
 
-\begin{figure}[h]
-\centering
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     ylabel={Probability},
@@ -123,9 +121,8 @@ c &= \max(1000, 1001, 1002) = 1002 \\
 \addplot coordinates {(1,0.090) (2,0.245) (3,0.665)};
 \end{axis}
 \end{tikzpicture}
-\caption{Stable softmax computation for large inputs}
-\label{fig:stable-softmax}
-\end{figure}
+\end{center}
+\end{examplebox}
 
 \subsection{Other Numerical Issues}
 

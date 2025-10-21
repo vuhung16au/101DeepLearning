@@ -21,7 +21,9 @@ Common: $2 \times 2$ max pooling with stride 2 (halves spatial dimensions).
 \paragraph{Understanding Max Pooling}
 Max pooling takes the maximum value within each pooling region, preserving only the strongest activation while discarding weaker responses. This operation provides translation invariance by keeping the strongest response in each region, making the output robust to small spatial shifts in the input. Max pooling is particularly effective for detecting the presence of features (like edges or textures) rather than their exact location, making it useful for building hierarchical representations in CNNs. The operation reduces spatial dimensions while maintaining the most important information, helping the network focus on the most salient features.
 
-\paragraph{Example.} For input of size $H\times W=32\times32$ and a $2\times2$ window with stride $2$, the output is $16\times16$. Channels are pooled independently.
+\begin{examplebox}{Max Pooling Example}
+For input of size $H\times W=32\times32$ and a $2\times2$ window with stride $2$, the output is $16\times16$. Channels are pooled independently.
+\end{examplebox}
 
 \subsection{Average Pooling}
 

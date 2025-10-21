@@ -40,13 +40,7 @@ The mathematical formulation computes gradients at the look-ahead position:
 
 By computing the gradient at the look-ahead point \(\theta_t+\beta v_{t-1}\), NAG corrects the course earlier than standard momentum, which reduces overshoot in curved valleys and can significantly improve convergence rates, particularly in convex optimization settings. This anticipatory mechanism allows the optimizer to make more informed decisions by evaluating the gradient at where the momentum will take it, rather than just following the current momentum and correcting afterward.\cite{Nesterov1983,WebOptimizationDLBook,GoodfellowEtAl2016}
 
-Practice notes:
-\begin{itemize}
-    \item Common defaults: \(\beta=0.9\), initial \(\alpha\in[10^{-3},10^{-1}]\) depending on scale.
-    \item Widely used with SGD in large-scale vision models \cite{He2016}.
-    \item Start with \(\beta=0.9\) and tune \(\alpha\) based on your loss scale; for well-normalized networks, \(\alpha=0.01\) often works well.
-    \item NAG typically requires fewer iterations than standard momentum to converge, making it particularly valuable for expensive training runs.
-    \item The look-ahead gradient computation adds minimal computational overhead (one extra gradient evaluation per step) while often providing significant convergence improvements.
-    \item Consider using NAG when training deep networks with many parameters, as the anticipation effect helps navigate complex loss landscapes more efficiently than standard momentum.
-\end{itemize}
+\begin{remark}[Nesterov Accelerated Gradient Practice Notes]
+Common defaults: \(\beta=0.9\), initial \(\alpha\in[10^{-3},10^{-1}]\) depending on scale. Widely used with SGD in large-scale vision models \cite{He2016}. Start with \(\beta=0.9\) and tune \(\alpha\) based on your loss scale; for well-normalized networks, \(\alpha=0.01\) often works well. NAG typically requires fewer iterations than standard momentum to converge, making it particularly valuable for expensive training runs. The look-ahead gradient computation adds minimal computational overhead (one extra gradient evaluation per step) while often providing significant convergence improvements. Consider using NAG when training deep networks with many parameters, as the anticipation effect helps navigate complex loss landscapes more efficiently than standard momentum.
+\end{remark}
 

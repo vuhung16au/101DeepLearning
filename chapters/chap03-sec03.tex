@@ -27,8 +27,7 @@ For continuous variables:
 Discrete expectation is a special case of continuous expectation. When we have a discrete distribution with probability mass function $P(x)$, we can think of it as a continuous distribution using Dirac delta functions: $p(x) = \sum_i P(x_i) \delta(x - x_i)$. The integral $\int p(x) f(x) \, dx$ then becomes $\sum_i P(x_i) f(x_i)$, which is exactly the discrete expectation formula. This unified view helps us understand that both discrete and continuous expectations follow the same fundamental principle of weighted averaging.
 \end{remark}
 
-\subsubsection{Example: Expected Value of Dice}
-
+\begin{examplebox}{Expected Value of Dice}
 For a fair six-sided die:
 \begin{align}
 \mathbb{E}[X] &= \sum_{x=1}^{6} x \cdot P(X=x) \\
@@ -38,8 +37,7 @@ For a fair six-sided die:
 
 The expected value is 3.5, even though we can never actually roll 3.5!
 
-\begin{figure}[h]
-\centering
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
@@ -56,9 +54,8 @@ The expected value is 3.5, even though we can never actually roll 3.5!
 \node[bookred] at (axis cs:3.5,0.18) {$\mathbb{E}[X] = 3.5$};
 \end{axis}
 \end{tikzpicture}
-\caption{Probability distribution of a fair die with expected value marked}
-\label{fig:dice-expectation}
-\end{figure}
+\end{center}
+\end{examplebox}
 
 \subsection{Variance}
 
@@ -85,8 +82,7 @@ For our fair die:
 
 So $\sigma = \sqrt{2.92} \approx 1.71$.
 
-\begin{figure}[h]
-\centering
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     ybar,
@@ -105,9 +101,7 @@ So $\sigma = \sqrt{2.92} \approx 1.71$.
 \node[bookpurple] at (axis cs:3.5,0.12) {$\sigma \approx 1.71$};
 \end{axis}
 \end{tikzpicture}
-\caption{Probability distribution showing mean and standard deviation}
-\label{fig:dice-variance}
-\end{figure}
+\end{center}
 
 \subsection{Covariance}
 
@@ -121,8 +115,7 @@ The \textbf{covariance} measures how two variables vary together:
 
 Positive covariance indicates that $X$ and $Y$ tend to increase together, while negative covariance indicates they tend to vary in opposite directions.
 
-\subsubsection{Example: Height and Weight}
-
+\begin{examplebox}{Height and Weight}
 Consider a small dataset of people:
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -145,6 +138,7 @@ The means are $\mu_X = 171.5$ and $\mu_Y = 68.25$. The covariance is:
 \end{align}
 
 Positive covariance confirms that taller people tend to weigh more!
+\end{examplebox}
 
 \subsection{Correlation}
 

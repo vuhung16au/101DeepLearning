@@ -82,12 +82,12 @@ z & \text{if } z > 0 \\
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[scale=0.6]
+\begin{tikzpicture}
     % Leaky ReLU plot
     \begin{scope}[xshift=0cm]
         \begin{axis}[
-            width=0.3\textwidth,
-            height=0.25\textwidth,
+            width=0.25\textwidth,
+            height=0.2\textwidth,
             axis lines=center,
             xlabel={$z$},
             ylabel={$\text{LeakyReLU}(z)$},
@@ -106,10 +106,10 @@ z & \text{if } z > 0 \\
     \end{scope}
     
     % PReLU plot
-    \begin{scope}[xshift=4cm]
+    \begin{scope}[xshift=0.27\textwidth]
         \begin{axis}[
-            width=0.3\textwidth,
-            height=0.25\textwidth,
+            width=0.25\textwidth,
+            height=0.2\textwidth,
             axis lines=center,
             xlabel={$z$},
             ylabel={$\text{PReLU}(z)$},
@@ -128,10 +128,10 @@ z & \text{if } z > 0 \\
     \end{scope}
     
     % ELU plot
-    \begin{scope}[xshift=8cm]
+    \begin{scope}[xshift=0.54\textwidth]
         \begin{axis}[
-            width=0.3\textwidth,
-            height=0.25\textwidth,
+            width=0.25\textwidth,
+            height=0.2\textwidth,
             axis lines=center,
             xlabel={$z$},
             ylabel={$\text{ELU}(z)$},

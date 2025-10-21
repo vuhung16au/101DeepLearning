@@ -11,7 +11,9 @@ Given input $I\in\mathbb{R}^{H\times W\times C_{\text{in}}}$ and kernel $K\in\ma
 \subsection{Backpropagation Through Convolution}
 Backpropagation through convolution follows the chain rule, where gradients flow backward through the cross-correlation operation to update both input and kernel parameters. For loss $\mathcal{L}$ and pre-activation output $S = I * K$, the gradients are computed as $\frac{\partial \mathcal{L}}{\partial K} = I \star \frac{\partial \mathcal{L}}{\partial S}$ and $\frac{\partial \mathcal{L}}{\partial I} = \frac{\partial \mathcal{L}}{\partial S} * K^\text{rot}$, where $\star$ denotes cross-correlation, $*$ denotes convolution, and $K^\text{rot}$ is the kernel rotated by $180^{\circ}$. The mathematical derivation shows that gradient computation mirrors the forward pass but with rotated kernels, enabling efficient parameter updates through cross-correlation operations.\cite{GoodfellowEtAl2016}
 
-\paragraph{Example (shape-aware):} For $I\in\mathbb{R}^{32\times32\times 64}$ and $K\in\mathbb{R}^{3\times3\times64\times128}$ with stride 1 and same padding, $S\in\mathbb{R}^{32\times32\times128}$. The gradient w.r.t. $K$ accumulates over spatial locations and batch.
+\begin{examplebox}{Backpropagation Through Convolution - Shape-aware Example}
+For $I\in\mathbb{R}^{32\times32\times 64}$ and $K\in\mathbb{R}^{3\times3\times64\times128}$ with stride 1 and same padding, $S\in\mathbb{R}^{32\times32\times128}$. The gradient w.r.t. $K$ accumulates over spatial locations and batch.
+\end{examplebox}
 
 \subsection{Pooling Backpropagation}
 Pooling backpropagation requires careful handling of gradient routing to maintain the mathematical properties of the forward pass. For max pooling, the upstream gradient is routed exclusively to the maximal input in each pooling region, since only the maximum value contributed to the output. For average pooling, the gradient is evenly divided among all elements in each region, reflecting the equal contribution of each input to the average. This gradient routing ensures that the backward pass accurately reflects the forward computation, enabling proper parameter updates during training.

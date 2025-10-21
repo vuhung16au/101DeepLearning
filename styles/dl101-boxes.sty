@@ -104,4 +104,71 @@
   \end{tcolorbox}
 }
 
+% Theorem environments with custom styling
+\newtcolorbox[auto counter,number within=chapter]{theorembox}[1][]{
+  title={\bfseries Theorem~\thetcbcounter},
+  enhanced,
+  drop shadow={black!30!white},
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=bookpurple,
+  boxrule=1.5pt,
+  arc=4pt,
+  left=12pt,right=12pt,top=12pt,bottom=12pt,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=bookpurple,coltitle=white},
+  fonttitle=\bfseries,
+  #1
+}
+
+\newtcolorbox[auto counter,number within=chapter]{examplebox}[1][]{
+  title={\bfseries Example~\thetcbcounter},
+  enhanced,
+  drop shadow={black!20!white},
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=bookred,
+  boxrule=1.5pt,
+  arc=4pt,
+  left=12pt,right=12pt,top=12pt,bottom=12pt,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=bookred,coltitle=white},
+  fonttitle=\bfseries,
+  #1
+}
+
+\newtcolorbox[auto counter,number within=chapter]{remarkbox}[1][]{
+  title={\bfseries Remark~\thetcbcounter},
+  enhanced,
+  drop shadow={black!20!white},
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=warmstone,
+  boxrule=1.5pt,
+  arc=4pt,
+  left=12pt,right=12pt,top=12pt,bottom=12pt,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=warmstone,coltitle=white},
+  fonttitle=\bfseries,
+  #1
+}
+
+\newtcolorbox[auto counter,number within=chapter]{definitionbox}[1][]{
+  title={\bfseries Definition~\thetcbcounter},
+  enhanced,
+  drop shadow={black!20!white},
+  coltitle=bookwhite,
+  colback=softivory,
+  colframe=bookpurple,
+  boxrule=1.5pt,
+  arc=4pt,
+  left=12pt,right=12pt,top=12pt,bottom=12pt,
+  attach boxed title to top left={xshift=1.5em,yshift=-\tcboxedtitleheight/2},
+  boxed title style={size=small,colback=bookpurple,coltitle=white},
+  fonttitle=\bfseries,
+  #1
+}
+
+% Theorem environments are now defined in dl101-theorems.sty
+
 

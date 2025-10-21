@@ -13,8 +13,7 @@ This is exactly what \textbf{conditional probability} helps us do - it tells us 
 
 The conditional probability of $X$ given $Y$ is defined as $P(X|Y) = \frac{P(X, Y)}{P(Y)}$, which quantifies how the probability of $X$ changes when we know the value of $Y$. This concept is fundamental to understanding how new information updates our beliefs about uncertain events, allowing us to make more informed decisions based on the evidence we observe.
 
-\subsubsection{Example: Medical Diagnosis}
-
+\begin{examplebox}{Medical Diagnosis}
 Let's make this concrete with our medical example:
 \begin{itemize}
     \item $D$: Patient has the disease (1 = yes, 0 = no)
@@ -39,13 +38,13 @@ P(D=1|S=1) &= \frac{P(S=1|D=1)P(D=1)}{P(S=1)} \\
 \end{align}
 
 So even with the symptom, there's only about a 30\% chance the patient has the disease!
+\end{examplebox}
 
 \subsection{Independence}
 
 Two events are independent if knowing one doesn't change our belief about the other, such as rolling two dice where the result of the first die doesn't affect the second, or they can be dependent like weather and clothing choice where knowing it's raining affects the probability you'll wear a raincoat. Two random variables $X$ and $Y$ are independent if $P(X, Y) = P(X)P(Y)$, which means that the joint probability equals the product of the individual probabilities, or equivalently, $P(X|Y) = P(X)$ and $P(Y|X) = P(Y)$, indicating that knowing the value of one variable doesn't change our belief about the other.
 
-\subsubsection{Example: Independent vs Dependent Variables}
-
+\begin{examplebox}{Independent vs Dependent Variables}
 Consider two scenarios:
 
 \textbf{Scenario 1 (Independent):} Flipping two coins
@@ -61,6 +60,7 @@ Consider two scenarios:
     \item $P(\text{Second card = Ace}) = 3/51$ (if first was Ace) or $4/51$ (if first wasn't Ace)
     \item The probability of the second card depends on what the first card was
 \end{itemize}
+\end{examplebox}
 
 \subsection{Bayes' Theorem}
 

@@ -1,0 +1,51 @@
+\ProvidesPackage{dl101-chapter-pages}[2025/01/20 DL101 Chapter Page Styles]
+
+% Required packages
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+
+% Define background colors for different parts
+\definecolor{part1-bg}{RGB}{245,245,245}  % Very light grey for Part I
+\definecolor{part2-bg}{RGB}{240,248,255}  % Very light blue for Part II  
+\definecolor{part3-bg}{RGB}{255,245,245}  % Very light red for Part III
+
+% Chapter number styling
+\newcommand{\chapterNumberStyle}[1]{%
+    \fontsize{72}{86}\selectfont%
+    \textbf{#1}%
+}
+
+% Chapter title styling
+\newcommand{\chapterTitleStyle}[1]{%
+    \fontsize{24}{28}\selectfont%
+    \textbf{#1}%
+}
+
+% Custom chapter page command
+\newcommand{\styledchapter}[1]{%
+    \clearpage%
+    \thispagestyle{empty}%
+    % Add background color - we'll use a default color for now
+    \AddToShipoutPictureBG*{%
+        \AtPageLowerLeft{%
+            \begin{tikzpicture}[remember picture,overlay]
+                \fill[part1-bg] (current page.south west) rectangle (current page.north east);
+            \end{tikzpicture}
+        }%
+    }%
+    % Create the styled chapter page
+    \begin{tikzpicture}[remember picture,overlay]
+        % Chapter number (right-aligned, huge)
+        \node[anchor=north east, xshift=-2cm, yshift=-3cm] at (current page.north east) {%
+            \chapterNumberStyle{Chapter \arabic{chapter}}%
+        };
+        % Chapter title (right-aligned, below number)
+        \node[anchor=north east, xshift=-2cm, yshift=-6cm] at (current page.north east) {%
+            \chapterTitleStyle{#1}%
+        };
+    \end{tikzpicture}%
+    \clearpage%
+    % Call the original chapter command for proper numbering and TOC entry
+    \chapter{#1}%
+}

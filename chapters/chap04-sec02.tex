@@ -19,12 +19,10 @@ For a function $f(\vect{\theta})$, \textbf{gradient descent} updates parameters 
 
 where $\alpha > 0$ is the \textbf{learning rate}.
 
-\subsubsection{Example: Gradient Descent in 2D}
-
+\begin{examplebox}{Gradient Descent in 2D}
 Consider minimizing $f(x, y) = x^2 + 2y^2$ starting from $(3, 3)$:
 
-\begin{figure}[h]
-\centering
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$x$},
@@ -42,9 +40,7 @@ Consider minimizing $f(x, y) = x^2 + 2y^2$ starting from $(3, 3)$:
 ] {x^2 + 2*y^2};
 \end{axis}
 \end{tikzpicture}
-\caption{Contour plot of $f(x,y) = x^2 + 2y^2$ showing gradient descent path}
-\label{fig:gradient-descent-2d}
-\end{figure}
+\end{center}
 
 The gradient is $\nabla f = [2x, 4y]$. Starting from $(3, 3)$ with learning rate $\alpha = 0.1$:
 \begin{align}
@@ -53,6 +49,7 @@ The gradient is $\nabla f = [2x, 4y]$. Starting from $(3, 3)$ with learning rate
 \nabla f(2.4, 1.8) &= [4.8, 7.2] \\
 (x_2, y_2) &= (2.4, 1.8) - 0.1[4.8, 7.2] = (1.92, 1.08)
 \end{align}
+\end{examplebox}
 
 \subsection{Jacobian and Hessian Matrices}
 
@@ -111,8 +108,7 @@ For example, $e^{0.1} \approx 1 + 0.1 + \frac{0.01}{2} = 1.105$, which is very c
 
 Critical points are locations where the gradient is zero, representing different types of terrain features in the optimization landscape. A local minimum is like the bottom of a bowl where you can't go lower in any direction, a local maximum is like the top of a hill where you can't go higher in any direction, and a saddle point is like a mountain pass where you can go down in some directions and up in others. At a critical point, $\nabla f(\vect{x}) = \boldsymbol{0}$, and the Hessian matrix determines the nature of the critical point: a local minimum occurs when the Hessian is positive definite, a local maximum occurs when the Hessian is negative definite, and a saddle point occurs when the Hessian has both positive and negative eigenvalues.
 
-\begin{figure}[h]
-\centering
+\begin{center}
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$x$},
@@ -130,9 +126,7 @@ Critical points are locations where the gradient is zero, representing different
 ] {x^2 - y^2};
 \end{axis}
 \end{tikzpicture}
-\caption{Example of a saddle point: $f(x,y) = x^2 - y^2$}
-\label{fig:saddle-point}
-\end{figure}
+\end{center}
 
 Deep learning often encounters saddle points rather than local minima in high dimensions.
 
