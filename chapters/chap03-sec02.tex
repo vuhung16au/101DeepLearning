@@ -13,11 +13,13 @@ This is exactly what \textbf{conditional probability} helps us do - it tells us 
 
 \subsection{Conditional Probability}
 
+\begin{definition}[Conditional Probability]
 The conditional probability of $X$ given $Y$ is defined as:
 \begin{equation}
 P(X|Y) = \frac{P(X, Y)}{P(Y)}
 \end{equation}
 This quantifies how the probability of $X$ changes when we know the value of $Y$. This concept is fundamental to understanding how new information updates our beliefs about uncertain events, allowing us to make more informed decisions based on the evidence we observe.
+\end{definition}
 
 \begin{examplebox}{Medical Diagnosis}
 Let's make this concrete with our medical example:
@@ -91,27 +93,6 @@ In machine learning terminology:
     \item $P(X|Y)$ is the \textbf{posterior} probability - what we believe after seeing the data
     \item $P(Y)$ is the \textbf{evidence} or marginal likelihood - the probability of observing the data
 \end{itemize}
-
-\subsubsection{Visualizing Bayes' Theorem}
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}
-\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] (prior) at (0,0) {Prior $P(X)$};
-\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] (likelihood) at (4,0) {Likelihood $P(Y|X)$};
-\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] (posterior) at (2,-3) {Posterior $P(X|Y)$};
-\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] (evidence) at (6,-3) {Evidence $P(Y)$};
-
-\draw[->] (prior) -- (posterior);
-\draw[->] (likelihood) -- (posterior);
-\draw[->] (evidence) -- (posterior);
-
-\node at (1,-1.5) {$\times$};
-\node at (5,-1.5) {$\div$};
-\end{tikzpicture}
-\caption{Bayes' theorem as a belief update process}
-\label{fig:bayes-process}
-\end{figure}
 
 The formula can be read as: "Posterior = (Likelihood × Prior) ÷ Evidence"
 

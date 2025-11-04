@@ -7,47 +7,49 @@ Information theory provides tools for quantifying information and uncertainty, w
 
 \subsection{Self-Information}
 
-The \textbf{self-information} or \textbf{surprisal} of an event $x$ is:
-
+\begin{definition}[Self-Information]
+The self-information or surprisal of an event $x$ is:
 \begin{equation}
 I(x) = -\log P(x)
 \end{equation}
-
 Rare events have high information content, while certain events have zero information.
+\end{definition}
 
 \subsection{Entropy}
 
-The \textbf{Shannon entropy} measures the expected information in a distribution:
-
+\begin{definition}[Shannon Entropy]
+The Shannon entropy measures the expected information in a distribution:
 \begin{equation}
 H(X) = \mathbb{E}_{x \sim P}[I(x)] = -\sum_{x} P(x) \log P(x)
 \end{equation}
+Entropy is maximized when all outcomes are equally likely.
+\end{definition}
 
-For continuous distributions, we use \textbf{differential entropy}:
-
+\begin{definition}[Differential Entropy]
+For continuous distributions, we use differential entropy:
 \begin{equation}
 H(X) = -\int p(x) \log p(x) \, dx
 \end{equation}
-
-Entropy is maximized when all outcomes are equally likely.
+\end{definition}
 
 \subsection{Cross-Entropy}
 
-The \textbf{cross-entropy} between distributions $P$ and $Q$ is:
-
+\begin{definition}[Cross-Entropy]
+The cross-entropy between distributions $P$ and $Q$ is:
 \begin{equation}
 H(P, Q) = -\mathbb{E}_{x \sim P}[\log Q(x)] = -\sum_{x} P(x) \log Q(x)
 \end{equation}
-
 In deep learning, cross-entropy is commonly used as a loss function for classification.
+\end{definition}
 
 \subsection{Kullback-Leibler Divergence}
 
-The \textbf{KL divergence} measures how one distribution differs from another:
-
+\begin{definition}[KL Divergence]
+The KL divergence measures how one distribution differs from another:
 \begin{equation}
 D_{KL}(P \| Q) = \mathbb{E}_{x \sim P}\left[\log \frac{P(x)}{Q(x)}\right] = \sum_{x} P(x) \log \frac{P(x)}{Q(x)}
 \end{equation}
+\end{definition}
 
 Properties:
 \begin{itemize}
@@ -58,19 +60,18 @@ Properties:
 
 \subsection{Mutual Information}
 
-The \textbf{mutual information} between $X$ and $Y$ quantifies how much knowing one reduces uncertainty about the other:
-
+\begin{definition}[Mutual Information]
+The mutual information between $X$ and $Y$ quantifies how much knowing one reduces uncertainty about the other:
 \begin{equation}
 I(X; Y) = D_{KL}(P(X, Y) \| P(X)P(Y))
 \end{equation}
 
 Equivalently:
-
 \begin{equation}
 I(X; Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
 \end{equation}
-
 Mutual information is symmetric and measures the dependence between variables.
+\end{definition}
 
 \subsection{Applications in Deep Learning}
 

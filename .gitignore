@@ -280,4 +280,7 @@ SUMMARY.txt
 docs/
 # styles/
 
+.venv/
+
+
 !Deep-Learning101-PDF-Books/*.pdf

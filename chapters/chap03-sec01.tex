@@ -50,13 +50,13 @@ P(X=x) \geq 0 \quad \text{for all } x
 \sum_{x} P(X=x) = 1
 \end{equation}
 
-\subsubsection{Example: Fair Coin}
-
+\begin{example}[Fair Coin]
 For a fair coin, we have:
 \begin{align}
 P(X=0) &= 0.5 \quad \text{(Tails)} \\
 P(X=1) &= 0.5 \quad \text{(Heads)}
 \end{align}
+\end{example}
 
 \begin{figure}[h]
 \centering
@@ -185,7 +185,12 @@ From our weather example:
 \end{examplebox}
 
 
-For multiple random variables $X$ and $Y$, the \textbf{joint distribution} $P(X, Y)$ describes their combined behavior. The \textbf{marginal distribution} is obtained by summing (or integrating) over the other variable:
+\begin{definition}[Joint Distribution]
+For multiple random variables $X$ and $Y$, the joint distribution $P(X, Y)$ describes their combined behavior, specifying the probability of all possible combinations of values for both variables.
+\end{definition}
+
+\begin{definition}[Marginal Distribution]
+The marginal distribution is obtained by summing (or integrating) over the other variable, giving us the probability distribution of a single variable when we ignore the others:
 
 \begin{equation}
 P(X=x) = \sum_{y} P(X=x, Y=y)

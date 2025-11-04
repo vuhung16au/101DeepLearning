@@ -11,17 +11,19 @@ When we have a random variable, we often want to summarize its behavior with a f
 
 \subsection{Expectation}
 
-The \textbf{expected value} or \textbf{mean} of a function $f(x)$ with respect to distribution $P(x)$ is:
-
-For discrete variables:
+\begin{definition}[Expected Value (Discrete)]
+For discrete variables, the expected value or mean of a function $f(x)$ with respect to distribution $P(x)$ is:
 \begin{equation}
 \mathbb{E}_{x \sim P}[f(x)] = \sum_{x} P(x) f(x)
 \end{equation}
+\end{definition}
 
-For continuous variables:
+\begin{definition}[Expected Value (Continuous)]
+For continuous variables, the expected value or mean of a function $f(x)$ with respect to distribution $p(x)$ is:
 \begin{equation}
 \mathbb{E}_{x \sim p}[f(x)] = \int p(x) f(x) \, dx
 \end{equation}
+\end{definition}
 
 \begin{remark}
 Discrete expectation is a special case of continuous expectation. When we have a discrete distribution with probability mass function $P(x)$, we can think of it as a continuous distribution using Dirac delta functions: $p(x) = \sum_i P(x_i) \delta(x - x_i)$. The integral $\int p(x) f(x) \, dx$ then becomes $\sum_i P(x_i) f(x_i)$, which is exactly the discrete expectation formula. This unified view helps us understand that both discrete and continuous expectations follow the same fundamental principle of weighted averaging.
@@ -63,16 +65,16 @@ The expected value is 3.5, even though we can never actually roll 3.5!
 
 Variance tells us how "spread out" the values are around the mean. Imagine two dart players with very different playing styles. The first player has low variance in their throws - every dart lands very close to the bullseye, creating a tight cluster of holes around the center. This player is consistent and precise, with their throws showing little variation from the target. The second player has high variance in their throws - their darts are scattered all over the board, some landing far to the left, others to the right, some high, some low. This player is inconsistent and unpredictable, with their throws showing large variation from the target. Variance quantifies this difference in consistency, measuring how much the individual values deviate from the average or expected value.
 
-The \textbf{variance} measures the spread of a distribution:
-
+\begin{definition}[Variance]
+The variance measures the spread of a distribution:
 \begin{equation}
 \text{Var}(X) = \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2
 \end{equation}
+\end{definition}
 
 The \textbf{standard deviation} is $\sigma = \sqrt{\text{Var}(X)}$.
 
-\subsubsection{Example: Variance of Dice}
-
+\begin{example}[Variance of Dice]
 For our fair die:
 \begin{align}
 \text{Var}(X) &= \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \\
@@ -81,6 +83,7 @@ For our fair die:
 \end{align}
 
 So $\sigma = \sqrt{2.92} \approx 1.71$.
+\end{example}
 
 \begin{center}
 \begin{tikzpicture}
@@ -107,11 +110,12 @@ So $\sigma = \sqrt{2.92} \approx 1.71$.
 
 Covariance tells us whether two variables tend to move in the same direction or opposite directions, with positive covariance indicating that when one variable goes up, the other tends to go up too, negative covariance indicating that when one goes up, the other tends to go down, and zero covariance indicating no clear relationship. Examples include height and weight having positive covariance because taller people tend to weigh more, price and demand having negative covariance because higher prices usually mean lower demand, and height and IQ having near zero covariance because there's no clear relationship between physical height and cognitive ability.
 
-The \textbf{covariance} measures how two variables vary together:
-
+\begin{definition}[Covariance]
+The covariance measures how two variables vary together:
 \begin{equation}
 \text{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])]
 \end{equation}
+\end{definition}
 
 Positive covariance indicates that $X$ and $Y$ tend to increase together, while negative covariance indicates they tend to vary in opposite directions.
 

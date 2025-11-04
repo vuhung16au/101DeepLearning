@@ -7,13 +7,13 @@ Understanding common probability distributions is essential for deep learning be
 
 \subsection{Bernoulli Distribution}
 
-Models a binary random variable (0 or 1):
-
+\begin{definition}[Bernoulli Distribution]
+The Bernoulli distribution models a binary random variable (0 or 1):
 \begin{equation}
 P(X=1) = \phi, \quad P(X=0) = 1-\phi
 \end{equation}
-
-Used for binary classification problems.
+where $\phi$ is the probability of success (1). Used for binary classification problems.
+\end{definition}
 
 \begin{example}
 Consider a biased coin that lands heads with probability 0.7. Let $X$ be the random variable representing the outcome:
@@ -33,11 +33,13 @@ The expected value is $\mathbb{E}[X] = 1 \cdot 0.7 + 0 \cdot 0.3 = 0.7$, and the
 
 \subsection{Categorical Distribution}
 
-Generalizes Bernoulli to $k$ discrete outcomes. If $X$ can take values $\{1, 2, \ldots, k\}$:
-
+\begin{definition}[Categorical Distribution]
+The categorical distribution generalizes Bernoulli to $k$ discrete outcomes. If $X$ can take values $\{1, 2, \ldots, k\}$:
 \begin{equation}
 P(X=i) = p_i \quad \text{where} \quad \sum_{i=1}^{k} p_i = 1
 \end{equation}
+where $p_i$ is the probability of outcome $i$.
+\end{definition}
 
 \subsection{Gaussian (Normal) Distribution}
 
@@ -73,11 +75,13 @@ The multivariate Gaussian with mean vector $\boldsymbol{\mu}$ and covariance mat
 
 \subsection{Exponential Distribution}
 
-Models the time between events in a Poisson process:
-
+\begin{definition}[Exponential Distribution]
+The exponential distribution models the time between events in a Poisson process:
 \begin{equation}
 p(x; \lambda) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0
 \end{equation}
+where $\lambda > 0$ is the rate parameter.
+\end{definition}
 
 \begin{figure}[h]
 \centering
@@ -103,13 +107,15 @@ p(x; \lambda) = \lambda e^{-\lambda x} \quad \text{for } x \geq 0
 
 \subsection{Laplace Distribution}
 
-Heavy-tailed alternative to Gaussian:
-
+\begin{definition}[Laplace Distribution]
+The Laplace distribution is a heavy-tailed alternative to Gaussian:
 \begin{equation}
 \text{Laplace}(x; \mu, b) = \frac{1}{2b} \exp\left(-\frac{|x-\mu|}{b}\right)
 \end{equation}
+where $\mu$ is the location parameter (mean) and $b$ is the scale parameter (controls the spread).
+\end{definition}
 
-where $\mu$ is the location parameter (mean) and $b$ is the scale parameter (controls the spread). The Laplace distribution is used in robust statistics because it's less sensitive to outliers than the Gaussian distribution, and in L1 regularization because its sharp peak at the mean encourages sparsity by penalizing small weights more heavily than the Gaussian distribution.
+The Laplace distribution is used in robust statistics because it's less sensitive to outliers than the Gaussian distribution, and in L1 regularization because its sharp peak at the mean encourages sparsity by penalizing small weights more heavily than the Gaussian distribution.
 
 \begin{figure}[h]
 \centering
@@ -135,17 +141,21 @@ where $\mu$ is the location parameter (mean) and $b$ is the scale parameter (con
 
 \subsection{Dirac Delta and Mixture Distributions}
 
-The \textbf{Dirac delta} $\delta(x)$ concentrates all probability at a single point:
-
+\begin{definition}[Dirac Delta]
+The Dirac delta $\delta(x)$ concentrates all probability at a single point:
 \begin{equation}
 p(x) = \delta(x - \mu)
 \end{equation}
+where $\mu$ is the location where all probability mass is concentrated.
+\end{definition}
 
-\textbf{Mixture distributions} combine multiple distributions:
-
+\begin{definition}[Mixture Distributions]
+Mixture distributions combine multiple distributions:
 \begin{equation}
 p(x) = \sum_{i=1}^{k} \alpha_i p_i(x), \quad \sum_{i=1}^{k} \alpha_i = 1
 \end{equation}
+where $\alpha_i$ are the mixing weights and $p_i(x)$ are the component distributions.
+\end{definition}
 
 \begin{example}[Gaussian Mixture Model (GMM)]
 A Gaussian Mixture Model is a probabilistic model that represents a probability distribution as a weighted sum of multiple Gaussian distributions, allowing it to model complex, multi-modal data that cannot be captured by a single Gaussian. GMMs are particularly useful in clustering, density estimation, and as building blocks for more complex generative models in deep learning.
